@@ -1,9 +1,14 @@
 require "./spec_helper"
 
-describe Gphoto2 do
-  # TODO: Write tests
+describe GPhoto2 do
+  describe ".check!" do
+    context "the return code is not GP_OK" do
+      it "raises GPhoto2::Error with a message and error code" do
+        code = -1
+        message = "Unspecified error (#{code})"
 
-  it "works" do
-    false.should eq(true)
+        expect_raises(GPhoto2::Error, message) { GPhoto2.check!(code) }
+      end
+    end
   end
 end
