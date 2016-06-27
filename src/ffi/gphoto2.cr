@@ -1,3 +1,5 @@
+require "./gphoto2/*"
+
 module FFI
   # @[Link(ldflags: "`pkg-config libgphoto2 --libs`")]
   # @[Link(ldflags: "`pkg-config libgphoto2_port --libs`")]
@@ -31,6 +33,19 @@ module FFI
     GP_ERROR_IO_USB_CLAIM = -53
     GP_ERROR_IO_LOCK = -60
     GP_ERROR_HAL = -70
+
+    GP_ERROR_CORRUPTED_DATA = -102
+    GP_ERROR_FILE_EXISTS = -103
+    GP_ERROR_MODEL_NOT_FOUND = -105
+    GP_ERROR_DIRECTORY_NOT_FOUND = -107
+    GP_ERROR_FILE_NOT_FOUND = -108
+    GP_ERROR_DIRECTORY_EXISTS = -109
+    GP_ERROR_CAMERA_BUSY = -110
+    GP_ERROR_PATH_NOT_ABSOLUTE = -111
+    GP_ERROR_CANCEL = -112
+    GP_ERROR_CAMERA_ERROR = -113
+    GP_ERROR_OS_FAILURE = -114
+    GP_ERROR_NO_SPACE = -115
 
     GP_MIME_TXT = "text/plain"
     GP_MIME_WAV = "audio/wav"
@@ -410,6 +425,7 @@ module FFI
     end
 
     # FIXME!
+    alias CameraFilesystem = Void*
     struct CameraFileInfo
       preview : Void*
       file : Void*
@@ -444,7 +460,7 @@ module FFI
 
     struct Camera
       port : GPPort*
-      fs : Void*
+      fs : CameraFilesystem*
       functions : CameraFunctions*
       pl : CameraPrivateLibrary*
       pc : CameraPrivateCore*
