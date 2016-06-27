@@ -446,11 +446,11 @@ lib LibGPhoto2
   fun gp_log_add_func(level : GPLogLevel, func : GPLogFunc, data : Void*) : LibC::Int
   fun gp_log_remove_func(id : LibC::Int) : LibC::Int
 
-  fun gp_log(level : GPLogLevel, domain : LibC::Char*, format : LibC::Char*, ...) : Void
-  fun gp_logv(level : GPLogLevel, domain : LibC::Char*, format : LibC::Char*, args : Void*) : Void
+  fun gp_log(level : GPLogLevel, domain : LibC::Char*, format : LibC::Char*, ...)
+  fun gp_logv(level : GPLogLevel, domain : LibC::Char*, format : LibC::Char*, args : Void*)
 
-  fun gp_log_with_source_location (level : GPLogLevel, file : LibC::Char*, line : LibC::Int, func : LibC::Char*, format : LibC::Char*, ...) : Void
-  fun gp_log_data(domain : LibC::Char*, data : LibC::Char*, size : LibC::UInt, format : LibC::Char*, ...) : Void
+  fun gp_log_with_source_location (level : GPLogLevel, file : LibC::Char*, line : LibC::Int, func : LibC::Char*, format : LibC::Char*, ...)
+  fun gp_log_data(domain : LibC::Char*, data : LibC::Char*, size : LibC::UInt, format : LibC::Char*, ...)
 
   # gp_setting_*
   fun gp_setting_set(id : LibC::Char*, key : LibC::Char*, value : LibC::Char*) : Int16
@@ -527,24 +527,24 @@ lib LibGPhoto2
 
   # gp_context_*
   fun gp_context_new() : GPContext*
-  fun gp_context_ref(context : GPContext*) : Void
-  fun gp_context_unref(context : GPContext*) : Void
-  fun gp_context_set_idle_func(context : GPContext*, func : Void*, data : Void*) : Void
-  fun gp_context_set_progress_funcs(context : GPContext*, start_func : Void*, update_func : Void*, stop_func : Void*, data : Void*) : Void
-  fun gp_context_set_error_func(context : GPContext*, func : Void*, data : Void*) : Void
-  fun gp_context_set_status_func(context : GPContext*, func : Void*, data : Void*) : Void
-  fun gp_context_set_question_func(context : GPContext*, func : Void*, data : Void*) : Void
-  fun gp_context_set_cancel_func(context : GPContext*, func : Void*, data : Void*) : Void
-  fun gp_context_set_message_func(context : GPContext*, func : Void*, data : Void*) : Void
-  fun gp_context_idle(context : GPContext*) : Void
-  fun gp_context_error(context : GPContext*, format : UInt8*) : Void
-  fun gp_context_status(context : GPContext*, format : UInt8*) : Void
-  fun gp_context_message(context : GPContext*, format : UInt8*) : Void
+  fun gp_context_ref(context : GPContext*)
+  fun gp_context_unref(context : GPContext*)
+  fun gp_context_set_idle_func(context : GPContext*, func : Void*, data : Void*)
+  fun gp_context_set_progress_funcs(context : GPContext*, start_func : Void*, update_func : Void*, stop_func : Void*, data : Void*)
+  fun gp_context_set_error_func(context : GPContext*, func : Void*, data : Void*)
+  fun gp_context_set_status_func(context : GPContext*, func : Void*, data : Void*)
+  fun gp_context_set_question_func(context : GPContext*, func : Void*, data : Void*)
+  fun gp_context_set_cancel_func(context : GPContext*, func : Void*, data : Void*)
+  fun gp_context_set_message_func(context : GPContext*, func : Void*, data : Void*)
+  fun gp_context_idle(context : GPContext*)
+  fun gp_context_error(context : GPContext*, format : UInt8*)
+  fun gp_context_status(context : GPContext*, format : UInt8*)
+  fun gp_context_message(context : GPContext*, format : UInt8*)
   fun gp_context_question(context : GPContext*, format : UInt8*) : GPContextFeedback
   fun gp_context_cancel(context : GPContext*) : GPContextFeedback
   fun gp_context_progress_start(context : GPContext*, target : Float32, format : UInt8*) : UInt16
-  fun gp_context_progress_update(context : GPContext*, id : UInt16, current : Float32) : Void
-  fun gp_context_progress_stop(context : GPContext*, id : UInt16) : Void
+  fun gp_context_progress_update(context : GPContext*, id : UInt16, current : Float32)
+  fun gp_context_progress_stop(context : GPContext*, id : UInt16)
 
     # gp_list_*
   fun gp_list_new(list : Void**) : Int16
@@ -677,9 +677,9 @@ lib LibGPhoto2
   fun gp_camera_file_read           (camera : Camera*, folder : UInt8*, file : UInt8*, type : CameraFileType, offset : UInt64, buf : UInt8*, size : Void*, context : GPContext*) : Int16
   fun gp_camera_file_delete         (camera : Camera*, folder : UInt8*, file : UInt8*, context : GPContext*) : Int16
 
-  fun gp_camera_set_timeout_funcs   (camera : Camera*, start_func : Void*, stop_func : Void*, data : Void*) : Void
+  fun gp_camera_set_timeout_funcs   (camera : Camera*, start_func : Void*, stop_func : Void*, data : Void*)
   fun gp_camera_start_timeout       (camera : Camera*, timeout : UInt16, func : Void*) : Int16
-  fun gp_camera_stop_timeout        (camera : Camera*, id : UInt16) : Void
+  fun gp_camera_stop_timeout        (camera : Camera*, id : UInt16)
 
   # --- other
   fun gp_message_codeset  (codeset : LibC::Char*) : LibC::Char*
