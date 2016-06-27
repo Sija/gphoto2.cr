@@ -7,7 +7,7 @@ module GPhoto2
   @@logger : Logger?
 
   def self.result_as_string(rc : Int32)
-    String.new LibGPhoto2.gp_result_as_string(rc)
+    String.new FFI::LibGPhoto2.gp_result_as_string(rc)
   end
 
   def self.logger
@@ -21,7 +21,7 @@ module GPhoto2
   # @raise [GPhoto2::Error] when the return code is not {FFI::GPhoto2Port::GP_OK}
   def self.check!(rc : Int32, port_call = false)
     logger.debug "#{caller.first} (#{__FILE__}:#{__LINE__}) => #{rc}" if ENV["DEBUG"]?
-    return if rc >= LibGPhoto2::GP_OK
+    return if rc >= FFI::LibGPhoto2::GP_OK
     raise Error.new(port_call ? PortResult.as_string(rc) : result_as_string(rc), rc)
   end
 end
