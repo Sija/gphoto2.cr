@@ -232,214 +232,214 @@ lib LibGPhoto2
   #
 
   struct GPPortInfo
-    type: GPPortType
-    name: LibC::Char*
-    path: LibC::Char*
-    library_filename: LibC::Char*
+    type : GPPortType
+    name : LibC::Char*
+    path : LibC::Char*
+    library_filename : LibC::Char*
   end
 
   struct GPPortInfoList
-    info: GPPortInfo*
-    count: LibC::UInt
-    iolib_count: LibC::UInt
+    info : GPPortInfo*
+    count : LibC::UInt
+    iolib_count : LibC::UInt
   end
 
   struct GPPortSettingsSerial
-    port: LibC::Char[128]
-    speed: LibC::Int
-    bits: LibC::Int
-    parity: GPPortSerialParity
-    stopbits: LibC::Int
+    port : LibC::Char[128]
+    speed : LibC::Int
+    bits : LibC::Int
+    parity : GPPortSerialParity
+    stopbits : LibC::Int
   end
 
   struct GPPortSettingsUSB
-    inep: LibC::Int
-    outep: LibC::Int
-    intep: LibC::Int
-    config: LibC::Int
-    interface: LibC::Int
-    altsetting: LibC::Int
-    maxpacketsize: LibC::Int
-    port: LibC::Char[64]
+    inep : LibC::Int
+    outep : LibC::Int
+    intep : LibC::Int
+    config : LibC::Int
+    interface : LibC::Int
+    altsetting : LibC::Int
+    maxpacketsize : LibC::Int
+    port : LibC::Char[64]
   end
 
   struct GPPortSettingsUsbDiskDirect
-    path: LibC::Char[128]
+    path : LibC::Char[128]
   end
 
   struct GPPortSettingsUsbScsi
-    path: LibC::Char[128]
+    path : LibC::Char[128]
   end
 
   union GPPortSettings
-    serial: GPPortSettingsSerial
-    usb: GPPortSettingsUSB
-    usbdiskdirect: GPPortSettingsUsbDiskDirect
-    usbscsi: GPPortSettingsUsbScsi
+    serial : GPPortSettingsSerial
+    usb : GPPortSettingsUSB
+    usbdiskdirect : GPPortSettingsUsbDiskDirect
+    usbscsi : GPPortSettingsUsbScsi
   end
 
   struct GPPort
-    type: GPPortType
-    settings: GPPortSettings
-    settings_pending: GPPortSettings
-    timeout: LibC::Int
-    pl: GPPortPrivateLibrary*
-    pc: GPPortPrivateCore*
+    type : GPPortType
+    settings : GPPortSettings
+    settings_pending : GPPortSettings
+    timeout : LibC::Int
+    pl : GPPortPrivateLibrary*
+    pc : GPPortPrivateCore*
   end
 
   struct GPContext
-    idle_func: GPContextIdleFunc
-    idle_func_data: Void*
+    idle_func : GPContextIdleFunc
+    idle_func_data : Void*
 
-    progress_start_func: GPContextProgressStartFunc
-    progress_update_func: GPContextProgressUpdateFunc
-    progress_stop_func: GPContextProgressStopFunc
-    progress_func_data: Void*
+    progress_start_func : GPContextProgressStartFunc
+    progress_update_func : GPContextProgressUpdateFunc
+    progress_stop_func : GPContextProgressStopFunc
+    progress_func_data : Void*
 
-    error_func: GPContextErrorFunc
-    error_func_data: Void*
+    error_func : GPContextErrorFunc
+    error_func_data : Void*
 
-    question_func: GPContextQuestionFunc
-    question_func_data: Void*
+    question_func : GPContextQuestionFunc
+    question_func_data : Void*
 
-    cancel_func: GPContextCancelFunc
-    cancel_func_data: Void*
+    cancel_func : GPContextCancelFunc
+    cancel_func_data : Void*
 
-    status_func: GPContextStatusFunc
-    status_func_data: Void*
+    status_func : GPContextStatusFunc
+    status_func_data : Void*
 
-    message_func: GPContextMessageFunc
-    message_func_data: Void*
+    message_func : GPContextMessageFunc
+    message_func_data : Void*
 
-    ref_count: LibC::UInt
+    ref_count : LibC::UInt
   end
 
   struct CameraListEntry
-    name: LibC::Char*
-    value: LibC::Char*
+    name : LibC::Char*
+    value : LibC::Char*
   end
 
   struct CameraList
-    used: LibC::Int
-    max: LibC::Int
-    entry: CameraListEntry*
-    ref_count: LibC::Int
+    used : LibC::Int
+    max : LibC::Int
+    entry : CameraListEntry*
+    ref_count : LibC::Int
   end
 
   struct CameraFile
-    mime_type: LibC::Char[64]
-    name: LibC::Char[256]
-    ref_count: LibC::Int
-    mtime: LibC::TimeT
-    accesstype: CameraFileAccessType
-    size: LibC::ULong
-    data: LibC::Char*
-    offset: LibC::ULong
-    fd: LibC::Int
-    handler: CameraFileHandler*
-    private: Void*
+    mime_type : LibC::Char[64]
+    name : LibC::Char[256]
+    ref_count : LibC::Int
+    mtime : LibC::TimeT
+    accesstype : CameraFileAccessType
+    size : LibC::ULong
+    data : LibC::Char*
+    offset : LibC::ULong
+    fd : LibC::Int
+    handler : CameraFileHandler*
+    private : Void*
   end
 
   struct CameraAbilities
-    model: LibC::Char[128]
-    status: CameraDriverStatus
-    port: LibC::Int
-    speed: LibC::Int[64]
-    operations: CameraOperation
-    file_operations: CameraFileOperation
-    folder_operations: CameraFolderOperation
-    usb_vendor: LibC::Int
-    usb_product: LibC::Int
-    usb_class: LibC::Int
-    usb_subclass: LibC::Int
-    usb_protocol: LibC::Int
-    library: LibC::Char[1024]
-    id: LibC::Char[1024]
-    device_type: GphotoDeviceType
-    reserved2: LibC::Int
-    reserved3: LibC::Int
-    reserved4: LibC::Int
-    reserved5: LibC::Int
-    reserved6: LibC::Int
-    reserved7: LibC::Int
-    reserved8: LibC::Int
+    model : LibC::Char[128]
+    status : CameraDriverStatus
+    port : LibC::Int
+    speed : LibC::Int[64]
+    operations : CameraOperation
+    file_operations : CameraFileOperation
+    folder_operations : CameraFolderOperation
+    usb_vendor : LibC::Int
+    usb_product : LibC::Int
+    usb_class : LibC::Int
+    usb_subclass : LibC::Int
+    usb_protocol : LibC::Int
+    library : LibC::Char[1024]
+    id : LibC::Char[1024]
+    device_type : GphotoDeviceType
+    reserved2 : LibC::Int
+    reserved3 : LibC::Int
+    reserved4 : LibC::Int
+    reserved5 : LibC::Int
+    reserved6 : LibC::Int
+    reserved7 : LibC::Int
+    reserved8 : LibC::Int
   end
 
   struct CameraAbilitiesList
-    count: LibC::Int
-    abilities: CameraAbilities*
+    count : LibC::Int
+    abilities : CameraAbilities*
   end
 
   struct CameraWidget
-    type: CameraWidgetType
-    label: LibC::Char[256]
-    info: LibC::Char[1024]
-    name: LibC::Char[256]
-    parent: CameraWidget*
-    value_string: LibC::Char*
-    value_int: LibC::Int
-    value_float: LibC::Float
-    choice: LibC::Char**
-    choice_count: LibC::Int
-    min: LibC::Float
-    max: LibC::Float
-    increment: LibC::Float
-    children: CameraWidget**
-    children_count: LibC::Int
-    changed: LibC::Int
-    readonly: LibC::Int
-    ref_count: LibC::Int
-    id: LibC::Int
-    callback: CameraWidgetCallback
+    type : CameraWidgetType
+    label : LibC::Char[256]
+    info : LibC::Char[1024]
+    name : LibC::Char[256]
+    parent : CameraWidget*
+    value_string : LibC::Char*
+    value_int : LibC::Int
+    value_float : LibC::Float
+    choice : LibC::Char**
+    choice_count : LibC::Int
+    min : LibC::Float
+    max : LibC::Float
+    increment : LibC::Float
+    children : CameraWidget**
+    children_count : LibC::Int
+    changed : LibC::Int
+    readonly : LibC::Int
+    ref_count : LibC::Int
+    id : LibC::Int
+    callback : CameraWidgetCallback
   end
 
   struct CameraFileHandler
-    size: (Void*, LibC::UInt64T* -> LibC::Int)
-    read: (Void*, LibC::UChar*, LibC::UInt64T* -> LibC::Int)
-    write: (Void*, LibC::UChar*, LibC::UInt64T* -> LibC::Int)
+    size : (Void*, LibC::UInt64T* -> LibC::Int)
+    read : (Void*, LibC::UChar*, LibC::UInt64T* -> LibC::Int)
+    write : (Void*, LibC::UChar*, LibC::UInt64T* -> LibC::Int)
   end
 
   struct CameraText
-    text: LibC::Char[32768] # 32 * 1024
+    text : LibC::Char[32768] # 32 * 1024
   end
 
   struct CameraFilePath
-    name: LibC::Char[128]
-    folder: LibC::Char[1024]
+    name : LibC::Char[128]
+    folder : LibC::Char[1024]
   end
 
   struct CameraFunctions
-    pre_func: CameraPrePostFunc
-    post_func: CameraPrePostFunc
-    exit: CameraExitFunc
-    get_config: CameraGetConfigFunc
-    set_config: CameraSetConfigFunc
-    list_config: CameraListConfigFunc
-    get_single_config: CameraGetSingleConfigFunc
-    set_single_config: CameraSetSingleConfigFunc
-    capture: CameraCaptureFunc
-    trigger_capture: CameraTriggerCaptureFunc
-    capture_preview: CameraCapturePreviewFunc
-    summary: CameraSummaryFunc
-    manual: CameraManualFunc
-    about: CameraAboutFunc
-    wait_for_event: CameraWaitForEvent
-    reserved1: Void*
-    reserved2: Void*
-    reserved3: Void*
-    reserved4: Void*
-    reserved5: Void*
-    reserved6: Void*
-    reserved7: Void*
-    reserved8: Void*
+    pre_func : CameraPrePostFunc
+    post_func : CameraPrePostFunc
+    exit : CameraExitFunc
+    get_config : CameraGetConfigFunc
+    set_config : CameraSetConfigFunc
+    list_config : CameraListConfigFunc
+    get_single_config : CameraGetSingleConfigFunc
+    set_single_config : CameraSetSingleConfigFunc
+    capture : CameraCaptureFunc
+    trigger_capture : CameraTriggerCaptureFunc
+    capture_preview : CameraCapturePreviewFunc
+    summary : CameraSummaryFunc
+    manual : CameraManualFunc
+    about : CameraAboutFunc
+    wait_for_event : CameraWaitForEvent
+    reserved1 : Void*
+    reserved2 : Void*
+    reserved3 : Void*
+    reserved4 : Void*
+    reserved5 : Void*
+    reserved6 : Void*
+    reserved7 : Void*
+    reserved8 : Void*
   end
 
   struct Camera
-    port: GPPort*
-    fs: Void*
-    functions: CameraFunctions*
-    pl: CameraPrivateLibrary*
-    pc: CameraPrivateCore*
+    port : GPPort*
+    fs : Void*
+    functions : CameraFunctions*
+    pl : CameraPrivateLibrary*
+    pc : CameraPrivateCore*
   end
 
   # gp_log_*
@@ -447,7 +447,7 @@ lib LibGPhoto2
   fun gp_log_remove_func(id : LibC::Int) : LibC::Int
 
   fun gp_log(level : GPLogLevel, domain : LibC::Char*, format : LibC::Char*, ...) : Void
-  fun gp_logv(level : GPLogLevel, domain : LibC::Char*, format : LibC::Char*, args: Void*) : Void
+  fun gp_logv(level : GPLogLevel, domain : LibC::Char*, format : LibC::Char*, args : Void*) : Void
 
   fun gp_log_with_source_location (level : GPLogLevel, file : LibC::Char*, line : LibC::Int, func : LibC::Char*, format : LibC::Char*, ...) : Void
   fun gp_log_data(domain : LibC::Char*, data : LibC::Char*, size : LibC::UInt, format : LibC::Char*, ...) : Void
