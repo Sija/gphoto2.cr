@@ -453,77 +453,77 @@ lib LibGPhoto2
   fun gp_log_data(domain : LibC::Char*, data : LibC::Char*, size : LibC::UInt, format : LibC::Char*, ...)
 
   # gp_setting_*
-  fun gp_setting_set(id : LibC::Char*, key : LibC::Char*, value : LibC::Char*) : Int16
-  fun gp_setting_get(id : LibC::Char*, key : LibC::Char*, value : LibC::Char*) : Int16
+  fun gp_setting_set(id : LibC::Char*, key : LibC::Char*, value : LibC::Char*) : LibC::Int
+  fun gp_setting_get(id : LibC::Char*, key : LibC::Char*, value : LibC::Char*) : LibC::Int
 
   # gp_port_*
-  fun gp_port_new(port : GPPort**) : Int16
-  fun gp_port_free(port : GPPort*) : Int16
+  fun gp_port_new(port : GPPort**) : LibC::Int
+  fun gp_port_free(port : GPPort*) : LibC::Int
 
-  fun gp_port_set_info(port : GPPort*, info : GPPortInfo) : Int16
-  fun gp_port_get_info(port : GPPort*, info : GPPortInfo*) : Int16
+  fun gp_port_set_info(port : GPPort*, info : GPPortInfo) : LibC::Int
+  fun gp_port_get_info(port : GPPort*, info : GPPortInfo*) : LibC::Int
 
-  fun gp_port_open(port : GPPort*) : Int16
-  fun gp_port_close(port : GPPort*) : Int16
-  fun gp_port_reset(port : GPPort*) : Int16
+  fun gp_port_open(port : GPPort*) : LibC::Int
+  fun gp_port_close(port : GPPort*) : LibC::Int
+  fun gp_port_reset(port : GPPort*) : LibC::Int
 
-  fun gp_port_write(port : GPPort*, data : LibC::Char*, size : Int16) : Int16
-  fun gp_port_read(port : GPPort*, data : LibC::Char*, size : Int16) : Int16
+  fun gp_port_write(port : GPPort*, data : LibC::Char*, size : LibC::Int) : LibC::Int
+  fun gp_port_read(port : GPPort*, data : LibC::Char*, size : LibC::Int) : LibC::Int
 
-  fun gp_port_check_int(port : GPPort*, data : LibC::Char*, size : Int16) : Int16
-  fun gp_port_check_int_fast(port : GPPort*, data : LibC::Char*, size : Int16) : Int16
+  fun gp_port_check_int(port : GPPort*, data : LibC::Char*, size : LibC::Int) : LibC::Int
+  fun gp_port_check_int_fast(port : GPPort*, data : LibC::Char*, size : LibC::Int) : LibC::Int
 
-  fun gp_port_get_timeout(port : GPPort*, timeout : Int16*) : Int16
-  fun gp_port_set_timeout(port : GPPort*, timeout : Int16) : Int16
+  fun gp_port_get_timeout(port : GPPort*, timeout : LibC::Int*) : LibC::Int
+  fun gp_port_set_timeout(port : GPPort*, timeout : LibC::Int) : LibC::Int
 
-  fun gp_port_set_settings(port : GPPort*, settings : GPPortSettings) : Int16
-  fun gp_port_get_settings(port : GPPort*, settings : GPPortSettings*) : Int16
+  fun gp_port_set_settings(port : GPPort*, settings : GPPortSettings) : LibC::Int
+  fun gp_port_get_settings(port : GPPort*, settings : GPPortSettings*) : LibC::Int
 
-  fun gp_port_get_pin(port : GPPort*, pin : GPPin, level : GPLevel*) : Int16
-  fun gp_port_set_pin(port : GPPort*, pin : GPPin, level : GPLevel) : Int16
+  fun gp_port_get_pin(port : GPPort*, pin : GPPin, level : GPLevel*) : LibC::Int
+  fun gp_port_set_pin(port : GPPort*, pin : GPPin, level : GPLevel) : LibC::Int
 
-  fun gp_port_send_break(port : GPPort*, duration : Int16) : Int16
-  fun gp_port_flush(port : GPPort*, direction : Int16) : Int16
+  fun gp_port_send_break(port : GPPort*, duration : LibC::Int) : LibC::Int
+  fun gp_port_flush(port : GPPort*, direction : LibC::Int) : LibC::Int
 
-  fun gp_port_usb_find_device(port : GPPort*, idvendor : Int16, idproduct : Int16) : Int16
-  fun gp_port_usb_find_device_by_class(port : GPPort*, mainclass : Int16, subclass : Int16, protocol : Int16) : Int16
-  fun gp_port_usb_clear_halt(port : GPPort*, ep : Int16) : Int16
-  fun gp_port_usb_msg_write(port : GPPort*, request : Int16, value : Int16, index : Int16, bytes : LibC::Char*, size : Int16) : Int16
-  fun gp_port_usb_msg_read(port : GPPort*, request : Int16, value : Int16, index : Int16, bytes : LibC::Char*, size : Int16) : Int16
-  fun gp_port_usb_msg_interface_write(port : GPPort*, request : Int16, value : Int16, index : Int16, bytes : LibC::Char*, size : Int16) : Int16
-  fun gp_port_usb_msg_interface_read(port : GPPort*, request : Int16, value : Int16, index : Int16, bytes : LibC::Char*, size : Int16) : Int16
-  fun gp_port_usb_msg_class_write(port : GPPort*, request : Int16, value : Int16, index : Int16, bytes : LibC::Char*, size : Int16) : Int16
-  fun gp_port_usb_msg_class_read(port : GPPort*, request : Int16, value : Int16, index : Int16, bytes : LibC::Char*, size : Int16) : Int16
+  fun gp_port_usb_find_device(port : GPPort*, idvendor : LibC::Int, idproduct : LibC::Int) : LibC::Int
+  fun gp_port_usb_find_device_by_class(port : GPPort*, mainclass : LibC::Int, subclass : LibC::Int, protocol : LibC::Int) : LibC::Int
+  fun gp_port_usb_clear_halt(port : GPPort*, ep : LibC::Int) : LibC::Int
+  fun gp_port_usb_msg_write(port : GPPort*, request : LibC::Int, value : LibC::Int, index : LibC::Int, bytes : LibC::Char*, size : LibC::Int) : LibC::Int
+  fun gp_port_usb_msg_read(port : GPPort*, request : LibC::Int, value : LibC::Int, index : LibC::Int, bytes : LibC::Char*, size : LibC::Int) : LibC::Int
+  fun gp_port_usb_msg_interface_write(port : GPPort*, request : LibC::Int, value : LibC::Int, index : LibC::Int, bytes : LibC::Char*, size : LibC::Int) : LibC::Int
+  fun gp_port_usb_msg_interface_read(port : GPPort*, request : LibC::Int, value : LibC::Int, index : LibC::Int, bytes : LibC::Char*, size : LibC::Int) : LibC::Int
+  fun gp_port_usb_msg_class_write(port : GPPort*, request : LibC::Int, value : LibC::Int, index : LibC::Int, bytes : LibC::Char*, size : LibC::Int) : LibC::Int
+  fun gp_port_usb_msg_class_read(port : GPPort*, request : LibC::Int, value : LibC::Int, index : LibC::Int, bytes : LibC::Char*, size : LibC::Int) : LibC::Int
 
-  fun gp_port_seek(port : GPPort*, offset : Int16, whence : Int16) : Int16
-  fun gp_port_send_scsi_cmd(port : GPPort*, to_dev : Int16, cmd : LibC::Char*, cmd_size : Int16, sense : LibC::Char*, sense_size : Int16, data : LibC::Char*, data_size : Int16) : Int16
+  fun gp_port_seek(port : GPPort*, offset : LibC::Int, whence : LibC::Int) : LibC::Int
+  fun gp_port_send_scsi_cmd(port : GPPort*, to_dev : LibC::Int, cmd : LibC::Char*, cmd_size : LibC::Int, sense : LibC::Char*, sense_size : LibC::Int, data : LibC::Char*, data_size : LibC::Int) : LibC::Int
 
-  fun gp_port_set_error(port : GPPort*, format : LibC::Char*) : Int16
+  fun gp_port_set_error(port : GPPort*, format : LibC::Char*) : LibC::Int
   fun gp_port_get_error(port : GPPort*) : LibC::Char*
 
-  fun gp_port_info_new(info : GPPortInfo*) : Int16
-  fun gp_port_info_get_name(info : GPPortInfo*, name : LibC::Char**) : Int16
-  fun gp_port_info_set_name(info : GPPortInfo*, name : LibC::Char*) : Int16
-  fun gp_port_info_get_path(info : GPPortInfo*, path : LibC::Char**) : Int16
-  fun gp_port_info_set_path(info : GPPortInfo*, path : LibC::Char*) : Int16
-  fun gp_port_info_get_type(info : GPPortInfo*, type : GPPortType*) : Int16
-  fun gp_port_info_set_type(info : GPPortInfo*, type : GPPortType) : Int16
+  fun gp_port_info_new(info : GPPortInfo*) : LibC::Int
+  fun gp_port_info_get_name(info : GPPortInfo*, name : LibC::Char**) : LibC::Int
+  fun gp_port_info_set_name(info : GPPortInfo*, name : LibC::Char*) : LibC::Int
+  fun gp_port_info_get_path(info : GPPortInfo*, path : LibC::Char**) : LibC::Int
+  fun gp_port_info_set_path(info : GPPortInfo*, path : LibC::Char*) : LibC::Int
+  fun gp_port_info_get_type(info : GPPortInfo*, type : GPPortType*) : LibC::Int
+  fun gp_port_info_set_type(info : GPPortInfo*, type : GPPortType) : LibC::Int
 
-  fun gp_port_info_get_library_filename(info : GPPortInfo*, lib : LibC::Char**) : Int16
-  fun gp_port_info_set_library_filename(info : GPPortInfo*, lib : LibC::Char*) : Int16
+  fun gp_port_info_get_library_filename(info : GPPortInfo*, lib : LibC::Char**) : LibC::Int
+  fun gp_port_info_set_library_filename(info : GPPortInfo*, lib : LibC::Char*) : LibC::Int
 
-  fun gp_port_info_list_new(list : GPPortInfoList**) : Int16
-  fun gp_port_info_list_free(list : GPPortInfoList*) : Int16
-  fun gp_port_info_list_append(list : GPPortInfoList*, info : GPPortInfo*) : Int16
-  fun gp_port_info_list_load(list : GPPortInfoList*) : Int16
-  fun gp_port_info_list_count(list : GPPortInfoList*) : Int16
-  fun gp_port_info_list_lookup_path(list : GPPortInfoList*, path : LibC::Char*) : Int16
-  fun gp_port_info_list_lookup_name(list : GPPortInfoList*, name : LibC::Char*) : Int16
-  fun gp_port_info_list_get_info(list : GPPortInfoList*, n : Int16, info : GPPortInfo*) : Int16
+  fun gp_port_info_list_new(list : GPPortInfoList**) : LibC::Int
+  fun gp_port_info_list_free(list : GPPortInfoList*) : LibC::Int
+  fun gp_port_info_list_append(list : GPPortInfoList*, info : GPPortInfo*) : LibC::Int
+  fun gp_port_info_list_load(list : GPPortInfoList*) : LibC::Int
+  fun gp_port_info_list_count(list : GPPortInfoList*) : LibC::Int
+  fun gp_port_info_list_lookup_path(list : GPPortInfoList*, path : LibC::Char*) : LibC::Int
+  fun gp_port_info_list_lookup_name(list : GPPortInfoList*, name : LibC::Char*) : LibC::Int
+  fun gp_port_info_list_get_info(list : GPPortInfoList*, n : LibC::Int, info : GPPortInfo*) : LibC::Int
 
   # --- other
   fun gp_port_message_codeset(codeset : LibC::Char*) : LibC::Char*
-  fun gp_port_result_as_string(result : Int16) : LibC::Char*
+  fun gp_port_result_as_string(result : LibC::Int) : LibC::Char*
   fun gp_port_library_version(verbose : GPVersionVerbosity) : LibC::Char**
 
   # gp_context_*
@@ -543,162 +543,162 @@ lib LibGPhoto2
   fun gp_context_message(context : GPContext*, format : UInt8*)
   fun gp_context_question(context : GPContext*, format : UInt8*) : GPContextFeedback
   fun gp_context_cancel(context : GPContext*) : GPContextFeedback
-  fun gp_context_progress_start(context : GPContext*, target : Float32, format : UInt8*) : UInt16
-  fun gp_context_progress_update(context : GPContext*, id : UInt16, current : Float32)
-  fun gp_context_progress_stop(context : GPContext*, id : UInt16)
+  fun gp_context_progress_start(context : GPContext*, target : LibC::Float, format : UInt8*) : LibC::UInt
+  fun gp_context_progress_update(context : GPContext*, id : LibC::UInt, current : LibC::Float)
+  fun gp_context_progress_stop(context : GPContext*, id : LibC::UInt)
 
     # gp_list_*
-  fun gp_list_new(list : Void**) : Int16
-  fun gp_list_ref(list : CameraList*) : Int16
-  fun gp_list_unref(list : CameraList*) : Int16
-  fun gp_list_free(list : CameraList*) : Int16
-  fun gp_list_count(list : CameraList*) : Int16
-  fun gp_list_append(list : CameraList*, name : UInt8*, value : UInt8*) : Int16
-  fun gp_list_reset(list : CameraList*) : Int16
-  fun gp_list_sort(list : CameraList*) : Int16
-  fun gp_list_find_by_name(list : CameraList*, index : Void*, name : UInt8*) : Int16
-  fun gp_list_get_name(list : CameraList*, index : Int16, name : Void**) : Int16
-  fun gp_list_get_value(list : CameraList*, index : Int16, value : Void**) : Int16
-  fun gp_list_set_name(list : CameraList*, index : Int16, name : UInt8*) : Int16
-  fun gp_list_set_value(list : CameraList*, index : Int16, value : UInt8*) : Int16
-  fun gp_list_populate(list : CameraList*, format : UInt8*, count : Int16) : Int16
+  fun gp_list_new(list : Void**) : LibC::Int
+  fun gp_list_ref(list : CameraList*) : LibC::Int
+  fun gp_list_unref(list : CameraList*) : LibC::Int
+  fun gp_list_free(list : CameraList*) : LibC::Int
+  fun gp_list_count(list : CameraList*) : LibC::Int
+  fun gp_list_append(list : CameraList*, name : UInt8*, value : UInt8*) : LibC::Int
+  fun gp_list_reset(list : CameraList*) : LibC::Int
+  fun gp_list_sort(list : CameraList*) : LibC::Int
+  fun gp_list_find_by_name(list : CameraList*, index : Void*, name : UInt8*) : LibC::Int
+  fun gp_list_get_name(list : CameraList*, index : LibC::Int, name : Void**) : LibC::Int
+  fun gp_list_get_value(list : CameraList*, index : LibC::Int, value : Void**) : LibC::Int
+  fun gp_list_set_name(list : CameraList*, index : LibC::Int, name : UInt8*) : LibC::Int
+  fun gp_list_set_value(list : CameraList*, index : LibC::Int, value : UInt8*) : LibC::Int
+  fun gp_list_populate(list : CameraList*, format : UInt8*, count : LibC::Int) : LibC::Int
 
   # gp_abilities_list_*
-  fun gp_abilities_list_new(list : Void**) : Int16
-  fun gp_abilities_list_free(list : CameraAbilitiesList*) : Int16
-  fun gp_abilities_list_load(list : CameraAbilitiesList*, context : GPContext*) : Int16
-  fun gp_abilities_list_load_dir(list : CameraAbilitiesList*, dir : UInt8*, context : GPContext*) : Int16
-  fun gp_abilities_list_reset(list : CameraAbilitiesList*) : Int16
-  fun gp_abilities_list_detect(list : CameraAbilitiesList*, info_list : Void*, l : CameraList*, context : GPContext*) : Int16
-  fun gp_abilities_list_append(list : CameraAbilitiesList*, abilities : CameraAbilities) : Int16
-  fun gp_abilities_list_count(list : CameraAbilitiesList*) : Int16
-  fun gp_abilities_list_lookup_model(list : CameraAbilitiesList*, model : UInt8*) : Int16
-  fun gp_abilities_list_get_abilities(list : CameraAbilitiesList*, index : Int16, abilities : CameraAbilities*) : Int16
+  fun gp_abilities_list_new(list : Void**) : LibC::Int
+  fun gp_abilities_list_free(list : CameraAbilitiesList*) : LibC::Int
+  fun gp_abilities_list_load(list : CameraAbilitiesList*, context : GPContext*) : LibC::Int
+  fun gp_abilities_list_load_dir(list : CameraAbilitiesList*, dir : UInt8*, context : GPContext*) : LibC::Int
+  fun gp_abilities_list_reset(list : CameraAbilitiesList*) : LibC::Int
+  fun gp_abilities_list_detect(list : CameraAbilitiesList*, info_list : Void*, l : CameraList*, context : GPContext*) : LibC::Int
+  fun gp_abilities_list_append(list : CameraAbilitiesList*, abilities : CameraAbilities) : LibC::Int
+  fun gp_abilities_list_count(list : CameraAbilitiesList*) : LibC::Int
+  fun gp_abilities_list_lookup_model(list : CameraAbilitiesList*, model : UInt8*) : LibC::Int
+  fun gp_abilities_list_get_abilities(list : CameraAbilitiesList*, index : LibC::Int, abilities : CameraAbilities*) : LibC::Int
 
   # gp_widget_*
-  fun gp_widget_new(type : CameraWidgetType, label : UInt8*, widget : Void**) : Int16
-  fun gp_widget_free(widget : CameraWidget*) : Int16
-  fun gp_widget_ref(widget : CameraWidget*) : Int16
-  fun gp_widget_unref(widget : CameraWidget*) : Int16
-  fun gp_widget_changed(widget : CameraWidget*) : Int16
+  fun gp_widget_new(type : CameraWidgetType, label : UInt8*, widget : Void**) : LibC::Int
+  fun gp_widget_free(widget : CameraWidget*) : LibC::Int
+  fun gp_widget_ref(widget : CameraWidget*) : LibC::Int
+  fun gp_widget_unref(widget : CameraWidget*) : LibC::Int
+  fun gp_widget_changed(widget : CameraWidget*) : LibC::Int
 
-  fun gp_widget_append(widget : CameraWidget*, child : CameraWidget*) : Int16
-  fun gp_widget_prepend(widget : CameraWidget*, child : CameraWidget*) : Int16
-  fun gp_widget_count_children(widget : CameraWidget*) : Int16
+  fun gp_widget_append(widget : CameraWidget*, child : CameraWidget*) : LibC::Int
+  fun gp_widget_prepend(widget : CameraWidget*, child : CameraWidget*) : LibC::Int
+  fun gp_widget_count_children(widget : CameraWidget*) : LibC::Int
 
-  fun gp_widget_get_child(widget : CameraWidget*, child_number : Int16, child : Void**) : Int16
-  fun gp_widget_get_child_by_label(widget : CameraWidget*, label : UInt8*, child : Void**) : Int16
-  fun gp_widget_get_child_by_id(widget : CameraWidget*, id : Int16, child : Void**) : Int16
-  fun gp_widget_get_child_by_name(widget : CameraWidget*, name : UInt8*, child : Void**) : Int16
+  fun gp_widget_get_child(widget : CameraWidget*, child_number : LibC::Int, child : Void**) : LibC::Int
+  fun gp_widget_get_child_by_label(widget : CameraWidget*, label : UInt8*, child : Void**) : LibC::Int
+  fun gp_widget_get_child_by_id(widget : CameraWidget*, id : LibC::Int, child : Void**) : LibC::Int
+  fun gp_widget_get_child_by_name(widget : CameraWidget*, name : UInt8*, child : Void**) : LibC::Int
 
-  fun gp_widget_get_root(widget : CameraWidget*, root : Void**) : Int16
-  fun gp_widget_get_parent(widget : CameraWidget*, parent : Void**) : Int16
+  fun gp_widget_get_root(widget : CameraWidget*, root : Void**) : LibC::Int
+  fun gp_widget_get_parent(widget : CameraWidget*, parent : Void**) : LibC::Int
 
-  fun gp_widget_set_value(widget : CameraWidget*, value : Void*) : Int16
-  fun gp_widget_get_value(widget : CameraWidget*, value : Void*) : Int16
+  fun gp_widget_set_value(widget : CameraWidget*, value : Void*) : LibC::Int
+  fun gp_widget_get_value(widget : CameraWidget*, value : Void*) : LibC::Int
 
-  fun gp_widget_set_name(widget : CameraWidget*, name : UInt8*) : Int16
-  fun gp_widget_get_name(widget : CameraWidget*, name : Void**) : Int16
+  fun gp_widget_set_name(widget : CameraWidget*, name : UInt8*) : LibC::Int
+  fun gp_widget_get_name(widget : CameraWidget*, name : Void**) : LibC::Int
 
-  fun gp_widget_set_info(widget : CameraWidget*, info : UInt8*) : Int16
-  fun gp_widget_get_info(widget : CameraWidget*, info : Void**) : Int16
+  fun gp_widget_set_info(widget : CameraWidget*, info : UInt8*) : LibC::Int
+  fun gp_widget_get_info(widget : CameraWidget*, info : Void**) : LibC::Int
 
-  fun gp_widget_get_id(widget : CameraWidget*, id : Void*) : Int16
-  fun gp_widget_get_type(widget : CameraWidget*, type : Void*) : Int16
-  fun gp_widget_get_label(widget : CameraWidget*, label : Void**) : Int16
+  fun gp_widget_get_id(widget : CameraWidget*, id : Void*) : LibC::Int
+  fun gp_widget_get_type(widget : CameraWidget*, type : Void*) : LibC::Int
+  fun gp_widget_get_label(widget : CameraWidget*, label : Void**) : LibC::Int
 
-  fun gp_widget_set_range(range : CameraWidget*, low : Float32, high : Float32, increment : Float32) : Int16
-  fun gp_widget_get_range(range : CameraWidget*, min : Void*, max : Void*, increment : Void*) : Int16
+  fun gp_widget_set_range(range : CameraWidget*, low : LibC::Float, high : LibC::Float, increment : LibC::Float) : LibC::Int
+  fun gp_widget_get_range(range : CameraWidget*, min : Void*, max : Void*, increment : Void*) : LibC::Int
 
-  fun gp_widget_add_choice(widget : CameraWidget*, choice : UInt8*) : Int16
-  fun gp_widget_get_choice(widget : CameraWidget*, choice_number : Int16, choice : Void**) : Int16
-  fun gp_widget_count_choices(widget : CameraWidget*) : Int16
+  fun gp_widget_add_choice(widget : CameraWidget*, choice : UInt8*) : LibC::Int
+  fun gp_widget_get_choice(widget : CameraWidget*, choice_number : LibC::Int, choice : Void**) : LibC::Int
+  fun gp_widget_count_choices(widget : CameraWidget*) : LibC::Int
 
-  fun gp_widget_set_changed(widget : CameraWidget*, changed : Int16) : Int16
-  fun gp_widget_set_readonly(widget : CameraWidget*, readonly : Int16) : Int16
-  fun gp_widget_get_readonly(widget : CameraWidget*, readonly : Void*) : Int16
+  fun gp_widget_set_changed(widget : CameraWidget*, changed : LibC::Int) : LibC::Int
+  fun gp_widget_set_readonly(widget : CameraWidget*, readonly : LibC::Int) : LibC::Int
+  fun gp_widget_get_readonly(widget : CameraWidget*, readonly : Void*) : LibC::Int
 
   # gp_file_*
-  fun gp_file_new(file : Void**) : Int16
-  fun gp_file_new_from_fd(file : Void**, fd : Int16) : Int16
-  fun gp_file_new_from_handler(file : Void**, handler : CameraFileHandler*, priv : Void*) : Int16
-  fun gp_file_ref(file : CameraFile*) : Int16
-  fun gp_file_unref(file : CameraFile*) : Int16
-  fun gp_file_free(file : CameraFile*) : Int16
+  fun gp_file_new(file : Void**) : LibC::Int
+  fun gp_file_new_from_fd(file : Void**, fd : LibC::Int) : LibC::Int
+  fun gp_file_new_from_handler(file : Void**, handler : CameraFileHandler*, priv : Void*) : LibC::Int
+  fun gp_file_ref(file : CameraFile*) : LibC::Int
+  fun gp_file_unref(file : CameraFile*) : LibC::Int
+  fun gp_file_free(file : CameraFile*) : LibC::Int
 
-  fun gp_file_set_name(file : CameraFile*, name : UInt8*) : Int16
-  fun gp_file_get_name(file : CameraFile*, name : Void**) : Int16
+  fun gp_file_set_name(file : CameraFile*, name : UInt8*) : LibC::Int
+  fun gp_file_get_name(file : CameraFile*, name : Void**) : LibC::Int
 
-  fun gp_file_detect_mime_type(file : CameraFile*) : Int16
-  fun gp_file_adjust_name_for_mime_type(file : CameraFile*) : Int16
+  fun gp_file_detect_mime_type(file : CameraFile*) : LibC::Int
+  fun gp_file_adjust_name_for_mime_type(file : CameraFile*) : LibC::Int
 
-  fun gp_file_set_mime_type(file : CameraFile*, mime_type : UInt8*) : Int16
-  fun gp_file_get_mime_type(file : CameraFile*, mime_type : Void**) : Int16
+  fun gp_file_set_mime_type(file : CameraFile*, mime_type : UInt8*) : LibC::Int
+  fun gp_file_get_mime_type(file : CameraFile*, mime_type : Void**) : LibC::Int
 
-  fun gp_file_set_mtime(file : CameraFile*, mtime : Int32) : Int16
-  fun gp_file_get_mtime(file : CameraFile*, mtime : Void*) : Int16
+  fun gp_file_set_mtime(file : CameraFile*, mtime : Int32) : LibC::Int
+  fun gp_file_get_mtime(file : CameraFile*, mtime : Void*) : LibC::Int
 
-  fun gp_file_set_data_and_size(camerafile : CameraFile*, data : UInt8*, size : UInt32) : Int16
-  fun gp_file_get_data_and_size(camerafile : CameraFile*, data : Void**, size : Void*) : Int16
+  fun gp_file_set_data_and_size(camerafile : CameraFile*, data : UInt8*, size : UInt32) : LibC::Int
+  fun gp_file_get_data_and_size(camerafile : CameraFile*, data : Void**, size : Void*) : LibC::Int
 
-  fun gp_file_get_name_by_type(file : CameraFile*, basename : UInt8*, type : CameraFileType, newname : Void**) : Int16
-  fun gp_file_open(file : CameraFile*, filename : UInt8*) : Int16
-  fun gp_file_save(file : CameraFile*, filename : UInt8*) : Int16
-  fun gp_file_clean(file : CameraFile*) : Int16
-  fun gp_file_copy(destination : CameraFile*, source : CameraFile*) : Int16
-  fun gp_file_append(camerafile : CameraFile*, data : UInt8*, size : UInt32) : Int16
-  fun gp_file_slurp(camerafile : CameraFile*, data : UInt8*, size : UInt32, readlen : Void*) : Int16
+  fun gp_file_get_name_by_type(file : CameraFile*, basename : UInt8*, type : CameraFileType, newname : Void**) : LibC::Int
+  fun gp_file_open(file : CameraFile*, filename : UInt8*) : LibC::Int
+  fun gp_file_save(file : CameraFile*, filename : UInt8*) : LibC::Int
+  fun gp_file_clean(file : CameraFile*) : LibC::Int
+  fun gp_file_copy(destination : CameraFile*, source : CameraFile*) : LibC::Int
+  fun gp_file_append(camerafile : CameraFile*, data : UInt8*, size : UInt32) : LibC::Int
+  fun gp_file_slurp(camerafile : CameraFile*, data : UInt8*, size : UInt32, readlen : Void*) : LibC::Int
 
   # gp_camera_*
-  fun gp_camera_autodetect(list : CameraList*, context : GPContext*) : Int16
-  fun gp_camera_get_storageinfo(camera : Camera*, void : Void**, void : Void*, context : GPContext*) : Int16
-  fun gp_camera_new(camera : Camera**) : Int16
-  fun gp_camera_init(camera : Camera*, context : GPContext*) : Int16
-  fun gp_camera_exit(camera : Camera*, context : GPContext*) : Int16
-  fun gp_camera_ref(camera : Camera*) : Int16
-  fun gp_camera_unref(camera : Camera*) : Int16
-  fun gp_camera_free(camera : Camera*) : Int16
+  fun gp_camera_autodetect(list : CameraList*, context : GPContext*) : LibC::Int
+  fun gp_camera_get_storageinfo(camera : Camera*, void : Void**, void : Void*, context : GPContext*) : LibC::Int
+  fun gp_camera_new(camera : Camera**) : LibC::Int
+  fun gp_camera_init(camera : Camera*, context : GPContext*) : LibC::Int
+  fun gp_camera_exit(camera : Camera*, context : GPContext*) : LibC::Int
+  fun gp_camera_ref(camera : Camera*) : LibC::Int
+  fun gp_camera_unref(camera : Camera*) : LibC::Int
+  fun gp_camera_free(camera : Camera*) : LibC::Int
 
-  fun gp_camera_get_summary(camera : Camera*, summary : CameraText*, context : GPContext*) : Int16
-  fun gp_camera_get_manual(camera : Camera*, manual : CameraText*, context : GPContext*) : Int16
-  fun gp_camera_get_about(camera : Camera*, about : CameraText*, context : GPContext*) : Int16
+  fun gp_camera_get_summary(camera : Camera*, summary : CameraText*, context : GPContext*) : LibC::Int
+  fun gp_camera_get_manual(camera : Camera*, manual : CameraText*, context : GPContext*) : LibC::Int
+  fun gp_camera_get_about(camera : Camera*, about : CameraText*, context : GPContext*) : LibC::Int
 
-  fun gp_camera_set_abilities(camera : Camera*, abilities : CameraAbilities) : Int16
-  fun gp_camera_get_abilities(camera : Camera*, abilities : CameraAbilities*) : Int16
+  fun gp_camera_set_abilities(camera : Camera*, abilities : CameraAbilities) : LibC::Int
+  fun gp_camera_get_abilities(camera : Camera*, abilities : CameraAbilities*) : LibC::Int
 
-  fun gp_camera_set_port_info(camera : Camera*, info : Void*) : Int16
-  fun gp_camera_get_port_info(camera : Camera*, info : Void*) : Int16
+  fun gp_camera_set_port_info(camera : Camera*, info : Void*) : LibC::Int
+  fun gp_camera_get_port_info(camera : Camera*, info : Void*) : LibC::Int
 
-  fun gp_camera_set_port_speed(camera : Camera*, speed : Int16) : Int16
-  fun gp_camera_get_port_speed(camera : Camera*) : Int16
+  fun gp_camera_set_port_speed(camera : Camera*, speed : LibC::Int) : LibC::Int
+  fun gp_camera_get_port_speed(camera : Camera*) : LibC::Int
 
-  fun gp_camera_capture(camera : Camera*, type : CameraCaptureType, path : CameraFilePath*, context : GPContext*) : Int16
-  fun gp_camera_capture_preview(camera : Camera*, file : CameraFile*, context : GPContext*) : Int16
-  fun gp_camera_trigger_capture(camera : Camera*, context : GPContext*) : Int16
-  fun gp_camera_wait_for_event(camera : Camera*, timeout : Int16, eventtype : Void*, eventdata : Void**, context : GPContext*) : Int16
+  fun gp_camera_capture(camera : Camera*, type : CameraCaptureType, path : CameraFilePath*, context : GPContext*) : LibC::Int
+  fun gp_camera_capture_preview(camera : Camera*, file : CameraFile*, context : GPContext*) : LibC::Int
+  fun gp_camera_trigger_capture(camera : Camera*, context : GPContext*) : LibC::Int
+  fun gp_camera_wait_for_event(camera : Camera*, timeout : LibC::Int, eventtype : Void*, eventdata : Void**, context : GPContext*) : LibC::Int
 
-  fun gp_camera_list_config(camera : Camera*, list : CameraList*, context : GPContext*) : Int16
-  fun gp_camera_set_config(camera : Camera*, window : CameraWidget*, context : GPContext*) : Int16
-  fun gp_camera_get_config(camera : Camera*, window : Void**, context : GPContext*) : Int16
-  fun gp_camera_set_single_config(camera : Camera*, name : UInt8*, widget : CameraWidget*, context : GPContext*) : Int16
-  fun gp_camera_get_single_config(camera : Camera*, name : UInt8*, widget : Void**, context : GPContext*) : Int16
+  fun gp_camera_list_config(camera : Camera*, list : CameraList*, context : GPContext*) : LibC::Int
+  fun gp_camera_set_config(camera : Camera*, window : CameraWidget*, context : GPContext*) : LibC::Int
+  fun gp_camera_get_config(camera : Camera*, window : Void**, context : GPContext*) : LibC::Int
+  fun gp_camera_set_single_config(camera : Camera*, name : UInt8*, widget : CameraWidget*, context : GPContext*) : LibC::Int
+  fun gp_camera_get_single_config(camera : Camera*, name : UInt8*, widget : Void**, context : GPContext*) : LibC::Int
 
-  fun gp_camera_folder_list_files(camera : Camera*, folder : UInt8*, list : CameraList*, context : GPContext*) : Int16
-  fun gp_camera_folder_list_folders(camera : Camera*, folder : UInt8*, list : CameraList*, context : GPContext*) : Int16
-  fun gp_camera_folder_delete_all(camera : Camera*, folder : UInt8*, context : GPContext*) : Int16
-  fun gp_camera_folder_put_file(camera : Camera*, folder : UInt8*, filename : UInt8*, type : CameraFileType, file : CameraFile*, context : GPContext*) : Int16
-  fun gp_camera_folder_make_dir(camera : Camera*, folder : UInt8*, name : UInt8*, context : GPContext*) : Int16
-  fun gp_camera_folder_remove_dir(camera : Camera*, folder : UInt8*, name : UInt8*, context : GPContext*) : Int16
+  fun gp_camera_folder_list_files(camera : Camera*, folder : UInt8*, list : CameraList*, context : GPContext*) : LibC::Int
+  fun gp_camera_folder_list_folders(camera : Camera*, folder : UInt8*, list : CameraList*, context : GPContext*) : LibC::Int
+  fun gp_camera_folder_delete_all(camera : Camera*, folder : UInt8*, context : GPContext*) : LibC::Int
+  fun gp_camera_folder_put_file(camera : Camera*, folder : UInt8*, filename : UInt8*, type : CameraFileType, file : CameraFile*, context : GPContext*) : LibC::Int
+  fun gp_camera_folder_make_dir(camera : Camera*, folder : UInt8*, name : UInt8*, context : GPContext*) : LibC::Int
+  fun gp_camera_folder_remove_dir(camera : Camera*, folder : UInt8*, name : UInt8*, context : GPContext*) : LibC::Int
 
-  fun gp_camera_file_get_info(camera : Camera*, folder : UInt8*, file : UInt8*, info : Void*, context : GPContext*) : Int16
-  fun gp_camera_file_set_info(camera : Camera*, folder : UInt8*, file : UInt8*, info : Int32, context : GPContext*) : Int16
-  fun gp_camera_file_get(camera : Camera*, folder : UInt8*, file : UInt8*, type : CameraFileType, camera_file : CameraFile*, context : GPContext*) : Int16
-  fun gp_camera_file_read(camera : Camera*, folder : UInt8*, file : UInt8*, type : CameraFileType, offset : UInt64, buf : UInt8*, size : Void*, context : GPContext*) : Int16
-  fun gp_camera_file_delete(camera : Camera*, folder : UInt8*, file : UInt8*, context : GPContext*) : Int16
+  fun gp_camera_file_get_info(camera : Camera*, folder : UInt8*, file : UInt8*, info : Void*, context : GPContext*) : LibC::Int
+  fun gp_camera_file_set_info(camera : Camera*, folder : UInt8*, file : UInt8*, info : Int32, context : GPContext*) : LibC::Int
+  fun gp_camera_file_get(camera : Camera*, folder : UInt8*, file : UInt8*, type : CameraFileType, camera_file : CameraFile*, context : GPContext*) : LibC::Int
+  fun gp_camera_file_read(camera : Camera*, folder : UInt8*, file : UInt8*, type : CameraFileType, offset : UInt64, buf : UInt8*, size : Void*, context : GPContext*) : LibC::Int
+  fun gp_camera_file_delete(camera : Camera*, folder : UInt8*, file : UInt8*, context : GPContext*) : LibC::Int
 
   fun gp_camera_set_timeout_funcs(camera : Camera*, start_func : Void*, stop_func : Void*, data : Void*)
-  fun gp_camera_start_timeout(camera : Camera*, timeout : UInt16, func : Void*) : Int16
-  fun gp_camera_stop_timeout(camera : Camera*, id : UInt16)
+  fun gp_camera_start_timeout(camera : Camera*, timeout : LibC::UInt, func : Void*) : LibC::Int
+  fun gp_camera_stop_timeout(camera : Camera*, id : LibC::UInt)
 
   # --- other
   fun gp_result_as_string(result : LibC::Int) : LibC::Char*
