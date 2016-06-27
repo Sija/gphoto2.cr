@@ -1,5 +1,4 @@
 require "./gphoto2/*"
 
-module Gphoto2
-  # TODO Put your code here
+module GPhoto2
 end
