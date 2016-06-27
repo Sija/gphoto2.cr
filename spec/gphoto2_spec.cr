@@ -4,9 +4,14 @@ describe GPhoto2 do
   describe ".result_as_string" do
     it "converts return code to proper string" do
       codez = {
-        -107 => "Directory not found",
-        -37  => "Error updating the port settings",
-        -7   => "I/O problem"
+        # libgphoto2
+        GPhoto2::FFI::LibGPhoto2::GP_ERROR_IO         => "I/O problem",
+        GPhoto2::FFI::LibGPhoto2::GP_ERROR_IO_LOCK    => "Could not lock the device",
+        GPhoto2::FFI::LibGPhoto2::GP_ERROR_NO_MEMORY  => "Out of memory",
+        # libgphoto2_port
+        GPhoto2::FFI::LibGPhoto2::GP_ERROR_DIRECTORY_NOT_FOUND  => "Directory not found",
+        GPhoto2::FFI::LibGPhoto2::GP_ERROR_CAMERA_BUSY          => "I/O in progress",
+        GPhoto2::FFI::LibGPhoto2::GP_ERROR_NO_SPACE             => "Not enough free space"
       }
       codez.each do |code, string|
         GPhoto2.result_as_string(code).should eq(string)
