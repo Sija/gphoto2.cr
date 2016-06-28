@@ -18,8 +18,30 @@ module GPhoto2
     end
   end
 
+  macro with_logger(*args, backtrace_offset = 1, &block)
+    if ENV["DEBUG"]?
+      caller_list = caller.dup
+      while !caller_list.empty? && caller_list.first? !~ /caller:Array\(String\)/i
+        caller_list.shift?
+      end
+      caller_list.shift {{backtrace_offset}}
+      unless caller_list.empty?
+        str = String.build do |str|
+          str << caller_list.first
+          {% if !args.empty? %}
+            str << " -- " << "{{args}} = " << {{args}}
+          {% end %}
+        end
+        logger.debug str
+      end
+    end
+    {{block.body}}
+  end
+
   def self.check!(rc : Int32)
-    return if rc >= FFI::LibGPhoto2::GP_OK
-    raise Error.new(result_as_string(rc), rc)
+    with_logger(rc, backtrace_offset: 2) do
+      return rc if rc >= FFI::LibGPhoto2::GP_OK
+      raise Error.new(result_as_string(rc), rc)
+    end
   end
 end
