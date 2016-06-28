@@ -10,7 +10,7 @@ module GPhoto2
     String.new FFI::LibGPhoto2.gp_result_as_string(rc)
   end
 
-  def self.logger
+  def self.logger : Logger
     @@logger ||= begin
       logger = Logger.new(STDERR)
       logger.level = Logger::DEBUG if ENV["DEBUG"]?
@@ -38,7 +38,7 @@ module GPhoto2
     {{block.body}}
   end
 
-  def self.check!(rc : Int32)
+  def self.check!(rc : Int32) : Int32
     with_logger(rc, backtrace_offset: 2) do
       return rc if rc >= FFI::LibGPhoto2::GP_OK
       raise Error.new(result_as_string(rc), rc)

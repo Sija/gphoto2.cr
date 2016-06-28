@@ -1,8 +1,9 @@
 module GPhoto2
   class Error < Exception
+    @code : Int32
     getter :code
 
-    def initialize(message, @code : Int32)
+    def initialize(message, @code)
       super(message)
     end
 
