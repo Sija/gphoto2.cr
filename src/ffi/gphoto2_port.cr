@@ -15,16 +15,6 @@ module GPhoto2
       # Enums
       #
 
-      @[Flags]
-      enum GPPortType
-        Serial
-        USB = (1 << 2)
-        Disk
-        PTPIP
-        USBDiskDirect
-        USBSCSI
-      end
-
       enum GPPortSerialParity
         Off
         Even
@@ -60,19 +50,6 @@ module GPhoto2
       #
       # Structs
       #
-
-      struct GPPortInfo
-        type : GPPortType
-        name : LibC::Char*
-        path : LibC::Char*
-        library_filename : LibC::Char*
-      end
-
-      struct GPPortInfoList
-        info : GPPortInfo*
-        count : LibC::UInt
-        iolib_count : LibC::UInt
-      end
 
       struct GPPortSettingsSerial
         port : LibC::Char[128]
@@ -164,26 +141,6 @@ module GPhoto2
 
       fun gp_port_set_error(port : GPPort*, format : LibC::Char*) : LibC::Int
       fun gp_port_get_error(port : GPPort*) : LibC::Char*
-
-      fun gp_port_info_new(info : GPPortInfo*) : LibC::Int
-      fun gp_port_info_get_name(info : GPPortInfo*, name : LibC::Char**) : LibC::Int
-      fun gp_port_info_set_name(info : GPPortInfo*, name : LibC::Char*) : LibC::Int
-      fun gp_port_info_get_path(info : GPPortInfo*, path : LibC::Char**) : LibC::Int
-      fun gp_port_info_set_path(info : GPPortInfo*, path : LibC::Char*) : LibC::Int
-      fun gp_port_info_get_type(info : GPPortInfo*, type : GPPortType*) : LibC::Int
-      fun gp_port_info_set_type(info : GPPortInfo*, type : GPPortType) : LibC::Int
-
-      fun gp_port_info_get_library_filename(info : GPPortInfo*, lib : LibC::Char**) : LibC::Int
-      fun gp_port_info_set_library_filename(info : GPPortInfo*, lib : LibC::Char*) : LibC::Int
-
-      fun gp_port_info_list_new(list : GPPortInfoList**) : LibC::Int
-      fun gp_port_info_list_free(list : GPPortInfoList*) : LibC::Int
-      fun gp_port_info_list_append(list : GPPortInfoList*, info : GPPortInfo*) : LibC::Int
-      fun gp_port_info_list_load(list : GPPortInfoList*) : LibC::Int
-      fun gp_port_info_list_count(list : GPPortInfoList*) : LibC::Int
-      fun gp_port_info_list_lookup_path(list : GPPortInfoList*, path : LibC::Char*) : LibC::Int
-      fun gp_port_info_list_lookup_name(list : GPPortInfoList*, name : LibC::Char*) : LibC::Int
-      fun gp_port_info_list_get_info(list : GPPortInfoList*, n : LibC::Int, info : GPPortInfo*) : LibC::Int
 
       fun gp_port_message_codeset(codeset : LibC::Char*) : LibC::Char*
       fun gp_port_result_as_string(result : LibC::Int) : LibC::Char*
