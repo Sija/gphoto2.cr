@@ -174,8 +174,8 @@ module GPhoto2
       fun gp_camera_set_abilities(camera : Camera*, abilities : CameraAbilities) : LibC::Int
       fun gp_camera_get_abilities(camera : Camera*, abilities : CameraAbilities*) : LibC::Int
 
-      fun gp_camera_set_port_info(camera : Camera*, info : LibGPhoto2Port::GPPortInfo) : LibC::Int
-      fun gp_camera_get_port_info(camera : Camera*, info : LibGPhoto2Port::GPPortInfo*) : LibC::Int
+      fun gp_camera_set_port_info(camera : Camera*, info : LibGPhoto2Port::GPPortInfo*) : LibC::Int
+      fun gp_camera_get_port_info(camera : Camera*, info : LibGPhoto2Port::GPPortInfo**) : LibC::Int
 
       fun gp_camera_set_port_speed(camera : Camera*, speed : LibC::Int) : LibC::Int
       fun gp_camera_get_port_speed(camera : Camera*) : LibC::Int
