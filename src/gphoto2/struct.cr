@@ -1,10 +1,29 @@
 module GPhoto2
   module Struct(T)
     @ptr : T*?
-    getter :ptr
 
-    def to_unsafe : T*?
+    def initialize(@ptr : T*); end
+
+    def to_unsafe : T*
+      # GPhoto2.log ptr, backtrace_offset: 2
       ptr
+    end
+
+    def wrapped : T
+      ptr.value
+    end
+
+    def ptr? : T*?
+      @ptr
+    end
+
+    def ptr : T*
+      @ptr ||= Pointer(T).null
+    end
+
+    protected def ptr=(ptr) : T*?
+      # GPhoto2.log ptr, backtrace_offset: 2
+      @ptr = ptr
     end
   end
 end

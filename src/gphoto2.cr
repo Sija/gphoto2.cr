@@ -1,4 +1,5 @@
 require "logger"
+require "colorize"
 
 require "./ffi/*"
 require "./gphoto2/*"
@@ -6,42 +7,83 @@ require "./gphoto2/*"
 module GPhoto2
   @@logger : Logger?
 
-  def self.result_as_string(rc : Int32)
-    String.new FFI::LibGPhoto2.gp_result_as_string(rc)
-  end
-
   def self.logger : Logger
     @@logger ||= begin
+      severity_colors = {
+        "UNKNOWN" => :dark_gray,
+        "ERROR"   => :ligh_red,
+        "WARN"    => :red,
+        "INFO"    => :blue,
+        "DEBUG"   => :green,
+        "FATAL"   => :cyan
+      }
       logger = Logger.new(STDERR)
-      logger.level = Logger::DEBUG if ENV["DEBUG"]?
+      logger.formatter = Logger::Formatter.new do |severity, datetime, progname, message, io|
+        io << severity.rjust(5).colorize(severity_colors[severity]? || :green)
+        io << " [" << progname.colorize(:cyan) << "]" unless progname.empty?
+        io << " -- " << message
+      end
+      logger.level = Logger::DEBUG if debug?
       logger
     end
   end
 
-  macro with_logger(*args, backtrace_offset = 1, &block)
-    if ENV["DEBUG"]?
-      caller_list = caller.dup
-      while !caller_list.empty? && caller_list.first? !~ /caller:Array\(String\)/i
-        caller_list.shift?
+  gp_logger = ->(level : FFI::LibGPhoto2::GPLogLevel, domain : LibC::Char*, str : LibC::Char*, data : Void*) {
+    severities = {
+      FFI::LibGPhoto2::GPLogLevel::Error   => Logger::Severity::ERROR,
+      FFI::LibGPhoto2::GPLogLevel::Verbose => Logger::Severity::INFO,
+      FFI::LibGPhoto2::GPLogLevel::Debug   => Logger::Severity::DEBUG
+    }
+    logger.log severities[level], String.new(str), "libgphoto2"
+  }
+  if debug?
+    gp_log_level = FFI::LibGPhoto2::GPLogLevel.parse ENV["LIB_LOG_LEVEL"]? || "debug"
+    FFI::LibGPhoto2.gp_log_add_func gp_log_level, gp_logger, nil
+  end
+
+  macro log(*args, severity = Logger::Severity::DEBUG, backtrace_offset = 1)
+    if GPhoto2.debug?
+      %caller_list = caller.dup
+      while !%caller_list.empty? && %caller_list.first? !~ /caller:Array\(String\)/i
+        %caller_list.shift?
       end
-      caller_list.shift {{backtrace_offset}}
-      unless caller_list.empty?
+      %caller_list.shift {{backtrace_offset}}
+      unless %caller_list.empty?
         str = String.build do |str|
-          str << caller_list.first
+          {% if backtrace_offset > 1 %}
+            str << %caller_list.first.colorize(:dark_gray)
+          {% end %}
           {% if !args.empty? %}
-            str << " -- " << "{{args}} = " << {{args}}
+            {% if backtrace_offset > 1 %}
+              str << " -- "
+            {% end %}
+            str << "{{args}} = ".colorize(:light_gray) << {{args}}
           {% end %}
         end
-        logger.debug str
+        GPhoto2.logger.log {{severity.id}}, str, "gphoto2.cr"
       end
     end
-    {{block.body}}
+  end
+
+  def self.debug?
+    ENV["DEBUG"]? == "1"
+  end
+
+  def self.result_as_string(rc : Int32)
+    String.new FFI::LibGPhoto2.gp_result_as_string(rc)
+  end
+
+  def self.library_version(verbose = FFI::LibGPhoto2::GPVersionVerbosity::Short)
+    String.new FFI::LibGPhoto2.gp_library_version(verbose).value
   end
 
   def self.check!(rc : Int32) : Int32
-    with_logger(rc, backtrace_offset: 2) do
-      return rc if rc >= FFI::LibGPhoto2::GP_OK
-      raise Error.new(result_as_string(rc), rc)
-    end
+    log(rc, backtrace_offset: 2)
+    return rc if check?(rc)
+    raise Error.new(result_as_string(rc), rc)
+  end
+  
+  def self.check?(rc : Int32) : Bool
+    rc >= FFI::LibGPhoto2::GP_OK
   end
 end

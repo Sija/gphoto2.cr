@@ -17,12 +17,12 @@ module GPhoto2
     end
 
     private def new
-      @ptr = FFI::LibGPhoto2.gp_context_new
+      self.ptr = FFI::LibGPhoto2.gp_context_new
     end
 
     private def unref
-      FFI::LibGPhoto2.gp_context_unref(@ptr)
-      @ptr = nil
+      FFI::LibGPhoto2.gp_context_unref(self)
+      self.ptr = nil
     end
   end
 end
