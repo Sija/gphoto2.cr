@@ -10,14 +10,15 @@ def visit(folder, level = 0)
     #{folder.root? ? "/ (root)".colorize(:red) : folder.path.colorize(:green)} \
     #{"(#{files.size} files)".colorize(:dark_gray)}"
 
-  folder.folders.each { |child| visit(child, level + 1) }
   indent += "  "
 
   puts indent + files.map { |file|
     filename = file.name.not_nil!
     "#{filename.sub(/\.(.*?)$/, "").colorize(:blue)}" \
     "#{File.extname(filename).colorize(:light_blue).mode(:bright)}"
-  }.join " , "
+  }.join " , " unless files.empty?
+
+  folder.folders.each { |child| visit(child, level + 1) }
 end
 
 GPhoto2::Camera.first do |camera|
