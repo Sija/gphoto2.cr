@@ -38,7 +38,7 @@ module GPhoto2
 
       entries = cameras.to_a.map do |entry|
         model, port = entry.name, entry.value
-        Camera.new(model.as(String), port.as(String))
+        Camera.new(model.not_nil!, port.not_nil!)
       end.to_a
 
       context.finalize
