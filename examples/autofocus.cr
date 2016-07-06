@@ -7,14 +7,20 @@ require "../src/gphoto2"
 # continues to autofocus until it is successful.
 
 GPhoto2::Camera.first do |camera|
-  begin
-    camera.update({ autofocusdrive: true })
-  rescue GPhoto2::Error
-    puts "autofocus failed... retrying"
-    camera.reload
-    # retry
-  ensure
-    camera.update({ autofocusdrive: false })
+  loop do |i|
+    begin
+      camera.update({ autofocusdrive: true })
+    rescue GPhoto2::Error
+      if i >= 9
+        puts "autofocus reached 10 failed attempts, bailing out..."
+        break
+      end
+      puts "autofocus failed... retrying"
+      camera.reload
+    ensure
+      camera.update({ autofocusdrive: false })
+    end
+    break
   end
   camera.capture
 end
