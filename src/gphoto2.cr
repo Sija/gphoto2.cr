@@ -11,7 +11,7 @@ module GPhoto2
     @@logger ||= begin
       severity_colors = {
         "UNKNOWN" => :dark_gray,
-        "ERROR"   => :ligh_red,
+        "ERROR"   => :light_red,
         "WARN"    => :red,
         "INFO"    => :blue,
         "DEBUG"   => :green,
