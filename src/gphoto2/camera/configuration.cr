@@ -61,7 +61,7 @@ module GPhoto2
       #   iso.value = "800"
       #   camera["iso"] = iso
       #
-      def []=(key : String | Symbol, widget)
+      def []=(key : String | Symbol, widget : CameraWidget)
         key = key.to_s
         set_single_config(key, widget)
         config[key] = widget
