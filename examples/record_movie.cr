@@ -20,6 +20,6 @@ GPhoto2::Camera.first do |camera|
   event = camera.wait_for(:file_added)
 
   # The event data has a camera file that can be saved.
-  file = event.data
+  file = event.data as GPhoto2::CameraFile
   file.save
 end
