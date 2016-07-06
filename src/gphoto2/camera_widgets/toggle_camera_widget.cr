@@ -2,14 +2,21 @@ require "../camera_widget"
 
 module GPhoto2
   class ToggleCameraWidget < CameraWidget
-    protected def get_value : Int32
+    protected def get_value
       ptr = Pointer(LibC::Int).malloc
-      GPhoto2.check! FFI::LibGPhoto2.gp_widget_get_value(self, ptr)
+      get_value_ptr ptr
       ptr.value
     end
 
-    protected def set_value(value : Int32)
-      GPhoto2.check! FFI::LibGPhoto2.gp_widget_set_value(self, pointerof(value))
+    protected def set_value(value)
+      case value
+      when Int32
+        ptr = Pointer(LibC::Int).malloc 1, value
+        set_value_ptr ptr
+      when Bool
+        ptr = Pointer(LibC::Int).malloc 1, value ? 1 : 0
+        set_value_ptr ptr
+      end
     end
   end
 end

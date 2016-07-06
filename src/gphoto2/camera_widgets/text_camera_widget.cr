@@ -2,14 +2,26 @@ require "../camera_widget"
 
 module GPhoto2
   class TextCameraWidget < CameraWidget
-    protected def get_value : String?
+    protected def get_value
       ptr = Pointer(LibC::Char).null
-      GPhoto2.check! FFI::LibGPhoto2.gp_widget_get_value(self, pointerof(ptr))
+      get_value_ptr pointerof(ptr)
       !ptr ? nil : String.new ptr
     end
 
-    protected def set_value(value : String)
-      GPhoto2.check! FFI::LibGPhoto2.gp_widget_set_value(self, pointerof(value))
+    protected def set_value(value)
+      case value
+      when String
+        ptr = Pointer(LibC::Char).malloc(value.size)
+        ptr.copy_from(value.to_unsafe, value.size)
+        set_value_ptr ptr
+      else
+        if value.responds_to?(:to_s)
+          value = value.to_s
+          ptr = Pointer(LibC::Char).malloc(value.size)
+          ptr.copy_from(value.to_unsafe, value.size)
+          set_value_ptr ptr
+        end
+      end
     end
   end
 end

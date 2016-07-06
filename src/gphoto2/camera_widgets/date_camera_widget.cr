@@ -2,15 +2,18 @@ require "../camera_widget"
 
 module GPhoto2
   class DateCameraWidget < CameraWidget
-    protected def get_value : Time
+    protected def get_value
       ptr = Pointer(LibC::Int).malloc
-      GPhoto2.check! FFI::LibGPhoto2.gp_widget_get_value(self, ptr)
+      get_value_ptr ptr
       Time.epoch(ptr.value).to_utc
     end
 
-    protected def set_value(value : Time)
-      value = value.epoch
-      GPhoto2.check! FFI::LibGPhoto2.gp_widget_set_value(self, pointerof(value))
+    protected def set_value(value)
+      case value
+      when Time
+        ptr = Pointer(LibC::Int).malloc 1, value.epoch
+        set_value_ptr ptr
+      end
     end
   end
 end
