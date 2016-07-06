@@ -36,6 +36,10 @@ module GPhoto2
       GPhoto2.check! FFI::LibGPhoto2Port.gp_port_info_list_load(self)
     end
 
+    private def count
+      GPhoto2.check! FFI::LibGPhoto2Port.gp_port_info_list_count(self)
+    end
+
     private def _lookup_path(port : String) : Int32
       GPhoto2.check! FFI::LibGPhoto2Port.gp_port_info_list_lookup_path(self, port)
     end
