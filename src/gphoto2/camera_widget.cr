@@ -90,6 +90,14 @@ module GPhoto2
     protected abstract def get_value
     protected abstract def set_value(value)
 
+    protected def get_value_ptr(ptr)
+      GPhoto2.check! FFI::LibGPhoto2.gp_widget_get_value(self, ptr)
+    end
+
+    protected def set_value_ptr(ptr)
+      GPhoto2.check! FFI::LibGPhoto2.gp_widget_set_value(self, ptr)
+    end
+
     private def free
       GPhoto2.check! FFI::LibGPhoto2.gp_widget_free(self)
     end
