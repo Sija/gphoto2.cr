@@ -14,16 +14,14 @@ module GPhoto2
       [min, max, inc]
     end
 
-    protected def get_value
-      value = 0_f32
-      GPhoto2.check! FFI::LibGPhoto2.gp_widget_get_value(self, pointerof(value))
-      value
+    protected def get_value : Float32
+      ptr = Pointer(LibC::Float).malloc
+      GPhoto2.check! FFI::LibGPhoto2.gp_widget_get_value(self, ptr)
+      ptr.value
     end
 
-    protected def set_value(value)
-      ptr = Pointer(LibC::Float).null
-      ptr.value = value
-      GPhoto2.check! FFI::LibGPhoto2.gp_widget_set_value(self, pointerof(ptr))
+    protected def set_value(value : Float32)
+      GPhoto2.check! FFI::LibGPhoto2.gp_widget_set_value(self, pointerof(value))
     end
   end
 end
