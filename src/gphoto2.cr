@@ -1,7 +1,7 @@
 require "logger"
 require "colorize"
 
-require "./ffi/*"
+require "./lib/*"
 require "./gphoto2/*"
 
 module GPhoto2
@@ -28,17 +28,17 @@ module GPhoto2
     end
   end
 
-  gp_logger = ->(level : FFI::LibGPhoto2::GPLogLevel, domain : LibC::Char*, str : LibC::Char*, data : Void*) {
+  gp_logger = ->(level : LibGPhoto2::GPLogLevel, domain : LibC::Char*, str : LibC::Char*, data : Void*) {
     severities = {
-      FFI::LibGPhoto2::GPLogLevel::Error   => Logger::Severity::ERROR,
-      FFI::LibGPhoto2::GPLogLevel::Verbose => Logger::Severity::INFO,
-      FFI::LibGPhoto2::GPLogLevel::Debug   => Logger::Severity::DEBUG
+      LibGPhoto2::GPLogLevel::Error   => Logger::Severity::ERROR,
+      LibGPhoto2::GPLogLevel::Verbose => Logger::Severity::INFO,
+      LibGPhoto2::GPLogLevel::Debug   => Logger::Severity::DEBUG
     }
     logger.log severities[level], String.new(str), "libgphoto2"
   }
   if debug?
-    gp_log_level = FFI::LibGPhoto2::GPLogLevel.parse ENV["LIB_LOG_LEVEL"]? || "debug"
-    FFI::LibGPhoto2.gp_log_add_func gp_log_level, gp_logger, nil
+    gp_log_level = LibGPhoto2::GPLogLevel.parse ENV["LIB_LOG_LEVEL"]? || "debug"
+    LibGPhoto2.gp_log_add_func gp_log_level, gp_logger, nil
   end
 
   macro log(*args, severity = Logger::Severity::DEBUG, backtrace_offset = 1)
@@ -70,11 +70,11 @@ module GPhoto2
   end
 
   def self.result_as_string(rc : Int32)
-    String.new FFI::LibGPhoto2.gp_result_as_string(rc)
+    String.new LibGPhoto2.gp_result_as_string(rc)
   end
 
-  def self.library_version(verbose = FFI::LibGPhoto2::GPVersionVerbosity::Short)
-    String.new FFI::LibGPhoto2.gp_library_version(verbose).value
+  def self.library_version(verbose = LibGPhoto2::GPVersionVerbosity::Short)
+    String.new LibGPhoto2.gp_library_version(verbose).value
   end
 
   def self.check!(rc : Int32) : Int32
@@ -84,6 +84,6 @@ module GPhoto2
   end
   
   def self.check?(rc : Int32) : Bool
-    rc >= FFI::LibGPhoto2::GP_OK
+    rc >= LibGPhoto2::GP_OK
   end
 end

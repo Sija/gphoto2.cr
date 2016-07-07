@@ -1,6 +1,6 @@
 module GPhoto2
   class CameraFilePath
-    include GPhoto2::Struct(FFI::LibGPhoto2::CameraFilePath)
+    include GPhoto2::Struct(LibGPhoto2::CameraFilePath)
 
     def name
       String.new wrapped.name.to_unsafe

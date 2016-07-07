@@ -11,14 +11,14 @@ module GPhoto2
       #   # And save it to the current working directory.
       #   file.save
       #
-      def capture(type = FFI::LibGPhoto2::CameraCaptureType::Image) : CameraFile
+      def capture(type = LibGPhoto2::CameraCaptureType::Image) : CameraFile
         save
         path = _capture(type)
         CameraFile.new(self, path.folder, path.name)
       end
 
       def capture(type : Symbol) : CameraFile
-        capture FFI::LibGPhoto2::CameraCaptureType.parse type.to_s
+        capture LibGPhoto2::CameraCaptureType.parse type.to_s
       end
 
       # Triggers a capture and immedately returns.
@@ -59,19 +59,19 @@ module GPhoto2
         capture_preview
       end
 
-      private def _capture(type : FFI::LibGPhoto2::CameraCaptureType) : CameraFilePath
-        GPhoto2.check! FFI::LibGPhoto2.gp_camera_capture(self, type, out path, context)
+      private def _capture(type : LibGPhoto2::CameraCaptureType) : CameraFilePath
+        GPhoto2.check! LibGPhoto2.gp_camera_capture(self, type, out path, context)
         CameraFilePath.new pointerof(path)
       end
 
       private def capture_preview : CameraFile
         file = CameraFile.new self
-        GPhoto2.check! FFI::LibGPhoto2.gp_camera_capture_preview(self, file, context)
+        GPhoto2.check! LibGPhoto2.gp_camera_capture_preview(self, file, context)
         file
       end
 
       private def trigger_capture : Void
-        GPhoto2.check! FFI::LibGPhoto2.gp_camera_trigger_capture(self, context)
+        GPhoto2.check! LibGPhoto2.gp_camera_trigger_capture(self, context)
       end
     end
   end

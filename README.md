@@ -49,7 +49,7 @@ GPhoto2::Camera.first do |camera|
   # ...
 end
 
-# check camera abilities (see `GPhoto2::FFI::LibGPhoto2::CameraOperation`)
+# check camera abilities (see `LibGPhoto2::CameraOperation`)
 camera.can? :capture_image
 # => true
 

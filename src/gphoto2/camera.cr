@@ -9,7 +9,7 @@ module GPhoto2
   class PortInfo; end
 
   class Camera
-    include GPhoto2::Struct(FFI::LibGPhoto2::Camera)
+    include GPhoto2::Struct(LibGPhoto2::Camera)
 
     include Capture
     include Configuration
@@ -161,10 +161,10 @@ module GPhoto2
     #   # => true
     #
     def can?(operation : Symbol)
-      can? FFI::LibGPhoto2::CameraOperation.parse operation.to_s
+      can? LibGPhoto2::CameraOperation.parse operation.to_s
     end
 
-    private def can?(operation : FFI::LibGPhoto2::CameraOperation)
+    private def can?(operation : LibGPhoto2::CameraOperation)
       abilities.wrapped.operations.includes? operation
     end
 
@@ -187,26 +187,26 @@ module GPhoto2
     end
 
     private def new
-      GPhoto2.check! FFI::LibGPhoto2.gp_camera_new(out ptr)
+      GPhoto2.check! LibGPhoto2.gp_camera_new(out ptr)
       self.ptr = ptr
     end
 
     private def _exit
-      GPhoto2.check! FFI::LibGPhoto2.gp_camera_exit(self, context)
+      GPhoto2.check! LibGPhoto2.gp_camera_exit(self, context)
     end
 
     private def set_port_info(port_info : PortInfo)
-      GPhoto2.check! FFI::LibGPhoto2.gp_camera_set_port_info(self, port_info)
+      GPhoto2.check! LibGPhoto2.gp_camera_set_port_info(self, port_info)
       @port_info = port_info
     end
 
     private def set_abilities(abilities : CameraAbilities)
-      GPhoto2.check! FFI::LibGPhoto2.gp_camera_set_abilities(self, abilities.wrapped)
+      GPhoto2.check! LibGPhoto2.gp_camera_set_abilities(self, abilities.wrapped)
       @abilities = abilities
     end
 
     private def unref
-      GPhoto2.check! FFI::LibGPhoto2.gp_camera_unref(self)
+      GPhoto2.check! LibGPhoto2.gp_camera_unref(self)
     end
   end
 end

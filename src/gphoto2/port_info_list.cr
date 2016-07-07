@@ -4,7 +4,7 @@ module GPhoto2
   class PortInfo; end
 
   class PortInfoList
-    include GPhoto2::Struct(FFI::LibGPhoto2Port::GPPortInfoList)
+    include GPhoto2::Struct(LibGPhoto2Port::GPPortInfoList)
 
     def initialize
       new
@@ -28,20 +28,20 @@ module GPhoto2
     end
 
     private def new
-      GPhoto2.check! FFI::LibGPhoto2Port.gp_port_info_list_new(out ptr)
+      GPhoto2.check! LibGPhoto2Port.gp_port_info_list_new(out ptr)
       self.ptr = ptr
     end
 
     private def load
-      GPhoto2.check! FFI::LibGPhoto2Port.gp_port_info_list_load(self)
+      GPhoto2.check! LibGPhoto2Port.gp_port_info_list_load(self)
     end
 
     private def count
-      GPhoto2.check! FFI::LibGPhoto2Port.gp_port_info_list_count(self)
+      GPhoto2.check! LibGPhoto2Port.gp_port_info_list_count(self)
     end
 
     private def _lookup_path(port : String) : Int32
-      GPhoto2.check! FFI::LibGPhoto2Port.gp_port_info_list_lookup_path(self, port)
+      GPhoto2.check! LibGPhoto2Port.gp_port_info_list_lookup_path(self, port)
     end
   end
 end

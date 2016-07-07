@@ -6,7 +6,7 @@ module GPhoto2
   class CameraAbilities; end
 
   class CameraAbilitiesList
-    include Struct(FFI::LibGPhoto2::CameraAbilitiesList)
+    include Struct(LibGPhoto2::CameraAbilitiesList)
 
     @context : Context
 
@@ -36,19 +36,19 @@ module GPhoto2
     end
 
     private def new
-      GPhoto2.check! FFI::LibGPhoto2.gp_abilities_list_new(out ptr)
+      GPhoto2.check! LibGPhoto2.gp_abilities_list_new(out ptr)
       self.ptr = ptr
     end
 
     private def load
-      GPhoto2.check! FFI::LibGPhoto2.gp_abilities_list_load(self, @context)
+      GPhoto2.check! LibGPhoto2.gp_abilities_list_load(self, @context)
     end
 
     private def _detect
       port_info_list = PortInfoList.new
       camera_list = CameraList.new
 
-      GPhoto2.check! FFI::LibGPhoto2.gp_abilities_list_detect(
+      GPhoto2.check! LibGPhoto2.gp_abilities_list_detect(
         self,
         port_info_list,
         camera_list,
@@ -58,7 +58,7 @@ module GPhoto2
     end
 
     private def _lookup_model(model : String) : Int32
-      GPhoto2.check! FFI::LibGPhoto2.gp_abilities_list_lookup_model(self, model)
+      GPhoto2.check! LibGPhoto2.gp_abilities_list_lookup_model(self, model)
     end
   end
 end

@@ -9,12 +9,12 @@ module GPhoto2
     end
 
     private def count_choices
-      GPhoto2.check! FFI::LibGPhoto2.gp_widget_count_choices(self)
+      GPhoto2.check! LibGPhoto2.gp_widget_count_choices(self)
     end
 
     private def get_choice(i)
       ptr = Pointer(LibC::Char).null
-      GPhoto2.check! FFI::LibGPhoto2.gp_widget_get_choice(self, i, pointerof(ptr))
+      GPhoto2.check! LibGPhoto2.gp_widget_get_choice(self, i, pointerof(ptr))
       !ptr ? nil : String.new ptr
     end
   end

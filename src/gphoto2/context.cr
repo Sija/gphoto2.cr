@@ -2,7 +2,7 @@ require "./struct"
 
 module GPhoto2
   class Context
-    include Struct(FFI::LibGPhoto2::GPContext)
+    include Struct(LibGPhoto2::GPContext)
 
     def initialize
       new
@@ -17,11 +17,11 @@ module GPhoto2
     end
 
     private def new
-      self.ptr = FFI::LibGPhoto2.gp_context_new
+      self.ptr = LibGPhoto2.gp_context_new
     end
 
     private def unref
-      FFI::LibGPhoto2.gp_context_unref(self)
+      LibGPhoto2.gp_context_unref(self)
       self.ptr = nil
     end
   end

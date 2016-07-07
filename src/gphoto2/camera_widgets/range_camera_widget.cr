@@ -10,7 +10,7 @@ module GPhoto2
 
     private def get_range
       min, max, inc = 0_f32, 0_f32, 0_f32
-      GPhoto2.check! FFI::LibGPhoto2.gp_widget_get_range(self, pointerof(min), pointerof(max), pointerof(inc))
+      GPhoto2.check! LibGPhoto2.gp_widget_get_range(self, pointerof(min), pointerof(max), pointerof(inc))
       [min, max, inc]
     end
 

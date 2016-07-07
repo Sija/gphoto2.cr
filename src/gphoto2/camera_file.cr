@@ -4,7 +4,7 @@ module GPhoto2
   class Camera; end
 
   class CameraFile
-    include GPhoto2::Struct(FFI::LibGPhoto2::CameraFile)
+    include GPhoto2::Struct(LibGPhoto2::CameraFile)
 
     # The preview data is assumed to be a jpg.
     PREVIEW_FILENAME = "capture_preview.jpg"
@@ -81,16 +81,16 @@ module GPhoto2
     end
 
     private def new
-      GPhoto2.check! FFI::LibGPhoto2.gp_file_new(out ptr)
+      GPhoto2.check! LibGPhoto2.gp_file_new(out ptr)
       self.ptr = ptr
     end
 
     private def free
-      GPhoto2.check! FFI::LibGPhoto2.gp_file_free(self)
+      GPhoto2.check! LibGPhoto2.gp_file_free(self)
     end
 
     private def get_data_and_size : Tuple(LibC::Char*, LibC::ULong)
-      GPhoto2.check! FFI::LibGPhoto2.gp_file_get_data_and_size(self, out data, out size)
+      GPhoto2.check! LibGPhoto2.gp_file_get_data_and_size(self, out data, out size)
       {data, size}
     end
 

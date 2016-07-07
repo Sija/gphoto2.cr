@@ -4,7 +4,7 @@ module GPhoto2
   class Entry; end
 
   class CameraList
-    include GPhoto2::Struct(FFI::LibGPhoto2::CameraList)
+    include GPhoto2::Struct(LibGPhoto2::CameraList)
 
     def initialize
       new
@@ -23,12 +23,12 @@ module GPhoto2
     end
 
     private def new
-      GPhoto2.check! FFI::LibGPhoto2.gp_list_new(out ptr)
+      GPhoto2.check! LibGPhoto2.gp_list_new(out ptr)
       self.ptr = ptr
     end
 
     private def count
-      GPhoto2.check! FFI::LibGPhoto2.gp_list_count(self)
+      GPhoto2.check! LibGPhoto2.gp_list_count(self)
     end
   end
 end

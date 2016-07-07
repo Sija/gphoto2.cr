@@ -141,16 +141,16 @@ module GPhoto2
       end
 
       private def get_config
-        GPhoto2.check! FFI::LibGPhoto2.gp_camera_get_config(self, out window, context)
+        GPhoto2.check! LibGPhoto2.gp_camera_get_config(self, out window, context)
         CameraWidget.factory window
       end
 
       private def set_config
-        GPhoto2.check! FFI::LibGPhoto2.gp_camera_set_config(self, window, context)
+        GPhoto2.check! LibGPhoto2.gp_camera_set_config(self, window, context)
       end
 
       private def set_single_config(name : String, widget : CameraWidget)
-        GPhoto2.check! FFI::LibGPhoto2.gp_camera_set_single_config(self, name, widget, context)
+        GPhoto2.check! LibGPhoto2.gp_camera_set_single_config(self, name, widget, context)
       end
     end
   end

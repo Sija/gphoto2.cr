@@ -24,15 +24,15 @@ module GPhoto2
         file_delete(file)
       end
 
-      private def file_get(file, type = FFI::LibGPhoto2::CameraFileType::Normal)
-        GPhoto2.check! FFI::LibGPhoto2.gp_camera_file_get(self,
+      private def file_get(file, type = LibGPhoto2::CameraFileType::Normal)
+        GPhoto2.check! LibGPhoto2.gp_camera_file_get(self,
           file.folder.not_nil!, file.name.not_nil!,
           type, file, context)
         file
       end
 
       private def file_delete(file)
-        GPhoto2.check! FFI::LibGPhoto2.gp_camera_file_delete(self,
+        GPhoto2.check! LibGPhoto2.gp_camera_file_delete(self,
           file.folder.not_nil!, file.name.not_nil!,
           context)
       end

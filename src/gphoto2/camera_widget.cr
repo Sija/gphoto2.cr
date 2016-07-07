@@ -4,7 +4,7 @@ module GPhoto2
   abstract class CameraWidget
     class NotImplementedError < Exception; end
 
-    include GPhoto2::Struct(FFI::LibGPhoto2::CameraWidget)
+    include GPhoto2::Struct(LibGPhoto2::CameraWidget)
 
     macro inherited
       {% factory_id = @type.name.gsub(/^GPhoto2::/, "").gsub(/CameraWidget$/, "").underscore %}
@@ -26,13 +26,13 @@ module GPhoto2
       @@widgets
     end
 
-    def self.factory(ptr : FFI::LibGPhoto2::CameraWidget*, parent = nil) : self
+    def self.factory(ptr : LibGPhoto2::CameraWidget*, parent = nil) : self
       type = ptr.value.type.to_s.downcase
       klass = @@widgets[type]
       klass.new(ptr, parent)
     end
 
-    def initialize(ptr : FFI::LibGPhoto2::CameraWidget*, @parent : self? = nil)
+    def initialize(ptr : LibGPhoto2::CameraWidget*, @parent : self? = nil)
       super ptr
     end
 
@@ -44,7 +44,7 @@ module GPhoto2
       finalize
     end
 
-    def type : FFI::LibGPhoto2::CameraWidgetType
+    def type : LibGPhoto2::CameraWidgetType
       get_type
     end
 
@@ -91,38 +91,38 @@ module GPhoto2
     protected abstract def set_value(value)
 
     protected def get_value_ptr(ptr)
-      GPhoto2.check! FFI::LibGPhoto2.gp_widget_get_value(self, ptr)
+      GPhoto2.check! LibGPhoto2.gp_widget_get_value(self, ptr)
     end
 
     protected def set_value_ptr(ptr)
-      GPhoto2.check! FFI::LibGPhoto2.gp_widget_set_value(self, ptr)
+      GPhoto2.check! LibGPhoto2.gp_widget_set_value(self, ptr)
     end
 
     private def free
-      GPhoto2.check! FFI::LibGPhoto2.gp_widget_free(self)
+      GPhoto2.check! LibGPhoto2.gp_widget_free(self)
     end
 
     private def get_type
-      GPhoto2.check! FFI::LibGPhoto2.gp_widget_get_type(self, out type)
+      GPhoto2.check! LibGPhoto2.gp_widget_get_type(self, out type)
       type
     end
 
     private def get_label
-      GPhoto2.check! FFI::LibGPhoto2.gp_widget_get_label(self, out ptr)
+      GPhoto2.check! LibGPhoto2.gp_widget_get_label(self, out ptr)
       !ptr ? nil : String.new ptr
     end
 
     private def get_name
-      GPhoto2.check! FFI::LibGPhoto2.gp_widget_get_name(self, out ptr)
+      GPhoto2.check! LibGPhoto2.gp_widget_get_name(self, out ptr)
       !ptr ? nil : String.new ptr
     end
 
     private def count_children : Int32
-      GPhoto2.check! FFI::LibGPhoto2.gp_widget_count_children(self)
+      GPhoto2.check! LibGPhoto2.gp_widget_count_children(self)
     end
 
     private def get_child(index) : self
-      GPhoto2.check! FFI::LibGPhoto2.gp_widget_get_child(self, index, out widget)
+      GPhoto2.check! LibGPhoto2.gp_widget_get_child(self, index, out widget)
       CameraWidget.factory(widget, self)
     end
   end

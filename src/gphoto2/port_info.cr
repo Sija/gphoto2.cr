@@ -4,7 +4,7 @@ module GPhoto2
   class PortInfoList; end
 
   class PortInfo
-    include GPhoto2::Struct(FFI::LibGPhoto2Port::GPPortInfo)
+    include GPhoto2::Struct(LibGPhoto2Port::GPPortInfo)
 
     @port_info_list : PortInfoList
     @index : Int32
@@ -32,22 +32,22 @@ module GPhoto2
     end
 
     private def new
-      GPhoto2.check! FFI::LibGPhoto2Port.gp_port_info_list_get_info(@port_info_list, @index, out ptr)
+      GPhoto2.check! LibGPhoto2Port.gp_port_info_list_get_info(@port_info_list, @index, out ptr)
       self.ptr = ptr
     end
 
     private def get_name : String?
-      GPhoto2.check! FFI::LibGPhoto2Port.gp_port_info_get_name(self, out ptr)
+      GPhoto2.check! LibGPhoto2Port.gp_port_info_get_name(self, out ptr)
       !ptr ? nil : String.new ptr
     end
 
     private def get_path : String?
-      GPhoto2.check! FFI::LibGPhoto2Port.gp_port_info_get_path(self, out ptr)
+      GPhoto2.check! LibGPhoto2Port.gp_port_info_get_path(self, out ptr)
       !ptr ? nil : String.new ptr
     end
 
-    private def get_type : FFI::LibGPhoto2Port::GPPortType
-      GPhoto2.check! FFI::LibGPhoto2Port.gp_port_info_get_type(self, out type)
+    private def get_type : LibGPhoto2Port::GPPortType
+      GPhoto2.check! LibGPhoto2Port.gp_port_info_get_type(self, out type)
       type
     end
   end

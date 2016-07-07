@@ -5,7 +5,7 @@ module GPhoto2
   class CameraAbilitiesList; end
 
   class CameraAbilities
-    include GPhoto2::Struct(FFI::LibGPhoto2::CameraAbilities)
+    include GPhoto2::Struct(LibGPhoto2::CameraAbilities)
 
     @camera_abilities_list : CameraAbilitiesList
     @index : Int32
@@ -27,8 +27,8 @@ module GPhoto2
 
     private def get_abilities
       # FIXME: where else should it be changed?
-      ptr = Pointer(FFI::LibGPhoto2::CameraAbilities).malloc
-      GPhoto2.check! FFI::LibGPhoto2.gp_abilities_list_get_abilities(
+      ptr = Pointer(LibGPhoto2::CameraAbilities).malloc
+      GPhoto2.check! LibGPhoto2.gp_abilities_list_get_abilities(
         @camera_abilities_list,
         @index,
         ptr
