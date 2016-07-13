@@ -41,7 +41,6 @@ module GPhoto2
       #   # => 800
       #
       def reload : Void
-        @window.try &.finalize
         reset
         config
       end

@@ -117,7 +117,6 @@ module GPhoto2
 
     def finalize
       @context.try &.finalize
-      @window.try &.finalize
       unref if ptr?
     end
 
