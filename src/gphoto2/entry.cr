@@ -3,8 +3,7 @@ module GPhoto2
     @camera_list : CameraList
     @index : Int32
 
-    def initialize(@camera_list, @index)
-    end
+    def initialize(@camera_list, @index); end
 
     def name
       get_name

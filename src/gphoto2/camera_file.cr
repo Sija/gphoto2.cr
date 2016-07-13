@@ -52,8 +52,8 @@ module GPhoto2
       data.to_slice(size)
     end
 
-    def extname : String
-      File.extname(@name.not_nil!)[1..-1].downcase
+    def extname : String?
+      File.extname(@name)[1..-1].downcase if @name
     end
 
     def image?
@@ -74,10 +74,6 @@ module GPhoto2
 
     def_equals @camera, @folder, @name
 
-    private def default_filename
-      preview? ? PREVIEW_FILENAME : @name.not_nil!
-    end
-
     private def new
       GPhoto2.check! LibGPhoto2.gp_file_new(out ptr)
       self.ptr = ptr
@@ -87,9 +83,8 @@ module GPhoto2
       GPhoto2.check! LibGPhoto2.gp_file_free(self)
     end
 
-    private def get_data_and_size : Tuple(LibC::Char*, LibC::ULong)
-      GPhoto2.check! LibGPhoto2.gp_file_get_data_and_size(self, out data, out size)
-      {data, size}
+    private def default_filename
+      preview? ? PREVIEW_FILENAME : @name.not_nil!
     end
 
     private def data_and_size : Tuple(LibC::Char*, LibC::ULong)
@@ -97,6 +92,11 @@ module GPhoto2
         @camera.file(self) unless preview?
         get_data_and_size
       end
+    end
+
+    private def get_data_and_size : Tuple(LibC::Char*, LibC::ULong)
+      GPhoto2.check! LibGPhoto2.gp_file_get_data_and_size(self, out data, out size)
+      {data, size}
     end
   end
 end

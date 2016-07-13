@@ -155,6 +155,10 @@ lib LibGPhoto2
     pc : CameraPrivateCore*
   end
 
+  #
+  # Functions
+  #
+
   fun gp_camera_autodetect(list : CameraList*, context : GPContext*) : LibC::Int
   fun gp_camera_get_storageinfo(camera : Camera*, sifs : Void**, nrofsifs : Void*, context : GPContext*) : LibC::Int
 
@@ -195,9 +199,6 @@ lib LibGPhoto2
   fun gp_camera_folder_put_file(camera : Camera*, folder : LibC::Char*, filename : LibC::Char*, type : CameraFileType, file : CameraFile*, context : GPContext*) : LibC::Int
   fun gp_camera_folder_make_dir(camera : Camera*, folder : LibC::Char*, name : LibC::Char*, context : GPContext*) : LibC::Int
   fun gp_camera_folder_remove_dir(camera : Camera*, folder : LibC::Char*, name : LibC::Char*, context : GPContext*) : LibC::Int
-
-  fun gp_camera_file_get_info(camera : Camera*, folder : LibC::Char*, file : LibC::Char*, info : CameraFileInfo*, context : GPContext*) : LibC::Int
-  fun gp_camera_file_set_info(camera : Camera*, folder : LibC::Char*, file : LibC::Char*, info : CameraFileInfo, context : GPContext*) : LibC::Int
 
   fun gp_camera_file_get(camera : Camera*, folder : LibC::Char*, file : LibC::Char*, type : CameraFileType, camera_file : CameraFile*, context : GPContext*) : LibC::Int
   fun gp_camera_file_read(camera : Camera*, folder : LibC::Char*, file : LibC::Char*, type : CameraFileType, offset : LibC::UInt64T, buf : LibC::Char*, size : LibC::UInt64T*, context : GPContext*) : LibC::Int

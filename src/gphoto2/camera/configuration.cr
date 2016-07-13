@@ -113,7 +113,7 @@ module GPhoto2
       #   camera["shutterspeed2"] # => "1/60"
       #
       # @return [Boolean] whether the configuration saved
-      def update(attributes = {} of String => Object)
+      def update(attributes)
         attributes.each do |key, value|
           self[key] = value
         end

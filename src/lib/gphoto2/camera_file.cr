@@ -58,13 +58,6 @@ lib LibGPhoto2
     folder : LibC::Char[1024]
   end
 
-  # FIXME
-  struct CameraFileInfo
-    preview : Void*
-    file : Void*
-    audio : Void*
-  end
-
   #
   # Functions
   #
