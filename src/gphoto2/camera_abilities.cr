@@ -1,8 +1,8 @@
-require "./struct"
+require "./managed_struct"
 
 module GPhoto2
   class CameraAbilities
-    include GPhoto2::Struct(LibGPhoto2::CameraAbilities)
+    include GPhoto2::ManagedStruct(LibGPhoto2::CameraAbilities)
 
     @camera_abilities_list : CameraAbilitiesList
     @index : Int32
@@ -23,14 +23,11 @@ module GPhoto2
     end
 
     private def get_abilities
-      # FIXME: where else should it be changed?
-      ptr = Pointer(LibGPhoto2::CameraAbilities).malloc
       GPhoto2.check! LibGPhoto2.gp_abilities_list_get_abilities(
         @camera_abilities_list,
         @index,
-        ptr
+        self
       )
-      self.ptr = ptr
     end
   end
 end
