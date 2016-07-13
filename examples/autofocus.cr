@@ -11,16 +11,10 @@ GPhoto2::Camera.first do |camera|
     begin
       camera.update({ autofocusdrive: true })
     rescue GPhoto2::Error
-      if i >= 9
-        puts "autofocus reached 10 failed attempts, bailing out..."
-        break
-      end
       puts "autofocus failed... retrying"
       camera.reload
-    ensure
-      camera.update({ autofocusdrive: false })
     end
-    break
   end
+  camera.update({ autofocusdrive: false })
   camera.capture
 end
