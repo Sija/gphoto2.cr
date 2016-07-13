@@ -1,6 +1,7 @@
 # gphoto2.cr
 
-gphoto2.cr provides an FFI for common functions in libgphoto2. It also includes a facade to interact with the library in a more idiomatic Crystal way.
+**gphoto2.cr** provides an FFI for common functions in [libgphoto2][gphoto].
+It also includes a facade to interact with the library in a more idiomatic Crystal way.
 
 ## Installation
 
