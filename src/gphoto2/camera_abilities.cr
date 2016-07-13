@@ -1,9 +1,6 @@
 require "./struct"
 
 module GPhoto2
-  class Context; end
-  class CameraAbilitiesList; end
-
   class CameraAbilities
     include GPhoto2::Struct(LibGPhoto2::CameraAbilities)
 

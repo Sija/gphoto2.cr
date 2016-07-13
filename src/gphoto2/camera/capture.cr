@@ -1,7 +1,4 @@
 module GPhoto2
-  class CameraFile; end
-  class CameraFilePath; end
-
   class Camera
     module Capture
       # @example

@@ -1,6 +1,4 @@
 module GPhoto2
-  class CameraList; end
-
   class Entry
     @camera_list : CameraList
     @index : Int32

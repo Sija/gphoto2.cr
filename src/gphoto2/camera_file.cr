@@ -1,8 +1,6 @@
 require "./struct"
 
 module GPhoto2
-  class Camera; end
-
   class CameraFile
     include GPhoto2::Struct(LibGPhoto2::CameraFile)
 

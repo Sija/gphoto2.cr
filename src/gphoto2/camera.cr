@@ -3,11 +3,6 @@ require "./camera/*"
 require "./camera_widgets/*"
 
 module GPhoto2
-  class Context; end
-  class CameraAbilities; end
-  class CameraAbilitiesList; end
-  class PortInfo; end
-
   class Camera
     include GPhoto2::Struct(LibGPhoto2::Camera)
 

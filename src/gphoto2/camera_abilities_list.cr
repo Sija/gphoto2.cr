@@ -1,10 +1,6 @@
 require "./struct"
 
 module GPhoto2
-  class PortInfoList; end
-  class CameraList; end
-  class CameraAbilities; end
-
   class CameraAbilitiesList
     include Struct(LibGPhoto2::CameraAbilitiesList)
 

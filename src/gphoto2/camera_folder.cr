@@ -1,8 +1,4 @@
 module GPhoto2
-  class Camera; end
-  class CameraList; end
-  class CameraFile; end
-
   class CameraFolder
     @path : String
     getter :path

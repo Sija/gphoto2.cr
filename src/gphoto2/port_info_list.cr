@@ -1,8 +1,6 @@
 require "./struct"
 
 module GPhoto2
-  class PortInfo; end
-
   class PortInfoList
     include GPhoto2::Struct(LibGPhoto2Port::GPPortInfoList)
 
