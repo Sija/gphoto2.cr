@@ -3,6 +3,6 @@ dist: trusty
 language: crystal
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get install libgphoto2-6 libgphoto2-port10
+  - sudo apt-get install libgphoto2-6 libgphoto2-dev libgphoto2-port10
   - sudo ln -s /usr/lib/x86_64-linux-gnu/libgphoto2.so{.6,}
   - sudo ln -s /usr/lib/x86_64-linux-gnu/libgphoto2_port.so{.10,}
