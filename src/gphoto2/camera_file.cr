@@ -52,6 +52,10 @@ module GPhoto2
       data.to_slice(size)
     end
 
+    def info
+      preview? ? nil : get_info
+    end
+
     def extname : String?
       File.extname(@name)[1..-1].downcase if @name
     end
@@ -97,6 +101,17 @@ module GPhoto2
     private def get_data_and_size : Tuple(LibC::Char*, LibC::ULong)
       GPhoto2.check! LibGPhoto2.gp_file_get_data_and_size(self, out data, out size)
       {data, size}
+    end
+
+    private def get_info
+      ptr = Pointer(LibGPhoto2::CameraFileInfo).malloc
+      GPhoto2.check! LibGPhoto2.gp_camera_file_get_info(@camera, @folder.not_nil!, @name.not_nil!, ptr, @camera.context)
+
+      file_info_file = ptr.value.file
+      file_info_file_ptr = Pointer(LibGPhoto2::CameraFileInfoFile).malloc
+      file_info_file_ptr.copy_from(pointerof(file_info_file), 1)
+
+      CameraFileInfoFile.new(file_info_file_ptr)
     end
   end
 end
