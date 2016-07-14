@@ -7,8 +7,8 @@ lib LibGPhoto2
 
   @[Flags]
   enum CameraFileInfoFields
-    Type
-    Size
+    Type    = (1 << 0)
+    Size    = (1 << 2)
     Width
     Height
     Permissions
@@ -34,19 +34,19 @@ lib LibGPhoto2
   struct CameraFileInfoPreview
     fields : CameraFileInfoFields
     status : CameraFileStatus
-    size : UInt64
+    size : LibC::UInt64T
     type : LibC::Char[64]
-    width : UInt32 
-    height : UInt32
+    width : LibC::UInt32T
+    height : LibC::UInt32T
   end
 
   struct CameraFileInfoFile
     fields : CameraFileInfoFields
     status : CameraFileStatus
-    size : UInt64
+    size : LibC::UInt64T
     type : LibC::Char[64]
-    width : UInt32 
-    height : UInt32
+    width : LibC::UInt32T
+    height : LibC::UInt32T
     permissions : CameraFilePermissions
     mtime : LibC::TimeT
   end
@@ -54,7 +54,7 @@ lib LibGPhoto2
   struct CameraFileInfoAudio
     fields : CameraFileInfoFields
     status : CameraFileStatus
-    size : UInt64
+    size : LibC::UInt64T
     type : LibC::Char[64]
   end
 
