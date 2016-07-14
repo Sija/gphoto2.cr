@@ -53,7 +53,7 @@ module GPhoto2
     end
 
     def info
-      preview? ? nil : get_info
+      get_info
     end
 
     def extname : String?
@@ -104,14 +104,21 @@ module GPhoto2
     end
 
     private def get_info
-      ptr = Pointer(LibGPhoto2::CameraFileInfo).malloc
-      GPhoto2.check! LibGPhoto2.gp_camera_file_get_info(@camera, @folder.not_nil!, @name.not_nil!, ptr, @camera.context)
+      GPhoto2.check! LibGPhoto2.gp_camera_file_get_info(
+        @camera,
+        @folder.not_nil!,
+        @name.not_nil!,
+        out info,
+        @camera.context
+      )
 
-      file_info_file = ptr.value.file
-      file_info_file_ptr = Pointer(LibGPhoto2::CameraFileInfoFile).malloc
-      file_info_file_ptr.copy_from(pointerof(file_info_file), 1)
-
-      CameraFileInfoFile.new(file_info_file_ptr)
+      if preview?
+        preview_info = info.preview
+        CameraFileInfoPreview.new pointerof(preview_info)
+      else
+        file_info = info.file
+        CameraFileInfoFile.new pointerof(file_info)
+      end
     end
   end
 end
