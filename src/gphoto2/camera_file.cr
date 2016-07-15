@@ -114,14 +114,7 @@ module GPhoto2
         out info,
         @camera.context
       )
-
-      if preview?
-        preview_info = info.preview
-        CameraFileInfoPreview.new pointerof(preview_info)
-      else
-        file_info = info.file
-        CameraFileInfoFile.new pointerof(file_info)
-      end
+      CameraFileInfo.new info
     end
   end
 end

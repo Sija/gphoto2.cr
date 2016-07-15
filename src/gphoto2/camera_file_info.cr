@@ -1,27 +1,23 @@
-require "./struct"
+require "./camera_file_info/*"
 
 module GPhoto2
-  abstract class CameraFileInfo
-    # include GPhoto2::ManagedStruct(LibGPhoto2::CameraFileInfo)
+  class CameraFileInfo
+    getter preview : CameraFileInfoPreview?
+    getter file    : CameraFileInfoFile?
+    getter audio   : CameraFileInfoAudio?
 
-    def fields
-      wrapped.fields
+    def initialize(info : LibGPhoto2::CameraFileInfo)
+      @preview = get_info info.preview, CameraFileInfoPreview
+      @file    = get_info info.file,    CameraFileInfoFile
+      @audio   = get_info info.audio,   CameraFileInfoAudio
     end
 
-    def has_field?(field : String | Symbol)
-      fields.includes? LibGPhoto2::CameraFileInfoFields.parse(field.to_s)
+    protected def fields_any?(info)
+      info.fields != LibGPhoto2::CameraFileInfoFields::None
     end
 
-    def status : LibGPhoto2::CameraFileStatus?
-      wrapped.status if has_field?(:status)
-    end
-
-    def size : LibC::UInt64T?
-      wrapped.size if has_field?(:size)
-    end
-
-    def type : String?
-      String.new wrapped.type.to_unsafe if has_field?(:type)
+    private def get_info(info, klass)
+      klass.new pointerof(info) if fields_any?(info)
     end
   end
 end

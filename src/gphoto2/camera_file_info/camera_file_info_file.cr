@@ -1,7 +1,7 @@
-require "./struct"
+require "./camera_file_info_base"
 
 module GPhoto2
-  class CameraFileInfoFile < CameraFileInfo
+  class CameraFileInfoFile < CameraFileInfo::Base
     include GPhoto2::ManagedStruct(LibGPhoto2::CameraFileInfoFile)
 
     def readable? : Bool

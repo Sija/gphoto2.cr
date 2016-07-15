@@ -1,7 +1,7 @@
-require "./struct"
+require "./camera_file_info_base"
 
 module GPhoto2
-  class CameraFileInfoPreview < CameraFileInfo
+  class CameraFileInfoPreview < CameraFileInfo::Base
     include GPhoto2::ManagedStruct(LibGPhoto2::CameraFileInfoPreview)
 
     def width : LibC::UInt32T?

@@ -17,61 +17,43 @@ end
 
 def visit(folder, level = 0)
   files = folder.files
+    .map    { |file| {file, file.info.file} }
+    .reject { |file, info| info.nil? }
+    .map    { |file, info| {file, info.not_nil!} }
+
   puts \
     "#{folder.root? ? "/ (root)".colorize(:red) : folder.path.colorize(:green)} " \
     "#{"(#{files.size} files)".colorize(:dark_gray)}"
 
-  files.each do |file|
-    name = file.name.not_nil!
-    info = file.info
-    type = info.type || "-"
+  files.each do |file, info|
+    name  = file.name.not_nil!
     # Avoid using `File#size` here to prevent having to load the data along with it.
-    size = info.size ? format_filesize(info.size.not_nil!) : "-"
+    size  = info.size ? format_filesize(info.size.not_nil!) : "-"
+    type  = info.type || "-"
+    mtime = info.mtime.try(&.to_s("%Y-%m-%d %H:%M:%S")) || "-"
 
-    case info
-    when GPhoto2::CameraFileInfoPreview
-      if info.width && info.height
-        dimensions = "#{info.width} x #{info.height}"
+    if info.readable? || info.deletable?
+      flags = String.build do |str|
+        str << '['
+        str << 'R' if info.readable?
+        str << 'W' if info.deletable?
+        str << ']'
       end
-      dimensions ||= "-"
-
-      puts \
-        "#{GPhoto2::CameraFile::PREVIEW_FILENAME.ljust(30).colorize(:blue)}  " \
-        "#{type.ljust(25).colorize(:magenta)}  " \
-        "#{size.rjust(12).colorize(:yellow)}  " \
-        "#{dimensions.rjust(12).colorize(:dark_gray)}  " \
-
-    when GPhoto2::CameraFileInfoFile
-      if info.readable? || info.deletable?
-        flags = String.build do |str|
-          str << '['
-          str << 'R' if info.readable?
-          str << 'W' if info.deletable?
-          str << ']'
-        end
-      end
-      flags ||= "-"
-
-      if info.width && info.height
-        dimensions = "#{info.width} x #{info.height}"
-      end
-      dimensions ||= "-"
-
-      mtime = info.mtime ? info.mtime.not_nil!.to_s("%Y-%m-%d %H:%M:%S") : "-"
-
-      puts \
-        "#{name.ljust(30).colorize(:blue)}  " \
-        "#{type.ljust(25).colorize(:magenta)}  " \
-        "#{flags.ljust(5).colorize(:cyan)}  " \
-        "#{size.rjust(12).colorize(:yellow)}  " \
-        "#{dimensions.rjust(12).colorize(:dark_gray)}  " \
-        "#{mtime.colorize(:green)}"
-
-    else
-      puts \
-        "#{type.ljust(25).colorize(:magenta)}  " \
-        "#{size.rjust(12).colorize(:yellow)}  " \
     end
+    flags ||= "-"
+
+    if info.width && info.height
+      dimensions = "#{info.width} x #{info.height}"
+    end
+    dimensions ||= "-"
+
+    puts \
+      "#{name.ljust(30).colorize(:blue)}  " \
+      "#{type.ljust(25).colorize(:magenta)}  " \
+      "#{flags.ljust(5).colorize(:cyan)}  " \
+      "#{size.rjust(12).colorize(:yellow)}  " \
+      "#{dimensions.rjust(12).colorize(:dark_gray)}  " \
+      "#{mtime.colorize(:green)}"
   end
 
   puts
