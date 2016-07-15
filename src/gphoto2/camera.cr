@@ -21,10 +21,11 @@ module GPhoto2
     @abilities : CameraAbilities?
     @port_info : PortInfo?
 
-    # @example
-    #   cameras = GPhoto2::Camera.all
-    #   # => [#<GPhoto2::Camera>, #<GPhoto2::Camera>, ...]
+    # Returns all available cameras.
     #
+    # ```
+    # cameras = GPhoto2::Camera.all # => [#<GPhoto2::Camera>, #<GPhoto2::Camera>, ...]
+    # ```
     def self.all : Array(self)
       context = Context.new
 
@@ -40,53 +41,57 @@ module GPhoto2
       entries
     end
 
-    # @example
-    #   camera = GPhoto2::Camera.first
+    # Returns first available camera or raises `Exception`
+    # when no devices are detected.
     #
-    #   begin
-    #     # ...
-    #   ensure
-    #     camera.finalize
-    #   end
+    # ```
+    # camera = GPhoto2::Camera.first
     #
-    #   # Alternatively, pass a block, which will automatically close the camera.
-    #   GPhoto2::Camera.first do |camera|
-    #     # ...
-    #   end
+    # begin
+    #   # ...
+    # ensure
+    #   camera.finalize
+    # end
     #
-    # @raise [RuntimeError] when no devices are detected
+    # # Alternatively, pass a block, which will automatically close the camera.
+    # GPhoto2::Camera.first do |camera|
+    #   # ...
+    # end
+    # ```
     def self.first : self
       cameras = all
       raise "no devices detected" if cameras.empty?
       cameras.first
     end
 
+    # ditto
     def self.first(&block : self -> _) : Void
       camera = first
       autorelease(camera, block)
     end
 
-    # @example
-    #   model = "Nikon DSC D5100 (PTP mode)"
-    #   port = "usb:250,006"
+    # ```
+    # model = "Nikon DSC D5100 (PTP mode)"
+    # port = "usb:250,006"
     #
-    #   camera = GPhoto2::Camera.open(model, port)
+    # camera = GPhoto2::Camera.open(model, port)
     #
-    #   begin
-    #     # ...
-    #   ensure
-    #     camera.finalize
-    #   end
+    # begin
+    #   # ...
+    # ensure
+    #   camera.finalize
+    # end
     #
-    #   # Alternatively, pass a block, which will automatically close the camera.
-    #   GPhoto2::Camera.open(model, port) do |camera|
-    #     # ...
-    #   end
-    #
+    # # Alternatively, pass a block, which will automatically close the camera.
+    # GPhoto2::Camera.open(model, port) do |camera|
+    #   # ...
+    # end
+    # ```
     def self.open(model : String, port : String) : self
       camera = new(model, port)
     end
 
+    # ditto
     def self.open(model : String, port : String, &block : self -> _) : Void
       camera = open(model, port)
       autorelease(camera, block)
@@ -94,16 +99,16 @@ module GPhoto2
 
     # Filters devices by a given condition.
     #
-    # Filter keys can be either `model` or `port`. Only the first filter is
+    # Filter keys can be either *model* or *port*. Only the first filter is
     # used.
     #
-    # @example
-    #   # Find the cameras whose model names contain Nikon.
-    #   cameras = GPhoto2::Camera.where(model: /nikon/i)
+    # ```
+    # # Find the cameras whose model names contain Nikon.
+    # cameras = GPhoto2::Camera.where(model: /nikon/i)
     #
-    #   # Select a camera by its port.
-    #   camera = GPhoto2::Camera.where(port: "usb:250,004").first
-    #
+    # # Select a camera by its port.
+    # camera = GPhoto2::Camera.where(port: "usb:250,004").first
+    # ```
     def self.where(model : String | Regex | Nil = nil, port : String | Regex | Nil = nil) : Array(self)
       all.select do |camera|
         (!model || camera.model.match model) && (!port || camera.port.match port)
@@ -150,10 +155,11 @@ module GPhoto2
       @context ||= Context.new
     end
 
-    # @example
-    #   camera.can? :capture_image
-    #   # => true
+    # Check camera abilities (see `LibGPhoto2::CameraOperation`).
     #
+    # ```
+    # camera.can? :capture_image # => true
+    # ```
     def can?(operation : Symbol)
       can? LibGPhoto2::CameraOperation.parse operation.to_s
     end
@@ -165,7 +171,6 @@ module GPhoto2
     def_equals @model, @port
 
     # Ensures the given camera is finalized when passed a block.
-    #
     private def self.autorelease(camera, block : self -> _) : Void
       begin
         block.call camera

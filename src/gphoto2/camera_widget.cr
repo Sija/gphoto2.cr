@@ -56,12 +56,10 @@ module GPhoto2
       get_name
     end
 
-    # @return [Object]
     def value
       get_value
     end
 
-    # @return [Object]
     def value=(value)
       set_value(value)
       value
