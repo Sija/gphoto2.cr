@@ -45,7 +45,7 @@ module GPhoto2
       end
 
       # ```
-      # iso = camera["iso"] as GPhoto2::RadioCameraWidget
+      # iso = camera["iso"].as(GPhoto2::RadioCameraWidget)
       # iso.value = "800"
       # camera["iso"] = iso
       # ```
@@ -89,12 +89,12 @@ module GPhoto2
       # configuration.
       #
       # ```
-      # camera["iso"] # => 800
+      # camera["iso"]           # => 800
       # camera["shutterspeed2"] # => "1/30"
       #
-      # camera.update({ iso: 400, shutterspeed2: "1/60" })
+      # camera.update({iso: 400, shutterspeed2: "1/60"})
       #
-      # camera["iso"] # => 400
+      # camera["iso"]           # => 400
       # camera["shutterspeed2"] # => "1/60"
       # ```
       def update(attributes)
