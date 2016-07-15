@@ -1,4 +1,12 @@
 module GPhoto2
+  class Exception < ::Exception; end
+
+  class NoDevicesError < Exception
+    def initialize
+      super("no devices detected")
+    end
+  end
+
   class Error < Exception
     @code : Int32
     getter :code

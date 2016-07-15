@@ -2,7 +2,6 @@ require "./gphoto2_port/*"
 
 @[Link("libgphoto2_port")]
 lib LibGPhoto2Port
-
   #
   # Constants
   #
@@ -143,5 +142,4 @@ lib LibGPhoto2Port
   fun gp_port_message_codeset(codeset : LibC::Char*) : LibC::Char*
   fun gp_port_result_as_string(result : LibC::Int) : LibC::Char*
   fun gp_port_library_version(verbose : GPVersionVerbosity) : LibC::Char**
-
 end

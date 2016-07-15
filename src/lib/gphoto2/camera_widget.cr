@@ -1,7 +1,7 @@
 @[Link("libgphoto2")]
 lib LibGPhoto2
-
   struct GPContext; end
+
   # struct Camera; end
 
   #
@@ -98,5 +98,4 @@ lib LibGPhoto2
   fun gp_widget_set_changed(widget : CameraWidget*, changed : LibC::Int) : LibC::Int
   fun gp_widget_set_readonly(widget : CameraWidget*, readonly : LibC::Int) : LibC::Int
   fun gp_widget_get_readonly(widget : CameraWidget*, readonly : LibC::Int*) : LibC::Int
-
 end

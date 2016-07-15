@@ -1,6 +1,5 @@
 @[Link("libgphoto2_port")]
 lib LibGPhoto2Port
-
   #
   # Enums
   #
@@ -8,11 +7,10 @@ lib LibGPhoto2Port
   @[Flags]
   enum GPPortType
     Serial
-    USB = (1 << 2)
+    USB           = (1 << 2)
     Disk
     PTPIP
     USBDiskDirect
     USBSCSI
   end
-
 end

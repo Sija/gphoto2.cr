@@ -1,6 +1,5 @@
 @[Link("libgphoto2")]
 lib LibGPhoto2
-
   #
   # Structs
   #
@@ -35,5 +34,4 @@ lib LibGPhoto2
   fun gp_list_set_name(list : CameraList*, index : LibC::Int, name : LibC::Char*) : LibC::Int
   fun gp_list_set_value(list : CameraList*, index : LibC::Int, value : LibC::Char*) : LibC::Int
   fun gp_list_populate(list : CameraList*, format : LibC::Char*, count : LibC::Int) : LibC::Int
-
 end

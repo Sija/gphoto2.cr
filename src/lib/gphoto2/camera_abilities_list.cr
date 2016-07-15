@@ -1,8 +1,8 @@
 @[Link("libgphoto2")]
 lib LibGPhoto2
-
   # struct CameraAbilities; end
   struct CameraList; end
+
   struct GPContext; end
 
   #
@@ -28,5 +28,4 @@ lib LibGPhoto2
   fun gp_abilities_list_count(list : CameraAbilitiesList*) : LibC::Int
   fun gp_abilities_list_lookup_model(list : CameraAbilitiesList*, model : LibC::Char*) : LibC::Int
   fun gp_abilities_list_get_abilities(list : CameraAbilitiesList*, index : LibC::Int, abilities : CameraAbilities*) : LibC::Int
-
 end

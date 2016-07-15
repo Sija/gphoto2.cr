@@ -2,7 +2,6 @@ require "./gp_port_type"
 
 @[Link("libgphoto2_port")]
 lib LibGPhoto2Port
-
   #
   # Structs
   #
@@ -28,5 +27,4 @@ lib LibGPhoto2Port
 
   fun gp_port_info_get_library_filename(info : GPPortInfo*, lib : LibC::Char**) : LibC::Int
   fun gp_port_info_set_library_filename(info : GPPortInfo*, lib : LibC::Char*) : LibC::Int
-
 end

@@ -33,6 +33,9 @@ module GPhoto2
     end
 
     def save(pathname = default_filename)
+      unless Dir.exists? pathname
+        Dir.mkdir_p File.dirname(pathname)
+      end
       File.open pathname, "w", &.write(to_slice)
     end
 
@@ -52,8 +55,12 @@ module GPhoto2
       data.to_slice(size)
     end
 
+    def info
+      preview? ? nil : get_info
+    end
+
     def extname : String?
-      File.extname(@name)[1..-1].downcase if @name
+      File.extname(@name.not_nil!)[1..-1].downcase if @name
     end
 
     def image?
@@ -97,6 +104,17 @@ module GPhoto2
     private def get_data_and_size : Tuple(LibC::Char*, LibC::ULong)
       GPhoto2.check! LibGPhoto2.gp_file_get_data_and_size(self, out data, out size)
       {data, size}
+    end
+
+    private def get_info
+      GPhoto2.check! LibGPhoto2.gp_camera_file_get_info(
+        @camera,
+        @folder.not_nil!,
+        @name.not_nil!,
+        out info,
+        @camera.context
+      )
+      CameraFileInfo.new info
     end
   end
 end

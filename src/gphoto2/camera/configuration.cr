@@ -10,18 +10,14 @@ module GPhoto2
         reset
       end
 
-      # @return [WindowCameraWidget]
       def window
         @window ||= get_config
       end
 
-      # @example
-      #   # List camera configuration keys.
-      #   camera.config.keys
-      #   # => ["autofocusdrive", "manualfocusdrive", "controlmode", ...]
-      #
-      # @see #[]
-      # @see #[]=
+      # ```
+      # # List camera configuration keys.
+      # camera.config.keys # => ["autofocusdrive", "manualfocusdrive", "controlmode", ...]
+      # ```
       def config
         @config ||= window.flatten
       end
@@ -30,52 +26,45 @@ module GPhoto2
       #
       # All unsaved changes will be lost.
       #
-      # @example
-      #   camera["iso"]
-      #   # => 800
-      #
-      #   camera["iso"] = 200
-      #   camera.reload
-      #
-      #   camera["iso"]
-      #   # => 800
-      #
+      # ```
+      # camera["iso"] # => 800
+      # camera["iso"] = 200
+      # camera.reload
+      # camera["iso"] # => 800
+      # ```
       def reload : Void
         reset
         config
       end
 
-      # @example
-      #   camera["whitebalance"].to_s
-      #   # => "Automatic"
-      #
-      # @param [#to_s] key
-      # @return [GPhoto2::CameraWidget] the widget identified by `key`
+      # ```
+      # camera["whitebalance"].to_s # => "Automatic"
+      # ```
       def [](key : String | Symbol)
         config[key.to_s]
       end
 
-      # @example
-      #   iso = camera["iso"] as GPhoto2::RadioCameraWidget
-      #   iso.value = "800"
-      #   camera["iso"] = iso
-      #
+      # ```
+      # iso = camera["iso"].as(GPhoto2::RadioCameraWidget)
+      # iso.value = "800"
+      # camera["iso"] = iso
+      # ```
       def []=(key : String | Symbol, widget : CameraWidget)
         key = key.to_s
         set_single_config(key, widget)
         config[key] = widget
       end
 
-      # Updates the attribute identified by `key` with the specified `value`.
+      # Updates the attribute identified by *key* with the specified *value*.
       #
-      # This marks the configuration as "dirty", meaning a call to {#save} is
+      # This marks the configuration as "dirty", meaning a call to `#save` is
       # needed to actually update the configuration on the camera.
       #
-      # @example
-      #   camera["iso"] = 800
-      #   camera["f-number"] = "f/2.8"
-      #   camera["shutterspeed2"] = "1/60"
-      #
+      # ```
+      # camera["iso"] = 800
+      # camera["f-number"] = "f/2.8"
+      # camera["shutterspeed2"] = "1/60"
+      # ```
       def []=(key : String | Symbol, value)
         self[key].value = value
         @dirty = true
@@ -84,14 +73,11 @@ module GPhoto2
 
       # Updates the configuration on the camera.
       #
-      # @example
-      #   camera["iso"] = 800
-      #   camera.save
-      #   # => true
-      #   camera.save
-      #   # => false (nothing to update)
-      #
-      # @return [Boolean] whether setting the configuration was attempted
+      # ```
+      # camera["iso"] = 800
+      # camera.save # => true
+      # camera.save # => false (nothing to update)
+      # ```
       def save
         return false unless dirty?
         set_config
@@ -102,16 +88,15 @@ module GPhoto2
       # Updates the attributes of the camera from the given Hash and saves the
       # configuration.
       #
-      # @example
-      #   camera["iso"] # => 800
-      #   camera["shutterspeed2"] # => "1/30"
+      # ```
+      # camera["iso"]           # => 800
+      # camera["shutterspeed2"] # => "1/30"
       #
-      #   camera.update(iso: 400, shutterspeed2: "1/60")
+      # camera.update({iso: 400, shutterspeed2: "1/60"})
       #
-      #   camera["iso"] # => 400
-      #   camera["shutterspeed2"] # => "1/60"
-      #
-      # @return [Boolean] whether the configuration saved
+      # camera["iso"]           # => 400
+      # camera["shutterspeed2"] # => "1/60"
+      # ```
       def update(attributes)
         attributes.each do |key, value|
           self[key] = value
@@ -119,16 +104,11 @@ module GPhoto2
         save
       end
 
-      # @example
-      #   camera.dirty?
-      #   # => false
-      #
-      #   camera["iso"] = 400
-      #
-      #   camera.dirty?
-      #   # => true
-      #
-      # @return [Boolean] whether attributes have been changed
+      # ```
+      # camera.dirty? # => false
+      # camera["iso"] = 400
+      # camera.dirty? # => true
+      # ```
       def dirty?
         @dirty
       end
