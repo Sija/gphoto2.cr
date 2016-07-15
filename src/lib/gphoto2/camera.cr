@@ -2,9 +2,10 @@ require "./camera_file"
 
 @[Link("libgphoto2")]
 lib LibGPhoto2
-
   struct GPContext; end
+
   struct CameraWidget; end
+
   struct CameraList; end
 
   #
@@ -207,5 +208,4 @@ lib LibGPhoto2
   fun gp_camera_set_timeout_funcs(camera : Camera*, start_func : CameraTimeoutStartFunc, stop_func : CameraTimeoutStopFunc, data : Void*)
   fun gp_camera_start_timeout(camera : Camera*, timeout : LibC::UInt, func : CameraTimeoutFunc) : LibC::Int
   fun gp_camera_stop_timeout(camera : Camera*, id : LibC::UInt)
-
 end

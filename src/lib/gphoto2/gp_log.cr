@@ -1,6 +1,5 @@
 @[Link("libgphoto2")]
 lib LibGPhoto2
-
   #
   # Enums
   #
@@ -29,5 +28,4 @@ lib LibGPhoto2
 
   fun gp_log_with_source_location(level : GPLogLevel, file : LibC::Char*, line : LibC::Int, func : LibC::Char*, format : LibC::Char*, ...)
   fun gp_log_data(domain : LibC::Char*, data : LibC::Char*, size : LibC::UInt, format : LibC::Char*, ...)
-
 end

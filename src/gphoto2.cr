@@ -15,7 +15,7 @@ module GPhoto2
         "WARN"    => :red,
         "INFO"    => :blue,
         "DEBUG"   => :green,
-        "FATAL"   => :cyan
+        "FATAL"   => :cyan,
       }
       logger = Logger.new(STDERR)
       logger.formatter = Logger::Formatter.new do |severity, datetime, progname, message, io|
@@ -32,7 +32,7 @@ module GPhoto2
     severities = {
       LibGPhoto2::GPLogLevel::Error   => Logger::Severity::ERROR,
       LibGPhoto2::GPLogLevel::Verbose => Logger::Severity::INFO,
-      LibGPhoto2::GPLogLevel::Debug   => Logger::Severity::DEBUG
+      LibGPhoto2::GPLogLevel::Debug   => Logger::Severity::DEBUG,
     }
     logger.log severities[level], String.new(str), "libgphoto2"
   }
@@ -82,7 +82,7 @@ module GPhoto2
     return rc if check?(rc)
     raise Error.new(result_as_string(rc), rc)
   end
-  
+
   def self.check?(rc : Int32) : Bool
     rc >= LibGPhoto2::GP_OK
   end

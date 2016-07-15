@@ -1,6 +1,5 @@
 @[Link("libgphoto2")]
 lib LibGPhoto2
-
   #
   # Enums
   #
@@ -62,7 +61,7 @@ lib LibGPhoto2
   # Functions
   #
 
-  fun gp_context_new() : GPContext*
+  fun gp_context_new : GPContext*
   fun gp_context_ref(context : GPContext*)
   fun gp_context_unref(context : GPContext*)
 
@@ -84,5 +83,4 @@ lib LibGPhoto2
   fun gp_context_progress_start(context : GPContext*, target : LibC::Float, format : LibC::Char*) : LibC::UInt
   fun gp_context_progress_update(context : GPContext*, id : LibC::UInt, current : LibC::Float)
   fun gp_context_progress_stop(context : GPContext*, id : LibC::UInt)
-
 end

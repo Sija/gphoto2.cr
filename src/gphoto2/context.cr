@@ -12,7 +12,7 @@ module GPhoto2
       unref
     end
 
-    def close 
+    def close
       finalize
     end
 

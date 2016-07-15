@@ -1,6 +1,5 @@
 @[Link("libgphoto2")]
 lib LibGPhoto2
-
   #
   # Enums
   #
@@ -91,5 +90,4 @@ lib LibGPhoto2
   fun gp_file_copy(destination : CameraFile*, source : CameraFile*) : LibC::Int
   fun gp_file_append(camerafile : CameraFile*, data : LibC::Char*, size : LibC::ULong) : LibC::Int
   fun gp_file_slurp(camerafile : CameraFile*, data : LibC::Char*, size : LibC::SizeT, readlen : LibC::SizeT*) : LibC::Int
-
 end

@@ -22,13 +22,13 @@ module GPhoto2
         data =
           case type
           when .file_added?
-            path = CameraFilePath.new(data_ptr as LibGPhoto2::CameraFilePath*)
+            path = CameraFilePath.new(data_ptr.as(LibGPhoto2::CameraFilePath*))
             CameraFile.new(self, path.folder, path.name)
           when .folder_added?
-            path = CameraFilePath.new(data_ptr as LibGPhoto2::CameraFilePath*)
+            path = CameraFilePath.new(data_ptr.as(LibGPhoto2::CameraFilePath*))
             CameraFolder.new(self, "%s/%s" % [path.folder, path.name])
           when .unknown?
-            data_ptr.null? ? nil : String.new(data_ptr as LibC::Char*)
+            data_ptr.null? ? nil : String.new(data_ptr.as(LibC::Char*))
           else
             nil
           end
