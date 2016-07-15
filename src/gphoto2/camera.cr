@@ -122,6 +122,21 @@ module GPhoto2
       init
     end
 
+    # Ensures the camera is finalized when passed a block.
+    #
+    # ```
+    # # Find the cameras whose model names contain Nikon.
+    # cameras = GPhoto2::Camera.where(model: /nikon/i)
+    #
+    # # Pass a block, which will automatically close the camera.
+    # cameras.first.autorelease do |camera|
+    #   # ...
+    # end
+    # ```
+    def autorelease(&block : self -> _)
+      self.class.autorelease(self, block)
+    end
+
     def finalize
       @context.try &.finalize
       unref if ptr?
@@ -166,14 +181,14 @@ module GPhoto2
       can? LibGPhoto2::CameraOperation.parse operation.to_s
     end
 
-    private def can?(operation : LibGPhoto2::CameraOperation)
+    protected def can?(operation : LibGPhoto2::CameraOperation)
       abilities.wrapped.operations.includes? operation
     end
 
     def_equals @model, @port
 
     # Ensures the given camera is finalized when passed a block.
-    private def self.autorelease(camera, block : self -> _) : Void
+    protected def self.autorelease(camera, block : self -> _) : Void
       begin
         block.call camera
       ensure
