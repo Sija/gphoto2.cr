@@ -126,7 +126,7 @@ file.save
 file.delete
 ```
 
-More examples can be found in [`examples/`][examples].
+More examples can be found in [`examples/`][examples]. Documentation can be generated using `crystal doc` task.
 
 [gphoto]: http://www.gphoto.org/
 [examples]: https://github.com/Sija/gphoto2.cr/tree/master/examples
