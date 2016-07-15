@@ -117,9 +117,11 @@ module GPhoto2
       end
     end
 
-    def initialize(@model, @port)
-      # FIXME: should we make it lazy? see #ptr comments
-      init
+    def initialize(@model, @port); end
+
+    def ptr
+      init unless ptr?
+      super
     end
 
     # Ensures the camera is finalized when passed a block.
@@ -149,14 +151,6 @@ module GPhoto2
     def exit
       _exit
     end
-
-    # def ptr
-    #   # FIXME: init invokes gp_* methods with self as a receiver
-    #   # which in turn invokes self.ptr,
-    #   # which finally leads to infinte recursion
-    #   init unless ptr?
-    #   super
-    # end
 
     def abilities : CameraAbilities
       init unless @abilities
@@ -212,12 +206,16 @@ module GPhoto2
     end
 
     private def set_port_info(port_info : PortInfo)
-      GPhoto2.check! LibGPhoto2.gp_camera_set_port_info(self, port_info)
+      # Need to use `@ptr` instead of `self`, since we call
+      # `#init` inside of overridden `#ptr` method.
+      GPhoto2.check! LibGPhoto2.gp_camera_set_port_info(@ptr, port_info)
       @port_info = port_info
     end
 
     private def set_abilities(abilities : CameraAbilities)
-      GPhoto2.check! LibGPhoto2.gp_camera_set_abilities(self, abilities.wrapped)
+      # Need to use `@ptr` instead of `self`, since we call
+      # `#init` inside of overridden `#ptr` method.
+      GPhoto2.check! LibGPhoto2.gp_camera_set_abilities(@ptr, abilities.wrapped)
       @abilities = abilities
     end
 
