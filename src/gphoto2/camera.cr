@@ -41,7 +41,7 @@ module GPhoto2
       entries
     end
 
-    # Returns first available camera or raises `Exception`
+    # Returns first available camera or raises `NoDevicesError`
     # when no devices are detected.
     #
     # ```
@@ -52,11 +52,6 @@ module GPhoto2
     # ensure
     #   camera.finalize
     # end
-    #
-    # # Alternatively, pass a block, which will automatically close the camera.
-    # GPhoto2::Camera.first do |camera|
-    #   # ...
-    # end
     # ```
     def self.first : self
       cameras = all
@@ -64,7 +59,13 @@ module GPhoto2
       cameras.first
     end
 
-    # ditto
+    # Pass a block to automatically close the camera.
+    #
+    # ```
+    # GPhoto2::Camera.first do |camera|
+    #   # ...
+    # end
+    # ```
     def self.first(&block : self -> _) : Void
       camera = first
       autorelease(camera, block)
@@ -81,17 +82,18 @@ module GPhoto2
     # ensure
     #   camera.finalize
     # end
-    #
-    # # Alternatively, pass a block, which will automatically close the camera.
-    # GPhoto2::Camera.open(model, port) do |camera|
-    #   # ...
-    # end
     # ```
     def self.open(model : String, port : String) : self
       camera = new(model, port)
     end
 
-    # ditto
+    # Pass a block to automatically close the camera.
+    #
+    # ```
+    # GPhoto2::Camera.open(model, port) do |camera|
+    #   # ...
+    # end
+    # ```
     def self.open(model : String, port : String, &block : self -> _) : Void
       camera = open(model, port)
       autorelease(camera, block)
