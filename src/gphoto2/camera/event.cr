@@ -6,7 +6,7 @@ module GPhoto2
       end
 
       def wait_for(event_type : Symbol) : CameraEvent
-        wait_for LibGPhoto2::CameraEventType.parse event_type.to_s
+        wait_for LibGPhoto2::CameraEventType.parse(event_type.to_s)
       end
 
       private def wait_for(event_type : LibGPhoto2::CameraEventType) : CameraEvent
@@ -26,7 +26,7 @@ module GPhoto2
             CameraFile.new(self, path.folder, path.name)
           when .folder_added?
             path = CameraFilePath.new(data_ptr.as(LibGPhoto2::CameraFilePath*))
-            CameraFolder.new(self, "%s/%s" % [path.folder, path.name])
+            CameraFolder.new(self, File.join(path.folder, path.name))
           when .unknown?
             data_ptr.null? ? nil : String.new(data_ptr.as(LibC::Char*))
           else
