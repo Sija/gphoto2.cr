@@ -56,7 +56,7 @@ module GPhoto2
     end
 
     def info
-      get_info
+      preview? ? nil : get_info
     end
 
     def extname : String?

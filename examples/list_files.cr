@@ -17,7 +17,7 @@ end
 
 def visit(folder, level = 0)
   files = folder.files
-    .map    { |file| {file, file.info.file} }
+    .map    { |file| {file, file.info.try(&.file)} }
     .reject { |file, info| info.nil? }
     .map    { |file, info| {file, info.not_nil!} }
 
