@@ -33,6 +33,9 @@ module GPhoto2
     end
 
     def save(pathname = default_filename)
+      unless Dir.exists? pathname
+        Dir.mkdir_p File.dirname(pathname)
+      end
       File.open pathname, "w", &.write(to_slice)
     end
 
