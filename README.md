@@ -10,6 +10,20 @@ It also includes a facade to interact with the library in a more idiomatic Cryst
   * Crystal >= 0.18.4
   * libgphoto2 >= 2.5.0
 
+To install the latest libgphoto2, you can use `homebrew` or `apt-get`, depending on the platform:
+
+#### Mac OS X
+
+```
+$ brew install libgphoto2
+```
+
+#### Debian/Ubuntu
+
+```
+$ apt-get install libgphoto2-6 libgphoto2-dev libgphoto2-port10
+```
+
 ### Shard
 
 Add this to your application's `shard.yml`:
