@@ -55,7 +55,7 @@ module GPhoto2
     # ```
     def self.first : self
       cameras = all
-      raise "no devices detected" if cameras.empty?
+      raise NoDevicesError.new if cameras.empty?
       cameras.first
     end
 
