@@ -57,7 +57,7 @@ module GPhoto2
     end
 
     def extname : String?
-      File.extname(@name)[1..-1].downcase if @name
+      File.extname(@name.not_nil!)[1..-1].downcase if @name
     end
 
     def image?
