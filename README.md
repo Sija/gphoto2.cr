@@ -99,7 +99,7 @@ camera.dirty?
 camera.save
 
 # alternatively, update the camera configuration in one go
-camera.update({ "iso" => 200, "shutterspeed2" => "1/60", "f-number" => "f/1.8" })
+camera.update({ iso: 200, shutterspeed2: "1/60", "f-number": "f/1.8" })
 
 # take a photo
 file = camera.capture
