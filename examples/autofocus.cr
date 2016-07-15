@@ -13,8 +13,10 @@ GPhoto2::Camera.first do |camera|
     rescue GPhoto2::Error
       puts "autofocus failed... retrying"
       camera.reload
+      next
     end
+    camera.update({ autofocusdrive: false })
+    break
   end
-  camera.update({ autofocusdrive: false })
   camera.capture
 end
