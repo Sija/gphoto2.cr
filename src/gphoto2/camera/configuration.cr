@@ -27,10 +27,10 @@ module GPhoto2
       # All unsaved changes will be lost.
       #
       # ```
-      # camera["iso"] # => 800
-      # camera["iso"] = 200
+      # camera[:iso] # => 800
+      # camera[:iso] = 200
       # camera.reload
-      # camera["iso"] # => 800
+      # camera[:iso] # => 800
       # ```
       def reload : Void
         reset
@@ -38,6 +38,7 @@ module GPhoto2
       end
 
       # ```
+      # camera[:whitebalance].to_s # => "Automatic"
       # camera["whitebalance"].to_s # => "Automatic"
       # ```
       def [](key : String | Symbol)
@@ -45,9 +46,9 @@ module GPhoto2
       end
 
       # ```
-      # iso = camera["iso"].as(GPhoto2::RadioCameraWidget)
-      # iso.value = "800"
-      # camera["iso"] = iso
+      # iso = camera[:iso].as(GPhoto2::RadioCameraWidget)
+      # iso.value = 800
+      # camera[:iso] = iso
       # ```
       def []=(key : String | Symbol, widget : CameraWidget)
         key = key.to_s
@@ -74,7 +75,7 @@ module GPhoto2
       # Updates the configuration on the camera.
       #
       # ```
-      # camera["iso"] = 800
+      # camera[:iso] = 800
       # camera.save # => true
       # camera.save # => false (nothing to update)
       # ```
@@ -90,8 +91,8 @@ module GPhoto2
       # the configuration.
       #
       # ```
-      # camera["iso"]           # => 800
-      # camera["shutterspeed2"] # => "1/30"
+      # camera[:iso]           # => 800
+      # camera[:shutterspeed2] # => "1/30"
       #
       # # **kwargs
       # camera.update(iso: 400, shutterspeed2: "1/60")
@@ -100,8 +101,8 @@ module GPhoto2
       # # Hash
       # camera.update({"iso" => 400, "shutterspeed2" => "1/60"})
       #
-      # camera["iso"]           # => 400
-      # camera["shutterspeed2"] # => "1/60"
+      # camera[:iso]           # => 400
+      # camera[:shutterspeed2] # => "1/60"
       # ```
       def update(attributes)
         attributes.each do |key, value|
@@ -117,7 +118,7 @@ module GPhoto2
 
       # ```
       # camera.dirty? # => false
-      # camera["iso"] = 400
+      # camera[:iso] = 400
       # camera.dirty? # => true
       # ```
       def dirty?

@@ -5,13 +5,13 @@ describe GPhoto2 do
     it "converts return code to proper string" do
       codez = {
         # libgphoto2
-        LibGPhoto2::GP_ERROR_IO         => "I/O problem",
-        LibGPhoto2::GP_ERROR_IO_LOCK    => "Could not lock the device",
-        LibGPhoto2::GP_ERROR_NO_MEMORY  => "Out of memory",
+        LibGPhoto2::GP_ERROR_IO        => "I/O problem",
+        LibGPhoto2::GP_ERROR_IO_LOCK   => "Could not lock the device",
+        LibGPhoto2::GP_ERROR_NO_MEMORY => "Out of memory",
         # libgphoto2_port
-        LibGPhoto2::GP_ERROR_DIRECTORY_NOT_FOUND  => "Directory not found",
-        LibGPhoto2::GP_ERROR_CAMERA_BUSY          => "I/O in progress",
-        LibGPhoto2::GP_ERROR_NO_SPACE             => "Not enough free space"
+        LibGPhoto2::GP_ERROR_DIRECTORY_NOT_FOUND => "Directory not found",
+        LibGPhoto2::GP_ERROR_CAMERA_BUSY         => "I/O in progress",
+        LibGPhoto2::GP_ERROR_NO_SPACE            => "Not enough free space",
       }
       codez.each do |code, string|
         GPhoto2.result_as_string(code).should eq(string)

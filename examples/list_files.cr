@@ -2,7 +2,7 @@ require "../src/gphoto2"
 
 # Recursively list folder contents with extended metadata.
 
-MAGNITUDES = %w[bytes KiB MiB GiB]
+MAGNITUDES = %w(bytes KiB MiB GiB)
 
 def format_filesize(size, precision = 1)
   n = 0

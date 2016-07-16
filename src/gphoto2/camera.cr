@@ -111,7 +111,7 @@ module GPhoto2
     # # Select a camera by its port.
     # camera = GPhoto2::Camera.where(port: "usb:250,004").first
     # ```
-    def self.where(model : String | Regex | Nil = nil, port : String | Regex | Nil = nil) : Array(self)
+    def self.where(model : String | Regex = nil, port : String | Regex = nil) : Array(self)
       all.select do |camera|
         (!model || camera.model.match model) && (!port || camera.port.match port)
       end
@@ -172,7 +172,7 @@ module GPhoto2
     # camera.can? :capture_image # => true
     # ```
     def can?(operation : Symbol)
-      can? LibGPhoto2::CameraOperation.parse operation.to_s
+      can? LibGPhoto2::CameraOperation.parse(operation.to_s)
     end
 
     protected def can?(operation : LibGPhoto2::CameraOperation)

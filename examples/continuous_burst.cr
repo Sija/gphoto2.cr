@@ -19,7 +19,7 @@ GPhoto2::Camera.first do |camera|
 
     # The event data contains a `CameraFile` when the `:file_added` event is
     # triggered.
-    event.data as GPhoto2::CameraFile
+    event.data.as(GPhoto2::CameraFile)
   end
 
   # Save all the images to the current working directory.
