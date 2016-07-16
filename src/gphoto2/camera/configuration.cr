@@ -85,14 +85,20 @@ module GPhoto2
         true
       end
 
-      # Updates the attributes of the camera from the given Hash and saves the
-      # configuration.
+      # Updates the attributes of the camera from the given
+      # `Hash`, `NamedTuple` or keyword arguments and saves
+      # the configuration.
       #
       # ```
       # camera["iso"]           # => 800
       # camera["shutterspeed2"] # => "1/30"
       #
+      # # **kwargs
+      # camera.update(iso: 400, shutterspeed2: "1/60")
+      # # NamedTuple
       # camera.update({iso: 400, shutterspeed2: "1/60"})
+      # # Hash
+      # camera.update({"iso" => 400, "shutterspeed2" => "1/60"})
       #
       # camera["iso"]           # => 400
       # camera["shutterspeed2"] # => "1/60"
@@ -102,6 +108,11 @@ module GPhoto2
           self[key] = value
         end
         save
+      end
+
+      # :nodoc:
+      def update(**attributes)
+        update(attributes)
       end
 
       # ```

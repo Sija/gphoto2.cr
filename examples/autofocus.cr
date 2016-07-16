@@ -9,13 +9,13 @@ require "../src/gphoto2"
 GPhoto2::Camera.first do |camera|
   loop do |i|
     begin
-      camera.update({ autofocusdrive: true })
+      camera.update(autofocusdrive: true)
     rescue GPhoto2::Error
       puts "autofocus failed... retrying"
       camera.reload
       next
     end
-    camera.update({ autofocusdrive: false })
+    camera.update(autofocusdrive: false)
     break
   end
   camera.capture

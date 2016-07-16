@@ -8,13 +8,13 @@ require "../src/gphoto2"
 
 GPhoto2::Camera.first do |camera|
   # Start recording.
-  camera.update({ movie: true })
+  camera.update(movie: true)
 
   # Record for ~10 seconds.
   sleep 10.seconds
 
   # Stop recording.
-  camera.update({ movie: false })
+  camera.update(movie: false)
 
   # Block until the camera finishes with the file.
   event = camera.wait_for(:file_added)

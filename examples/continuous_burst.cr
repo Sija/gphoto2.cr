@@ -7,7 +7,7 @@ N = 3
 
 GPhoto2::Camera.first do |camera|
   # Set the camera to continuous burst mode.
-  camera.update({ capturemode: "Burst", burstnumber: N })
+  camera.update(capturemode: "Burst", burstnumber: N)
 
   # Use `#trigger` instead of `#capture` so the data remains in the camera
   # buffer.
