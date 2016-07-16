@@ -73,13 +73,13 @@ camera.config.keys
 # => ["autofocusdrive", "manualfocusdrive", "controlmode", ...]
 
 # read the current configuration value of an option
-camera["expprogram"].value
+camera[:expprogram].value
 # => "M"
-camera["whitebalance"].value
+camera[:whitebalance].value
 # => "Automatic"
 
 # list valid choices of a configuration option
-camera["whitebalance"].choices
+camera[:whitebalance].choices
 # => ["Automatic", "Daylight", "Fluorescent", "Tungsten", ...]
 
 # check if the configuration has changed
