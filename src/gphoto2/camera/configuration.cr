@@ -47,6 +47,7 @@ module GPhoto2
 
       # ```
       # iso = camera[:iso].as(GPhoto2::RadioCameraWidget)
+      # iso = camera[:iso].as_radio
       # iso.value = 800
       # camera[:iso] = iso
       # ```

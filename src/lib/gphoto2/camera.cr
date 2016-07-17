@@ -119,7 +119,7 @@ lib LibGPhoto2
     text : LibC::Char[32768] # 32 * 1024
   end
 
-  # FIXME!
+  # TODO?
   alias CameraFilesystem = Void*
 
   struct CameraFunctions
