@@ -24,7 +24,8 @@ def visit(widget, level = 0)
     step = (range.size > 1) ? range[1] - range[0] : 1.0
     puts "#{indent}options: #{range.first}..#{range.last}:step(#{step})"
   when .radio?, .menu?
-    puts "#{indent}options: #{widget.as(GPhoto2::RadioCameraWidget).choices.inspect.colorize(:dark_gray)}"
+    choices = widget.as(GPhoto2::RadioCameraWidget).choices
+    puts "#{indent}options: #{choices.inspect.colorize(:dark_gray)}"
   end
 end
 
