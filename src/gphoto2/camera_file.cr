@@ -7,10 +7,6 @@ module GPhoto2
     # The preview data is assumed to be a jpg.
     PREVIEW_FILENAME = "capture_preview.jpg"
 
-    IMAGE_EXTENSIONS = %w(jpg jpeg cr2 raw)
-    AUDIO_EXTENSIONS = %w(mp3 aae)
-    VIDEO_EXTENSIONS = %w(mov)
-
     @folder : String?
     getter :folder
 
@@ -61,22 +57,6 @@ module GPhoto2
 
     def extname : String?
       File.extname(@name.not_nil!)[1..-1].downcase if @name
-    end
-
-    def image?
-      IMAGE_EXTENSIONS.includes? extname
-    end
-
-    def audio?
-      AUDIO_EXTENSIONS.includes? extname
-    end
-
-    def video?
-      VIDEO_EXTENSIONS.includes? extname
-    end
-
-    def jpg?
-      (extname =~ /jpe?g$/i) != nil
     end
 
     def_equals @camera, @folder, @name
