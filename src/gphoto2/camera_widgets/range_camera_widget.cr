@@ -3,17 +3,8 @@ require "../camera_widget"
 module GPhoto2
   class RangeCameraWidget < CameraWidget
     def range
-      # TODO: remove it once Range start accepting float as type
-      # min, max, inc = get_range
-      # (min..max).step(inc).to_a
       min, max, inc = get_range
-      arr = [] of Float32
-      i = min
-      while i <= max
-        arr << i.to_f32
-        i += inc
-      end
-      arr
+      min.step(by: inc, limit: max).to_a
     end
 
     private def get_range
