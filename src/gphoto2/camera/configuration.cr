@@ -45,6 +45,11 @@ module GPhoto2
         config[key.to_s]
       end
 
+      # ditto
+      def []?(key : String | Symbol)
+        config[key.to_s]?
+      end
+
       # Updates the attribute identified by *key* with the specified *value*.
       #
       # This marks the configuration as "dirty", meaning a call to `#save` is
