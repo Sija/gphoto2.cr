@@ -8,6 +8,16 @@ module GPhoto2
       choices
     end
 
+    protected def set_value(value)
+      case value
+      when Regex
+        matches = choices.select &.try &.match(value)
+        super matches.first
+      else
+        super
+      end
+    end
+
     private def count_choices
       GPhoto2.check! LibGPhoto2.gp_widget_count_choices(self)
     end
