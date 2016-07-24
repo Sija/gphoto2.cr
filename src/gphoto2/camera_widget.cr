@@ -37,6 +37,16 @@ module GPhoto2
       super ptr
     end
 
+    def_equals type, name, value
+
+    def ==(other : String | Symbol)
+      other.to_s == self.to_s
+    end
+
+    def ==(other : Regex)
+      other === self.to_s
+    end
+
     def finalize : Void
       free
     end
