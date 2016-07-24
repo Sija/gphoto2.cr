@@ -6,12 +6,12 @@ module GPhoto2
       # folder = camera/"store_00010001/DCIM/100D5100"
       # folder.files.map(&.name) # => ["DSC_0001.JPG", "DSC_0002.JPG", ...]
       # ```
-      def filesystem(root : String = "/")
+      def filesystem(root : String = "/") : CameraFolder
         root = "/#{root}" unless root.starts_with? '/'
         CameraFolder.new(self, root)
       end
 
-      def /(root)
+      def /(root) : CameraFolder
         filesystem(root)
       end
 

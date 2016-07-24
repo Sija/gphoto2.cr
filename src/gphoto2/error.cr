@@ -11,7 +11,7 @@ module GPhoto2
     @code : Int32
     getter :code
 
-    def initialize(message, @code)
+    def initialize(message : String?, @code : Int32)
       super(message)
     end
 

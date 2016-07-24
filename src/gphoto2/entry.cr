@@ -3,13 +3,13 @@ module GPhoto2
     @camera_list : CameraList
     @index : Int32
 
-    def initialize(@camera_list, @index); end
+    def initialize(@camera_list : CameraList, @index : Int32); end
 
-    def name
+    def name : String?
       get_name
     end
 
-    def value
+    def value : String?
       get_value
     end
 

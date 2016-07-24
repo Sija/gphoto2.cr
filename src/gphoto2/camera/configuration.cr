@@ -80,7 +80,7 @@ module GPhoto2
       # camera.save # => true
       # camera.save # => false (nothing to update)
       # ```
-      def save
+      def save : Bool
         return false unless dirty?
         set_config
         @dirty = false
@@ -105,7 +105,7 @@ module GPhoto2
       # camera[:iso]           # => 400
       # camera[:shutterspeed2] # => "1/60"
       # ```
-      def update(attributes)
+      def update(attributes) : Bool
         attributes.each do |key, value|
           self[key] = value
         end
@@ -141,7 +141,7 @@ module GPhoto2
         GPhoto2.check! LibGPhoto2.gp_camera_set_config(self, window, context)
       end
 
-      private def set_single_config(name : String, widget : CameraWidget)
+      private def set_single_config(name, widget)
         GPhoto2.check! LibGPhoto2.gp_camera_set_single_config(self, name, widget, context)
       end
     end

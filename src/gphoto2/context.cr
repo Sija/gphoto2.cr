@@ -8,11 +8,11 @@ module GPhoto2
       new
     end
 
-    def finalize
+    def finalize : Void
       unref
     end
 
-    def close
+    def close : Void
       finalize
     end
 

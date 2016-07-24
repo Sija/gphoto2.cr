@@ -7,7 +7,7 @@ module GPhoto2
     @camera_abilities_list : CameraAbilitiesList
     @index : Int32
 
-    def self.find(model : String)
+    def self.find(model : String) : self
       context = Context.new
 
       camera_abilities_list = CameraAbilitiesList.new(context)
@@ -18,7 +18,7 @@ module GPhoto2
       abilities
     end
 
-    def initialize(@camera_abilities_list, @index)
+    def initialize(@camera_abilities_list : CameraAbilitiesList, @index : Int32)
       get_abilities
     end
 

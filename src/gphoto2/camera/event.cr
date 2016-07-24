@@ -1,7 +1,7 @@
 module GPhoto2
   class Camera
     module Event
-      def wait(timeout = 2000) : CameraEvent
+      def wait(timeout : Int32 = 2000) : CameraEvent
         wait_for_event(timeout)
       end
 
@@ -17,7 +17,7 @@ module GPhoto2
         event
       end
 
-      private def wait_for_event(timeout : Int32) : CameraEvent
+      private def wait_for_event(timeout) : CameraEvent
         GPhoto2.check! LibGPhoto2.gp_camera_wait_for_event(self, timeout, out type, out data_ptr, context)
         data =
           case type

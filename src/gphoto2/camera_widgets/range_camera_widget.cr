@@ -2,7 +2,7 @@ require "../camera_widget"
 
 module GPhoto2
   class RangeCameraWidget < CameraWidget
-    def range
+    def range : Array(LibC::Float)
       min, max, inc = get_range
       min.step(by: inc, limit: max).to_a
     end

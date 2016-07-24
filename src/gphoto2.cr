@@ -69,11 +69,11 @@ module GPhoto2
     ENV["DEBUG"]? == "1"
   end
 
-  def self.library_version(verbose = LibGPhoto2::GPVersionVerbosity::Short)
+  def self.library_version(verbose = LibGPhoto2::GPVersionVerbosity::Short) : String
     String.new LibGPhoto2.gp_library_version(verbose).value
   end
 
-  def self.result_as_string(rc : Int32)
+  def self.result_as_string(rc : Int32) : String
     String.new LibGPhoto2.gp_result_as_string(rc)
   end
 

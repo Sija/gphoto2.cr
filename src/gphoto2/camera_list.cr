@@ -12,7 +12,7 @@ module GPhoto2
       count
     end
 
-    def length
+    def length : Int32
       size
     end
 

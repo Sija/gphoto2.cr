@@ -26,7 +26,7 @@ module GPhoto2
       @@widgets
     end
 
-    def self.factory(ptr : LibGPhoto2::CameraWidget*, parent = nil) : self
+    def self.factory(ptr : LibGPhoto2::CameraWidget*, parent : self? = nil) : self
       type = ptr.value.type.to_s.downcase
       klass = @@widgets[type]
       klass.new(ptr, parent)

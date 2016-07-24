@@ -16,7 +16,7 @@ module GPhoto2
     @camera : Camera
     @data_and_size : Tuple(LibC::Char*, LibC::ULong)?
 
-    def initialize(@camera, @folder = nil, @name = nil)
+    def initialize(@camera : Camera, @folder : String? = nil, @name : String? = nil)
       new
     end
 
@@ -28,14 +28,14 @@ module GPhoto2
       @folder.nil? && @name.nil?
     end
 
-    def save(pathname = default_filename)
+    def save(pathname : String = default_filename) : Void
       unless Dir.exists? pathname
         Dir.mkdir_p File.dirname(pathname)
       end
       File.open pathname, "w", &.write(to_slice)
     end
 
-    def delete
+    def delete : Void
       @camera.delete(self)
     end
 
@@ -51,7 +51,7 @@ module GPhoto2
       data.to_slice(size)
     end
 
-    def info
+    def info : CameraFileInfo?
       preview? ? nil : get_info
     end
 

@@ -2,7 +2,7 @@ require "./text_camera_widget"
 
 module GPhoto2
   class RadioCameraWidget < TextCameraWidget
-    def choices
+    def choices : Array(String?)
       choices = [] of String?
       count_choices.times.each { |i| choices << get_choice(i) }
       choices

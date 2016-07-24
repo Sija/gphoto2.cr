@@ -117,7 +117,7 @@ module GPhoto2
       end
     end
 
-    def initialize(@model, @port); end
+    def initialize(@model : String, @port : String); end
 
     def ptr
       init unless ptr?
@@ -135,20 +135,20 @@ module GPhoto2
     #   # ...
     # end
     # ```
-    def autorelease(&block : self -> _)
+    def autorelease(&block : self -> _) : Void
       self.class.autorelease(self, block)
     end
 
-    def finalize
+    def finalize : Void
       @context.try &.finalize
       unref if ptr?
     end
 
-    def close
+    def close : Void
       finalize
     end
 
-    def exit
+    def exit : Void
       _exit
     end
 
