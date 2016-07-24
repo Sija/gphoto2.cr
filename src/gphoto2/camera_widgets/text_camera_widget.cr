@@ -9,18 +9,11 @@ module GPhoto2
     end
 
     protected def set_value(value)
-      case value
-      when String
+      if value.responds_to?(:to_s)
+        value = value.to_s
         ptr = Pointer(LibC::Char).malloc(value.size)
         ptr.copy_from(value.to_unsafe, value.size)
         set_value_ptr ptr
-      else
-        if value.responds_to?(:to_s)
-          value = value.to_s
-          ptr = Pointer(LibC::Char).malloc(value.size)
-          ptr.copy_from(value.to_unsafe, value.size)
-          set_value_ptr ptr
-        end
       end
     end
   end
