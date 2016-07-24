@@ -122,9 +122,7 @@ module GPhoto2
       # camera[:iso] = 400
       # camera.dirty? # => true
       # ```
-      def dirty?
-        @dirty
-      end
+      getter? :dirty
 
       private def reset
         @window = nil

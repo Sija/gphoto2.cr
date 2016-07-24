@@ -37,8 +37,8 @@ module GPhoto2
     logger.log severities[level], String.new(str), "libgphoto2"
   }
   if debug?
-    gp_log_level = LibGPhoto2::GPLogLevel.parse ENV["LIB_LOG_LEVEL"]? || "debug"
-    LibGPhoto2.gp_log_add_func gp_log_level, gp_logger, nil
+    gp_log_level = LibGPhoto2::GPLogLevel.parse(ENV["LIB_LOG_LEVEL"]? || "debug")
+    LibGPhoto2.gp_log_add_func(gp_log_level, gp_logger, nil)
   end
 
   macro log(*args, severity = Logger::Severity::DEBUG, backtrace_offset = 1)
@@ -77,13 +77,13 @@ module GPhoto2
     String.new LibGPhoto2.gp_result_as_string(rc)
   end
 
+  def self.check?(rc : Int32) : Bool
+    rc >= LibGPhoto2::GP_OK
+  end
+
   def self.check!(rc : Int32) : Int32
     log(rc, backtrace_offset: 2)
     return rc if check?(rc)
     raise Error.new(result_as_string(rc), rc)
-  end
-
-  def self.check?(rc : Int32) : Bool
-    rc >= LibGPhoto2::GP_OK
   end
 end

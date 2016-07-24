@@ -3,7 +3,7 @@ module GPhoto2
 
   class NoDevicesError < Exception
     def initialize
-      super("no devices detected")
+      super("No devices detected")
     end
   end
 

@@ -175,7 +175,8 @@ module GPhoto2
       can? LibGPhoto2::CameraOperation.parse(operation.to_s)
     end
 
-    protected def can?(operation : LibGPhoto2::CameraOperation)
+    # :nodoc:
+    def can?(operation : LibGPhoto2::CameraOperation)
       abilities.wrapped.operations.includes? operation
     end
 

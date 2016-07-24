@@ -9,7 +9,8 @@ module GPhoto2
         wait_for LibGPhoto2::CameraEventType.parse(event_type.to_s)
       end
 
-      private def wait_for(event_type : LibGPhoto2::CameraEventType) : CameraEvent
+      # :nodoc:
+      def wait_for(event_type : LibGPhoto2::CameraEventType) : CameraEvent
         event = wait
         until event.type == event_type
           event = wait

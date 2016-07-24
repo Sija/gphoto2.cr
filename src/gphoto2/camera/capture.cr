@@ -8,12 +8,17 @@ module GPhoto2
       # # And save it to the current working directory.
       # file.save
       # ```
-      def capture(type : Symbol) : CameraFile
-        capture LibGPhoto2::CameraCaptureType.parse type.to_s
+      def capture : CameraFile
+        capture LibGPhoto2::CameraCaptureType::Image
       end
 
       # :nodoc:
-      def capture(type = LibGPhoto2::CameraCaptureType::Image) : CameraFile
+      def capture(type : Symbol) : CameraFile
+        capture LibGPhoto2::CameraCaptureType.parse(type.to_s)
+      end
+
+      # :nodoc:
+      def capture(type : LibGPhoto2::CameraCaptureType) : CameraFile
         save
         path = _capture(type)
         CameraFile.new(self, path.folder, path.name)
