@@ -13,11 +13,11 @@ module GPhoto2
       when Int32
         ptr = Pointer(LibC::Int).malloc 1, value
         set_value_ptr ptr
-      when String
-        ptr = Pointer(LibC::Int).malloc 1, value.to_i32
-        set_value_ptr ptr
       when Bool
         ptr = Pointer(LibC::Int).malloc 1, value ? 1 : 0
+        set_value_ptr ptr
+      when String
+        ptr = Pointer(LibC::Int).malloc 1, value.to_i32
         set_value_ptr ptr
       end
     end

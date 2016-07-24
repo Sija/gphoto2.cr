@@ -9,7 +9,8 @@ module GPhoto2
     end
 
     protected def set_value(value)
-      if value.responds_to?(:to_s)
+      case
+      when value.responds_to?(:to_s)
         value = value.to_s
         ptr = Pointer(LibC::Char).malloc(value.size)
         ptr.copy_from(value.to_unsafe, value.size)
