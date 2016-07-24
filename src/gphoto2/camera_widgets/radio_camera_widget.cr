@@ -2,6 +2,25 @@ require "./text_camera_widget"
 
 module GPhoto2
   class RadioCameraWidget < TextCameraWidget
+    def >>(step : Int32) : String?
+      move_by step
+    end
+
+    def <<(step : Int32) : String?
+      move_by -step
+    end
+
+    def move_by(step : Int32) : String?
+      choices = self.choices
+      index = choices.index(self.value)
+      if index
+        next_value = choices[index + step]?
+        if next_value
+          self.value = next_value
+        end
+      end
+    end
+
     def choices : Array(String?)
       choices = [] of String?
       count_choices.times.each { |i| choices << get_choice(i) }
