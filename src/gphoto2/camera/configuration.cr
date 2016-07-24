@@ -45,18 +45,6 @@ module GPhoto2
         config[key.to_s]
       end
 
-      # ```
-      # iso = camera[:iso].as(GPhoto2::RadioCameraWidget)
-      # iso = camera[:iso].as_radio
-      # iso.value = 800
-      # camera[:iso] = iso
-      # ```
-      def []=(key : String | Symbol, widget : CameraWidget)
-        key = key.to_s
-        set_single_config(key, widget)
-        config[key] = widget
-      end
-
       # Updates the attribute identified by *key* with the specified *value*.
       #
       # This marks the configuration as "dirty", meaning a call to `#save` is
@@ -71,6 +59,19 @@ module GPhoto2
         self[key].value = value
         @dirty = true
         value
+      end
+
+      # ```
+      # iso = camera[:iso].as_radio
+      # iso.value = iso.choices.first
+      # camera << iso
+      # ```
+      def <<(widget : CameraWidget) : self
+        key = widget.name.not_nil!
+        # set_single_config(key, widget)
+        config[key] = widget
+        @dirty = true
+        self
       end
 
       # Updates the configuration on the camera.
