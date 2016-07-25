@@ -39,14 +39,31 @@ module GPhoto2
 
     def_equals type, name, value
 
+    # Compares `#value` with given *other*.
+    #
+    # ```
+    # camera[:whitebalance] == "Automatic"
+    # camera[:shutterspeed] == 0.5
+    # camera[:iso] == 400
+    # ```
     def ==(other)
       other.to_s == self.to_s
     end
 
+    # Compares `#value` with given `Symbol`.
+    #
+    # ```
+    # camera[:whitebalance] == :automatic
+    # ```
     def ==(other : Symbol)
       other.to_s.capitalize == self.to_s
     end
 
+    # Compares `#value` with given `Regex`.
+    #
+    # ```
+    # camera[:whitebalance] == /Automatic/
+    # ```
     def ==(other : Regex)
       other === self.to_s
     end
