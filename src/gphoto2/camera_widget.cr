@@ -117,6 +117,28 @@ module GPhoto2
       other === self.to_s
     end
 
+    # Returns true if `#value` matches at least one element of the collection.
+    #
+    # ```
+    # camera[:autoexposuremode].in? %w(Manual Bulb)
+    # ```
+    def in?(other)
+      other.any? { |value| self == value }
+    end
+
+    # Returns true if `#value` is included in the *other* `Range`.
+    #
+    # ```
+    # camera[:aperture].in? 4..7.1
+    # camera[:iso].in? 100..400
+    # ```
+    def in?(other : Range)
+      value = self.to_s
+      other.includes? (value =~ /^\d+\.\d+$/) \
+        ? value.to_f
+        : value.to_i
+    end
+
     protected abstract def get_value
     protected abstract def set_value(value)
 
