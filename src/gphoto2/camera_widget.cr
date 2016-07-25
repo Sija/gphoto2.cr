@@ -43,6 +43,10 @@ module GPhoto2
       other.to_s == self.to_s
     end
 
+    def ==(other : Symbol)
+      other.to_s.capitalize == self.to_s
+    end
+
     def ==(other : Regex)
       other === self.to_s
     end
