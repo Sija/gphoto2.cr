@@ -22,6 +22,41 @@ module GPhoto2
         @config ||= window.flatten
       end
 
+      # Preserves config for a block call.
+      #
+      # ```
+      # # Original values
+      # camera[:aperture] # => 4
+      # camera[:iso]      # => 400
+      #
+      # # Capture photo with different settings,
+      # # while preserving original values
+      # camera.preserving_config do
+      #   camera.update({
+      #     aperture: 8,
+      #     iso:      200,
+      #   })
+      #   file = camera.capture
+      #   file.save
+      # end
+      #
+      # # Original values are being preserved
+      # camera[:aperture] # => 4
+      # camera[:iso]      # => 400
+      # ```
+      def preserving_config(&block) : Void
+        previous_config = config.reduce({} of String => String) do |memo, (key, widget)|
+          memo[key] = widget.to_s rescue CameraWidget::NotImplementedError
+          memo
+        end
+        begin
+          yield self
+        ensure
+          diff = previous_config.select { |key, value| self[key] != value }
+          update diff
+        end
+      end
+
       # Reloads the camera configuration.
       #
       # All unsaved changes will be lost.
