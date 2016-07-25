@@ -39,7 +39,7 @@ module GPhoto2
 
     def_equals type, name, value
 
-    def ==(other : String | Symbol)
+    def ==(other)
       other.to_s == self.to_s
     end
 
