@@ -37,37 +37,6 @@ module GPhoto2
       super ptr
     end
 
-    def_equals type, name, value
-
-    # Compares `#value` with given *other*.
-    #
-    # ```
-    # camera[:whitebalance] == "Automatic"
-    # camera[:shutterspeed] == 0.5
-    # camera[:iso] == 400
-    # ```
-    def ==(other)
-      other.to_s == self.to_s
-    end
-
-    # Compares `#value` with given `Symbol`.
-    #
-    # ```
-    # camera[:whitebalance] == :automatic
-    # ```
-    def ==(other : Symbol)
-      other.to_s.capitalize == self.to_s
-    end
-
-    # Compares `#value` with given `Regex`.
-    #
-    # ```
-    # camera[:whitebalance] == /Automatic/
-    # ```
-    def ==(other : Regex)
-      other === self.to_s
-    end
-
     def finalize : Void
       free
     end
@@ -103,7 +72,7 @@ module GPhoto2
       children
     end
 
-    def flatten(map = {} of String => self)
+    def flatten(map = {} of String => self) : Hash(String, self)
       case type
       when .window?, .section?
         children.each &.flatten(map)
@@ -115,6 +84,37 @@ module GPhoto2
 
     def to_s(io)
       io << value
+    end
+
+    def_equals type, name, value
+
+    # Compares `#value` with given *other*.
+    #
+    # ```
+    # camera[:whitebalance] == "Automatic"
+    # camera[:shutterspeed] == 0.5
+    # camera[:iso] == 400
+    # ```
+    def ==(other)
+      self.to_s == other.to_s
+    end
+
+    # Compares `#value` with given `Symbol`.
+    #
+    # ```
+    # camera[:whitebalance] == :automatic
+    # ```
+    def ==(other : Symbol)
+      self.to_s == other.to_s.capitalize
+    end
+
+    # Compares `#value` with given `Regex`.
+    #
+    # ```
+    # camera[:whitebalance] == /Automatic/
+    # ```
+    def ==(other : Regex)
+      other === self.to_s
     end
 
     protected abstract def get_value
