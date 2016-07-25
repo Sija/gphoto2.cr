@@ -67,9 +67,7 @@ module GPhoto2
     end
 
     def children : Array(self)
-      children = [] of self
-      count_children.times.each { |i| children << get_child(i) }
-      children
+      Array(self).new(count_children) { |i| get_child(i) }
     end
 
     def flatten(map = {} of String => self) : Hash(String, self)
