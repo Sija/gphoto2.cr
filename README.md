@@ -64,6 +64,11 @@ GPhoto2::Camera.first do |camera|
   # ...
 end
 
+# ...or use `#autorelease` on any `Camera` instance
+camera.autorelease do
+  # ...
+end
+
 # check camera abilities (see `LibGPhoto2::CameraOperation`)
 camera.can? :capture_image
 # => true
@@ -101,6 +106,11 @@ camera.save
 # alternatively, update the camera configuration in one go
 camera.update({ iso: 200, shutterspeed2: "1/60", "f-number": "f/1.8" })
 
+# ...do all of above while preserving camera original configuration
+camera.preserving_config do
+  # ...
+end
+
 # take a photo
 file = camera.capture
 
@@ -133,7 +143,9 @@ More examples can be found in [`examples/`][examples]. Documentation can be gene
 
 ## Development
 
-TODO: Write development instructions here
+```
+crystal spec
+```
 
 ## Contributing
 
