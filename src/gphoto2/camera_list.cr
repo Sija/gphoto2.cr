@@ -17,7 +17,7 @@ module GPhoto2
     end
 
     def to_a : Array(Entry)
-      size.times.map { |i| Entry.new(self, i) }.to_a
+      Array(Entry).new(size) { |i| Entry.new(self, i) }
     end
 
     private def new

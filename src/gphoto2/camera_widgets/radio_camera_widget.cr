@@ -22,9 +22,7 @@ module GPhoto2
     end
 
     def choices : Array(String?)
-      choices = [] of String?
-      count_choices.times.each { |i| choices << get_choice(i) }
-      choices
+      Array(String?).new(count_choices) { |i| get_choice(i) }
     end
 
     protected def set_value(value)
