@@ -9,7 +9,7 @@ module GPhoto2
 
     macro inherited
       {% factory_id = @type.name.gsub(/^GPhoto2::/, "").gsub(/CameraWidget$/, "").underscore %}
-      CameraWidget.widgets[{{factory_id.stringify}}] = self
+      ::GPhoto2::CameraWidget.widgets[{{factory_id.stringify}}] = self
 
       class ::GPhoto2::CameraWidget
         def as_{{factory_id}} : {{@type.name}}
