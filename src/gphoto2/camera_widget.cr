@@ -132,7 +132,7 @@ module GPhoto2
     # ```
     def in?(other : Range)
       value = self.to_s
-      other.includes? (value =~ /^\d+\.\d+$/) \
+      other.includes? (value =~ /^\-?\d+\.\d+$/) \
         ? value.to_f
         : value.to_i
     end
