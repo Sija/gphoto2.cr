@@ -10,7 +10,7 @@ module GPhoto2
         reset
       end
 
-      def window
+      def window : CameraWidget
         @window ||= get_config
       end
 
@@ -18,7 +18,7 @@ module GPhoto2
       # # List camera configuration keys.
       # camera.config.keys # => ["autofocusdrive", "manualfocusdrive", "controlmode", ...]
       # ```
-      def config
+      def config : Hash(String, CameraWidget)
         @config ||= window.flatten
       end
 
