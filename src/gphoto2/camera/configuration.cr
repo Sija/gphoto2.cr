@@ -165,7 +165,7 @@ module GPhoto2
       # ```
       getter? :dirty
 
-      private def reset
+      private def reset : Void
         @window = nil
         @config = nil
         @dirty = false

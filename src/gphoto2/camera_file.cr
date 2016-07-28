@@ -7,11 +7,8 @@ module GPhoto2
     # The preview data is assumed to be a jpg.
     PREVIEW_FILENAME = "capture_preview.jpg"
 
-    @folder : String?
-    getter :folder
-
-    @name : String?
-    getter :name
+    getter folder : String?
+    getter name : String?
 
     @camera : Camera
     @data_and_size : Tuple(LibC::Char*, LibC::ULong)?

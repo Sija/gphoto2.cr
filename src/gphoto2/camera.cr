@@ -11,11 +11,8 @@ module GPhoto2
     include Event
     include Filesystem
 
-    @model : String
-    getter :model
-
-    @port : String
-    getter :port
+    getter model : String
+    getter port : String
 
     @context : Context?
     @abilities : CameraAbilities?

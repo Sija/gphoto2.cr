@@ -1,7 +1,6 @@
 module GPhoto2
   class CameraFolder
-    @path : String
-    getter :path
+    getter path : String
 
     def initialize(@camera : Camera, @path : String = "/"); end
 

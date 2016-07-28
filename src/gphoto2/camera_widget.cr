@@ -18,8 +18,7 @@ module GPhoto2
       end
     end
 
-    @parent : self?
-    getter :parent
+    getter parent : self?
 
     @@widgets = {} of String => self.class
 
@@ -127,6 +126,7 @@ module GPhoto2
     # Returns true if `#value` is included in the *other* `Range`.
     #
     # ```
+    # camera[:exposurecompensation].in? -1.6..0.6
     # camera[:aperture].in? 4..7.1
     # camera[:iso].in? 100..400
     # ```
@@ -167,11 +167,11 @@ module GPhoto2
       !ptr ? nil : String.new ptr
     end
 
-    private def count_children : Int32
+    private def count_children
       GPhoto2.check! LibGPhoto2.gp_widget_count_children(self)
     end
 
-    private def get_child(index) : self
+    private def get_child(index)
       GPhoto2.check! LibGPhoto2.gp_widget_get_child(self, index, out widget)
       CameraWidget.factory(widget, self)
     end
