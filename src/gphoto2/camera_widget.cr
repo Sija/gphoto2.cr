@@ -19,13 +19,13 @@ module GPhoto2
       end
     end
 
-    @@widgets = {} of String => self.class
+    @@widgets = {} of String => CameraWidget.class
 
     def self.widgets
       @@widgets
     end
 
-    def self.factory(ptr : LibGPhoto2::CameraWidget*, parent : self? = nil) : self
+    def self.factory(ptr : LibGPhoto2::CameraWidget*, parent : CameraWidget? = nil) : CameraWidget
       type = ptr.value.type.to_s.downcase
       klass = @@widgets[type]
       klass.new(ptr, parent)
@@ -35,9 +35,9 @@ module GPhoto2
   abstract class CameraWidget
     include GPhoto2::Struct(LibGPhoto2::CameraWidget)
 
-    getter parent : self?
+    getter parent : CameraWidget?
 
-    def initialize(ptr : LibGPhoto2::CameraWidget*, @parent : self? = nil)
+    def initialize(ptr : LibGPhoto2::CameraWidget*, @parent : CameraWidget? = nil)
       super ptr
     end
 
@@ -70,11 +70,11 @@ module GPhoto2
       value
     end
 
-    def children : Array(self)
-      Array(self).new(count_children) { |i| get_child(i) }
+    def children : Array(CameraWidget)
+      Array(CameraWidget).new(count_children) { |i| get_child(i) }
     end
 
-    def flatten(map = {} of String => self) : Hash(String, self)
+    def flatten(map = {} of String => CameraWidget) : Hash(String, CameraWidget)
       case type
       when .window?, .section?
         children.each &.flatten(map)
