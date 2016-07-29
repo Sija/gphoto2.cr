@@ -1,17 +1,17 @@
 module GPhoto2
   class Camera
     module Configuration
-      @dirty : Bool = false
-      @window : CameraWidget?
+      @window : WindowCameraWidget?
       @config : Hash(String, CameraWidget)?
+      @dirty : Bool = false
 
       def initialize(model, port)
         super
         reset
       end
 
-      def window : CameraWidget
-        @window ||= get_config
+      def window : WindowCameraWidget
+        @window ||= get_config.as(WindowCameraWidget)
       end
 
       # ```
