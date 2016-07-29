@@ -4,7 +4,7 @@ module GPhoto2
   module ManagedStruct(T)
     include Struct(T)
 
-    def initialize(ptr : T*)
+    def initialize(ptr : T*? = nil)
       self.ptr = ptr
     end
 
