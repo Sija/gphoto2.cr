@@ -4,11 +4,12 @@ require "./struct"
 module GPhoto2
   abstract class CameraWidget
     class NotImplementedError < Exception; end
+  end
 
-    include GPhoto2::Struct(LibGPhoto2::CameraWidget)
-
+  abstract class CameraWidget
     macro inherited
       {% factory_id = @type.name.gsub(/^GPhoto2::/, "").gsub(/CameraWidget$/, "").underscore %}
+
       ::GPhoto2::CameraWidget.widgets[{{factory_id.stringify}}] = self
 
       class ::GPhoto2::CameraWidget
@@ -17,8 +18,6 @@ module GPhoto2
         end
       end
     end
-
-    getter parent : self?
 
     @@widgets = {} of String => self.class
 
@@ -31,6 +30,12 @@ module GPhoto2
       klass = @@widgets[type]
       klass.new(ptr, parent)
     end
+  end
+
+  abstract class CameraWidget
+    include GPhoto2::Struct(LibGPhoto2::CameraWidget)
+
+    getter parent : self?
 
     def initialize(ptr : LibGPhoto2::CameraWidget*, @parent : self? = nil)
       super ptr
