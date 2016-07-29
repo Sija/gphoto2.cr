@@ -11,7 +11,7 @@ module GPhoto2
       end
 
       def window : WindowCameraWidget
-        @window ||= get_config.as(WindowCameraWidget)
+        @window ||= get_config
       end
 
       # ```
@@ -173,7 +173,7 @@ module GPhoto2
 
       private def get_config
         GPhoto2.check! LibGPhoto2.gp_camera_get_config(self, out window, context)
-        CameraWidget.factory window
+        CameraWidget.factory(window).as(WindowCameraWidget)
       end
 
       private def set_config
