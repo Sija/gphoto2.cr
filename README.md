@@ -157,4 +157,9 @@ crystal spec
 
 ## Contributors
 
+- [zaeleus](https://github.com/zaeleus) Michael Macias - the author of the original implementation
 - [Sija](https://github.com/Sija) Sijawusz Pur Rahnama - creator, maintainer
+
+## References
+
+- Original implementation in `Ruby` - https://github.com/zaeleus/ffi-gphoto2
