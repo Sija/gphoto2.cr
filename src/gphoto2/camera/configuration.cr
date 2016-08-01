@@ -54,7 +54,7 @@ module GPhoto2
           yield self
         ensure
           diff = config_snapshot.select { |key, value| self[key] != value }
-          update diff
+          update diff unless diff.empty?
         end
       end
 
