@@ -44,17 +44,23 @@ module GPhoto2
       # camera[:aperture] # => 4
       # camera[:iso]      # => 400
       # ```
-      def preserving_config(&block) : Void
-        previous_config = config.reduce({} of String => String) do |memo, (key, widget)|
+      def preserving_config(keys : Array(String | Symbol) = nil, &block) : Void
+        config_snapshot = keys ? config.select(keys.map &.to_s) : config
+        config_snapshot = config_snapshot.reduce({} of String => String) do |memo, (key, widget)|
           memo[key] = widget.to_s rescue CameraWidget::NotImplementedError
           memo
         end
         begin
           yield self
         ensure
-          diff = previous_config.select { |key, value| self[key] != value }
+          diff = config_snapshot.select { |key, value| self[key] != value }
           update diff
         end
+      end
+
+      # :nodoc:
+      def preserving_config(*keys, &block) : Void
+        preserving_config(keys.to_a, &block)
       end
 
       # Reloads the camera configuration.
