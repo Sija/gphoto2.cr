@@ -83,8 +83,14 @@ camera[:expprogram].value
 camera[:whitebalance].value
 # => "Automatic"
 
+# compare the current configuration value
+camera[:whitebalance] == "Automatic"
+camera[:whitebalance] == /Automatic/i
+camera[:whitebalance] == :automatic
+# => true
+
 # list valid choices of a configuration option
-camera[:whitebalance].choices
+camera[:whitebalance].as_radio.choices
 # => ["Automatic", "Daylight", "Fluorescent", "Tungsten", ...]
 
 # check if the configuration has changed
@@ -95,6 +101,9 @@ camera.dirty?
 camera["iso"] = 800
 camera["f-number"] = "f/4.5"
 camera["shutterspeed2"] = "1/30"
+
+# set radio widget value to first matching option
+camera[:imageformat] = /Medium(.+?)JPEG/i
 
 # check if the configuration has changed
 camera.dirty?
