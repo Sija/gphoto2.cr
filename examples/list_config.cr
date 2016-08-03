@@ -15,6 +15,7 @@ def visit(widget, level = 0)
   indent += "  "
 
   puts "#{indent}label: #{widget.label.colorize(:yellow)}"
+  puts "#{indent}info: #{widget.info.colorize(:yellow)}" if !widget.info.try(&.empty?)
   puts "#{indent}type: #{widget.type.colorize(:magenta)}"
   puts "#{indent}readonly?: #{widget.readonly?.to_s.colorize(:cyan)}" if widget.readonly?
   puts "#{indent}value: #{widget.value.try(&.colorize(:blue)) || "<nil>".colorize(:red)}"
