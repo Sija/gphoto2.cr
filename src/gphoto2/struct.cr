@@ -7,7 +7,7 @@ module GPhoto2
     end
 
     def to_unsafe : T*
-      # GPhoto2.log ptr, backtrace_offset: 2
+      # GPhoto2.log ptr, backtrace_offset: 1
       ptr
     end
 
@@ -24,7 +24,7 @@ module GPhoto2
     end
 
     protected def ptr=(ptr) : T*?
-      # GPhoto2.log ptr, backtrace_offset: 2
+      # GPhoto2.log ptr, backtrace_offset: 1
       @ptr = ptr
     end
   end

@@ -41,26 +41,29 @@ module GPhoto2
     LibGPhoto2.gp_log_add_func(gp_log_level, gp_logger, nil)
   end
 
-  macro log(*args, severity = Logger::Severity::DEBUG, backtrace_offset = 1)
-    if GPhoto2.debug?
+  macro log(*args, severity = Logger::Severity::DEBUG, backtrace_offset = 0)
+    if ::GPhoto2.debug?
       %caller_list = caller.dup
       while !%caller_list.empty? && %caller_list.first? !~ /caller:Array\(String\)/i
         %caller_list.shift?
       end
-      %caller_list.shift {{backtrace_offset}}
+      %caller_list.shift?
+      {% if backtrace_offset > 0 %}
+        %caller_list.shift {{backtrace_offset}}
+      {% end %}
       unless %caller_list.empty?
         str = String.build do |str|
-          {% if backtrace_offset > 1 %}
+          if %caller_list.size > 1
             str << %caller_list.first.colorize(:dark_gray)
-          {% end %}
+          end
           {% if !args.empty? %}
-            {% if backtrace_offset > 1 %}
+            if %caller_list.size > 1
               str << " -- "
-            {% end %}
+            end
             str << "{{args}} = ".colorize(:light_gray) << {{args}}
           {% end %}
         end
-        GPhoto2.logger.log {{severity.id}}, str, "gphoto2.cr"
+        ::GPhoto2.logger.log {{severity.id}}, str, "gphoto2.cr"
       end
     end
   end
@@ -82,7 +85,7 @@ module GPhoto2
   end
 
   def self.check!(rc : Int32) : Int32
-    log(rc, backtrace_offset: 2)
+    log(rc, backtrace_offset: 1)
     return rc if check?(rc)
     raise Error.new(result_as_string(rc), rc)
   end
