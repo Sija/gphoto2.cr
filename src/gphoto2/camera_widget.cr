@@ -53,12 +53,16 @@ module GPhoto2
       get_readonly
     end
 
+    def type : LibGPhoto2::CameraWidgetType
+      get_type
+    end
+
     def id : LibC::Int
       get_id
     end
 
-    def type : LibGPhoto2::CameraWidgetType
-      get_type
+    def name : String?
+      get_name
     end
 
     def label : String?
@@ -67,10 +71,6 @@ module GPhoto2
 
     def info : String?
       get_info
-    end
-
-    def name : String?
-      get_name
     end
 
     def value
@@ -174,23 +174,23 @@ module GPhoto2
       readonly == 1
     end
 
-    private def get_id
-      GPhoto2.check! LibGPhoto2.gp_widget_get_id(self, out id)
-      id
-    end
-
     private def get_type
       GPhoto2.check! LibGPhoto2.gp_widget_get_type(self, out type)
       type
     end
 
-    private def get_label
-      GPhoto2.check! LibGPhoto2.gp_widget_get_label(self, out ptr)
-      !ptr ? nil : String.new ptr
+    private def get_id
+      GPhoto2.check! LibGPhoto2.gp_widget_get_id(self, out id)
+      id
     end
 
     private def get_name
       GPhoto2.check! LibGPhoto2.gp_widget_get_name(self, out ptr)
+      !ptr ? nil : String.new ptr
+    end
+
+    private def get_label
+      GPhoto2.check! LibGPhoto2.gp_widget_get_label(self, out ptr)
       !ptr ? nil : String.new ptr
     end
 
