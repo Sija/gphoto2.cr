@@ -179,7 +179,7 @@ module GPhoto2
       abilities.wrapped.operations.includes? operation
     end
 
-    def_equals_and_hash @model, @port
+    def_equals @model, @port
 
     # Ensures the given camera is finalized when passed a block.
     protected def self.autorelease(camera, block : self -> _) : Void

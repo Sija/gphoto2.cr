@@ -54,7 +54,7 @@ module GPhoto2
       io << name
     end
 
-    def_equals_and_hash @camera, @path
+    def_equals @camera, @path
 
     private def folder_list_files : Array(CameraFile)
       list = CameraList.new
