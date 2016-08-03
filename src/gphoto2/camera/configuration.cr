@@ -53,12 +53,14 @@ module GPhoto2
           yield self
         ensure
           diff = config_snapshot.select { |key, value| self[key] != value }
-          return if diff.empty?
-          begin
-            update diff
-          rescue GPhoto2::Error
-            reload
-            update diff
+          # return if diff.empty? # FIXME: Crystal BUG?
+          unless diff.empty?
+            begin
+              update diff
+            rescue GPhoto2::Error
+              reload
+              update diff
+            end
           end
         end
       end
