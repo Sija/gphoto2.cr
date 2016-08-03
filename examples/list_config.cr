@@ -16,6 +16,7 @@ def visit(widget, level = 0)
 
   puts "#{indent}label: #{widget.label.colorize(:yellow)}"
   puts "#{indent}type: #{widget.type.colorize(:magenta)}"
+  puts "#{indent}readonly?: #{widget.readonly?.to_s.colorize(:cyan)}" if widget.readonly?
   puts "#{indent}value: #{widget.value.try(&.colorize(:blue)) || "<nil>".colorize(:red)}"
 
   case widget.type

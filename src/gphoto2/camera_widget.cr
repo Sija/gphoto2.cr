@@ -49,6 +49,10 @@ module GPhoto2
       finalize
     end
 
+    def readonly?
+      get_readonly
+    end
+
     def type : LibGPhoto2::CameraWidgetType
       get_type
     end
@@ -155,6 +159,11 @@ module GPhoto2
 
     private def free
       GPhoto2.check! LibGPhoto2.gp_widget_free(self)
+    end
+
+    private def get_readonly
+      GPhoto2.check! LibGPhoto2.gp_widget_get_readonly(self, out readonly)
+      readonly == 1
     end
 
     private def get_type
