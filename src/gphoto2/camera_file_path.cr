@@ -10,6 +10,6 @@ module GPhoto2
       String.new wrapped.folder.to_unsafe
     end
 
-    def_equals name, folder
+    def_equals_and_hash name, folder
   end
 end
