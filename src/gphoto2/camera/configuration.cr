@@ -5,8 +5,7 @@ module GPhoto2
       @config : Hash(String, CameraWidget)?
       @dirty : Bool = false
 
-      def initialize(model, port)
-        super
+      def initialize(model : String, port : String)
         reset
       end
 
