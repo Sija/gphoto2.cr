@@ -41,12 +41,8 @@ module GPhoto2
       super ptr
     end
 
-    def finalize : Void
-      free
-    end
-
     def close : Void
-      finalize
+      free
     end
 
     def readonly?
@@ -167,6 +163,7 @@ module GPhoto2
 
     private def free
       GPhoto2.check! LibGPhoto2.gp_widget_free(self)
+      self.ptr = nil
     end
 
     private def get_readonly

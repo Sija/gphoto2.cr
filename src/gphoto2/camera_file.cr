@@ -17,7 +17,7 @@ module GPhoto2
       new
     end
 
-    def finalize : Void
+    def close : Void
       free
     end
 
@@ -65,6 +65,7 @@ module GPhoto2
 
     private def free
       GPhoto2.check! LibGPhoto2.gp_file_free(self)
+      self.ptr = nil
     end
 
     private def default_filename

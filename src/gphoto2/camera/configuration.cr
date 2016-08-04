@@ -78,6 +78,7 @@ module GPhoto2
       # camera[:iso] # => 800
       # ```
       def reload : Void
+        @window.try &.close
         reset
         config
       end

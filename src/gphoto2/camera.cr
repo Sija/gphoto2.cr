@@ -34,7 +34,7 @@ module GPhoto2
         Camera.new(model.not_nil!, port.not_nil!)
       end
 
-      context.finalize
+      context.close
       entries
     end
 
@@ -47,7 +47,7 @@ module GPhoto2
     # begin
     #   # ...
     # ensure
-    #   camera.finalize
+    #   camera.close
     # end
     # ```
     def self.first : self
@@ -77,7 +77,7 @@ module GPhoto2
     # begin
     #   # ...
     # ensure
-    #   camera.finalize
+    #   camera.close
     # end
     # ```
     def self.open(model : String, port : String) : self
@@ -138,13 +138,10 @@ module GPhoto2
       self.class.autorelease(self, block)
     end
 
-    def finalize : Void
-      @context.try &.finalize
-      unref if ptr?
-    end
-
     def close : Void
-      finalize
+      @context.try &.close
+      @window.try &.close
+      unref if ptr?
     end
 
     def exit : Void
@@ -186,7 +183,7 @@ module GPhoto2
       begin
         block.call camera
       ensure
-        camera.finalize
+        camera.close
       end
     end
 

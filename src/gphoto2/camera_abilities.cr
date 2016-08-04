@@ -14,7 +14,7 @@ module GPhoto2
       index = camera_abilities_list.lookup_model(model)
       abilities = camera_abilities_list[index]
 
-      context.finalize
+      context.close
       abilities
     end
 
