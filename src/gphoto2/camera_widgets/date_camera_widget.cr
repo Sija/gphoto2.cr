@@ -19,6 +19,8 @@ module GPhoto2
       when String
         ptr = Pointer(LibC::Int).malloc 1, Time.parse(value, "%F %T %z").epoch.to_i32
         set_value_ptr ptr
+      else
+        raise ArgumentError.new "Invalid value type, expected Time | Int32 | String, got #{value.class}"
       end
     end
   end

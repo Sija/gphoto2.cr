@@ -24,6 +24,8 @@ module GPhoto2
       when value.responds_to?(:to_f32)
         ptr = Pointer(LibC::Float).malloc 1, value.to_f32
         set_value_ptr ptr
+      else
+        raise ArgumentError.new "Invalid value, expected #to_f32, got #{value.inspect}"
       end
     end
   end

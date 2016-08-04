@@ -19,6 +19,8 @@ module GPhoto2
       when String
         ptr = Pointer(LibC::Int).malloc 1, value.to_i32
         set_value_ptr ptr
+      else
+        raise ArgumentError.new "Invalid value type, expected Int32 | Bool | String, got #{value.class}"
       end
     end
   end

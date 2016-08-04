@@ -15,6 +15,8 @@ module GPhoto2
         ptr = Pointer(LibC::Char).malloc(value.size)
         ptr.copy_from(value.to_unsafe, value.size)
         set_value_ptr ptr
+      else
+        raise ArgumentError.new "Invalid value, expected #to_s, got #{value.inspect}"
       end
     end
   end
