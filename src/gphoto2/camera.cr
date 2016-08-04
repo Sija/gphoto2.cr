@@ -167,6 +167,8 @@ module GPhoto2
     # ```
     # camera.can? :capture_image # => true
     # ```
+    #
+    # See also: `LibGPhoto2::CameraOperation`
     def can?(operation : Symbol)
       can? LibGPhoto2::CameraOperation.parse(operation.to_s)
     end

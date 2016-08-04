@@ -17,6 +17,8 @@ module GPhoto2
       # # List camera configuration keys.
       # camera.config.keys # => ["autofocusdrive", "manualfocusdrive", "controlmode", ...]
       # ```
+      #
+      # See also: `#[]` and `#[]=`
       def config : Hash(String, CameraWidget)
         @config ||= window.flatten
       end
