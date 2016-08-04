@@ -9,12 +9,15 @@ module GPhoto2
     end
 
     protected def set_value(value)
-      case
-      when value.responds_to?(:to_s)
-        value = value.to_s
+      case value
+      when String
         ptr = Pointer(LibC::Char).malloc(value.size)
         ptr.copy_from(value.to_unsafe, value.size)
         set_value_ptr ptr
+      when Symbol, Int, Float
+        set_value value.to_s
+      else
+        raise ArgumentError.new "Invalid value type, expected String | Symbol | Int | Float, got #{value.class}"
       end
     end
   end

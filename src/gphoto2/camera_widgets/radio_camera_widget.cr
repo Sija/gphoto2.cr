@@ -21,6 +21,12 @@ module GPhoto2
       end
     end
 
+    # Returns valid choices for a configuration widget.
+    #
+    # ```
+    # camera[:whitebalance].as_radio.choices
+    # # => ["Automatic", "Daylight", "Fluorescent", "Tungsten", ...]
+    # ```
     def choices : Array(String?)
       Array(String?).new(count_choices) { |i| get_choice(i) }
     end

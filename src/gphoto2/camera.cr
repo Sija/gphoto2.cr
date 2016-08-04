@@ -218,6 +218,7 @@ module GPhoto2
 
     private def unref
       GPhoto2.check! LibGPhoto2.gp_camera_unref(self)
+      self.ptr = nil
     end
   end
 end

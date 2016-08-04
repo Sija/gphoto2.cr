@@ -13,12 +13,12 @@ module GPhoto2
       when Time
         ptr = Pointer(LibC::Int).malloc 1, value.epoch.to_i32
         set_value_ptr ptr
-      when Int32
-        ptr = Pointer(LibC::Int).malloc 1, value
-        set_value_ptr ptr
+      when Int
+        set_value Time.epoch(value)
       when String
-        ptr = Pointer(LibC::Int).malloc 1, Time.parse(value, "%F %T %z").epoch.to_i32
-        set_value_ptr ptr
+        set_value Time.parse(value, "%F %T %z")
+      else
+        raise ArgumentError.new "Invalid value type, expected Time | Int | String, got #{value.class}"
       end
     end
   end

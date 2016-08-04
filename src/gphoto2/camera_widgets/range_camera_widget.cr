@@ -20,10 +20,16 @@ module GPhoto2
     end
 
     protected def set_value(value)
-      case
-      when value.responds_to?(:to_f32)
+      case value
+      when Float
         ptr = Pointer(LibC::Float).malloc 1, value.to_f32
         set_value_ptr ptr
+      when Int
+        set_value value.to_f32
+      when String
+        set_value value.to_f32
+      else
+        raise ArgumentError.new "Invalid value type, expected Float | Int | String, got #{value.class}"
       end
     end
   end
