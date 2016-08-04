@@ -5,7 +5,7 @@ require "../src/gphoto2"
 def visit(widget, level = 0)
   indent = "  " * level
 
-  puts "#{indent}#{widget.name.colorize(:green)}"
+  puts "#{indent}#{widget.name.colorize(:green)}#{" (read-only)".colorize(:cyan) if widget.readonly?}"
 
   if widget.type.window? || widget.type.section?
     widget.children.each { |child| visit(child, level + 1) }
@@ -17,7 +17,6 @@ def visit(widget, level = 0)
   puts "#{indent}label: #{widget.label.colorize(:yellow)}"
   puts "#{indent}info: #{widget.info.colorize(:yellow)}" if !widget.info.try(&.empty?)
   puts "#{indent}type: #{widget.type.colorize(:magenta)}"
-  puts "#{indent}readonly?: #{widget.readonly?.to_s.colorize(:cyan)}" if widget.readonly?
   puts "#{indent}value: #{widget.value.try(&.colorize(:blue)) || "<nil>".colorize(:red)}"
 
   case widget.type
