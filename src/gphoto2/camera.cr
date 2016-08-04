@@ -11,11 +11,8 @@ module GPhoto2
     include Event
     include Filesystem
 
-    @model : String
-    getter :model
-
-    @port : String
-    getter :port
+    getter model : String
+    getter port : String
 
     @context : Context?
     @abilities : CameraAbilities?
@@ -35,9 +32,9 @@ module GPhoto2
       entries = cameras.to_a.map do |entry|
         model, port = entry.name, entry.value
         Camera.new(model.not_nil!, port.not_nil!)
-      end.to_a
+      end
 
-      context.finalize
+      context.close
       entries
     end
 
@@ -50,7 +47,7 @@ module GPhoto2
     # begin
     #   # ...
     # ensure
-    #   camera.finalize
+    #   camera.close
     # end
     # ```
     def self.first : self
@@ -80,7 +77,7 @@ module GPhoto2
     # begin
     #   # ...
     # ensure
-    #   camera.finalize
+    #   camera.close
     # end
     # ```
     def self.open(model : String, port : String) : self
@@ -117,7 +114,9 @@ module GPhoto2
       end
     end
 
-    def initialize(@model, @port); end
+    def initialize(@model : String, @port : String)
+      super
+    end
 
     def ptr
       init unless ptr?
@@ -135,20 +134,17 @@ module GPhoto2
     #   # ...
     # end
     # ```
-    def autorelease(&block : self -> _)
+    def autorelease(&block : self -> _) : Void
       self.class.autorelease(self, block)
     end
 
-    def finalize
-      @context.try &.finalize
+    def close : Void
+      @context.try &.close
+      @window.try &.close
       unref if ptr?
     end
 
-    def close
-      finalize
-    end
-
-    def exit
+    def exit : Void
       _exit
     end
 
@@ -175,7 +171,8 @@ module GPhoto2
       can? LibGPhoto2::CameraOperation.parse(operation.to_s)
     end
 
-    protected def can?(operation : LibGPhoto2::CameraOperation)
+    # :nodoc:
+    def can?(operation : LibGPhoto2::CameraOperation)
       abilities.wrapped.operations.includes? operation
     end
 
@@ -186,7 +183,7 @@ module GPhoto2
       begin
         block.call camera
       ensure
-        camera.finalize
+        camera.close
       end
     end
 

@@ -61,7 +61,6 @@ lib LibGPhoto2
   fun gp_widget_free(widget : CameraWidget*) : LibC::Int
   fun gp_widget_ref(widget : CameraWidget*) : LibC::Int
   fun gp_widget_unref(widget : CameraWidget*) : LibC::Int
-  fun gp_widget_changed(widget : CameraWidget*) : LibC::Int
 
   fun gp_widget_append(widget : CameraWidget*, child : CameraWidget*) : LibC::Int
   fun gp_widget_prepend(widget : CameraWidget*, child : CameraWidget*) : LibC::Int
@@ -95,7 +94,9 @@ lib LibGPhoto2
   fun gp_widget_get_choice(widget : CameraWidget*, choice_number : LibC::Int, choice : LibC::Char**) : LibC::Int
   fun gp_widget_count_choices(widget : CameraWidget*) : LibC::Int
 
+  fun gp_widget_changed(widget : CameraWidget*) : LibC::Int
   fun gp_widget_set_changed(widget : CameraWidget*, changed : LibC::Int) : LibC::Int
+
   fun gp_widget_set_readonly(widget : CameraWidget*, readonly : LibC::Int) : LibC::Int
   fun gp_widget_get_readonly(widget : CameraWidget*, readonly : LibC::Int*) : LibC::Int
 end

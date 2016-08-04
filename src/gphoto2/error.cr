@@ -3,15 +3,14 @@ module GPhoto2
 
   class NoDevicesError < Exception
     def initialize
-      super("no devices detected")
+      super("No devices detected")
     end
   end
 
   class Error < Exception
-    @code : Int32
-    getter :code
+    getter code : Int32
 
-    def initialize(message, @code)
+    def initialize(message : String?, @code : Int32)
       super(message)
     end
 

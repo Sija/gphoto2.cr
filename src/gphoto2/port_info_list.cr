@@ -9,11 +9,11 @@ module GPhoto2
       load
     end
 
-    def lookup_path(port)
+    def lookup_path(port : String) : Int32
       _lookup_path(port)
     end
 
-    def index(port)
+    def index(port : String) : Int32
       lookup_path(port)
     end
 
@@ -21,7 +21,7 @@ module GPhoto2
       PortInfo.new(self, index)
     end
 
-    def [](index) : PortInfo
+    def [](index : Int32) : PortInfo
       at(index)
     end
 
@@ -38,7 +38,7 @@ module GPhoto2
       GPhoto2.check! LibGPhoto2Port.gp_port_info_list_count(self)
     end
 
-    private def _lookup_path(port : String) : Int32
+    private def _lookup_path(port)
       GPhoto2.check! LibGPhoto2Port.gp_port_info_list_lookup_path(self, port)
     end
   end

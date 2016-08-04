@@ -1,16 +1,15 @@
 module GPhoto2
   class Camera
     module Configuration
-      @dirty : Bool = false
-      @window : CameraWidget?
+      @window : WindowCameraWidget?
       @config : Hash(String, CameraWidget)?
+      @dirty : Bool = false
 
-      def initialize(model, port)
-        super
+      def initialize(model : String, port : String)
         reset
       end
 
-      def window
+      def window : WindowCameraWidget
         @window ||= get_config
       end
 
@@ -18,8 +17,54 @@ module GPhoto2
       # # List camera configuration keys.
       # camera.config.keys # => ["autofocusdrive", "manualfocusdrive", "controlmode", ...]
       # ```
-      def config
+      def config : Hash(String, CameraWidget)
         @config ||= window.flatten
+      end
+
+      # Preserves config for a block call.
+      #
+      # ```
+      # # Original values
+      # camera[:aperture] # => 4
+      # camera[:iso]      # => 400
+      #
+      # # Capture photo with different settings,
+      # # while preserving original values
+      # camera.preserving_config do
+      #   camera.update({
+      #     aperture: 8,
+      #     iso:      200,
+      #   })
+      #   file = camera.capture
+      #   file.save
+      # end
+      #
+      # # Original values are being preserved
+      # camera[:aperture] # => 4
+      # camera[:iso]      # => 400
+      # ```
+      def preserving_config(keys : Array(String | Symbol) = nil, &block) : Void
+        config_snapshot = keys ? config.select(keys.map &.to_s) : config
+        config_snapshot = config_snapshot.reduce({} of String => String) do |memo, (key, widget)|
+          memo[key] = widget.to_s rescue CameraWidget::NotImplementedError
+          memo
+        end
+        begin
+          yield self
+        ensure
+          diff = config_snapshot.select { |key, value| self[key] != value }
+          begin
+            update diff unless diff.empty?
+          rescue GPhoto2::Error
+            reload
+            update diff
+          end
+        end
+      end
+
+      # :nodoc:
+      def preserving_config(*keys, &block) : Void
+        preserving_config(keys.to_a, &block)
       end
 
       # Reloads the camera configuration.
@@ -33,6 +78,7 @@ module GPhoto2
       # camera[:iso] # => 800
       # ```
       def reload : Void
+        @window.try &.close
         reset
         config
       end
@@ -45,16 +91,9 @@ module GPhoto2
         config[key.to_s]
       end
 
-      # ```
-      # iso = camera[:iso].as(GPhoto2::RadioCameraWidget)
-      # iso = camera[:iso].as_radio
-      # iso.value = 800
-      # camera[:iso] = iso
-      # ```
-      def []=(key : String | Symbol, widget : CameraWidget)
-        key = key.to_s
-        set_single_config(key, widget)
-        config[key] = widget
+      # ditto
+      def []?(key : String | Symbol)
+        config[key.to_s]?
       end
 
       # Updates the attribute identified by *key* with the specified *value*.
@@ -73,6 +112,19 @@ module GPhoto2
         value
       end
 
+      # ```
+      # iso = camera[:iso].as_radio
+      # iso.value = iso.choices.first
+      # camera << iso
+      # ```
+      def <<(widget : CameraWidget) : self
+        key = widget.name.not_nil!
+        # set_single_config(key, widget)
+        config[key] = widget
+        @dirty = true
+        self
+      end
+
       # Updates the configuration on the camera.
       #
       # ```
@@ -80,7 +132,7 @@ module GPhoto2
       # camera.save # => true
       # camera.save # => false (nothing to update)
       # ```
-      def save
+      def save : Bool
         return false unless dirty?
         set_config
         @dirty = false
@@ -105,7 +157,7 @@ module GPhoto2
       # camera[:iso]           # => 400
       # camera[:shutterspeed2] # => "1/60"
       # ```
-      def update(attributes)
+      def update(attributes) : Bool
         attributes.each do |key, value|
           self[key] = value
         end
@@ -122,11 +174,9 @@ module GPhoto2
       # camera[:iso] = 400
       # camera.dirty? # => true
       # ```
-      def dirty?
-        @dirty
-      end
+      getter? :dirty
 
-      private def reset
+      private def reset : Void
         @window = nil
         @config = nil
         @dirty = false
@@ -134,14 +184,14 @@ module GPhoto2
 
       private def get_config
         GPhoto2.check! LibGPhoto2.gp_camera_get_config(self, out window, context)
-        CameraWidget.factory window
+        CameraWidget.factory(window).as(WindowCameraWidget)
       end
 
       private def set_config
         GPhoto2.check! LibGPhoto2.gp_camera_set_config(self, window, context)
       end
 
-      private def set_single_config(name : String, widget : CameraWidget)
+      private def set_single_config(name, widget)
         GPhoto2.check! LibGPhoto2.gp_camera_set_single_config(self, name, widget, context)
       end
     end

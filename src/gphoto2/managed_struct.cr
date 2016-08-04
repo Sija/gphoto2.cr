@@ -4,7 +4,7 @@ module GPhoto2
   module ManagedStruct(T)
     include Struct(T)
 
-    def initialize(ptr : T*)
+    def initialize(ptr : T*? = nil)
       self.ptr = ptr
     end
 
@@ -13,7 +13,7 @@ module GPhoto2
     end
 
     protected def ptr=(ptr) : T*?
-      # GPhoto2.log ptr, backtrace_offset: 2
+      # GPhoto2.log ptr, backtrace_offset: 1
       if ptr
         self.ptr.copy_from(ptr, 1)
       else

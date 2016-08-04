@@ -6,28 +6,28 @@ module GPhoto2
 
     @context : Context
 
-    def initialize(@context)
+    def initialize(@context : Context)
       new
       load
     end
 
-    def detect
+    def detect : CameraList
       _detect
     end
 
-    def lookup_model(model)
+    def lookup_model(model : String) : Int32
       _lookup_model(model)
     end
 
-    def index(model)
+    def index(model : String) : Int32
       lookup_model(model)
     end
 
-    def at(index : Int32)
+    def at(index : Int32) : CameraAbilities
       CameraAbilities.new(self, index)
     end
 
-    def [](index)
+    def [](index : Int32) : CameraAbilities
       at(index)
     end
 
@@ -53,7 +53,7 @@ module GPhoto2
       camera_list
     end
 
-    private def _lookup_model(model : String) : Int32
+    private def _lookup_model(model)
       GPhoto2.check! LibGPhoto2.gp_abilities_list_lookup_model(self, model)
     end
   end

@@ -2,7 +2,7 @@ require "../camera_widget"
 
 module GPhoto2
   class RangeCameraWidget < CameraWidget
-    def range
+    def range : Array(LibC::Float)
       min, max, inc = get_range
       min.step(by: inc, limit: max).to_a
     end
@@ -20,8 +20,8 @@ module GPhoto2
     end
 
     protected def set_value(value)
-      case value
-      when Float32
+      case
+      when value.responds_to?(:to_f32)
         ptr = Pointer(LibC::Float).malloc 1, value.to_f32
         set_value_ptr ptr
       end

@@ -6,7 +6,7 @@ module GPhoto2
       it "decrements the reference counter" do
         context = Context.new
         context.@ptr.should be_a Pointer(LibGPhoto2::GPContext)
-        context.finalize
+        context.close
         context.@ptr.should be_nil
       end
     end

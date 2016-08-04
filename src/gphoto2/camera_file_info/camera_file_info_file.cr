@@ -4,11 +4,11 @@ module GPhoto2
   class CameraFileInfoFile < CameraFileInfo::Base
     include GPhoto2::ManagedStruct(LibGPhoto2::CameraFileInfoFile)
 
-    def readable? : Bool
+    def readable?
       has_field?(:permissions) && wrapped.permissions.read?
     end
 
-    def deletable? : Bool
+    def deletable?
       has_field?(:permissions) && wrapped.permissions.delete?
     end
 

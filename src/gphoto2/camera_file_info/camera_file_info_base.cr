@@ -5,7 +5,7 @@ module GPhoto2
     abstract class Base
       # include GPhoto2::ManagedStruct(LibGPhoto2::CameraFileInfo)
 
-      def fields
+      def fields : LibGPhoto2::CameraFileInfoFields
         wrapped.fields
       end
 

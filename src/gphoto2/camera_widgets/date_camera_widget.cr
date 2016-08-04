@@ -5,13 +5,19 @@ module GPhoto2
     protected def get_value
       ptr = Pointer(LibC::Int).malloc
       get_value_ptr ptr
-      Time.epoch(ptr.value).to_utc
+      Time.epoch(ptr.value)
     end
 
     protected def set_value(value)
       case value
       when Time
-        ptr = Pointer(LibC::Int).malloc 1, value.epoch
+        ptr = Pointer(LibC::Int).malloc 1, value.epoch.to_i32
+        set_value_ptr ptr
+      when Int32
+        ptr = Pointer(LibC::Int).malloc 1, value
+        set_value_ptr ptr
+      when String
+        ptr = Pointer(LibC::Int).malloc 1, Time.parse(value, "%F %T %z").epoch.to_i32
         set_value_ptr ptr
       end
     end

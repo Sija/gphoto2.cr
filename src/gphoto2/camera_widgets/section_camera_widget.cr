@@ -9,8 +9,5 @@ module GPhoto2
     protected def set_value(value)
       raise NotImplementedError.new
     end
-
-    # FIXME?
-    private def free; end
   end
 end

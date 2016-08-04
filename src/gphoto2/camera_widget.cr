@@ -1,59 +1,72 @@
+require "./error"
 require "./struct"
 
 module GPhoto2
   abstract class CameraWidget
     class NotImplementedError < Exception; end
+  end
 
-    include GPhoto2::Struct(LibGPhoto2::CameraWidget)
-
+  abstract class CameraWidget
     macro inherited
       {% factory_id = @type.name.gsub(/^GPhoto2::/, "").gsub(/CameraWidget$/, "").underscore %}
-      CameraWidget.widgets[{{factory_id.stringify}}] = self
+
+      ::GPhoto2::CameraWidget.widgets[{{factory_id.stringify}}] = self
 
       class ::GPhoto2::CameraWidget
-        def as_{{factory_id}}
-          self as {{@type.name}}
+        def as_{{factory_id}} : {{@type.name}}
+          self.as({{@type.name}})
         end
       end
     end
 
-    @parent : self?
-    getter :parent
-
-    @@widgets = {} of String => self.class
+    @@widgets = {} of String => CameraWidget.class
 
     def self.widgets
       @@widgets
     end
 
-    def self.factory(ptr : LibGPhoto2::CameraWidget*, parent = nil) : self
+    def self.factory(ptr : LibGPhoto2::CameraWidget*, parent : CameraWidget? = nil) : CameraWidget
       type = ptr.value.type.to_s.downcase
       klass = @@widgets[type]
       klass.new(ptr, parent)
     end
+  end
 
-    def initialize(ptr : LibGPhoto2::CameraWidget*, @parent : self? = nil)
+  abstract class CameraWidget
+    include GPhoto2::Struct(LibGPhoto2::CameraWidget)
+
+    getter parent : CameraWidget?
+
+    def initialize(ptr : LibGPhoto2::CameraWidget*, @parent : CameraWidget? = nil)
       super ptr
     end
 
-    def finalize : Void
+    def close : Void
       free
     end
 
-    def close : Void
-      finalize
+    def readonly?
+      get_readonly == 1
     end
 
     def type : LibGPhoto2::CameraWidgetType
       get_type
     end
 
-    def label : String?
-      get_label
+    def id : LibC::Int
+      get_id
     end
 
     def name : String?
       get_name
+    end
+
+    def label : String?
+      get_label
+    end
+
+    def info : String?
+      get_info
     end
 
     def value
@@ -65,13 +78,11 @@ module GPhoto2
       value
     end
 
-    def children : Array(self)
-      children = [] of self
-      count_children.times.each { |i| children << get_child(i) }
-      children
+    def children : Array(CameraWidget)
+      Array(CameraWidget).new(count_children) { |i| get_child(i) }
     end
 
-    def flatten(map = {} of String => self)
+    def flatten(map = {} of String => CameraWidget) : Hash(String, CameraWidget)
       case type
       when .window?, .section?
         children.each &.flatten(map)
@@ -83,6 +94,60 @@ module GPhoto2
 
     def to_s(io)
       io << value
+    end
+
+    def_equals type, name, value
+
+    # Compares `#value` with given *other*.
+    #
+    # ```
+    # camera[:whitebalance] == "Automatic"
+    # camera[:shutterspeed] == 0.5
+    # camera[:iso] == 400
+    # ```
+    def ==(other)
+      self.to_s == other.to_s
+    end
+
+    # Compares `#value` with given `Symbol`.
+    #
+    # ```
+    # camera[:whitebalance] == :automatic
+    # ```
+    def ==(other : Symbol)
+      self.to_s == other.to_s.capitalize
+    end
+
+    # Compares `#value` with given `Regex`.
+    #
+    # ```
+    # camera[:whitebalance] == /Automatic/
+    # ```
+    def ==(other : Regex)
+      other === self.to_s
+    end
+
+    # Returns true if `#value` matches at least one element of the collection.
+    #
+    # ```
+    # camera[:autoexposuremode].in? %w(Manual Bulb)
+    # ```
+    def in?(other)
+      other.any? { |value| self == value }
+    end
+
+    # Returns true if `#value` is included in the *other* `Range`.
+    #
+    # ```
+    # camera[:exposurecompensation].in? -1.6..0.6
+    # camera[:aperture].in? 4..7.1
+    # camera[:iso].in? 100..400
+    # ```
+    def in?(other : Range)
+      value = self.to_s
+      other.includes? (value =~ /^\-?\d+\.\d+$/) \
+        ? value.to_f
+        : value.to_i
     end
 
     protected abstract def get_value
@@ -98,6 +163,12 @@ module GPhoto2
 
     private def free
       GPhoto2.check! LibGPhoto2.gp_widget_free(self)
+      self.ptr = nil
+    end
+
+    private def get_readonly
+      GPhoto2.check! LibGPhoto2.gp_widget_get_readonly(self, out readonly)
+      readonly
     end
 
     private def get_type
@@ -105,9 +176,9 @@ module GPhoto2
       type
     end
 
-    private def get_label
-      GPhoto2.check! LibGPhoto2.gp_widget_get_label(self, out ptr)
-      !ptr ? nil : String.new ptr
+    private def get_id
+      GPhoto2.check! LibGPhoto2.gp_widget_get_id(self, out id)
+      id
     end
 
     private def get_name
@@ -115,11 +186,21 @@ module GPhoto2
       !ptr ? nil : String.new ptr
     end
 
-    private def count_children : Int32
+    private def get_label
+      GPhoto2.check! LibGPhoto2.gp_widget_get_label(self, out ptr)
+      !ptr ? nil : String.new ptr
+    end
+
+    private def get_info
+      GPhoto2.check! LibGPhoto2.gp_widget_get_info(self, out ptr)
+      !ptr ? nil : String.new ptr
+    end
+
+    private def count_children
       GPhoto2.check! LibGPhoto2.gp_widget_count_children(self)
     end
 
-    private def get_child(index) : self
+    private def get_child(index)
       GPhoto2.check! LibGPhoto2.gp_widget_get_child(self, index, out widget)
       CameraWidget.factory(widget, self)
     end

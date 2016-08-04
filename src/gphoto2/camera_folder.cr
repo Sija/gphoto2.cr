@@ -1,15 +1,14 @@
 module GPhoto2
   class CameraFolder
-    @path : String
-    getter :path
+    getter path : String
 
-    def initialize(@camera : Camera, @path = "/"); end
+    def initialize(@camera : Camera, @path : String = "/"); end
 
     def root?
       @path == "/"
     end
 
-    def name
+    def name : String
       return "/" if root?
       @path.split("/").last
     end
@@ -33,15 +32,15 @@ module GPhoto2
       end
     end
 
-    def /(name : String)
+    def /(name : String) : self
       cd(name)
     end
 
-    def open(name : String)
+    def open(name : String) : CameraFile
       CameraFile.new(@camera, @path, name)
     end
 
-    def up
+    def up : self
       if root?
         self
       else

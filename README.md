@@ -64,6 +64,11 @@ GPhoto2::Camera.first do |camera|
   # ...
 end
 
+# ...or use `#autorelease` on any `Camera` instance
+camera.autorelease do
+  # ...
+end
+
 # check camera abilities (see `LibGPhoto2::CameraOperation`)
 camera.can? :capture_image
 # => true
@@ -78,8 +83,14 @@ camera[:expprogram].value
 camera[:whitebalance].value
 # => "Automatic"
 
+# compare the current configuration value
+camera[:whitebalance] == "Automatic"
+camera[:whitebalance] == /Automatic/i
+camera[:whitebalance] == :automatic
+# => true
+
 # list valid choices of a configuration option
-camera[:whitebalance].choices
+camera[:whitebalance].as_radio.choices
 # => ["Automatic", "Daylight", "Fluorescent", "Tungsten", ...]
 
 # check if the configuration has changed
@@ -91,6 +102,9 @@ camera["iso"] = 800
 camera["f-number"] = "f/4.5"
 camera["shutterspeed2"] = "1/30"
 
+# set radio widget value to first matching option
+camera[:imageformat] = /Medium(.+?)JPEG/i
+
 # check if the configuration has changed
 camera.dirty?
 # => true
@@ -100,6 +114,11 @@ camera.save
 
 # alternatively, update the camera configuration in one go
 camera.update({ iso: 200, shutterspeed2: "1/60", "f-number": "f/1.8" })
+
+# ...do all of above while preserving camera original configuration
+camera.preserving_config do
+  # ...
+end
 
 # take a photo
 file = camera.capture
@@ -133,7 +152,9 @@ More examples can be found in [`examples/`][examples]. Documentation can be gene
 
 ## Development
 
-TODO: Write development instructions here
+```
+crystal spec
+```
 
 ## Contributing
 
@@ -145,4 +166,9 @@ TODO: Write development instructions here
 
 ## Contributors
 
+- [zaeleus](https://github.com/zaeleus) Michael Macias - the author of the original implementation
 - [Sija](https://github.com/Sija) Sijawusz Pur Rahnama - creator, maintainer
+
+## References
+
+- Original implementation in `Ruby` - https://github.com/zaeleus/ffi-gphoto2

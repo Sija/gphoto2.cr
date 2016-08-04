@@ -1,9 +1,11 @@
 require "../camera_widget"
 
 module GPhoto2
-  class WindowCameraWidget < CameraWidget
+  class ButtonCameraWidget < CameraWidget
     protected def get_value
-      raise NotImplementedError.new
+      ptr = Pointer(LibGPhoto2::CameraWidgetCallback).null
+      get_value_ptr pointerof(ptr)
+      !ptr ? nil : ptr.value
     end
 
     protected def set_value(value)
