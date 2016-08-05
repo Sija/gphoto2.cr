@@ -13,6 +13,10 @@ module GPhoto2
       ::GPhoto2::CameraWidget.widgets[{{factory_id.stringify}}] = self
 
       class ::GPhoto2::CameraWidget
+        def as_{{factory_id}}? : {{@type.name}}?
+          self.as?({{@type.name}})
+        end
+
         def as_{{factory_id}} : {{@type.name}}
           self.as({{@type.name}})
         end
