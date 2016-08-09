@@ -56,13 +56,13 @@ module GPhoto2
 
     def_equals @camera, @path
 
-    private def folder_list_files : Array(CameraFile)
+    private def folder_list_files
       list = CameraList.new
       GPhoto2.check! LibGPhoto2.gp_camera_folder_list_files(@camera, @path, list, @camera.context)
       list.to_a.map { |f| open f.name.not_nil! }
     end
 
-    private def folder_list_folders : Array(self)
+    private def folder_list_folders
       list = CameraList.new
       GPhoto2.check! LibGPhoto2.gp_camera_folder_list_folders(@camera, @path, list, @camera.context)
       list.to_a.map { |f| cd f.name.not_nil! }

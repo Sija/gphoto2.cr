@@ -72,14 +72,14 @@ module GPhoto2
       preview? ? PREVIEW_FILENAME : @name.not_nil!
     end
 
-    private def data_and_size : Tuple(LibC::Char*, LibC::ULong)
+    private def data_and_size
       @data_and_size ||= begin
         @camera.file(self) unless preview?
         get_data_and_size
       end
     end
 
-    private def get_data_and_size : Tuple(LibC::Char*, LibC::ULong)
+    private def get_data_and_size
       GPhoto2.check! LibGPhoto2.gp_file_get_data_and_size(self, out data, out size)
       {data, size}
     end
