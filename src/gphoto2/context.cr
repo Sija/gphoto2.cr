@@ -1,8 +1,11 @@
 require "./struct"
+require "./context/*"
 
 module GPhoto2
   class Context
     include Struct(LibGPhoto2::GPContext)
+
+    include Callbacks
 
     def initialize
       new
