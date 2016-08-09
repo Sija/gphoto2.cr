@@ -24,8 +24,7 @@ module GPhoto2
     end
 
     @@widgets = {} of String => CameraWidget.class
-
-    def self.widgets
+    def self.widgets : Hash(String, CameraWidget.class)
       @@widgets
     end
 
