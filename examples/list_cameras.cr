@@ -4,6 +4,8 @@ require "../src/gphoto2"
 
 cameras = GPhoto2::Camera.all # or .where model: /canon/i
 cameras.each do |camera|
+  abilities = camera.abilities
+
   puts camera.model.colorize(:green)
   props = {
     "port"              : camera.port,
@@ -16,5 +18,6 @@ cameras.each do |camera|
   props.each do |prop, value|
     puts "  %s: %s" % [prop, value.to_s.colorize(:blue)]
   end
+
   camera.close
 end
