@@ -15,14 +15,14 @@ lib LibGPhoto2
 
   alias GPContextIdleFunc = GPContext*, Void* ->
 
-  alias GPContextErrorFunc    = GPContext*, LibC::Char*, Void*, Void* ->
-  alias GPContextStatusFunc   = GPContext*, LibC::Char*, Void*, Void* ->
-  alias GPContextMessageFunc  = GPContext*, LibC::Char*, Void*, Void* ->
+  alias GPContextErrorFunc    = GPContext*, LibC::Char*, Void* ->
+  alias GPContextStatusFunc   = GPContext*, LibC::Char*, Void* ->
+  alias GPContextMessageFunc  = GPContext*, LibC::Char*, Void* ->
 
-  alias GPContextQuestionFunc = GPContext*, LibC::Char*, Void*, Void* -> GPContextFeedback
+  alias GPContextQuestionFunc = GPContext*, LibC::Char*, Void* -> GPContextFeedback
   alias GPContextCancelFunc   = GPContext*, Void* -> GPContextFeedback
 
-  alias GPContextProgressStartFunc  = GPContext*, LibC::Float, LibC::Char*, Void*, Void* -> LibC::UInt
+  alias GPContextProgressStartFunc  = GPContext*, LibC::Float, LibC::Char*, Void* -> LibC::UInt
   alias GPContextProgressUpdateFunc = GPContext*, LibC::Int, LibC::Float, Void* ->
   alias GPContextProgressStopFunc   = GPContext*, LibC::Int, Void* ->
 
@@ -74,13 +74,13 @@ lib LibGPhoto2
   fun gp_context_set_message_func(context : GPContext*, func : GPContextMessageFunc, data : Void*)
 
   fun gp_context_idle(context : GPContext*)
-  fun gp_context_error(context : GPContext*, format : LibC::Char*)
-  fun gp_context_status(context : GPContext*, format : LibC::Char*)
-  fun gp_context_message(context : GPContext*, format : LibC::Char*)
-  fun gp_context_question(context : GPContext*, format : LibC::Char*) : GPContextFeedback
+  fun gp_context_error(context : GPContext*, format : LibC::Char*, ...)
+  fun gp_context_status(context : GPContext*, format : LibC::Char*, ...)
+  fun gp_context_message(context : GPContext*, format : LibC::Char*, ...)
+  fun gp_context_question(context : GPContext*, format : LibC::Char*, ...) : GPContextFeedback
   fun gp_context_cancel(context : GPContext*) : GPContextFeedback
 
-  fun gp_context_progress_start(context : GPContext*, target : LibC::Float, format : LibC::Char*) : LibC::UInt
+  fun gp_context_progress_start(context : GPContext*, target : LibC::Float, format : LibC::Char*, ...) : LibC::UInt
   fun gp_context_progress_update(context : GPContext*, id : LibC::UInt, current : LibC::Float)
   fun gp_context_progress_stop(context : GPContext*, id : LibC::UInt)
 end
