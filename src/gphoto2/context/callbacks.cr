@@ -8,7 +8,7 @@ module GPhoto2
 
     module Callbacks
       macro set_callback(key, callback_type, &block)
-        getter {{key.id}}_callback : {{callback_type.id}}?
+        getter! {{key.id}}_callback : {{callback_type.id}}?
 
         # See: [LibGPhoto2#gp_context_set_{{key.id}}_func](http://www.gphoto.org/doc/api/gphoto2-context_8h.html)
         def {{key.id}}_callback=(callback : {{callback_type.id}}?) : Void

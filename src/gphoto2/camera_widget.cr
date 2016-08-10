@@ -60,16 +60,16 @@ module GPhoto2
       get_id
     end
 
-    def name : String?
-      get_name
+    def name : String
+      get_name.not_nil!
     end
 
-    def label : String?
-      get_label
+    def label : String
+      get_label.not_nil!
     end
 
-    def info : String?
-      get_info
+    def info : String
+      get_info.not_nil!
     end
 
     def value
@@ -90,7 +90,7 @@ module GPhoto2
       when .window?, .section?
         children.each &.flatten(map)
       else
-        map[name.not_nil!] = self
+        map[name] = self
       end
       map
     end

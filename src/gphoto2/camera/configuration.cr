@@ -120,7 +120,7 @@ module GPhoto2
       # camera << iso
       # ```
       def <<(widget : CameraWidget) : self
-        key = widget.name.not_nil!
+        key = widget.name
         # set_single_config(key, widget)
         config[key] = widget
         @dirty = true

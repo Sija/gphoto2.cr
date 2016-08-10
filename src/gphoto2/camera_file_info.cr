@@ -2,9 +2,9 @@ require "./camera_file_info/*"
 
 module GPhoto2
   class CameraFileInfo
-    getter preview : CameraFileInfoPreview?
-    getter file    : CameraFileInfoFile?
-    getter audio   : CameraFileInfoAudio?
+    getter! preview : CameraFileInfoPreview?
+    getter! file    : CameraFileInfoFile?
+    getter! audio   : CameraFileInfoAudio?
 
     def initialize(info : LibGPhoto2::CameraFileInfo)
       @preview = get_info info.preview, CameraFileInfoPreview

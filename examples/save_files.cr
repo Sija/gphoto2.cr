@@ -13,7 +13,7 @@ def visit(camera, folder)
     files.each do |file|
       puts "Saving #{file.folder.colorize(:green)}/#{file.name.colorize(:blue)} ..."
 
-      path = File.join DEST_PATH, camera.model, file.folder.not_nil!, file.name.not_nil!
+      path = File.join DEST_PATH, camera.model, file.folder, file.name
       file.save path
     end
 

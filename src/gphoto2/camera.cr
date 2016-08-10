@@ -30,8 +30,7 @@ module GPhoto2
       cameras = abilities.detect
 
       entries = cameras.to_a.map do |entry|
-        model, port = entry.name, entry.value
-        Camera.new(model.not_nil!, port.not_nil!)
+        Camera.new(model: entry.name, port: entry.value)
       end
 
       context.close
