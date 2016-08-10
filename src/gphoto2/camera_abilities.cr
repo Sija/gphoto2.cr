@@ -13,8 +13,8 @@ module GPhoto2
     def self.find(model : String) : self
       context = Context.new
 
-      camera_abilities_list = CameraAbilitiesList.new(context)
-      abilities = camera_abilities_list[model]
+      abilities_list = CameraAbilitiesList.new(context)
+      abilities = abilities_list[model]
 
       context.close
       abilities
