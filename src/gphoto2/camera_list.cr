@@ -12,10 +12,6 @@ module GPhoto2
       count
     end
 
-    def length : Int32
-      size
-    end
-
     def to_a : Array(Entry)
       Array(Entry).new(size) { |i| Entry.new(self, i) }
     end
