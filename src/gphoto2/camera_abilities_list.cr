@@ -37,19 +37,14 @@ module GPhoto2
     end
 
     private def load
-      GPhoto2.check! LibGPhoto2.gp_abilities_list_load(self, @context)
+      @context.check! LibGPhoto2.gp_abilities_list_load(self, @context)
     end
 
     private def _detect
       port_info_list = PortInfoList.new
       camera_list = CameraList.new
 
-      GPhoto2.check! LibGPhoto2.gp_abilities_list_detect(
-        self,
-        port_info_list,
-        camera_list,
-        @context
-      )
+      @context.check! LibGPhoto2.gp_abilities_list_detect(self, port_info_list, camera_list, @context)
       camera_list
     end
 

@@ -13,6 +13,8 @@ module GPhoto2
     @camera : Camera
     @data_and_size : Tuple(LibC::Char*, LibC::ULong)?
 
+    protected delegate :context, to: @camera
+
     def initialize(@camera : Camera, @folder : String? = nil, @name : String? = nil)
       new
     end
@@ -85,7 +87,7 @@ module GPhoto2
     end
 
     private def get_info
-      GPhoto2.check! LibGPhoto2.gp_camera_file_get_info(@camera, folder, name, out info, @camera.context)
+      context.check! LibGPhoto2.gp_camera_file_get_info(@camera, folder, name, out info, context)
       CameraFileInfo.new info
     end
   end

@@ -24,12 +24,12 @@ module GPhoto2
       end
 
       private def file_get(file, type = LibGPhoto2::CameraFileType::Normal)
-        GPhoto2.check! LibGPhoto2.gp_camera_file_get(self, file.folder, file.name, type, file, context)
+        context.check! LibGPhoto2.gp_camera_file_get(self, file.folder, file.name, type, file, context)
         file
       end
 
       private def file_delete(file)
-        GPhoto2.check! LibGPhoto2.gp_camera_file_delete(self, file.folder, file.name, context)
+        context.check! LibGPhoto2.gp_camera_file_delete(self, file.folder, file.name, context)
       end
     end
   end

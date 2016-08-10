@@ -1,11 +1,5 @@
 module GPhoto2
   class Context
-    class Error < GPhoto2::Error
-      def initialize(message, code = -1)
-        super
-      end
-    end
-
     module Callbacks
       macro set_callback(key, callback_type, &block)
         getter! {{key.id}}_callback : {{callback_type.id}}?
@@ -71,9 +65,21 @@ module GPhoto2
         end
       {% end %}
 
+      getter last_error : String?
+
       def initialize
         set_error_callback do |message|
-          raise Error.new message
+          @last_error = message
+        end
+      end
+
+      def check!(rc : Int32) : Int32
+        GPhoto2.log(rc, backtrace_offset: 1)
+        if GPhoto2.check?(rc)
+          return rc
+        else
+          message = @last_error || GPhoto2.result_as_string(rc)
+          raise Error.new(message, rc)
         end
       end
     end

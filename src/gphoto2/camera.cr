@@ -200,7 +200,7 @@ module GPhoto2
     end
 
     private def _exit
-      GPhoto2.check! LibGPhoto2.gp_camera_exit(self, context)
+      context.check! LibGPhoto2.gp_camera_exit(self, context)
     end
 
     private def set_port_info(port_info : PortInfo)
