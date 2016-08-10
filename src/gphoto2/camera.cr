@@ -174,7 +174,7 @@ module GPhoto2
 
     # :nodoc:
     def can?(operation : LibGPhoto2::CameraOperation)
-      abilities.wrapped.operations.includes? operation
+      abilities.operations.includes? operation
     end
 
     def_equals @model, @port
