@@ -1,5 +1,11 @@
 module GPhoto2
   class Context
+    class Error < GPhoto2::Error
+      def initialize(message, code = -1)
+        super
+      end
+    end
+
     module Callbacks
       macro set_callback(key, callback_type, &block)
         getter {{key.id}}_callback : {{callback_type.id}}?
@@ -64,6 +70,12 @@ module GPhoto2
           }, boxed_data
         end
       {% end %}
+
+      def initialize
+        set_error_callback do |message|
+          raise Error.new message
+        end
+      end
     end
   end
 end

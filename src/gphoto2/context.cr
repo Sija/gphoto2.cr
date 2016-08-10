@@ -9,6 +9,7 @@ module GPhoto2
 
     def initialize
       new
+      super
     end
 
     def close : Void
