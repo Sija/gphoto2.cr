@@ -18,6 +18,9 @@ module GPhoto2
     @abilities : CameraAbilities?
     @port_info : PortInfo?
 
+    protected setter abilities : CameraAbilities?
+    protected setter port_info : PortInfo?
+
     # Returns all available cameras.
     #
     # ```
@@ -26,11 +29,25 @@ module GPhoto2
     def self.all : Array(self)
       context = Context.new
 
-      abilities = CameraAbilitiesList.new(context)
-      cameras = abilities.detect
+      port_info_list = PortInfoList.new
+      abilities_list = CameraAbilitiesList.new(context, port_info_list)
+      cameras = abilities_list.detect
 
       entries = cameras.to_a.map do |entry|
-        Camera.new(model: entry.name, port: entry.value)
+        camera = Camera.new(model: entry.name, port: entry.value)
+
+        # See: `CameraAbilities.find`
+        index = abilities_list.lookup_model(camera.model)
+        if abilities = abilities_list[index]
+          camera.abilities = abilities
+        end
+        # See: `PortInfo.find`
+        index = port_info_list.lookup_path(camera.port)
+        if port_info = port_info_list[index]
+          camera.port_info = port_info
+        end
+
+        camera
       end
 
       context.close
@@ -190,8 +207,8 @@ module GPhoto2
 
     private def init : Void
       new
-      set_abilities CameraAbilities.find(@model)
-      set_port_info PortInfo.find(@port)
+      set_abilities @abilities || CameraAbilities.find(@model)
+      set_port_info @port_info || PortInfo.find(@port)
     end
 
     private def new

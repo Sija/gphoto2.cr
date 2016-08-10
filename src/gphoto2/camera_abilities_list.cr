@@ -5,8 +5,9 @@ module GPhoto2
     include Struct(LibGPhoto2::CameraAbilitiesList)
 
     @context : Context
+    @port_info_list : PortInfoList
 
-    def initialize(@context : Context)
+    def initialize(@context : Context, @port_info_list : PortInfoList = PortInfoList.new)
       new
       load
     end
@@ -41,10 +42,8 @@ module GPhoto2
     end
 
     private def _detect
-      port_info_list = PortInfoList.new
       camera_list = CameraList.new
-
-      @context.check! LibGPhoto2.gp_abilities_list_detect(self, port_info_list, camera_list, @context)
+      @context.check! LibGPhoto2.gp_abilities_list_detect(self, @port_info_list, camera_list, @context)
       camera_list
     end
 
