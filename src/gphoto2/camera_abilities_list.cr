@@ -20,21 +20,11 @@ module GPhoto2
       _lookup_model(model)
     end
 
-    # See: `#lookup_model`
-    def index(model : String) : Int32
-      lookup_model(model)
-    end
-
-    def at(index : Int32) : CameraAbilities
+    def [](index : Int32) : CameraAbilities
       CameraAbilities.new(self, index)
     end
 
-    # See: `#at`
-    def [](index : Int32) : CameraAbilities
-      at(index)
-    end
-
-    # See: `#lookup_model`, `#at`
+    # See: `#lookup_model`, `#[]`
     def [](model : String) : CameraAbilities
       index = self.lookup_model(model)
       self[index]

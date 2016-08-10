@@ -13,21 +13,11 @@ module GPhoto2
       _lookup_path(port)
     end
 
-    # See: `#lookup_path`
-    def index(port : String) : Int32
-      lookup_path(port)
-    end
-
-    def at(index : Int32) : PortInfo
+    def [](index : Int32) : PortInfo
       PortInfo.new(self, index)
     end
 
-    # See: `#at`
-    def [](index : Int32) : PortInfo
-      at(index)
-    end
-
-    # See: `#lookup_path`, `#at`
+    # See: `#lookup_path`, `#[]`
     def [](port : String) : PortInfo
       index = self.lookup_path(port)
       self[index]
