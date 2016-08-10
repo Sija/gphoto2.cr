@@ -14,8 +14,7 @@ module GPhoto2
       context = Context.new
 
       camera_abilities_list = CameraAbilitiesList.new(context)
-      index = camera_abilities_list.lookup_model(model)
-      abilities = camera_abilities_list[index]
+      abilities = camera_abilities_list[model]
 
       context.close
       abilities

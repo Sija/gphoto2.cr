@@ -37,13 +37,11 @@ module GPhoto2
         camera = Camera.new(model: entry.name, port: entry.value)
 
         # See: `CameraAbilities.find`
-        index = abilities_list.lookup_model(camera.model)
-        if abilities = abilities_list[index]
+        if abilities = abilities_list[camera.model]
           camera.abilities = abilities
         end
         # See: `PortInfo.find`
-        index = port_info_list.lookup_path(camera.port)
-        if port_info = port_info_list[index]
+        if port_info = port_info_list[camera.port]
           camera.port_info = port_info
         end
 

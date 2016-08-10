@@ -9,8 +9,7 @@ module GPhoto2
 
     def self.find(port : String) : self
       port_info_list = PortInfoList.new
-      index = port_info_list.lookup_path(port)
-      port_info_list[index]
+      port_info_list[port]
     end
 
     def initialize(@port_info_list : PortInfoList, @index : Int32)
