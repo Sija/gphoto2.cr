@@ -17,12 +17,12 @@ module GPhoto2
       new
     end
 
-    def name : String?
-      get_name
+    def name : String
+      get_name.not_nil!
     end
 
-    def path : String?
-      get_path
+    def path : String
+      get_path.not_nil!
     end
 
     def type : LibGPhoto2Port::GPPortType
