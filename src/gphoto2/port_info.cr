@@ -7,6 +7,8 @@ module GPhoto2
     @port_info_list : PortInfoList
     @index : Int32
 
+    delegate :type, to: wrapped
+
     def self.find(port : String) : self
       port_info_list = PortInfoList.new
       port_info_list[port]
