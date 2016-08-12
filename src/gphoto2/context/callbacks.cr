@@ -68,6 +68,12 @@ module GPhoto2
         end
       end
 
+      def clear_callbacks : Void
+        {% for key in %w(cancel idle error status message) %}
+          unset_{{key.id}}_callback if {{key.id}}_callback?
+        {% end %}
+      end
+
       def check!(rc : Int32) : Int32
         GPhoto2.log(rc, backtrace_offset: 1)
         if GPhoto2.check?(rc)
