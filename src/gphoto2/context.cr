@@ -13,6 +13,7 @@ module GPhoto2
     end
 
     def close : Void
+      clear_callbacks
       unref
     end
 
