@@ -1,10 +1,12 @@
 module GPhoto2
   class Context
     module Callbacks
-      macro set_callback(key, callback_type, &block)
+      macro set_callback(key, callback_type, args, &block)
         getter! {{key.id}}_callback : {{callback_type.id}}?
         private getter {{key.id}}_boxed_data : Pointer(Void)?
 
+        # Sets *{{key.id}}* callback. Pass `nil` to remove it.
+        #
         # See: [LibGPhoto2#gp_context_set_{{key.id}}_func](http://www.gphoto.org/doc/api/gphoto2-context_8h.html)
         def {{key.id}}_callback=(callback : {{callback_type.id}}?) : Void
           if callback
@@ -28,14 +30,11 @@ module GPhoto2
 
           # We pass a callback that doesn't form a closure, and pass the boxed_data as
           # the callback data
-          # LibGPhoto2.gp_context_set_XXX_func(self, ->(...) {
-          #   # Now we turn data back into the Proc, using Box.unbox
-          #   data_as_callback = Box(typeof(callback)).unbox(data)
-          #   # And finally invoke the user's callback
-          #   data_as_callback.call(...)
-          # }, boxed_data)
+          LibGPhoto2.gp_context_set_{{key.id}}_func self, ->({{args.join(", ").id}}) {
+            data_as_callback = Box(typeof(callback)).unbox(data)
 
-          {{block.body}}
+            {{block.body}}
+          }, boxed_data
         end
 
         protected def unset_{{key.id}}_callback
@@ -45,28 +44,19 @@ module GPhoto2
         end
       end
 
-      set_callback :cancel, Proc(Bool) do
-        LibGPhoto2.gp_context_set_cancel_func self, ->(context, data) {
-          data_as_callback = Box(typeof(callback)).unbox(data)
-          data_as_callback.call \
-            ? LibGPhoto2::GPContextFeedback::Cancel
-            : LibGPhoto2::GPContextFeedback::OK
-        }, boxed_data
+      set_callback :cancel, Proc(Bool), [context, data] do
+        data_as_callback.call \
+          ? LibGPhoto2::GPContextFeedback::Cancel
+          : LibGPhoto2::GPContextFeedback::OK
       end
 
-      set_callback :idle, Proc(Void) do
-        LibGPhoto2.gp_context_set_idle_func self, ->(context, data) {
-          data_as_callback = Box(typeof(callback)).unbox(data)
-          data_as_callback.call
-        }, boxed_data
+      set_callback :idle, Proc(Void), [context, data] do
+        data_as_callback.call
       end
 
       {% for key in %w(error status message) %}
-        set_callback {{key.id}}, Proc(String, Void) do
-          LibGPhoto2.gp_context_set_{{key.id}}_func self, ->(context, message, data) {
-            data_as_callback = Box(typeof(callback)).unbox(data)
-            data_as_callback.call(String.new(message))
-          }, boxed_data
+        set_callback {{key.id}}, Proc(String, Void), [context, message, data] do
+          data_as_callback.call(String.new(message))
         end
       {% end %}
 
