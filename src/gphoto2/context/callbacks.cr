@@ -3,6 +3,7 @@ module GPhoto2
     module Callbacks
       macro set_callback(key, callback_type, &block)
         getter! {{key.id}}_callback : {{callback_type.id}}?
+        private getter {{key.id}}_boxed_data : Pointer(Void)?
 
         # See: [LibGPhoto2#gp_context_set_{{key.id}}_func](http://www.gphoto.org/doc/api/gphoto2-context_8h.html)
         def {{key.id}}_callback=(callback : {{callback_type.id}}?) : Void
@@ -15,12 +16,15 @@ module GPhoto2
 
         # The callback for the user doesn't have a Void*
         protected def set_{{key.id}}_callback(&callback : {{callback_type.id}})
-          # We must save this in Crystal-land so the GC doesn't collect it (*)
+          # We save our callback for l8r use.
           @{{key.id}}_callback = callback
 
           # Since Proc is a {Void*, Void*}, we can't turn that into a Void*, so we
           # "box" it: we allocate memory and store the Proc there
           boxed_data = Box.box(callback)
+
+          # We must save this in Crystal-land so the GC doesn't collect it (*)
+          @{{key.id}}_boxed_data = boxed_data
 
           # We pass a callback that doesn't form a closure, and pass the boxed_data as
           # the callback data
@@ -37,6 +41,7 @@ module GPhoto2
         protected def unset_{{key.id}}_callback
           LibGPhoto2.gp_context_set_{{key.id}}_func self, nil, nil
           @{{key.id}}_callback = nil
+          @{{key.id}}_boxed_data = nil
         end
       end
 
