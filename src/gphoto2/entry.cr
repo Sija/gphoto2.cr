@@ -5,12 +5,12 @@ module GPhoto2
 
     def initialize(@camera_list : CameraList, @index : Int32); end
 
-    def name : String?
-      get_name
+    def name : String
+      get_name.not_nil!
     end
 
-    def value : String?
-      get_value
+    def value : String
+      get_value.not_nil!
     end
 
     private def get_name

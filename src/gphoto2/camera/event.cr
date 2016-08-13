@@ -19,7 +19,7 @@ module GPhoto2
       end
 
       private def wait_for_event(timeout) : CameraEvent
-        GPhoto2.check! LibGPhoto2.gp_camera_wait_for_event(self, timeout, out type, out data_ptr, context)
+        context.check! LibGPhoto2.gp_camera_wait_for_event(self, timeout, out type, out data_ptr, context)
         data =
           case type
           when .file_added?

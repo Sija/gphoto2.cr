@@ -4,7 +4,7 @@ require "../src/gphoto2"
 
 cameras = GPhoto2::Camera.all # or .where model: /canon/i
 cameras.each do |camera|
-  abilities = camera.abilities.wrapped
+  abilities = camera.abilities
 
   puts camera.model.colorize(:green)
   props = {

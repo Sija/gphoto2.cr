@@ -7,11 +7,13 @@ module GPhoto2
     # The preview data is assumed to be a jpg.
     PREVIEW_FILENAME = "capture_preview.jpg"
 
-    getter folder : String?
-    getter name : String?
+    getter! folder : String?
+    getter! name : String?
 
     @camera : Camera
     @data_and_size : Tuple(LibC::Char*, LibC::ULong)?
+
+    protected delegate :context, to: @camera
 
     def initialize(@camera : Camera, @folder : String? = nil, @name : String? = nil)
       new
@@ -22,7 +24,7 @@ module GPhoto2
     end
 
     def preview?
-      @folder.nil? && @name.nil?
+      !(@folder && @name)
     end
 
     def save(pathname : String = default_filename) : Void
@@ -52,8 +54,8 @@ module GPhoto2
       preview? ? nil : get_info
     end
 
-    def extname : String?
-      File.extname(@name.not_nil!)[1..-1].downcase if @name
+    def extname : String
+      File.extname(name)[1..-1].downcase
     end
 
     def_equals @camera, @folder, @name
@@ -69,29 +71,23 @@ module GPhoto2
     end
 
     private def default_filename
-      preview? ? PREVIEW_FILENAME : @name.not_nil!
+      preview? ? PREVIEW_FILENAME : name
     end
 
-    private def data_and_size : Tuple(LibC::Char*, LibC::ULong)
+    private def data_and_size
       @data_and_size ||= begin
         @camera.file(self) unless preview?
         get_data_and_size
       end
     end
 
-    private def get_data_and_size : Tuple(LibC::Char*, LibC::ULong)
+    private def get_data_and_size
       GPhoto2.check! LibGPhoto2.gp_file_get_data_and_size(self, out data, out size)
       {data, size}
     end
 
     private def get_info
-      GPhoto2.check! LibGPhoto2.gp_camera_file_get_info(
-        @camera,
-        @folder.not_nil!,
-        @name.not_nil!,
-        out info,
-        @camera.context
-      )
+      context.check! LibGPhoto2.gp_camera_file_get_info(@camera, folder, name, out info, context)
       CameraFileInfo.new info
     end
   end

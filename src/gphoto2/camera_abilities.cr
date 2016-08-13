@@ -7,12 +7,14 @@ module GPhoto2
     @camera_abilities_list : CameraAbilitiesList
     @index : Int32
 
+    delegate :status, :device_type, :operations, :file_operations, :folder_operations,
+      to: wrapped
+
     def self.find(model : String) : self
       context = Context.new
 
-      camera_abilities_list = CameraAbilitiesList.new(context)
-      index = camera_abilities_list.lookup_model(model)
-      abilities = camera_abilities_list[index]
+      abilities_list = CameraAbilitiesList.new(context)
+      abilities = abilities_list[model]
 
       context.close
       abilities

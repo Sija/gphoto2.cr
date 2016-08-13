@@ -5,8 +5,9 @@ module GPhoto2
     include Struct(LibGPhoto2::CameraAbilitiesList)
 
     @context : Context
+    @port_info_list : PortInfoList
 
-    def initialize(@context : Context)
+    def initialize(@context : Context, @port_info_list : PortInfoList = PortInfoList.new)
       new
       load
     end
@@ -19,16 +20,14 @@ module GPhoto2
       _lookup_model(model)
     end
 
-    def index(model : String) : Int32
-      lookup_model(model)
-    end
-
-    def at(index : Int32) : CameraAbilities
+    def [](index : Int32) : CameraAbilities
       CameraAbilities.new(self, index)
     end
 
-    def [](index : Int32) : CameraAbilities
-      at(index)
+    # See: `#lookup_model`, `#[]`
+    def [](model : String) : CameraAbilities
+      index = self.lookup_model(model)
+      self[index]
     end
 
     private def new
@@ -37,19 +36,12 @@ module GPhoto2
     end
 
     private def load
-      GPhoto2.check! LibGPhoto2.gp_abilities_list_load(self, @context)
+      @context.check! LibGPhoto2.gp_abilities_list_load(self, @context)
     end
 
     private def _detect
-      port_info_list = PortInfoList.new
       camera_list = CameraList.new
-
-      GPhoto2.check! LibGPhoto2.gp_abilities_list_detect(
-        self,
-        port_info_list,
-        camera_list,
-        @context
-      )
+      @context.check! LibGPhoto2.gp_abilities_list_detect(self, @port_info_list, camera_list, @context)
       camera_list
     end
 

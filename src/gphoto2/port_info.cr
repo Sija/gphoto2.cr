@@ -7,22 +7,23 @@ module GPhoto2
     @port_info_list : PortInfoList
     @index : Int32
 
+    delegate :type, to: wrapped
+
     def self.find(port : String) : self
       port_info_list = PortInfoList.new
-      index = port_info_list.lookup_path(port)
-      port_info_list[index]
+      port_info_list[port]
     end
 
     def initialize(@port_info_list : PortInfoList, @index : Int32)
       new
     end
 
-    def name : String?
-      get_name
+    def name : String
+      get_name.not_nil!
     end
 
-    def path : String?
-      get_path
+    def path : String
+      get_path.not_nil!
     end
 
     def type : LibGPhoto2Port::GPPortType

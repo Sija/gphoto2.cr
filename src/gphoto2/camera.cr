@@ -18,6 +18,9 @@ module GPhoto2
     @abilities : CameraAbilities?
     @port_info : PortInfo?
 
+    protected setter abilities : CameraAbilities?
+    protected setter port_info : PortInfo?
+
     # Returns all available cameras.
     #
     # ```
@@ -26,12 +29,23 @@ module GPhoto2
     def self.all : Array(self)
       context = Context.new
 
-      abilities = CameraAbilitiesList.new(context)
-      cameras = abilities.detect
+      port_info_list = PortInfoList.new
+      abilities_list = CameraAbilitiesList.new(context, port_info_list)
+      cameras = abilities_list.detect
 
       entries = cameras.to_a.map do |entry|
-        model, port = entry.name, entry.value
-        Camera.new(model.not_nil!, port.not_nil!)
+        camera = Camera.new(model: entry.name, port: entry.value)
+
+        # See: `CameraAbilities.find`
+        if abilities = abilities_list[camera.model]
+          camera.abilities = abilities
+        end
+        # See: `PortInfo.find`
+        if port_info = port_info_list[camera.port]
+          camera.port_info = port_info
+        end
+
+        camera
       end
 
       context.close
@@ -167,13 +181,15 @@ module GPhoto2
     # ```
     # camera.can? :capture_image # => true
     # ```
+    #
+    # See also: `LibGPhoto2::CameraOperation`
     def can?(operation : Symbol)
       can? LibGPhoto2::CameraOperation.parse(operation.to_s)
     end
 
     # :nodoc:
     def can?(operation : LibGPhoto2::CameraOperation)
-      abilities.wrapped.operations.includes? operation
+      abilities.operations.includes? operation
     end
 
     def_equals @model, @port
@@ -189,8 +205,8 @@ module GPhoto2
 
     private def init : Void
       new
-      set_abilities CameraAbilities.find(@model)
-      set_port_info PortInfo.find(@port)
+      set_abilities @abilities || CameraAbilities.find(@model)
+      set_port_info @port_info || PortInfo.find(@port)
     end
 
     private def new
@@ -199,7 +215,7 @@ module GPhoto2
     end
 
     private def _exit
-      GPhoto2.check! LibGPhoto2.gp_camera_exit(self, context)
+      context.check! LibGPhoto2.gp_camera_exit(self, context)
     end
 
     private def set_port_info(port_info : PortInfo)

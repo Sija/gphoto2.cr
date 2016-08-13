@@ -17,6 +17,8 @@ module GPhoto2
       # # List camera configuration keys.
       # camera.config.keys # => ["autofocusdrive", "manualfocusdrive", "controlmode", ...]
       # ```
+      #
+      # See also: `#[]` and `#[]=`
       def config : Hash(String, CameraWidget)
         @config ||= window.flatten
       end
@@ -118,7 +120,7 @@ module GPhoto2
       # camera << iso
       # ```
       def <<(widget : CameraWidget) : self
-        key = widget.name.not_nil!
+        key = widget.name
         # set_single_config(key, widget)
         config[key] = widget
         @dirty = true
@@ -183,16 +185,16 @@ module GPhoto2
       end
 
       private def get_config
-        GPhoto2.check! LibGPhoto2.gp_camera_get_config(self, out window, context)
+        context.check! LibGPhoto2.gp_camera_get_config(self, out window, context)
         CameraWidget.factory(window)
       end
 
       private def set_config
-        GPhoto2.check! LibGPhoto2.gp_camera_set_config(self, window, context)
+        context.check! LibGPhoto2.gp_camera_set_config(self, window, context)
       end
 
       private def set_single_config(name, widget)
-        GPhoto2.check! LibGPhoto2.gp_camera_set_single_config(self, name, widget, context)
+        context.check! LibGPhoto2.gp_camera_set_single_config(self, name, widget, context)
       end
     end
   end

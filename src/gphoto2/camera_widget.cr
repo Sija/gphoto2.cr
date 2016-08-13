@@ -13,6 +13,10 @@ module GPhoto2
       ::GPhoto2::CameraWidget.widgets[{{factory_id.stringify}}] = self
 
       class ::GPhoto2::CameraWidget
+        def as_{{factory_id}}? : {{@type.name}}?
+          self.as?({{@type.name}})
+        end
+
         def as_{{factory_id}} : {{@type.name}}
           self.as({{@type.name}})
         end
@@ -20,8 +24,7 @@ module GPhoto2
     end
 
     @@widgets = {} of String => CameraWidget.class
-
-    def self.widgets
+    def self.widgets : Hash(String, CameraWidget.class)
       @@widgets
     end
 
@@ -57,16 +60,16 @@ module GPhoto2
       get_id
     end
 
-    def name : String?
-      get_name
+    def name : String
+      get_name.not_nil!
     end
 
-    def label : String?
-      get_label
+    def label : String
+      get_label.not_nil!
     end
 
-    def info : String?
-      get_info
+    def info : String
+      get_info.not_nil!
     end
 
     def value
@@ -87,7 +90,7 @@ module GPhoto2
       when .window?, .section?
         children.each &.flatten(map)
       else
-        map[name.not_nil!] = self
+        map[name] = self
       end
       map
     end
