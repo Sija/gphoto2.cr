@@ -12,7 +12,7 @@ module GPhoto2
 
     def name : String
       return "/" if root?
-      @path.split("/").last
+      @path.split('/').last
     end
 
     def folders : Array(self)
@@ -46,7 +46,7 @@ module GPhoto2
       if root?
         self
       else
-        parent = @path[0...(@path.rindex("/") || 0)]
+        parent = @path[0...(@path.rindex('/') || 0)]
         parent = "/" if parent.empty?
         CameraFolder.new(@camera, parent)
       end
