@@ -19,6 +19,11 @@ module GPhoto2
       new
     end
 
+    def finalize
+      # GPhoto2.log ptr
+      close
+    end
+
     def close : Void
       free
     end
