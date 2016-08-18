@@ -25,7 +25,7 @@ def visit(folder, level = 0)
   files.each do |file|
     name  = file.name
     info  = file.info.not_nil!.file
-    # Avoid using `File#size` here to prevent having to load the data along with it.
+    # Avoid using `CameraFile#size` here to prevent having to load the data along with it.
     size  = info.size ? format_filesize(info.size.not_nil!) : "-"
     type  = info.type || "-"
     mtime = info.mtime.try(&.to_s("%Y-%m-%d %H:%M:%S")) || "-"
