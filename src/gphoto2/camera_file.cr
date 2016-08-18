@@ -20,7 +20,6 @@ module GPhoto2
     end
 
     def finalize
-      # GPhoto2.log ptr
       close
     end
 

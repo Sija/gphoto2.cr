@@ -12,6 +12,10 @@ module GPhoto2
       load
     end
 
+    def finalize
+      free
+    end
+
     def detect : CameraList
       _detect
     end
@@ -33,6 +37,11 @@ module GPhoto2
     private def new
       GPhoto2.check! LibGPhoto2.gp_abilities_list_new(out ptr)
       self.ptr = ptr
+    end
+
+    private def free
+      GPhoto2.check! LibGPhoto2.gp_abilities_list_free(self)
+      self.ptr = nil
     end
 
     private def load

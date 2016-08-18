@@ -9,6 +9,10 @@ module GPhoto2
       load
     end
 
+    def finalize
+      free
+    end
+
     def lookup_path(port : String) : Int32
       _lookup_path(port)
     end
@@ -26,6 +30,11 @@ module GPhoto2
     private def new
       GPhoto2.check! LibGPhoto2Port.gp_port_info_list_new(out ptr)
       self.ptr = ptr
+    end
+
+    private def free
+      GPhoto2.check! LibGPhoto2Port.gp_port_info_list_free(self)
+      self.ptr = nil
     end
 
     private def load
