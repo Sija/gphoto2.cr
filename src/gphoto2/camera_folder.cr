@@ -52,6 +52,10 @@ module GPhoto2
       end
     end
 
+    def clear : Void
+      folder_delete_all
+    end
+
     def to_s(io)
       io << name
     end
@@ -68,6 +72,10 @@ module GPhoto2
       list = CameraList.new
       context.check! LibGPhoto2.gp_camera_folder_list_folders(@camera, @path, list, context)
       list.to_a.map { |f| cd f.name }
+    end
+
+    private def folder_delete_all
+      context.check! LibGPhoto2.gp_camera_folder_delete_all(@camera, @path, context)
     end
   end
 end
