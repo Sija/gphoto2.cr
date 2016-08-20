@@ -1,3 +1,9 @@
+# 0.5.0
+- Fixed some of the most egregious memory leaks – think: `CameraFile#data`
+- Renamed `CameraFile#extname` to `#extension`
+- New `CameraFile#path` as a shortcut for `File.join(file.folder, file.name)`
+- New `CameraFolder#clear` method which deletes all files in the given folder
+
 # 0.4.0
 - New non-throwing `CameraWidget#as_<widget>?` method
 - New `CameraAbilities` convenience methods: `#status`, `#device_type`, `#operations`, `#file_operations`, `#folder_operations`
