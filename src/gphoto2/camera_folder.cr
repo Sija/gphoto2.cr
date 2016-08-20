@@ -30,7 +30,7 @@ module GPhoto2
       when ".."
         up
       else
-        CameraFolder.new(@camera, File.join(@path, name))
+        self.class.new(@camera, File.join(@path, name))
       end
     end
 
@@ -48,7 +48,7 @@ module GPhoto2
       else
         parent = @path[0...(@path.rindex('/') || 0)]
         parent = "/" if parent.empty?
-        CameraFolder.new(@camera, parent)
+        self.class.new(@camera, parent)
       end
     end
 

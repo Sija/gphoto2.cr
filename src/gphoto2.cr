@@ -8,7 +8,7 @@ module GPhoto2
   @@logger : Logger?
 
   def self.logger : Logger
-    @@logger ||= begin
+    @@logger ||= Logger.new(STDERR).tap do |logger|
       severity_colors = {
         "UNKNOWN" => :dark_gray,
         "ERROR"   => :light_red,
@@ -17,26 +17,24 @@ module GPhoto2
         "DEBUG"   => :green,
         "FATAL"   => :cyan,
       }
-      logger = Logger.new(STDERR)
       logger.formatter = Logger::Formatter.new do |severity, datetime, progname, message, io|
         io << severity.rjust(5).colorize(severity_colors[severity]? || :green)
         io << " [" << progname.colorize(:cyan) << "]" unless progname.empty?
         io << " -- " << message
       end
       logger.level = Logger::DEBUG if debug?
-      logger
     end
   end
 
-  gp_logger = ->(level : LibGPhoto2::GPLogLevel, domain : LibC::Char*, str : LibC::Char*, data : Void*) {
-    severities = {
-      LibGPhoto2::GPLogLevel::Error   => Logger::Severity::ERROR,
-      LibGPhoto2::GPLogLevel::Verbose => Logger::Severity::INFO,
-      LibGPhoto2::GPLogLevel::Debug   => Logger::Severity::DEBUG,
-    }
-    logger.log severities[level], String.new(str), "libgphoto2"
-  }
   if debug?
+    gp_logger = ->(level : LibGPhoto2::GPLogLevel, domain : LibC::Char*, str : LibC::Char*, data : Void*) {
+      severities = {
+        LibGPhoto2::GPLogLevel::Error   => Logger::Severity::ERROR,
+        LibGPhoto2::GPLogLevel::Verbose => Logger::Severity::INFO,
+        LibGPhoto2::GPLogLevel::Debug   => Logger::Severity::DEBUG,
+      }
+      logger.log severities[level], String.new(str), "libgphoto2"
+    }
     gp_log_level = LibGPhoto2::GPLogLevel.parse(ENV["LIB_LOG_LEVEL"]? || "debug")
     LibGPhoto2.gp_log_add_func(gp_log_level, gp_logger, nil)
   end
