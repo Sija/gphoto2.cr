@@ -152,6 +152,12 @@ More examples can be found in [`examples/`][examples]. Documentation can be gene
 
 ## Development
 
+Enable debug mode by passing `DEBUG=1` env variable:
+```
+DEBUG=1 crystal examples/list_cameras.cr
+```
+
+Run specs with:
 ```
 crystal spec
 ```
@@ -171,4 +177,4 @@ crystal spec
 
 ## References
 
-- Original implementation in `Ruby` - https://github.com/zaeleus/ffi-gphoto2
+- Original implementation in Ruby - https://github.com/zaeleus/ffi-gphoto2
