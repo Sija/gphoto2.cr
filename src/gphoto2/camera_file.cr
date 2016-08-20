@@ -66,11 +66,6 @@ module GPhoto2
       File.extname(name).split('.').last.downcase
     end
 
-    # Returns file mime type.
-    def type : String?
-      info.try &.file.type
-    end
-
     # Returns full file path (within the camera filesystem).
     def path : String
       File.join folder, name
