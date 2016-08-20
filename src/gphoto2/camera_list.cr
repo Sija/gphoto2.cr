@@ -8,6 +8,10 @@ module GPhoto2
       new
     end
 
+    def finalize
+      free
+    end
+
     def size : Int32
       count
     end
@@ -19,6 +23,11 @@ module GPhoto2
     private def new
       GPhoto2.check! LibGPhoto2.gp_list_new(out ptr)
       self.ptr = ptr
+    end
+
+    private def free
+      GPhoto2.check! LibGPhoto2.gp_list_free(self)
+      self.ptr = nil
     end
 
     private def count

@@ -86,7 +86,7 @@ module GPhoto2
       end
 
       # ```
-      # camera[:whitebalance].to_s # => "Automatic"
+      # camera[:whitebalance].to_s  # => "Automatic"
       # camera["whitebalance"].to_s # => "Automatic"
       # ```
       def [](key : String | Symbol)

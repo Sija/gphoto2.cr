@@ -12,7 +12,7 @@ module GPhoto2
 
     def name : String
       return "/" if root?
-      @path.split("/").last
+      @path.split('/').last
     end
 
     def folders : Array(self)
@@ -30,7 +30,7 @@ module GPhoto2
       when ".."
         up
       else
-        CameraFolder.new(@camera, File.join(@path, name))
+        self.class.new(@camera, File.join(@path, name))
       end
     end
 
@@ -46,10 +46,14 @@ module GPhoto2
       if root?
         self
       else
-        parent = @path[0...(@path.rindex("/") || 0)]
+        parent = @path[0...(@path.rindex('/') || 0)]
         parent = "/" if parent.empty?
-        CameraFolder.new(@camera, parent)
+        self.class.new(@camera, parent)
       end
+    end
+
+    def clear : Void
+      folder_delete_all
     end
 
     def to_s(io)
@@ -68,6 +72,10 @@ module GPhoto2
       list = CameraList.new
       context.check! LibGPhoto2.gp_camera_folder_list_folders(@camera, @path, list, context)
       list.to_a.map { |f| cd f.name }
+    end
+
+    private def folder_delete_all
+      context.check! LibGPhoto2.gp_camera_folder_delete_all(@camera, @path, context)
     end
   end
 end

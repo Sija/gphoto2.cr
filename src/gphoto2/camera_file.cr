@@ -7,16 +7,20 @@ module GPhoto2
     # The preview data is assumed to be a jpg.
     PREVIEW_FILENAME = "capture_preview.jpg"
 
+    @camera : Camera
+    @data_and_size : {UInt8*, LibC::ULong}?
+
     getter! folder : String?
     getter! name : String?
-
-    @camera : Camera
-    @data_and_size : Tuple(LibC::Char*, LibC::ULong)?
 
     protected delegate :context, to: @camera
 
     def initialize(@camera : Camera, @folder : String? = nil, @name : String? = nil)
       new
+    end
+
+    def finalize
+      close
     end
 
     def close : Void
@@ -34,28 +38,37 @@ module GPhoto2
       File.open pathname, "w", &.write(to_slice)
     end
 
+    # Deletes file from the camera.
     def delete : Void
-      @camera.delete(self)
+      _delete
     end
 
-    def data : LibC::Char*
+    # Returns file data.
+    def data : UInt8*
       data_and_size.first
     end
 
+    # Returns size of the file (in bytes).
     def size : LibC::ULong
       data_and_size.last
     end
 
-    def to_slice : Slice(LibC::Char)
+    def to_slice : Bytes
       data.to_slice(size)
     end
 
     def info : CameraFileInfo?
-      preview? ? nil : get_info
+      get_info unless preview?
     end
 
-    def extname : String
-      File.extname(name)[1..-1].downcase
+    # Returns file extension in lowercase (without leading dot).
+    def extension : String
+      File.extname(name).split('.').last.downcase
+    end
+
+    # Returns full file path (within the camera filesystem).
+    def path : String
+      File.join folder, name
     end
 
     def_equals @camera, @folder, @name
@@ -76,7 +89,7 @@ module GPhoto2
 
     private def data_and_size
       @data_and_size ||= begin
-        @camera.file(self) unless preview?
+        get unless preview?
         get_data_and_size
       end
     end
@@ -86,9 +99,17 @@ module GPhoto2
       {data, size}
     end
 
+    private def get(type = LibGPhoto2::CameraFileType::Normal)
+      context.check! LibGPhoto2.gp_camera_file_get(@camera, folder, name, type, self, context)
+    end
+
     private def get_info
       context.check! LibGPhoto2.gp_camera_file_get_info(@camera, folder, name, out info, context)
       CameraFileInfo.new info
+    end
+
+    private def _delete
+      context.check! LibGPhoto2.gp_camera_file_delete(@camera, folder, name, context)
     end
   end
 end

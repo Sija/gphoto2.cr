@@ -4,18 +4,9 @@ module GPhoto2
   class PortInfo
     include GPhoto2::Struct(LibGPhoto2Port::GPPortInfo)
 
-    @port_info_list : PortInfoList
-    @index : Int32
-
-    delegate :type, to: wrapped
-
     def self.find(port : String) : self
       port_info_list = PortInfoList.new
       port_info_list[port]
-    end
-
-    def initialize(@port_info_list : PortInfoList, @index : Int32)
-      new
     end
 
     def name : String
@@ -28,11 +19,6 @@ module GPhoto2
 
     def type : LibGPhoto2Port::GPPortType
       get_type
-    end
-
-    private def new
-      GPhoto2.check! LibGPhoto2Port.gp_port_info_list_get_info(@port_info_list, @index, out ptr)
-      self.ptr = ptr
     end
 
     private def get_name

@@ -9,23 +9,32 @@ module GPhoto2
       load
     end
 
+    def finalize
+      free
+    end
+
     def lookup_path(port : String) : Int32
       _lookup_path(port)
     end
 
     def [](index : Int32) : PortInfo
-      PortInfo.new(self, index)
+      get_info(index)
     end
 
     # See: `#lookup_path`, `#[]`
     def [](port : String) : PortInfo
-      index = self.lookup_path(port)
+      index = lookup_path(port)
       self[index]
     end
 
     private def new
       GPhoto2.check! LibGPhoto2Port.gp_port_info_list_new(out ptr)
       self.ptr = ptr
+    end
+
+    private def free
+      GPhoto2.check! LibGPhoto2Port.gp_port_info_list_free(self)
+      self.ptr = nil
     end
 
     private def load
@@ -38,6 +47,11 @@ module GPhoto2
 
     private def _lookup_path(port)
       GPhoto2.check! LibGPhoto2Port.gp_port_info_list_lookup_path(self, port)
+    end
+
+    private def get_info(index)
+      GPhoto2.check! LibGPhoto2Port.gp_port_info_list_get_info(self, index, out info)
+      PortInfo.new info
     end
   end
 end
