@@ -25,7 +25,7 @@ module GPhoto2
     end
 
     def [](index : Int32) : CameraAbilities
-      CameraAbilities.new(self, index)
+      get_abilities(index)
     end
 
     # See: `#lookup_model`, `#[]`
@@ -56,6 +56,11 @@ module GPhoto2
 
     private def _lookup_model(model)
       GPhoto2.check! LibGPhoto2.gp_abilities_list_lookup_model(self, model)
+    end
+
+    private def get_abilities(index)
+      GPhoto2.check! LibGPhoto2.gp_abilities_list_get_abilities(self, index, out abilities)
+      CameraAbilities.new pointerof(abilities)
     end
   end
 end
