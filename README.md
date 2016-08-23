@@ -1,4 +1,4 @@
-# gphoto2.cr
+# gphoto2.cr [![Build Status](https://travis-ci.org/Sija/gphoto2.cr.svg?branch=master)](https://travis-ci.org/Sija/gphoto2.cr)
 
 **gphoto2.cr** provides an FFI for common functions in [libgphoto2][gphoto].
 It also includes a facade to interact with the library in a more idiomatic Crystal way.
