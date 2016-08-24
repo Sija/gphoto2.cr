@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta id="repository-name" content="github.com/Sija/gphoto2.cr">
+  <link href="../../css/style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="../../js/doc.js"></script>
+  <title>GPhoto2::Camera::Capture - github.com/Sija/gphoto2.cr</title>
+</head>
+<body>
+
+<div id="types-list">
+  <div id="search-box">
+    <input type="search" id="search-input" placeholder="Search...">
+  </div>
+
+  <ul>
+    <li><a href="../../index.html">README</a></li>
+  </ul>
+
+  <ul>
+  
+  <li class="parent open current" data-id="github.com/Sija/gphoto2.cr/GPhoto2" data-name="gphoto2">
+      <a href="../../GPhoto2.html">GPhoto2</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/ButtonCameraWidget" data-name="gphoto2::buttoncamerawidget">
+      <a href="../../GPhoto2/ButtonCameraWidget.html">ButtonCameraWidget</a>
+      
+    </li>
+  
+  <li class="parent open current" data-id="github.com/Sija/gphoto2.cr/GPhoto2/Camera" data-name="gphoto2::camera">
+      <a href="../../GPhoto2/Camera.html">Camera</a>
+      
+        <ul>
+  
+  <li class=" current" data-id="github.com/Sija/gphoto2.cr/GPhoto2/Camera/Capture" data-name="gphoto2::camera::capture">
+      <a href="../../GPhoto2/Camera/Capture.html">Capture</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Camera/Configuration" data-name="gphoto2::camera::configuration">
+      <a href="../../GPhoto2/Camera/Configuration.html">Configuration</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Camera/Event" data-name="gphoto2::camera::event">
+      <a href="../../GPhoto2/Camera/Event.html">Event</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Camera/Filesystem" data-name="gphoto2::camera::filesystem">
+      <a href="../../GPhoto2/Camera/Filesystem.html">Filesystem</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraAbilities" data-name="gphoto2::cameraabilities">
+      <a href="../../GPhoto2/CameraAbilities.html">CameraAbilities</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraAbilitiesList" data-name="gphoto2::cameraabilitieslist">
+      <a href="../../GPhoto2/CameraAbilitiesList.html">CameraAbilitiesList</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraEvent" data-name="gphoto2::cameraevent(t)">
+      <a href="../../GPhoto2/CameraEvent.html">CameraEvent</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFile" data-name="gphoto2::camerafile">
+      <a href="../../GPhoto2/CameraFile.html">CameraFile</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFileInfo" data-name="gphoto2::camerafileinfo">
+      <a href="../../GPhoto2/CameraFileInfo.html">CameraFileInfo</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFileInfo/Base" data-name="gphoto2::camerafileinfo::base">
+      <a href="../../GPhoto2/CameraFileInfo/Base.html">Base</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFileInfoAudio" data-name="gphoto2::camerafileinfoaudio">
+      <a href="../../GPhoto2/CameraFileInfoAudio.html">CameraFileInfoAudio</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFileInfoFile" data-name="gphoto2::camerafileinfofile">
+      <a href="../../GPhoto2/CameraFileInfoFile.html">CameraFileInfoFile</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFileInfoPreview" data-name="gphoto2::camerafileinfopreview">
+      <a href="../../GPhoto2/CameraFileInfoPreview.html">CameraFileInfoPreview</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFilePath" data-name="gphoto2::camerafilepath">
+      <a href="../../GPhoto2/CameraFilePath.html">CameraFilePath</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFolder" data-name="gphoto2::camerafolder">
+      <a href="../../GPhoto2/CameraFolder.html">CameraFolder</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraList" data-name="gphoto2::cameralist">
+      <a href="../../GPhoto2/CameraList.html">CameraList</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraWidget" data-name="gphoto2::camerawidget">
+      <a href="../../GPhoto2/CameraWidget.html">CameraWidget</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraWidget/NotImplementedError" data-name="gphoto2::camerawidget::notimplementederror">
+      <a href="../../GPhoto2/CameraWidget/NotImplementedError.html">NotImplementedError</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Context" data-name="gphoto2::context">
+      <a href="../../GPhoto2/Context.html">Context</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Context/Callbacks" data-name="gphoto2::context::callbacks">
+      <a href="../../GPhoto2/Context/Callbacks.html">Callbacks</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Context/Error" data-name="gphoto2::context::error">
+      <a href="../../GPhoto2/Context/Error.html">Error</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/DateCameraWidget" data-name="gphoto2::datecamerawidget">
+      <a href="../../GPhoto2/DateCameraWidget.html">DateCameraWidget</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Entry" data-name="gphoto2::entry">
+      <a href="../../GPhoto2/Entry.html">Entry</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Error" data-name="gphoto2::error">
+      <a href="../../GPhoto2/Error.html">Error</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Exception" data-name="gphoto2::exception">
+      <a href="../../GPhoto2/Exception.html">Exception</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/ManagedStruct" data-name="gphoto2::managedstruct(t)">
+      <a href="../../GPhoto2/ManagedStruct.html">ManagedStruct</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/MenuCameraWidget" data-name="gphoto2::menucamerawidget">
+      <a href="../../GPhoto2/MenuCameraWidget.html">MenuCameraWidget</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/NoDevicesError" data-name="gphoto2::nodeviceserror">
+      <a href="../../GPhoto2/NoDevicesError.html">NoDevicesError</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/PortInfo" data-name="gphoto2::portinfo">
+      <a href="../../GPhoto2/PortInfo.html">PortInfo</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/PortInfoList" data-name="gphoto2::portinfolist">
+      <a href="../../GPhoto2/PortInfoList.html">PortInfoList</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/RadioCameraWidget" data-name="gphoto2::radiocamerawidget">
+      <a href="../../GPhoto2/RadioCameraWidget.html">RadioCameraWidget</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/RangeCameraWidget" data-name="gphoto2::rangecamerawidget">
+      <a href="../../GPhoto2/RangeCameraWidget.html">RangeCameraWidget</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/SectionCameraWidget" data-name="gphoto2::sectioncamerawidget">
+      <a href="../../GPhoto2/SectionCameraWidget.html">SectionCameraWidget</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Struct" data-name="gphoto2::struct(t)">
+      <a href="../../GPhoto2/Struct.html">Struct</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/TextCameraWidget" data-name="gphoto2::textcamerawidget">
+      <a href="../../GPhoto2/TextCameraWidget.html">TextCameraWidget</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/ToggleCameraWidget" data-name="gphoto2::togglecamerawidget">
+      <a href="../../GPhoto2/ToggleCameraWidget.html">ToggleCameraWidget</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/WindowCameraWidget" data-name="gphoto2::windowcamerawidget">
+      <a href="../../GPhoto2/WindowCameraWidget.html">WindowCameraWidget</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+</div>
+
+<div id="main-content">
+<h1 class="type-name">
+
+  <span class="kind">module</span> GPhoto2::Camera::Capture
+
+</h1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>Direct including types</h2>
+  <ul class="other-types-list">
+  
+    <li class="other-type"><a href="../../GPhoto2/Camera.html">GPhoto2::Camera</a></li>
+  
+  </ul>
+
+
+
+
+  <h2>Defined in:</h2>
+  
+    
+      <a href="https://github.com/Sija/gphoto2.cr/blob/741b2da1ca5ed631714700e31a39bfa1b879a88e/src/gphoto2/camera/capture.cr#L3" target="_blank">gphoto2/camera/capture.cr</a>
+    
+    <br/>
+  
+
+
+
+
+
+
+
+  <h2>Instance Method Summary</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#capture%3ACameraFile-instance-method" class="signature"><strong>#capture</strong> : CameraFile</a>
+        
+          <div class="summary"><pre><code class='language-# Take a photo.'></code></pre></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#preview%3ACameraFile-instance-method" class="signature"><strong>#preview</strong> : CameraFile</a>
+        
+          <div class="summary"><p>Captures a preview from the camera.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#trigger%3AVoid-instance-method" class="signature"><strong>#trigger</strong> : Void</a>
+        
+          <div class="summary"><p>Triggers a capture and immedately returns.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+</div>
+
+
+
+
+  <h2>Instance Method Detail</h2>
+  
+    <div class="entry-detail" id="capture:CameraFile-instance-method">
+      <div class="signature">
+        
+        def <strong>capture</strong> : <a href="../../GPhoto2/CameraFile.html">CameraFile</a>
+
+        <a class="method-permalink" href="#capture%3ACameraFile-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><pre><code><span class="c"># Take a photo.</span>
+file <span class="o">=</span> camera.capture
+
+<span class="c"># And save it to the current working directory.</span>
+file.save</code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/741b2da1ca5ed631714700e31a39bfa1b879a88e/src/gphoto2/camera/capture.cr#L11" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="preview:CameraFile-instance-method">
+      <div class="signature">
+        
+        def <strong>preview</strong> : <a href="../../GPhoto2/CameraFile.html">CameraFile</a>
+
+        <a class="method-permalink" href="#preview%3ACameraFile-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Captures a preview from the camera.</p>
+
+<p>Previews are not stored on the camera but are returned as data in a
+<code><a href="../../GPhoto2/CameraFile.html">GPhoto2::CameraFile</a></code>.</p>
+
+<pre><code><span class="c"># Capturing a preview is like using &#96;Camera#capture&#96;.</span>
+file <span class="o">=</span> camera.preview
+
+<span class="c"># The resulting file will have neither a folder nor name.</span>
+file.preview? <span class="c"># &#61;&gt; true</span>
+
+<span class="c"># But it will contain image data from the camera.</span>
+file.data <span class="c"># &#61;&gt; &quot;\xFF\xD8\xFF\xDB\x00\x84\x00\x06...&quot;</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/741b2da1ca5ed631714700e31a39bfa1b879a88e/src/gphoto2/camera/capture.cr#L58" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="trigger:Void-instance-method">
+      <div class="signature">
+        
+        def <strong>trigger</strong> : Void
+
+        <a class="method-permalink" href="#trigger%3AVoid-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Triggers a capture and immedately returns.</p>
+
+<p>A camera trigger is the first half of a <code><a href="../../GPhoto2/Camera/Capture.html#capture%3ACameraFile-instance-method">#capture</a></code>. Instead of
+returning a <code><a href="../../GPhoto2/CameraFile.html">GPhoto2::CameraFile</a></code>, a trigger immediately returns and
+the caller has to poll for events.</p>
+
+<pre><code>camera.trigger
+event <span class="o">=</span> camera.wait_for(<span class="n">:file_added</span>)
+event.data <span class="c"># &#61;&gt; CameraFile</span></code></pre></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/741b2da1ca5ed631714700e31a39bfa1b879a88e/src/gphoto2/camera/capture.cr#L38" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>

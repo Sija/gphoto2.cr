@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta id="repository-name" content="github.com/Sija/gphoto2.cr">
+  <link href="../css/style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="../js/doc.js"></script>
+  <title>GPhoto2::CameraFile - github.com/Sija/gphoto2.cr</title>
+</head>
+<body>
+
+<div id="types-list">
+  <div id="search-box">
+    <input type="search" id="search-input" placeholder="Search...">
+  </div>
+
+  <ul>
+    <li><a href="../index.html">README</a></li>
+  </ul>
+
+  <ul>
+  
+  <li class="parent open current" data-id="github.com/Sija/gphoto2.cr/GPhoto2" data-name="gphoto2">
+      <a href="../GPhoto2.html">GPhoto2</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/ButtonCameraWidget" data-name="gphoto2::buttoncamerawidget">
+      <a href="../GPhoto2/ButtonCameraWidget.html">ButtonCameraWidget</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Camera" data-name="gphoto2::camera">
+      <a href="../GPhoto2/Camera.html">Camera</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Camera/Capture" data-name="gphoto2::camera::capture">
+      <a href="../GPhoto2/Camera/Capture.html">Capture</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Camera/Configuration" data-name="gphoto2::camera::configuration">
+      <a href="../GPhoto2/Camera/Configuration.html">Configuration</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Camera/Event" data-name="gphoto2::camera::event">
+      <a href="../GPhoto2/Camera/Event.html">Event</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Camera/Filesystem" data-name="gphoto2::camera::filesystem">
+      <a href="../GPhoto2/Camera/Filesystem.html">Filesystem</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraAbilities" data-name="gphoto2::cameraabilities">
+      <a href="../GPhoto2/CameraAbilities.html">CameraAbilities</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraAbilitiesList" data-name="gphoto2::cameraabilitieslist">
+      <a href="../GPhoto2/CameraAbilitiesList.html">CameraAbilitiesList</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraEvent" data-name="gphoto2::cameraevent(t)">
+      <a href="../GPhoto2/CameraEvent.html">CameraEvent</a>
+      
+    </li>
+  
+  <li class=" current" data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFile" data-name="gphoto2::camerafile">
+      <a href="../GPhoto2/CameraFile.html">CameraFile</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFileInfo" data-name="gphoto2::camerafileinfo">
+      <a href="../GPhoto2/CameraFileInfo.html">CameraFileInfo</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFileInfo/Base" data-name="gphoto2::camerafileinfo::base">
+      <a href="../GPhoto2/CameraFileInfo/Base.html">Base</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFileInfoAudio" data-name="gphoto2::camerafileinfoaudio">
+      <a href="../GPhoto2/CameraFileInfoAudio.html">CameraFileInfoAudio</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFileInfoFile" data-name="gphoto2::camerafileinfofile">
+      <a href="../GPhoto2/CameraFileInfoFile.html">CameraFileInfoFile</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFileInfoPreview" data-name="gphoto2::camerafileinfopreview">
+      <a href="../GPhoto2/CameraFileInfoPreview.html">CameraFileInfoPreview</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFilePath" data-name="gphoto2::camerafilepath">
+      <a href="../GPhoto2/CameraFilePath.html">CameraFilePath</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFolder" data-name="gphoto2::camerafolder">
+      <a href="../GPhoto2/CameraFolder.html">CameraFolder</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraList" data-name="gphoto2::cameralist">
+      <a href="../GPhoto2/CameraList.html">CameraList</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraWidget" data-name="gphoto2::camerawidget">
+      <a href="../GPhoto2/CameraWidget.html">CameraWidget</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraWidget/NotImplementedError" data-name="gphoto2::camerawidget::notimplementederror">
+      <a href="../GPhoto2/CameraWidget/NotImplementedError.html">NotImplementedError</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Context" data-name="gphoto2::context">
+      <a href="../GPhoto2/Context.html">Context</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Context/Callbacks" data-name="gphoto2::context::callbacks">
+      <a href="../GPhoto2/Context/Callbacks.html">Callbacks</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Context/Error" data-name="gphoto2::context::error">
+      <a href="../GPhoto2/Context/Error.html">Error</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/DateCameraWidget" data-name="gphoto2::datecamerawidget">
+      <a href="../GPhoto2/DateCameraWidget.html">DateCameraWidget</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Entry" data-name="gphoto2::entry">
+      <a href="../GPhoto2/Entry.html">Entry</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Error" data-name="gphoto2::error">
+      <a href="../GPhoto2/Error.html">Error</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Exception" data-name="gphoto2::exception">
+      <a href="../GPhoto2/Exception.html">Exception</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/ManagedStruct" data-name="gphoto2::managedstruct(t)">
+      <a href="../GPhoto2/ManagedStruct.html">ManagedStruct</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/MenuCameraWidget" data-name="gphoto2::menucamerawidget">
+      <a href="../GPhoto2/MenuCameraWidget.html">MenuCameraWidget</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/NoDevicesError" data-name="gphoto2::nodeviceserror">
+      <a href="../GPhoto2/NoDevicesError.html">NoDevicesError</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/PortInfo" data-name="gphoto2::portinfo">
+      <a href="../GPhoto2/PortInfo.html">PortInfo</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/PortInfoList" data-name="gphoto2::portinfolist">
+      <a href="../GPhoto2/PortInfoList.html">PortInfoList</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/RadioCameraWidget" data-name="gphoto2::radiocamerawidget">
+      <a href="../GPhoto2/RadioCameraWidget.html">RadioCameraWidget</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/RangeCameraWidget" data-name="gphoto2::rangecamerawidget">
+      <a href="../GPhoto2/RangeCameraWidget.html">RangeCameraWidget</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/SectionCameraWidget" data-name="gphoto2::sectioncamerawidget">
+      <a href="../GPhoto2/SectionCameraWidget.html">SectionCameraWidget</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Struct" data-name="gphoto2::struct(t)">
+      <a href="../GPhoto2/Struct.html">Struct</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/TextCameraWidget" data-name="gphoto2::textcamerawidget">
+      <a href="../GPhoto2/TextCameraWidget.html">TextCameraWidget</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/ToggleCameraWidget" data-name="gphoto2::togglecamerawidget">
+      <a href="../GPhoto2/ToggleCameraWidget.html">ToggleCameraWidget</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/WindowCameraWidget" data-name="gphoto2::windowcamerawidget">
+      <a href="../GPhoto2/WindowCameraWidget.html">WindowCameraWidget</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+</div>
+
+<div id="main-content">
+<h1 class="type-name">
+
+  <span class="kind">class</span> GPhoto2::CameraFile
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../GPhoto2/CameraFile.html">GPhoto2::CameraFile</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+
+
+
+
+  <h2>Included Modules</h2>
+  <ul class="other-types-list">
+  
+    <li class="other-type"><a href="../GPhoto2/Struct.html">GPhoto2::Struct(LibGPhoto2::CameraFile)</a></li>
+  
+  </ul>
+
+
+
+
+
+
+
+
+
+
+  <h2>Defined in:</h2>
+  
+    
+      <a href="https://github.com/Sija/gphoto2.cr/blob/741b2da1ca5ed631714700e31a39bfa1b879a88e/src/gphoto2/camera_file.cr#L4" target="_blank">gphoto2/camera_file.cr</a>
+    
+    <br/>
+  
+
+
+
+  
+    <h2>Constant Summary</h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="PREVIEW_FILENAME">
+        <strong>PREVIEW_FILENAME</strong> = <code><span class="s">&quot;capture_preview.jpg&quot;</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>The preview data is assumed to be a jpg.</p>
+      </dd>
+      
+    
+  </dl>
+
+
+
+  <h2>Class Method Summary</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28camera%3ACamera%2Cfolder%3AString%7CNil%3D%3Cspanclass%3D%22n%22%3Enil%3C%2Fspan%3E%2Cname%3AString%7CNil%3D%3Cspanclass%3D%22n%22%3Enil%3C%2Fspan%3E%29-class-method" class="signature"><strong>.new</strong>(camera : Camera, folder : String | Nil = <span class="n">nil</span>, name : String | Nil = <span class="n">nil</span>)</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <h2>Instance Method Summary</h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#%3D%3D%28other%3Aself%29-instance-method" class="signature"><strong>#==</strong>(other : self)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#close%3AVoid-instance-method" class="signature"><strong>#close</strong> : Void</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#data%3A%3A%3APointer%28UInt8%29-instance-method" class="signature"><strong>#data</strong> : ::Pointer(UInt8)</a>
+        
+          <div class="summary"><p>Returns file data.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#delete%3AVoid-instance-method" class="signature"><strong>#delete</strong> : Void</a>
+        
+          <div class="summary"><p>Deletes file from the camera.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#extension%3AString-instance-method" class="signature"><strong>#extension</strong> : String</a>
+        
+          <div class="summary"><p>Returns file extension in lowercase (without leading dot).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#finalize-instance-method" class="signature"><strong>#finalize</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#folder-instance-method" class="signature"><strong>#folder</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#folder%3F%3ANil%7CString-instance-method" class="signature"><strong>#folder?</strong> : Nil | String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#info%3ACameraFileInfo%7CNil-instance-method" class="signature"><strong>#info</strong> : CameraFileInfo | Nil</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#name-instance-method" class="signature"><strong>#name</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#name%3F%3ANil%7CString-instance-method" class="signature"><strong>#name?</strong> : Nil | String</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#path%3AString-instance-method" class="signature"><strong>#path</strong> : String</a>
+        
+          <div class="summary"><p>Returns full file path (within the camera filesystem).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#preview%3F-instance-method" class="signature"><strong>#preview?</strong></a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#save%28pathname%3AString%3Ddefault_filename%29%3AVoid-instance-method" class="signature"><strong>#save</strong>(pathname : String = default_filename) : Void</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#size%3ALibC%3A%3AULong-instance-method" class="signature"><strong>#size</strong> : LibC::ULong</a>
+        
+          <div class="summary"><p>Returns size of the file (in bytes).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#to_slice%3ABytes-instance-method" class="signature"><strong>#to_slice</strong> : Bytes</a>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+  <h3>Instance methods inherited from module <code><a href="../GPhoto2/Struct.html">GPhoto2::Struct(T)</a></code></h3>
+  
+  
+    <a href="../GPhoto2/Struct.html#ptr%3A%3A%3APointer%28T%29-instance-method" class="tooltip">
+      <span>ptr : ::Pointer(T)</span>
+    ptr</a>, 
+    
+  
+    <a href="../GPhoto2/Struct.html#ptr%3F%3A%3A%3APointer%28T%29%7CNil-instance-method" class="tooltip">
+      <span>ptr? : ::Pointer(T) | Nil</span>
+    ptr?</a>, 
+    
+  
+    <a href="../GPhoto2/Struct.html#to_unsafe%3A%3A%3APointer%28T%29-instance-method" class="tooltip">
+      <span>to_unsafe : ::Pointer(T)</span>
+    to_unsafe</a>, 
+    
+  
+    <a href="../GPhoto2/Struct.html#wrapped%3AT-instance-method" class="tooltip">
+      <span>wrapped : T</span>
+    wrapped</a>
+    
+  
+
+
+    
+
+  <h3>Class methods inherited from module <code><a href="../GPhoto2/Struct.html">GPhoto2::Struct(T)</a></code></h3>
+  
+  
+    <a href="../GPhoto2/Struct.html#new%28ptr%3A%3A%3APointer%28T%29%7CNil%3D%3Cspanclass%3D%22n%22%3Enil%3C%2Fspan%3E%29-class-method" class="tooltip">
+      <span>new(ptr : ::Pointer(T) | Nil = <span class="n">nil</span>)</span>
+    new</a>
+    
+  
+
+
+  
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+  
+</div>
+
+
+  <h2>Class Method Detail</h2>
+  
+    <div class="entry-detail" id="new&#40;camera:Camera,folder:String|Nil&#61;&lt;spanclass&#61;&quot;n&quot;&gt;nil&lt;/span&gt;,name:String|Nil&#61;&lt;spanclass&#61;&quot;n&quot;&gt;nil&lt;/span&gt;&#41;-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(camera : <a href="../GPhoto2/Camera.html">Camera</a>, folder : String | Nil = <span class="n">nil</span>, name : String | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#new%28camera%3ACamera%2Cfolder%3AString%7CNil%3D%3Cspanclass%3D%22n%22%3Enil%3C%2Fspan%3E%2Cname%3AString%7CNil%3D%3Cspanclass%3D%22n%22%3Enil%3C%2Fspan%3E%29-class-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/741b2da1ca5ed631714700e31a39bfa1b879a88e/src/gphoto2/camera_file.cr#L18" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+  <h2>Instance Method Detail</h2>
+  
+    <div class="entry-detail" id="&#61;&#61;&#40;other:self&#41;-instance-method">
+      <div class="signature">
+        
+        def <strong>==</strong>(other : self)
+
+        <a class="method-permalink" href="#%3D%3D%28other%3Aself%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/741b2da1ca5ed631714700e31a39bfa1b879a88e/src/gphoto2/camera_file.cr#L74" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="close:Void-instance-method">
+      <div class="signature">
+        
+        def <strong>close</strong> : Void
+
+        <a class="method-permalink" href="#close%3AVoid-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/741b2da1ca5ed631714700e31a39bfa1b879a88e/src/gphoto2/camera_file.cr#L26" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="data:::Pointer&#40;UInt8&#41;-instance-method">
+      <div class="signature">
+        
+        def <strong>data</strong> : ::Pointer(UInt8)
+
+        <a class="method-permalink" href="#data%3A%3A%3APointer%28UInt8%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Returns file data.</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/741b2da1ca5ed631714700e31a39bfa1b879a88e/src/gphoto2/camera_file.cr#L47" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="delete:Void-instance-method">
+      <div class="signature">
+        
+        def <strong>delete</strong> : Void
+
+        <a class="method-permalink" href="#delete%3AVoid-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Deletes file from the camera.</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/741b2da1ca5ed631714700e31a39bfa1b879a88e/src/gphoto2/camera_file.cr#L42" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="extension:String-instance-method">
+      <div class="signature">
+        
+        def <strong>extension</strong> : String
+
+        <a class="method-permalink" href="#extension%3AString-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Returns file extension in lowercase (without leading dot).</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/741b2da1ca5ed631714700e31a39bfa1b879a88e/src/gphoto2/camera_file.cr#L65" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="finalize-instance-method">
+      <div class="signature">
+        
+        def <strong>finalize</strong>
+
+        <a class="method-permalink" href="#finalize-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/741b2da1ca5ed631714700e31a39bfa1b879a88e/src/gphoto2/camera_file.cr#L22" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="folder-instance-method">
+      <div class="signature">
+        
+        def <strong>folder</strong>
+
+        <a class="method-permalink" href="#folder-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/741b2da1ca5ed631714700e31a39bfa1b879a88e/src/gphoto2/camera_file.cr#L13" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="folder?:Nil|String-instance-method">
+      <div class="signature">
+        
+        def <strong>folder?</strong> : Nil | String
+
+        <a class="method-permalink" href="#folder%3F%3ANil%7CString-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/741b2da1ca5ed631714700e31a39bfa1b879a88e/src/gphoto2/camera_file.cr#L13" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="info:CameraFileInfo|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>info</strong> : <a href="../GPhoto2/CameraFileInfo.html">CameraFileInfo</a> | Nil
+
+        <a class="method-permalink" href="#info%3ACameraFileInfo%7CNil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/741b2da1ca5ed631714700e31a39bfa1b879a88e/src/gphoto2/camera_file.cr#L60" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="name-instance-method">
+      <div class="signature">
+        
+        def <strong>name</strong>
+
+        <a class="method-permalink" href="#name-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/741b2da1ca5ed631714700e31a39bfa1b879a88e/src/gphoto2/camera_file.cr#L14" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="name?:Nil|String-instance-method">
+      <div class="signature">
+        
+        def <strong>name?</strong> : Nil | String
+
+        <a class="method-permalink" href="#name%3F%3ANil%7CString-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/741b2da1ca5ed631714700e31a39bfa1b879a88e/src/gphoto2/camera_file.cr#L14" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="path:String-instance-method">
+      <div class="signature">
+        
+        def <strong>path</strong> : String
+
+        <a class="method-permalink" href="#path%3AString-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Returns full file path (within the camera filesystem).</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/741b2da1ca5ed631714700e31a39bfa1b879a88e/src/gphoto2/camera_file.cr#L70" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="preview?-instance-method">
+      <div class="signature">
+        
+        def <strong>preview?</strong>
+
+        <a class="method-permalink" href="#preview%3F-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/741b2da1ca5ed631714700e31a39bfa1b879a88e/src/gphoto2/camera_file.cr#L30" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="save&#40;pathname:String&#61;default_filename&#41;:Void-instance-method">
+      <div class="signature">
+        
+        def <strong>save</strong>(pathname : String = default_filename) : Void
+
+        <a class="method-permalink" href="#save%28pathname%3AString%3Ddefault_filename%29%3AVoid-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/741b2da1ca5ed631714700e31a39bfa1b879a88e/src/gphoto2/camera_file.cr#L34" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="size:LibC::ULong-instance-method">
+      <div class="signature">
+        
+        def <strong>size</strong> : LibC::ULong
+
+        <a class="method-permalink" href="#size%3ALibC%3A%3AULong-instance-method">#</a>
+      </div>
+      
+        <div class="doc"><p>Returns size of the file (in bytes).</p></div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/741b2da1ca5ed631714700e31a39bfa1b879a88e/src/gphoto2/camera_file.cr#L52" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_slice:Bytes-instance-method">
+      <div class="signature">
+        
+        def <strong>to_slice</strong> : Bytes
+
+        <a class="method-permalink" href="#to_slice%3ABytes-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/741b2da1ca5ed631714700e31a39bfa1b879a88e/src/gphoto2/camera_file.cr#L56" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>
