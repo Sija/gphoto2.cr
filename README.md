@@ -7,7 +7,7 @@ It also includes a facade to interact with the library in a more idiomatic Cryst
 
 ### Prerequisites
 
-  * Crystal >= 0.18.4
+  * Crystal >= 0.18.7
   * libgphoto2 >= 2.5.0
 
 To install the latest libgphoto2, you can use `homebrew` or `apt-get`, depending on the platform:
@@ -145,10 +145,11 @@ file.save
 file.delete
 ```
 
-More examples can be found in [`examples/`][examples]. Documentation can be generated using `crystal doc` task.
+More examples can be found in [`examples/`][examples]. Documentation can be generated using `crystal doc` task or [browsed online][docs].
 
 [gphoto]: http://www.gphoto.org/
 [examples]: https://github.com/Sija/gphoto2.cr/tree/master/examples
+[docs]: https://sija.github.io/gphoto2.cr
 
 ## Development
 
@@ -170,11 +171,11 @@ crystal spec
 4. Push to the branch (git push origin my-new-feature)
 5. Create a new Pull Request
 
+## Acknowledgements
+
+- The [gphoto2][gphoto] developers for building such an awesome tool
+- [@zaeleus](https://github.com/zaeleus) for the [ffi-gphoto2](https://github.com/zaeleus/ffi-gphoto2) gem, on which this library is heavily inspired
+
 ## Contributors
 
-- [zaeleus](https://github.com/zaeleus) Michael Macias - the author of the original implementation
-- [Sija](https://github.com/Sija) Sijawusz Pur Rahnama - creator, maintainer
-
-## References
-
-- Original implementation in Ruby - https://github.com/zaeleus/ffi-gphoto2
+- [@Sija](https://github.com/Sija) Sijawusz Pur Rahnama - creator, maintainer
