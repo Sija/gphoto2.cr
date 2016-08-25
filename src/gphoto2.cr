@@ -41,17 +41,20 @@ module GPhoto2
 
   macro log(*args, severity = Logger::Severity::DEBUG, backtrace_offset = 0)
     if ::GPhoto2.debug? && {{!args.empty?}}
+      %DEBUG_CALLER_PATTERN = /caller:Array\(String\)/i
       %caller_list = caller.dup
-      while !%caller_list.empty? && %caller_list.first? !~ /caller:Array\(String\)/i
+      if %caller_list.any? &.match(%DEBUG_CALLER_PATTERN)
+        while !%caller_list.empty? && %caller_list.first? !~ %DEBUG_CALLER_PATTERN
+          %caller_list.shift?
+        end
         %caller_list.shift?
       end
-      %caller_list.shift?
       {% if backtrace_offset > 0 %}
         %caller_list.shift {{backtrace_offset}}
       {% end %}
       %str = String.build do |str|
-        if %caller_list.size > 1
-          str << %caller_list.first.colorize(:dark_gray)
+        if %caller = %caller_list.first?
+          str << %caller.colorize(:dark_gray)
           str << " -- "
         end
         str << "{{args}} = ".colorize(:light_gray) << {{args}}
