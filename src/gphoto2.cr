@@ -52,12 +52,12 @@ module GPhoto2
       {% if backtrace_offset > 0 %}
         %caller_list.shift {{backtrace_offset}}
       {% end %}
-      %str = String.build do |str|
+      %str = String.build do |%str|
         if %caller = %caller_list.first?
-          str << %caller.colorize(:dark_gray)
-          str << " -- "
+          %str << %caller.colorize(:dark_gray)
+          %str << " -- "
         end
-        str << "{{args}} = ".colorize(:light_gray) << {{args}}
+        %str << "{{args}} = ".colorize(:light_gray) << {{args}}
       end
       ::GPhoto2.logger.log {{severity.id}}, %str, "gphoto2.cr"
     end
