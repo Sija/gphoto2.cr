@@ -87,8 +87,8 @@ lib LibGPhoto2Port
     settings : GPPortSettings
     settings_pending : GPPortSettings
     timeout : LibC::Int
-    pl : GPPortPrivateLibrary*
-    pc : GPPortPrivateCore*
+    pl : GPPortPrivateLibrary
+    pc : GPPortPrivateCore
   end
 
   #
@@ -98,8 +98,8 @@ lib LibGPhoto2Port
   fun gp_port_new(port : GPPort**) : LibC::Int
   fun gp_port_free(port : GPPort*) : LibC::Int
 
-  fun gp_port_set_info(port : GPPort*, info : GPPortInfo) : LibC::Int
-  fun gp_port_get_info(port : GPPort*, info : GPPortInfo*) : LibC::Int
+  fun gp_port_set_info(port : GPPort*, info : GPPortInfo*) : LibC::Int
+  fun gp_port_get_info(port : GPPort*, info : GPPortInfo**) : LibC::Int
 
   fun gp_port_open(port : GPPort*) : LibC::Int
   fun gp_port_close(port : GPPort*) : LibC::Int
