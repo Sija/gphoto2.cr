@@ -1,7 +1,7 @@
 require "./spec_helper"
 
 VERSION_PATTERN = /^\d+(\.\d+){2,3}(-\w+)?$/
-ENV_DEBUG_KEY = "DEBUG"
+ENV_DEBUG_KEY   = "DEBUG"
 
 describe GPhoto2 do
   describe "VERSION" do
@@ -20,8 +20,8 @@ describe GPhoto2 do
     it "converts return code to proper string" do
       return_codes = {
         # general
-        LibGPhoto2::GP_OK     => "No error",
-        LibGPhoto2::GP_ERROR  => "Unspecified error",
+        LibGPhoto2::GP_OK    => "No error",
+        LibGPhoto2::GP_ERROR => "Unspecified error",
         # libgphoto2
         LibGPhoto2::GP_ERROR_IO        => "I/O problem",
         LibGPhoto2::GP_ERROR_IO_LOCK   => "Could not lock the device",
@@ -31,8 +31,8 @@ describe GPhoto2 do
         LibGPhoto2::GP_ERROR_CAMERA_BUSY         => "I/O in progress",
         LibGPhoto2::GP_ERROR_NO_SPACE            => "Not enough free space",
         # random
-        -777  => "Unknown error",
-        777   => "Unknown error",
+        -777 => "Unknown error",
+         777 => "Unknown error",
       }
       return_codes.each do |code, string|
         GPhoto2.result_as_string(code).should eq string
