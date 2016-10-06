@@ -158,6 +158,9 @@ module GPhoto2
       unref if ptr?
     end
 
+    # Closes a connection to the camera and therefore gives other application the possibility to access the camera, too.
+    # It is recommended that you call this function when you currently don't need the camera.
+    # The camera will get reinitialized if you try to access the camera again.
     def exit : Void
       _exit
     end
