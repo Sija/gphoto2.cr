@@ -1,6 +1,6 @@
 require "./gphoto2_port/*"
 
-@[Link("libgphoto2_port")]
+@[Link("gphoto2_port")]
 lib LibGPhoto2Port
   #
   # Constants
