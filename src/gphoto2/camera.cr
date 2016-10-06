@@ -176,6 +176,28 @@ module GPhoto2
       @context ||= Context.new
     end
 
+    # Yields opened instance of `Port` with already associated camera's `PortInfo`.
+    # Port is automatically closed on block exit/exception.
+    #
+    # To reset given camera's port you can do:
+    #
+    # ```
+    # camera.with_port do |port|
+    #   camera.exit
+    #   port.reset
+    # end
+    # ```
+    def with_port : Void
+      port = Port.new
+      port.info = port_info
+      port.open
+      begin
+        yield port, self
+      ensure
+        port.close
+      end
+    end
+
     # Check camera abilities (see `LibGPhoto2::CameraOperation`).
     #
     # ```
