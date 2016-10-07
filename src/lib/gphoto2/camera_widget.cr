@@ -1,9 +1,5 @@
 @[Link("libgphoto2")]
 lib LibGPhoto2
-  struct GPContext; end
-
-  # struct Camera; end
-
   #
   # Enums
   #

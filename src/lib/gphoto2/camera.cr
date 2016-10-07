@@ -2,12 +2,6 @@ require "./camera_file"
 
 @[Link("libgphoto2")]
 lib LibGPhoto2
-  struct GPContext; end
-
-  struct CameraWidget; end
-
-  struct CameraList; end
-
   #
   # Enums
   #
