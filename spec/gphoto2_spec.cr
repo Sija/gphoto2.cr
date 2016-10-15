@@ -1,11 +1,18 @@
 require "./spec_helper"
+require "yaml"
 
 VERSION_PATTERN = /^\d+(\.\d+){2,3}(-\w+)?$/
+ENV_DEBUG_KEY   = "DEBUG"
 
 describe GPhoto2 do
   describe "VERSION" do
     it "should have proper format" do
       GPhoto2::VERSION.should match VERSION_PATTERN
+    end
+
+    it "should match shard.yml" do
+      version = YAML.parse(File.read(File.join(__DIR__, "..", "shard.yml")))["version"].as_s
+      version.should eq GPhoto2::VERSION
     end
   end
 
@@ -19,8 +26,8 @@ describe GPhoto2 do
     it "converts return code to proper string" do
       return_codes = {
         # general
-        LibGPhoto2::GP_OK     => "No error",
-        LibGPhoto2::GP_ERROR  => "Unspecified error",
+        LibGPhoto2::GP_OK    => "No error",
+        LibGPhoto2::GP_ERROR => "Unspecified error",
         # libgphoto2
         LibGPhoto2::GP_ERROR_IO        => "I/O problem",
         LibGPhoto2::GP_ERROR_IO_LOCK   => "Could not lock the device",
@@ -30,8 +37,8 @@ describe GPhoto2 do
         LibGPhoto2::GP_ERROR_CAMERA_BUSY         => "I/O in progress",
         LibGPhoto2::GP_ERROR_NO_SPACE            => "Not enough free space",
         # random
-        -777  => "Unknown error",
-        777   => "Unknown error",
+        -777 => "Unknown error",
+         777 => "Unknown error",
       }
       return_codes.each do |code, string|
         GPhoto2.result_as_string(code).should eq string
@@ -68,12 +75,49 @@ describe GPhoto2 do
         code = LibGPhoto2::GP_ERROR
         message = "Unspecified error (#{code})"
 
-        expect_raises(GPhoto2::Error, message) { GPhoto2.check!(code) }
+        expect_raises(GPhoto2::Error, message) do
+          GPhoto2.check!(code)
+        end
       end
     end
     context "the return code is a value" do
       it "returns back the value" do
         GPhoto2.check!(10).should eq 10
+      end
+    end
+  end
+
+  describe ".debug?" do
+    context "ENV debug key is set to '1'" do
+      debug_flag = ENV[ENV_DEBUG_KEY]?
+      begin
+        ENV[ENV_DEBUG_KEY] = "1"
+        it "should be true" do
+          GPhoto2.debug?.should be_true
+        end
+      ensure
+        ENV[ENV_DEBUG_KEY] = debug_flag
+      end
+    end
+    context "ENV debug key is set to value other than '1'" do
+      debug_flag = ENV[ENV_DEBUG_KEY]?
+      begin
+        ENV[ENV_DEBUG_KEY] = "10"
+        it "should be false" do
+          GPhoto2.debug?.should be_false
+        end
+      ensure
+        ENV[ENV_DEBUG_KEY] = debug_flag
+      end
+    end
+    context "ENV debug key is unset" do
+      debug_flag = ENV.delete ENV_DEBUG_KEY
+      begin
+        it "should be false" do
+          GPhoto2.debug?.should be_false
+        end
+      ensure
+        ENV[ENV_DEBUG_KEY] = debug_flag
       end
     end
   end

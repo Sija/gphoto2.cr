@@ -3,7 +3,7 @@ module GPhoto2
     module Callbacks
       macro set_callback(key, callback_type, args, &block)
         getter! {{key.id}}_callback : {{callback_type.id}}?
-        private getter {{key.id}}_boxed_data : Pointer(Void)?
+        private getter {{key.id}}_box : Pointer(Void)?
 
         # Sets *{{key.id}}* callback. Pass `nil` to remove it.
         #
@@ -26,7 +26,7 @@ module GPhoto2
           boxed_data = Box.box(callback)
 
           # We must save this in Crystal-land so the GC doesn't collect it (*)
-          @{{key.id}}_boxed_data = boxed_data
+          @{{key.id}}_box = boxed_data
 
           # We pass a callback that doesn't form a closure, and pass the boxed_data as
           # the callback data
@@ -40,7 +40,7 @@ module GPhoto2
         protected def unset_{{key.id}}_callback
           LibGPhoto2.gp_context_set_{{key.id}}_func self, nil, nil
           @{{key.id}}_callback = nil
-          @{{key.id}}_boxed_data = nil
+          @{{key.id}}_box = nil
         end
       end
 

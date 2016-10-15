@@ -1,3 +1,11 @@
+# 0.6.0
+- Code compiles on Crystal v0.19, which is now minimum required version
+- New `GPhoto2::Port` class to allow camera port reset
+- New `Camera#with_port` convenience method yielding opened camera port instance
+- Fixed `GPhoto2#log` macro not showing caller when compiled with --release flag
+- Refactored some methods to avoid closures
+- Removed CoC, see https://github.com/domgetter/NCoC
+
 # 0.5.0
 - Fixed some of the most egregious memory leaks – think: `CameraFile#data`
 - Renamed `CameraFile#extname` to `#extension`

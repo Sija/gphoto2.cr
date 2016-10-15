@@ -77,9 +77,9 @@ module GPhoto2
     #   # ...
     # end
     # ```
-    def self.first(&block : self -> _) : Void
+    def self.first : Void
       camera = first
-      autorelease(camera, block)
+      autorelease(camera) { |camera| yield camera }
     end
 
     # ```
@@ -105,9 +105,9 @@ module GPhoto2
     #   # ...
     # end
     # ```
-    def self.open(model : String, port : String, &block : self -> _) : Void
+    def self.open(model : String, port : String) : Void
       camera = open(model, port)
-      autorelease(camera, block)
+      autorelease(camera) { |camera| yield camera }
     end
 
     # Filters devices by a given condition.
@@ -148,8 +148,8 @@ module GPhoto2
     #   # ...
     # end
     # ```
-    def autorelease(&block : self -> _) : Void
-      self.class.autorelease(self, block)
+    def autorelease : Void
+      self.class.autorelease(self) { |camera| yield camera }
     end
 
     def close : Void
@@ -158,6 +158,9 @@ module GPhoto2
       unref if ptr?
     end
 
+    # Closes a connection to the camera and therefore gives other application the possibility to access the camera, too.
+    # It is recommended that you call this function when you currently don't need the camera.
+    # The camera will get reinitialized if you try to access the camera again.
     def exit : Void
       _exit
     end
@@ -174,6 +177,28 @@ module GPhoto2
 
     def context : Context
       @context ||= Context.new
+    end
+
+    # Yields opened instance of `Port` with already associated camera's `PortInfo`.
+    # Port is automatically closed on block exit/exception.
+    #
+    # To reset given camera's port you can do:
+    #
+    # ```
+    # camera.with_port do |port|
+    #   camera.exit
+    #   port.reset
+    # end
+    # ```
+    def with_port : Void
+      port = Port.new
+      port.info = port_info
+      port.open
+      begin
+        yield port, self
+      ensure
+        port.close
+      end
     end
 
     # Check camera abilities (see `LibGPhoto2::CameraOperation`).
@@ -195,9 +220,9 @@ module GPhoto2
     def_equals @model, @port
 
     # Ensures the given camera is finalized when passed a block.
-    protected def self.autorelease(camera, block : self -> _) : Void
+    protected def self.autorelease(camera) : Void
       begin
-        block.call camera
+        yield camera
       ensure
         camera.close
       end

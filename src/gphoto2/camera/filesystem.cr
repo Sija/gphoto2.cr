@@ -13,7 +13,7 @@ module GPhoto2
         CameraFolder.new(self, path)
       end
 
-      # :ditto:
+      # ditto
       def /(path) : CameraFolder
         filesystem(path)
       end

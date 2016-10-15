@@ -1,10 +1,5 @@
 @[Link("libgphoto2")]
 lib LibGPhoto2
-  # struct CameraAbilities; end
-  struct CameraList; end
-
-  struct GPContext; end
-
   #
   # Structs
   #
