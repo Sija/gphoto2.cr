@@ -4,12 +4,10 @@ module GPhoto2
   module ManagedStruct(T)
     include Struct(T)
 
+    getter ptr : T* { Pointer(T).malloc }
+
     def initialize(ptr : T*? = nil)
       self.ptr = ptr
-    end
-
-    def ptr : T*
-      @ptr ||= Pointer(T).malloc
     end
 
     protected def ptr=(ptr) : T*?

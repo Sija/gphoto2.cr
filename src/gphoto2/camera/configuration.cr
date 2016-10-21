@@ -9,9 +9,7 @@ module GPhoto2
         reset
       end
 
-      def window : WindowCameraWidget
-        @window ||= get_config.as(WindowCameraWidget)
-      end
+      getter window : WindowCameraWidget { get_config.as(WindowCameraWidget) }
 
       # ```
       # # List camera configuration keys.
@@ -19,9 +17,7 @@ module GPhoto2
       # ```
       #
       # See also: `#[]` and `#[]=`
-      def config : Hash(String, CameraWidget)
-        @config ||= window.flatten
-      end
+      getter config : Hash(String, CameraWidget) { window.flatten }
 
       # Preserves config for a block call.
       #

@@ -175,9 +175,7 @@ module GPhoto2
       @port_info.not_nil!
     end
 
-    def context : Context
-      @context ||= Context.new
-    end
+    getter context : Context { Context.new }
 
     # Yields opened instance of `Port` with already associated camera's `PortInfo`.
     # Port is automatically closed on block exit/exception.
