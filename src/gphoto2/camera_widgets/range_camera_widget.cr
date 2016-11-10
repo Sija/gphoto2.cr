@@ -24,9 +24,7 @@ module GPhoto2
       when Float
         ptr = Pointer(LibC::Float).malloc 1, value.to_f32
         set_value_ptr ptr
-      when Int
-        set_value value.to_f32
-      when String
+      when Int, String
         set_value value.to_f32
       else
         raise ArgumentError.new "Invalid value type, expected Float | Int | String, got #{value.class}"
