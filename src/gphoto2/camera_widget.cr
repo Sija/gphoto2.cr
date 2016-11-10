@@ -3,10 +3,6 @@ require "./struct"
 
 module GPhoto2
   abstract class CameraWidget
-    class NotImplementedError < Exception; end
-  end
-
-  abstract class CameraWidget
     macro inherited
       {% factory_id = @type.name.gsub(/^GPhoto2::/, "").gsub(/CameraWidget$/, "").underscore %}
 

@@ -44,7 +44,7 @@ module GPhoto2
       def preserving_config(keys : Array(String | Symbol) = nil) : Void
         config_snapshot = keys ? config.select(keys.map &.to_s) : config
         config_snapshot = config_snapshot.reduce({} of String => String) do |memo, (key, widget)|
-          memo[key] = widget.to_s rescue CameraWidget::NotImplementedError
+          memo[key] = widget.to_s rescue NotImplementedError
           memo
         end
         begin
