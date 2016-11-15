@@ -1,15 +1,13 @@
-require "./camera_file_info/*"
-
 module GPhoto2
   class CameraFileInfo
-    getter! preview : CameraFileInfoPreview?
-    getter! file    : CameraFileInfoFile?
-    getter! audio   : CameraFileInfoAudio?
+    getter! preview : Preview?
+    getter! file    : File?
+    getter! audio   : Audio?
 
     def initialize(info : LibGPhoto2::CameraFileInfo)
-      @preview = get_info info.preview, CameraFileInfoPreview
-      @file    = get_info info.file,    CameraFileInfoFile
-      @audio   = get_info info.audio,   CameraFileInfoAudio
+      @preview = get_info info.preview, Preview
+      @file    = get_info info.file,    File
+      @audio   = get_info info.audio,   Audio
     end
 
     protected def fields_any?(info)
@@ -21,3 +19,5 @@ module GPhoto2
     end
   end
 end
+
+require "./camera_file_info/*"
