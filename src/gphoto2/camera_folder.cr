@@ -31,10 +31,10 @@ module GPhoto2
     # Returns `CameraFolder` by *name*, relative to current `#path`.
     def cd(name : String) : self
       case name
-      when "."
-        self
       when ".."
         up
+      when "."
+        self
       else
         self.class.new(@camera, File.join(@path, name))
       end
@@ -53,7 +53,7 @@ module GPhoto2
     # Returns parent `CameraFolder`.
     def up : self
       if root?
-        self
+        self # NOTE: would `nil` be more apt here?
       else
         parent = @path[0...(@path.rindex('/') || 0)]
         parent = "/" if parent.empty?

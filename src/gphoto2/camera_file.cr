@@ -10,8 +10,8 @@ module GPhoto2
     @camera : Camera
     @data_and_size : {UInt8*, LibC::ULong}?
 
-    getter! folder : String?
-    getter! name : String?
+    getter! folder : String
+    getter! name : String
 
     protected delegate :context, to: @camera
 

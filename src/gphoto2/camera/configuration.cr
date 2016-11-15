@@ -1,13 +1,7 @@
 module GPhoto2
   class Camera
     module Configuration
-      @window : CameraWidget::Window?
-      @config : Hash(String, CameraWidget::Base)?
       @dirty : Bool = false
-
-      def initialize(model : String, port : String)
-        reset
-      end
 
       # Returns camera `CameraWidget::Window` root configuration widget.
       getter window : CameraWidget::Window { get_config.as(CameraWidget::Window) }

@@ -2,7 +2,7 @@ module GPhoto2
   class Context
     module Callbacks
       macro set_callback(key, callback_type, args, &block)
-        getter! {{key.id}}_callback : {{callback_type.id}}?
+        getter! {{key.id}}_callback : {{callback_type.id}}
         private getter {{key.id}}_box : Pointer(Void)?
 
         # Sets *{{key.id}}* callback. Pass `nil` to remove it.
@@ -45,9 +45,11 @@ module GPhoto2
       end
 
       set_callback :cancel, Proc(Bool), [context, data] do
-        data_as_callback.call \
-          ? LibGPhoto2::GPContextFeedback::Cancel
-          : LibGPhoto2::GPContextFeedback::OK
+        if data_as_callback.call
+          LibGPhoto2::GPContextFeedback::Cancel
+        else
+          LibGPhoto2::GPContextFeedback::OK
+        end
       end
 
       set_callback :idle, Proc(Void), [context, data] do
@@ -75,7 +77,7 @@ module GPhoto2
       end
 
       def check!(rc : Int32) : Int32
-        GPhoto2.log(rc, backtrace_offset: 1)
+        GPhoto2.log rc, backtrace_offset: 1
         if GPhoto2.check?(rc)
           return rc
         else

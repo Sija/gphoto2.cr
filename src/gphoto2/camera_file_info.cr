@@ -1,8 +1,8 @@
 module GPhoto2
   class CameraFileInfo
-    getter! preview : Preview?
-    getter! file    : File?
-    getter! audio   : Audio?
+    getter! preview : Preview
+    getter! file    : File
+    getter! audio   : Audio
 
     def initialize(info : LibGPhoto2::CameraFileInfo)
       @preview = get_info info.preview, Preview
@@ -10,7 +10,7 @@ module GPhoto2
       @audio   = get_info info.audio,   Audio
     end
 
-    protected def fields_any?(info)
+    private def fields_any?(info)
       info.fields != LibGPhoto2::CameraFileInfoFields::None
     end
 
