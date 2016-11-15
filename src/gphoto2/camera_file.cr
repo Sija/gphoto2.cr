@@ -27,10 +27,12 @@ module GPhoto2
       free
     end
 
+    # Returns `true` if file is a preview.
     def preview?
       !(@folder && @name)
     end
 
+    # Saves file `#data` at given *pathname*.
     def save(pathname : String = default_filename) : Void
       unless Dir.exists? pathname
         Dir.mkdir_p File.dirname(pathname)
@@ -48,11 +50,12 @@ module GPhoto2
       data_and_size.first
     end
 
-    # Returns size of the file (in bytes).
+    # Returns file size (in bytes).
     def size : LibC::ULong
       data_and_size.last
     end
 
+    # Returns file `#data` as `Bytes`.
     def to_slice : Bytes
       data.to_slice(size)
     end

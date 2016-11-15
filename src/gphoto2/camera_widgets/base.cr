@@ -6,6 +6,7 @@ module GPhoto2
     abstract class Base
       include GPhoto2::Struct(LibGPhoto2::CameraWidget)
 
+      # Returns parent widget, `nil` otherwise.
       getter parent : Base?
 
       macro inherited
@@ -14,10 +15,12 @@ module GPhoto2
         ::GPhoto2::CameraWidget.widgets[{{factory_id.stringify}}] = self
 
         class ::GPhoto2::CameraWidget::Base
+          # Returns widget as `{{factory_id.capitalize}}`, `nil` otherwise.
           def as_{{factory_id}}? : {{@type.name}}?
             self.as?({{@type.name}})
           end
 
+          # Returns widget as `{{factory_id.capitalize}}`, raises otherwise.
           def as_{{factory_id}} : {{@type.name}}
             self.as({{@type.name}})
           end
@@ -32,43 +35,53 @@ module GPhoto2
         free
       end
 
+      # Returns `true` if the widget has readonly flag set.
       def readonly?
         get_readonly == 1
       end
 
+      # Returns type of the widget.
       def type : LibGPhoto2::CameraWidgetType
         get_type
       end
 
+      # Returns widget numerical id.
       def id : LibC::Int
         get_id
       end
 
+      # Returns widget name.
       def name : String
         get_name.not_nil!
       end
 
+      # Returns widget label.
       def label : String
         get_label.not_nil!
       end
 
+      # Returns widget info if set.
       def info : String
         get_info.not_nil!
       end
 
+      # Returns widget value.
       def value
         get_value
       end
 
+      # Sets widget value.
       def value=(value)
         set_value(value)
         value
       end
 
+      # Returns widget children.
       def children : Array(Base)
         Array(Base).new(count_children) { |i| get_child(i) }
       end
 
+      # Returns flat structure of widget `#children`.
       def flatten(map = {} of String => Base) : Hash(String, Base)
         case type
         when .window?, .section?
@@ -79,13 +92,19 @@ module GPhoto2
         map
       end
 
+      # Returns string representation of the widget `#value`.
+      #
+      # ```
+      # puts camera[:whitebalance].to_s # => "Automatic"
+      # ```
       def to_s(io)
         io << value
       end
 
+      # Compares widget with another, based on `#type`, `#name` and `#value`.
       def_equals type, name, value
 
-      # Compares `#value` with given *other*.
+      # Compares `#value` with given *other* using `#to_s`.
       #
       # ```
       # camera[:whitebalance] == "Automatic"
@@ -114,7 +133,7 @@ module GPhoto2
         other === self.to_s
       end
 
-      # Returns true if `#value` matches at least one element of the collection.
+      # Returns `true` if `#value` matches at least one element of the collection.
       #
       # ```
       # camera[:autoexposuremode].in? %w(Manual Bulb)
@@ -123,7 +142,7 @@ module GPhoto2
         other.any? { |value| self == value }
       end
 
-      # Returns true if `#value` is included in the *other* `Range`.
+      # Returns `true` if `#value` is included in the *other* `::Range`.
       #
       # ```
       # camera[:exposurecompensation].in? -1.6..0.6

@@ -1,28 +1,34 @@
 module GPhoto2
   class CameraFolder
+    # Returns folder path.
     getter path : String
 
     protected delegate :context, to: @camera
 
     def initialize(@camera : Camera, @path : String = "/"); end
 
+    # Returns `true` if folder `#path` is */*.
     def root?
       @path == "/"
     end
 
+    # Returns folder name.
     def name : String
       return "/" if root?
       @path.split('/').last
     end
 
+    # Lists folders.
     def folders : Array(self)
       folder_list_folders
     end
 
+    # Lists files.
     def files : Array(CameraFile)
       folder_list_files
     end
 
+    # Returns `CameraFolder` by *name*, relative to current `#path`.
     def cd(name : String) : self
       case name
       when "."
@@ -34,14 +40,17 @@ module GPhoto2
       end
     end
 
+    # See: `#cd`
     def /(name : String) : self
       cd(name)
     end
 
+    # Returns `CameraFile` by *name*, relative to current `#path`.
     def open(name : String) : CameraFile
       CameraFile.new(@camera, @path, name)
     end
 
+    # Returns parent `CameraFolder`.
     def up : self
       if root?
         self
@@ -52,6 +61,7 @@ module GPhoto2
       end
     end
 
+    # Deletes all files.
     def clear : Void
       folder_delete_all
     end
