@@ -85,12 +85,12 @@ module GPhoto2
       # camera[:whitebalance].to_s  # => "Automatic"
       # camera["whitebalance"].to_s # => "Automatic"
       # ```
-      def [](key : String | Symbol)
+      def [](key : String | Symbol) : CameraWidget::Base
         config[key.to_s]
       end
 
       # ditto
-      def []?(key : String | Symbol)
+      def []?(key : String | Symbol) : CameraWidget::Base?
         config[key.to_s]?
       end
 
