@@ -1,6 +1,5 @@
 require "./struct"
 require "./camera/*"
-require "./camera_widgets/*"
 
 module GPhoto2
   class Camera

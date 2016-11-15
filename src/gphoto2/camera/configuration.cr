@@ -1,15 +1,15 @@
 module GPhoto2
   class Camera
     module Configuration
-      @window : WindowCameraWidget?
-      @config : Hash(String, CameraWidget)?
+      @window : CameraWidget::Window?
+      @config : Hash(String, CameraWidget::Base)?
       @dirty : Bool = false
 
       def initialize(model : String, port : String)
         reset
       end
 
-      getter window : WindowCameraWidget { get_config.as(WindowCameraWidget) }
+      getter window : CameraWidget::Window { get_config.as(CameraWidget::Window) }
 
       # ```
       # # List camera configuration keys.
@@ -17,7 +17,7 @@ module GPhoto2
       # ```
       #
       # See also: `#[]` and `#[]=`
-      getter config : Hash(String, CameraWidget) { window.flatten }
+      getter config : Hash(String, CameraWidget::Base) { window.flatten }
 
       # Preserves config for a block call.
       #
@@ -115,7 +115,7 @@ module GPhoto2
       # iso.value = iso.choices.first
       # camera << iso
       # ```
-      def <<(widget : CameraWidget) : self
+      def <<(widget : CameraWidget::Base) : self
         key = widget.name
         # set_single_config(key, widget)
         config[key] = widget
