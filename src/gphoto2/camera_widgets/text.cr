@@ -15,10 +15,10 @@ module GPhoto2
           ptr = Pointer(LibC::Char).malloc(value.size)
           ptr.copy_from(value.to_unsafe, value.size)
           set_value_ptr ptr
-        when Symbol, Int, Float
+        when Symbol, Number
           set_value value.to_s
         else
-          raise ArgumentError.new "Invalid value type, expected String | Symbol | Int | Float, got #{value.class}"
+          raise ArgumentError.new "Invalid value type, expected String | Symbol | Number, got #{value.class}"
         end
       end
     end
