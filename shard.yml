@@ -4,6 +4,8 @@ version: 0.6.0
 authors:
   - Sijawusz Pur Rahnama <sija@sija.pl>
 
+crystal: 0.19.4
+
 libraries:
   libgphoto2: ~> 2.5.2
   libgphoto2_port: ~> 0.10.1
