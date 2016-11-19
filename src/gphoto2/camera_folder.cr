@@ -55,9 +55,7 @@ module GPhoto2
       if root?
         self # NOTE: would `nil` be more apt here?
       else
-        parent = @path[0...(@path.rindex('/') || 0)]
-        parent = "/" if parent.empty?
-        self.class.new(@camera, parent)
+        self.class.new(@camera, parent_path)
       end
     end
 
@@ -71,6 +69,12 @@ module GPhoto2
     end
 
     def_equals @camera, @path
+
+    private def parent_path
+      parent = @path[0...(@path.rindex('/') || 0)]
+      parent = "/" if parent.empty?
+      parent
+    end
 
     private def folder_list_files
       list = CameraList.new
