@@ -64,6 +64,17 @@ module GPhoto2
       folder_delete_all
     end
 
+    # Deletes this folder from the camera.
+    def delete : Void
+      raise "Cannot delete root folder" if root?
+      # delete files
+      clear
+      # delete subfolders
+      folders.each &.delete
+      # finally, delete itself
+      folder_remove_dir
+    end
+
     def to_s(io)
       io << name
     end
@@ -90,6 +101,10 @@ module GPhoto2
 
     private def folder_delete_all
       context.check! LibGPhoto2.gp_camera_folder_delete_all(@camera, @path, context)
+    end
+
+    private def folder_remove_dir
+      context.check! LibGPhoto2.gp_camera_folder_remove_dir(@camera, parent_path, name, context)
     end
   end
 end
