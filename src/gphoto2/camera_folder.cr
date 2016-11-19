@@ -59,18 +59,17 @@ module GPhoto2
       end
     end
 
-    # Deletes all files.
-    def clear : Void
-      folder_delete_all
+    # Deletes all files and/or folders.
+    def clear(files : Bool = true, folders : Bool = false) : Void
+      folder_delete_all if files
+      folders.each &.delete if folders
     end
 
     # Deletes this folder from the camera.
     def delete : Void
       raise "Cannot delete root folder" if root?
-      # delete files
-      clear
-      # delete subfolders
-      folders.each &.delete
+      # delete files and subfolders
+      clear files: true, folders: true
       # finally, delete itself
       folder_remove_dir
     end
