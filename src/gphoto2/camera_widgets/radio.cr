@@ -28,8 +28,8 @@ module GPhoto2
       # camera[:whitebalance].as_radio.choices
       # # => ["Automatic", "Daylight", "Fluorescent", "Tungsten", ...]
       # ```
-      def choices : Array(String?)
-        Array(String?).new(count_choices) { |i| get_choice(i) }
+      def choices : Array(String)
+        Array(String).new(count_choices) { |i| get_choice(i).not_nil! }
       end
 
       protected def set_value(value)
