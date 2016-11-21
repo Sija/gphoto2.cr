@@ -24,7 +24,7 @@ module GPhoto2
     end
 
     def close : Void
-      free
+      free if ptr?
     end
 
     # Returns `true` if file is a preview.
