@@ -9,6 +9,7 @@ module GPhoto2
     include Configuration
     include Event
     include Filesystem
+    include Info
 
     getter model : String
     getter port : String
