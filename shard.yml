@@ -1,8 +1,10 @@
 name: gphoto2
-version: 0.6.0
+version: 0.7.0
 
 authors:
   - Sijawusz Pur Rahnama <sija@sija.pl>
+
+crystal: 0.19.4
 
 libraries:
   libgphoto2: ~> 2.5.2

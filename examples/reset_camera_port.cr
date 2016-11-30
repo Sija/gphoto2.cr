@@ -5,7 +5,7 @@ require "../src/gphoto2"
 GPhoto2::Camera.first do |camera|
   puts "Resetting %s on port %s" % [
     camera.model.colorize(:green),
-    camera.port.colorize(:blue)
+    camera.port.colorize(:blue),
   ]
   camera.with_port do |port|
     camera.exit

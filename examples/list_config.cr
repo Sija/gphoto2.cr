@@ -21,11 +21,11 @@ def visit(widget, level = 0)
 
   case widget.type
   when .range?
-    range = widget.as(GPhoto2::RangeCameraWidget).range
+    range = widget.as(GPhoto2::CameraWidget::Range).range
     step = (range.size > 1) ? range[1] - range[0] : 1.0
     puts "#{indent}options: #{range.first}..#{range.last}:step(#{step})"
   when .radio?, .menu?
-    choices = widget.as(GPhoto2::RadioCameraWidget).choices
+    choices = widget.as(GPhoto2::CameraWidget::Radio).choices
     puts "#{indent}options: #{choices.inspect.colorize(:dark_gray)}"
   end
 end

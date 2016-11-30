@@ -14,7 +14,7 @@ module GPhoto2
 
     def close : Void
       clear_callbacks
-      unref
+      unref if ptr?
     end
 
     private def new

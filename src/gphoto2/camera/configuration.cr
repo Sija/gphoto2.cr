@@ -1,27 +1,20 @@
 module GPhoto2
   class Camera
     module Configuration
-      @window : WindowCameraWidget?
-      @config : Hash(String, CameraWidget)?
       @dirty : Bool = false
 
-      def initialize(model : String, port : String)
-        reset
-      end
+      # Returns camera `CameraWidget::Window` root configuration widget.
+      getter window : CameraWidget::Window { get_config.as(CameraWidget::Window) }
 
-      def window : WindowCameraWidget
-        @window ||= get_config.as(WindowCameraWidget)
-      end
-
+      # Returns flattened `Hash` of camera attributes.
+      #
       # ```
       # # List camera configuration keys.
       # camera.config.keys # => ["autofocusdrive", "manualfocusdrive", "controlmode", ...]
       # ```
       #
       # See also: `#[]` and `#[]=`
-      def config : Hash(String, CameraWidget)
-        @config ||= window.flatten
-      end
+      getter config : Hash(String, CameraWidget::Base) { window.flatten }
 
       # Preserves config for a block call.
       #
@@ -33,12 +26,14 @@ module GPhoto2
       # # Capture photo with different settings,
       # # while preserving original values
       # camera.preserving_config do
-      #   camera.update({
-      #     aperture: 8,
-      #     iso:      200,
-      #   })
-      #   file = camera.capture
-      #   file.save
+      #   1.upto(3) do |i|
+      #     camera.update({
+      #       aperture: 8,
+      #       iso:      200 * i,
+      #     })
+      #     file = camera.capture
+      #     file.save
+      #   end
       # end
       #
       # # Original values are being preserved
@@ -48,7 +43,7 @@ module GPhoto2
       def preserving_config(keys : Array(String | Symbol) = nil) : Void
         config_snapshot = keys ? config.select(keys.map &.to_s) : config
         config_snapshot = config_snapshot.reduce({} of String => String) do |memo, (key, widget)|
-          memo[key] = widget.to_s rescue CameraWidget::NotImplementedError
+          memo[key] = widget.to_s rescue NotImplementedError
           memo
         end
         begin
@@ -69,7 +64,7 @@ module GPhoto2
         preserving_config(keys.to_a) { |camera| yield camera }
       end
 
-      # Reloads the camera configuration.
+      # Reloads camera configuration.
       #
       # All unsaved changes will be lost.
       #
@@ -85,16 +80,20 @@ module GPhoto2
         config
       end
 
+      # Returns the attribute identified by *key*.
+      #
+      # See: `#config`
+      #
       # ```
       # camera[:whitebalance].to_s  # => "Automatic"
       # camera["whitebalance"].to_s # => "Automatic"
       # ```
-      def [](key : String | Symbol)
+      def [](key : String | Symbol) : CameraWidget::Base
         config[key.to_s]
       end
 
       # ditto
-      def []?(key : String | Symbol)
+      def []?(key : String | Symbol) : CameraWidget::Base?
         config[key.to_s]?
       end
 
@@ -119,7 +118,7 @@ module GPhoto2
       # iso.value = iso.choices.first
       # camera << iso
       # ```
-      def <<(widget : CameraWidget) : self
+      def <<(widget : CameraWidget::Base) : self
         key = widget.name
         # set_single_config(key, widget)
         config[key] = widget
@@ -141,9 +140,9 @@ module GPhoto2
         true
       end
 
-      # Updates the attributes of the camera from the given
-      # `Hash`, `NamedTuple` or keyword arguments and saves
-      # the configuration.
+      # Updates camera attributes from the given
+      # `Hash`, `NamedTuple` or keyword arguments (`**kwargs`)
+      # and saves the configuration.
       #
       # ```
       # camera[:iso]           # => 800
@@ -171,6 +170,8 @@ module GPhoto2
         update(attributes)
       end
 
+      # Returns `true` if any attributes have unsaved changes.
+      #
       # ```
       # camera.dirty? # => false
       # camera[:iso] = 400

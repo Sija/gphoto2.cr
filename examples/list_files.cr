@@ -24,7 +24,7 @@ def visit(folder, level = 0)
 
   files.each do |file|
     name  = file.name
-    info  = file.info.not_nil!.file
+    info  = file.info.file
     # Avoid using `CameraFile#size` here to prevent having to load the data along with it.
     size  = info.size ? format_filesize(info.size.not_nil!) : "-"
     type  = info.type || "-"

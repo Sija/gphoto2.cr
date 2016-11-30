@@ -7,11 +7,14 @@ module GPhoto2
     # The preview data is assumed to be a jpg.
     PREVIEW_FILENAME = "capture_preview.jpg"
 
+    # Initial buffer size used in `#read`.
+    BUFFER_SIZE = 256 * 1024
+
     @camera : Camera
     @data_and_size : {UInt8*, LibC::ULong}?
 
-    getter! folder : String?
-    getter! name : String?
+    getter! folder : String
+    getter! name : String
 
     protected delegate :context, to: @camera
 
@@ -24,13 +27,15 @@ module GPhoto2
     end
 
     def close : Void
-      free
+      free if ptr?
     end
 
+    # Returns `true` if file is a preview.
     def preview?
       !(@folder && @name)
     end
 
+    # Saves file `#data` at given *pathname*.
     def save(pathname : String = default_filename) : Void
       unless Dir.exists? pathname
         Dir.mkdir_p File.dirname(pathname)
@@ -48,17 +53,24 @@ module GPhoto2
       data_and_size.first
     end
 
-    # Returns size of the file (in bytes).
+    # Returns file size (in bytes).
     def size : LibC::ULong
       data_and_size.last
     end
 
+    # Returns file `#data` as `Bytes`.
     def to_slice : Bytes
       data.to_slice(size)
     end
 
-    def info : CameraFileInfo?
-      get_info unless preview?
+    # Reads file directly from the camera.
+    def read : Bytes
+      _read
+    end
+
+    # Returns `CameraFileInfo` object containing information about the file.
+    def info : CameraFileInfo
+      get_info
     end
 
     # Returns file extension in lowercase (without leading dot).
@@ -101,6 +113,32 @@ module GPhoto2
 
     private def get(type = LibGPhoto2::CameraFileType::Normal)
       context.check! LibGPhoto2.gp_camera_file_get(@camera, folder, name, type, self, context)
+    end
+
+    private def _read(buffer, offset, type)
+      size = buffer.size.to_u64
+
+      context.check! LibGPhoto2.gp_camera_file_read(@camera, folder, name, type,
+        offset, buffer, pointerof(size), context)
+
+      offset += size
+      {offset, size}
+    end
+
+    private def _read(type = LibGPhoto2::CameraFileType::Normal)
+      buffer = Bytes.new(BUFFER_SIZE)
+      offset, size = _read(buffer, 0, type)
+
+      data = Pointer(UInt8).malloc(size)
+      data.copy_from(buffer.to_unsafe, size)
+
+      while size == buffer.size
+        offset, size = _read(buffer, offset, type)
+        data = data.realloc(offset)
+        data_with_offset = data + (offset - size)
+        data_with_offset.copy_from(buffer.to_unsafe, size)
+      end
+      data.to_slice(offset)
     end
 
     private def get_info

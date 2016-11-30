@@ -1,6 +1,5 @@
 require "./struct"
 require "./camera/*"
-require "./camera_widgets/*"
 
 module GPhoto2
   class Camera
@@ -10,6 +9,7 @@ module GPhoto2
     include Configuration
     include Event
     include Filesystem
+    include Info
 
     getter model : String
     getter port : String
@@ -128,9 +128,7 @@ module GPhoto2
       end
     end
 
-    def initialize(@model : String, @port : String)
-      super
-    end
+    def initialize(@model : String, @port : String); end
 
     def ptr
       init unless ptr?
@@ -160,7 +158,8 @@ module GPhoto2
 
     # Closes a connection to the camera and therefore gives other application the possibility to access the camera, too.
     # It is recommended that you call this function when you currently don't need the camera.
-    # The camera will get reinitialized if you try to access the camera again.
+    #
+    # NOTE: The camera will get reinitialized if you try to access the camera again.
     def exit : Void
       _exit
     end
@@ -175,9 +174,7 @@ module GPhoto2
       @port_info.not_nil!
     end
 
-    def context : Context
-      @context ||= Context.new
-    end
+    getter context : Context { Context.new }
 
     # Yields opened instance of `Port` with already associated camera's `PortInfo`.
     # Port is automatically closed on block exit/exception.
