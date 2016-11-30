@@ -1,3 +1,15 @@
+# 0.7.0
+- New `CameraFile#read`
+- New `CameraFolder#delete`
+- New `Camera::Info` module containing `#{about,manual,summary}_text` methods
+- Extended `CameraFolder#clear` method to remove subfolders too (off by default)
+- Moved all `CameraFileInfo*` classes under single `CameraFileInfo` namespace
+- Moved all `CameraWidget*` classes under single `CameraWidget` namespace
+- Made camera widgets inherit from `CameraWidget::Base` class
+- Changed `CameraWidget::Text` to accept `Number` values, not only `Int` or `Float`
+- Changed `CameraWidget::Radio#choices` signature to return non-nillable `String` values
+- Changed `CameraFile#info` signature to return non-nillable `CameraFileInfo` value
+
 # 0.6.0
 - Code compiles on Crystal v0.19, which is now minimum required version
 - New `GPhoto2::Port` class to allow camera port reset
@@ -17,7 +29,7 @@
 - New `CameraAbilities` convenience methods: `#status`, `#device_type`, `#operations`, `#file_operations`, `#folder_operations`
 - New `Context#{idle,cancel,error,status,message}_callback` assignable property
 - New `Context#check!` for context-aware error messages
-- New `CameraAbilitiesList#[model : String]` 
+- New `CameraAbilitiesList#[model : String]`
 - New `PortInfoList#[port : String]`
 - New `PortInfoList#type`
 - Optimized `Camera.all` method (shaved ~5s)
