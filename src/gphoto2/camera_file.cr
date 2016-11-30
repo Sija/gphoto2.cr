@@ -68,8 +68,9 @@ module GPhoto2
       _read
     end
 
-    def info : CameraFileInfo?
-      get_info unless preview?
+    # Returns `CameraFileInfo` object containing information about the file.
+    def info : CameraFileInfo
+      get_info
     end
 
     # Returns file extension in lowercase (without leading dot).
