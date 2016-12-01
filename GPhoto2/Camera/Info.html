@@ -5,7 +5,7 @@
   <meta id="repository-name" content="github.com/Sija/gphoto2.cr">
   <link href="../../css/style.css" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="../../js/doc.js"></script>
-  <title>GPhoto2::CameraFileInfo::Base - github.com/Sija/gphoto2.cr</title>
+  <title>GPhoto2::Camera::Info - github.com/Sija/gphoto2.cr</title>
 </head>
 <body>
 
@@ -25,7 +25,7 @@
       
         <ul>
   
-  <li class="parent " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Camera" data-name="gphoto2::camera">
+  <li class="parent open current" data-id="github.com/Sija/gphoto2.cr/GPhoto2/Camera" data-name="gphoto2::camera">
       <a href="../../GPhoto2/Camera.html">Camera</a>
       
         <ul>
@@ -50,7 +50,7 @@
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Camera/Info" data-name="gphoto2::camera::info">
+  <li class=" current" data-id="github.com/Sija/gphoto2.cr/GPhoto2/Camera/Info" data-name="gphoto2::camera::info">
       <a href="../../GPhoto2/Camera/Info.html">Info</a>
       
     </li>
@@ -80,7 +80,7 @@
       
     </li>
   
-  <li class="parent open current" data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFileInfo" data-name="gphoto2::camerafileinfo">
+  <li class="parent " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFileInfo" data-name="gphoto2::camerafileinfo">
       <a href="../../GPhoto2/CameraFileInfo.html">CameraFileInfo</a>
       
         <ul>
@@ -90,7 +90,7 @@
       
     </li>
   
-  <li class=" current" data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFileInfo/Base" data-name="gphoto2::camerafileinfo::base">
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFileInfo/Base" data-name="gphoto2::camerafileinfo::base">
       <a href="../../GPhoto2/CameraFileInfo/Base.html">Base</a>
       
     </li>
@@ -262,12 +262,11 @@
 <div id="main-content">
 <h1 class="type-name">
 
-  <span class="kind">abstract class</span> GPhoto2::CameraFileInfo::Base
+  <span class="kind">module</span> GPhoto2::Camera::Info
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../GPhoto2/CameraFileInfo/Base.html">GPhoto2::CameraFileInfo::Base</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -280,18 +279,13 @@
 
 
 
-  <h2>Direct Known Subclasses</h2>
+
+  <h2>Direct including types</h2>
   <ul class="other-types-list">
   
-    <li class="other-type"><a href="../../GPhoto2/CameraFileInfo/Audio.html">GPhoto2::CameraFileInfo::Audio</a></li>
-  
-    <li class="other-type"><a href="../../GPhoto2/CameraFileInfo/File.html">GPhoto2::CameraFileInfo::File</a></li>
-  
-    <li class="other-type"><a href="../../GPhoto2/CameraFileInfo/Preview.html">GPhoto2::CameraFileInfo::Preview</a></li>
+    <li class="other-type"><a href="../../GPhoto2/Camera.html">GPhoto2::Camera</a></li>
   
   </ul>
-
-
 
 
 
@@ -299,7 +293,7 @@
   <h2>Defined in:</h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/404ef6783e9f0afd06ef8b0143a85bc9f14534b0/src/gphoto2/camera_file_info/base.cr#L5" target="_blank">gphoto2/camera_file_info/base.cr</a>
+      <a href="https://github.com/Sija/gphoto2.cr/blob/404ef6783e9f0afd06ef8b0143a85bc9f14534b0/src/gphoto2/camera/info.cr#L3" target="_blank">gphoto2/camera/info.cr</a>
     
     <br/>
   
@@ -314,27 +308,23 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#fields%3ALibGPhoto2%3A%3ACameraFileInfoFields-instance-method" class="signature"><strong>#fields</strong> : LibGPhoto2::CameraFileInfoFields</a>
+        <a href="#about_text%3AString-instance-method" class="signature"><strong>#about_text</strong> : String</a>
+        
+          <div class="summary"><p>Retrieves information about the camera driver.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#has_field%3F%28field%3AString%7CSymbol%29-instance-method" class="signature"><strong>#has_field?</strong>(field : String | Symbol)</a>
+        <a href="#manual_text%3AString-instance-method" class="signature"><strong>#manual_text</strong> : String</a>
+        
+          <div class="summary"><p>Retrieves the manual for given camera.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#size%3ALibC%3A%3AUInt64T%3F-instance-method" class="signature"><strong>#size</strong> : LibC::UInt64T?</a>
+        <a href="#summary_text%3AString-instance-method" class="signature"><strong>#summary_text</strong> : String</a>
         
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#status%3ALibGPhoto2%3A%3ACameraFileStatus%3F-instance-method" class="signature"><strong>#status</strong> : LibGPhoto2::CameraFileStatus?</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#type%3AString%3F-instance-method" class="signature"><strong>#type</strong> : String?</a>
+          <div class="summary"><p>Retrieves a camera summary.</p></div>
         
       </li>
     
@@ -346,20 +336,6 @@
 
 <div class="methods-inherited">
   
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-  
 </div>
 
 
@@ -367,82 +343,64 @@
 
   <h2>Instance Method Detail</h2>
   
-    <div class="entry-detail" id="fields:LibGPhoto2::CameraFileInfoFields-instance-method">
+    <div class="entry-detail" id="about_text:String-instance-method">
       <div class="signature">
         
-        def <strong>fields</strong> : <a href="../../LibGPhoto2/CameraFileInfoFields.html">LibGPhoto2::CameraFileInfoFields</a>
+        def <strong>about_text</strong> : String
 
-        <a class="method-permalink" href="#fields%3ALibGPhoto2%3A%3ACameraFileInfoFields-instance-method">#</a>
+        <a class="method-permalink" href="#about_text%3AString-instance-method">#</a>
       </div>
+      
+        <div class="doc"><p>Retrieves information about the camera driver.</p>
+
+<p>Typically, this information contains name and address of the author,
+acknowledgements, etc.</p></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/404ef6783e9f0afd06ef8b0143a85bc9f14534b0/src/gphoto2/camera_file_info/base.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/404ef6783e9f0afd06ef8b0143a85bc9f14534b0/src/gphoto2/camera/info.cr#L25" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="has_field?&#40;field:String|Symbol&#41;-instance-method">
+    <div class="entry-detail" id="manual_text:String-instance-method">
       <div class="signature">
         
-        def <strong>has_field?</strong>(field : String | Symbol)
+        def <strong>manual_text</strong> : String
 
-        <a class="method-permalink" href="#has_field%3F%28field%3AString%7CSymbol%29-instance-method">#</a>
+        <a class="method-permalink" href="#manual_text%3AString-instance-method">#</a>
       </div>
+      
+        <div class="doc"><p>Retrieves the manual for given camera.</p>
+
+<p>This manual typically contains information about using the camera.</p></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/404ef6783e9f0afd06ef8b0143a85bc9f14534b0/src/gphoto2/camera_file_info/base.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/404ef6783e9f0afd06ef8b0143a85bc9f14534b0/src/gphoto2/camera/info.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="size:LibC::UInt64T?-instance-method">
+    <div class="entry-detail" id="summary_text:String-instance-method">
       <div class="signature">
         
-        def <strong>size</strong> : LibC::UInt64T?
+        def <strong>summary_text</strong> : String
 
-        <a class="method-permalink" href="#size%3ALibC%3A%3AUInt64T%3F-instance-method">#</a>
+        <a class="method-permalink" href="#summary_text%3AString-instance-method">#</a>
       </div>
+      
+        <div class="doc"><p>Retrieves a camera summary.</p>
+
+<p>This summary typically contains information like manufacturer,
+pictures taken, or generally information that is not configurable.</p></div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/404ef6783e9f0afd06ef8b0143a85bc9f14534b0/src/gphoto2/camera_file_info/base.cr#L20" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="status:LibGPhoto2::CameraFileStatus?-instance-method">
-      <div class="signature">
-        
-        def <strong>status</strong> : <a href="../../LibGPhoto2/CameraFileStatus.html">LibGPhoto2::CameraFileStatus</a>?
-
-        <a class="method-permalink" href="#status%3ALibGPhoto2%3A%3ACameraFileStatus%3F-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/404ef6783e9f0afd06ef8b0143a85bc9f14534b0/src/gphoto2/camera_file_info/base.cr#L16" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="type:String?-instance-method">
-      <div class="signature">
-        
-        def <strong>type</strong> : String?
-
-        <a class="method-permalink" href="#type%3AString%3F-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/404ef6783e9f0afd06ef8b0143a85bc9f14534b0/src/gphoto2/camera_file_info/base.cr#L24" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/404ef6783e9f0afd06ef8b0143a85bc9f14534b0/src/gphoto2/camera/info.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>

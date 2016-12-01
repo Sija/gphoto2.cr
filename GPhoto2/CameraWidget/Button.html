@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta id="repository-name" content="github.com/Sija/gphoto2.cr">
+  <link href="../../css/style.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="../../js/doc.js"></script>
+  <title>GPhoto2::CameraWidget::Button - github.com/Sija/gphoto2.cr</title>
+</head>
+<body>
+
+<div id="types-list">
+  <div id="search-box">
+    <input type="search" id="search-input" placeholder="Search...">
+  </div>
+
+  <ul>
+    <li><a href="../../index.html">README</a></li>
+  </ul>
+
+  <ul>
+  
+  <li class="parent open current" data-id="github.com/Sija/gphoto2.cr/GPhoto2" data-name="gphoto2">
+      <a href="../../GPhoto2.html">GPhoto2</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Camera" data-name="gphoto2::camera">
+      <a href="../../GPhoto2/Camera.html">Camera</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Camera/Capture" data-name="gphoto2::camera::capture">
+      <a href="../../GPhoto2/Camera/Capture.html">Capture</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Camera/Configuration" data-name="gphoto2::camera::configuration">
+      <a href="../../GPhoto2/Camera/Configuration.html">Configuration</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Camera/Event" data-name="gphoto2::camera::event">
+      <a href="../../GPhoto2/Camera/Event.html">Event</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Camera/Filesystem" data-name="gphoto2::camera::filesystem">
+      <a href="../../GPhoto2/Camera/Filesystem.html">Filesystem</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Camera/Info" data-name="gphoto2::camera::info">
+      <a href="../../GPhoto2/Camera/Info.html">Info</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraAbilities" data-name="gphoto2::cameraabilities">
+      <a href="../../GPhoto2/CameraAbilities.html">CameraAbilities</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraAbilitiesList" data-name="gphoto2::cameraabilitieslist">
+      <a href="../../GPhoto2/CameraAbilitiesList.html">CameraAbilitiesList</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraEvent" data-name="gphoto2::cameraevent(t)">
+      <a href="../../GPhoto2/CameraEvent.html">CameraEvent</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFile" data-name="gphoto2::camerafile">
+      <a href="../../GPhoto2/CameraFile.html">CameraFile</a>
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFileInfo" data-name="gphoto2::camerafileinfo">
+      <a href="../../GPhoto2/CameraFileInfo.html">CameraFileInfo</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFileInfo/Audio" data-name="gphoto2::camerafileinfo::audio">
+      <a href="../../GPhoto2/CameraFileInfo/Audio.html">Audio</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFileInfo/Base" data-name="gphoto2::camerafileinfo::base">
+      <a href="../../GPhoto2/CameraFileInfo/Base.html">Base</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFileInfo/File" data-name="gphoto2::camerafileinfo::file">
+      <a href="../../GPhoto2/CameraFileInfo/File.html">File</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFileInfo/Preview" data-name="gphoto2::camerafileinfo::preview">
+      <a href="../../GPhoto2/CameraFileInfo/Preview.html">Preview</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFilePath" data-name="gphoto2::camerafilepath">
+      <a href="../../GPhoto2/CameraFilePath.html">CameraFilePath</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFolder" data-name="gphoto2::camerafolder">
+      <a href="../../GPhoto2/CameraFolder.html">CameraFolder</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraList" data-name="gphoto2::cameralist">
+      <a href="../../GPhoto2/CameraList.html">CameraList</a>
+      
+    </li>
+  
+  <li class="parent open current" data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraWidget" data-name="gphoto2::camerawidget">
+      <a href="../../GPhoto2/CameraWidget.html">CameraWidget</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraWidget/Base" data-name="gphoto2::camerawidget::base">
+      <a href="../../GPhoto2/CameraWidget/Base.html">Base</a>
+      
+    </li>
+  
+  <li class=" current" data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraWidget/Button" data-name="gphoto2::camerawidget::button">
+      <a href="../../GPhoto2/CameraWidget/Button.html">Button</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraWidget/Date" data-name="gphoto2::camerawidget::date">
+      <a href="../../GPhoto2/CameraWidget/Date.html">Date</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraWidget/Menu" data-name="gphoto2::camerawidget::menu">
+      <a href="../../GPhoto2/CameraWidget/Menu.html">Menu</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraWidget/Radio" data-name="gphoto2::camerawidget::radio">
+      <a href="../../GPhoto2/CameraWidget/Radio.html">Radio</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraWidget/Range" data-name="gphoto2::camerawidget::range">
+      <a href="../../GPhoto2/CameraWidget/Range.html">Range</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraWidget/Section" data-name="gphoto2::camerawidget::section">
+      <a href="../../GPhoto2/CameraWidget/Section.html">Section</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraWidget/Text" data-name="gphoto2::camerawidget::text">
+      <a href="../../GPhoto2/CameraWidget/Text.html">Text</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraWidget/Toggle" data-name="gphoto2::camerawidget::toggle">
+      <a href="../../GPhoto2/CameraWidget/Toggle.html">Toggle</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraWidget/Window" data-name="gphoto2::camerawidget::window">
+      <a href="../../GPhoto2/CameraWidget/Window.html">Window</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Context" data-name="gphoto2::context">
+      <a href="../../GPhoto2/Context.html">Context</a>
+      
+        <ul>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Context/Callbacks" data-name="gphoto2::context::callbacks">
+      <a href="../../GPhoto2/Context/Callbacks.html">Callbacks</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Entry" data-name="gphoto2::entry">
+      <a href="../../GPhoto2/Entry.html">Entry</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Error" data-name="gphoto2::error">
+      <a href="../../GPhoto2/Error.html">Error</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Exception" data-name="gphoto2::exception">
+      <a href="../../GPhoto2/Exception.html">Exception</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/ManagedStruct" data-name="gphoto2::managedstruct(t)">
+      <a href="../../GPhoto2/ManagedStruct.html">ManagedStruct</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/NoDevicesError" data-name="gphoto2::nodeviceserror">
+      <a href="../../GPhoto2/NoDevicesError.html">NoDevicesError</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/NotImplementedError" data-name="gphoto2::notimplementederror">
+      <a href="../../GPhoto2/NotImplementedError.html">NotImplementedError</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Port" data-name="gphoto2::port">
+      <a href="../../GPhoto2/Port.html">Port</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/PortInfo" data-name="gphoto2::portinfo">
+      <a href="../../GPhoto2/PortInfo.html">PortInfo</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/PortInfoList" data-name="gphoto2::portinfolist">
+      <a href="../../GPhoto2/PortInfoList.html">PortInfoList</a>
+      
+    </li>
+  
+  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Struct" data-name="gphoto2::struct(t)">
+      <a href="../../GPhoto2/Struct.html">Struct</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+</div>
+
+<div id="main-content">
+<h1 class="type-name">
+
+  <span class="kind">class</span> GPhoto2::CameraWidget::Button
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../GPhoto2/CameraWidget/Button.html">GPhoto2::CameraWidget::Button</a></li><li class="superclass"><a href="../../GPhoto2/CameraWidget/Base.html">GPhoto2::CameraWidget::Base</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>Defined in:</h2>
+  
+    
+      <a href="https://github.com/Sija/gphoto2.cr/blob/404ef6783e9f0afd06ef8b0143a85bc9f14534b0/src/gphoto2/camera_widgets/button.cr#L5" target="_blank">gphoto2/camera_widgets/button.cr</a>
+    
+    <br/>
+  
+
+
+
+
+
+
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+  <h3>Instance methods inherited from class <code><a href="../../GPhoto2/CameraWidget/Base.html">GPhoto2::CameraWidget::Base</a></code></h3>
+  
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#%3D%3D%28other%3Aself%29-instance-method" class="tooltip">
+      <span>==(other : self)<br/>==(other)<br/>==(other : Regex)<br/>==(other : Symbol)</span>
+    ==</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#as_button%3AGPhoto2%3A%3ACameraWidget%3A%3AButton-instance-method" class="tooltip">
+      <span>as_button : GPhoto2::CameraWidget::Button</span>
+    as_button</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#as_button%3F%3AGPhoto2%3A%3ACameraWidget%3A%3AButton%3F-instance-method" class="tooltip">
+      <span>as_button? : GPhoto2::CameraWidget::Button?</span>
+    as_button?</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#as_date%3AGPhoto2%3A%3ACameraWidget%3A%3ADate-instance-method" class="tooltip">
+      <span>as_date : GPhoto2::CameraWidget::Date</span>
+    as_date</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#as_date%3F%3AGPhoto2%3A%3ACameraWidget%3A%3ADate%3F-instance-method" class="tooltip">
+      <span>as_date? : GPhoto2::CameraWidget::Date?</span>
+    as_date?</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#as_menu%3AGPhoto2%3A%3ACameraWidget%3A%3AMenu-instance-method" class="tooltip">
+      <span>as_menu : GPhoto2::CameraWidget::Menu</span>
+    as_menu</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#as_menu%3F%3AGPhoto2%3A%3ACameraWidget%3A%3AMenu%3F-instance-method" class="tooltip">
+      <span>as_menu? : GPhoto2::CameraWidget::Menu?</span>
+    as_menu?</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#as_radio%3AGPhoto2%3A%3ACameraWidget%3A%3ARadio-instance-method" class="tooltip">
+      <span>as_radio : GPhoto2::CameraWidget::Radio</span>
+    as_radio</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#as_radio%3F%3AGPhoto2%3A%3ACameraWidget%3A%3ARadio%3F-instance-method" class="tooltip">
+      <span>as_radio? : GPhoto2::CameraWidget::Radio?</span>
+    as_radio?</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#as_range%3AGPhoto2%3A%3ACameraWidget%3A%3ARange-instance-method" class="tooltip">
+      <span>as_range : GPhoto2::CameraWidget::Range</span>
+    as_range</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#as_range%3F%3AGPhoto2%3A%3ACameraWidget%3A%3ARange%3F-instance-method" class="tooltip">
+      <span>as_range? : GPhoto2::CameraWidget::Range?</span>
+    as_range?</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#as_section%3AGPhoto2%3A%3ACameraWidget%3A%3ASection-instance-method" class="tooltip">
+      <span>as_section : GPhoto2::CameraWidget::Section</span>
+    as_section</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#as_section%3F%3AGPhoto2%3A%3ACameraWidget%3A%3ASection%3F-instance-method" class="tooltip">
+      <span>as_section? : GPhoto2::CameraWidget::Section?</span>
+    as_section?</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#as_text%3AGPhoto2%3A%3ACameraWidget%3A%3AText-instance-method" class="tooltip">
+      <span>as_text : GPhoto2::CameraWidget::Text</span>
+    as_text</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#as_text%3F%3AGPhoto2%3A%3ACameraWidget%3A%3AText%3F-instance-method" class="tooltip">
+      <span>as_text? : GPhoto2::CameraWidget::Text?</span>
+    as_text?</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#as_toggle%3AGPhoto2%3A%3ACameraWidget%3A%3AToggle-instance-method" class="tooltip">
+      <span>as_toggle : GPhoto2::CameraWidget::Toggle</span>
+    as_toggle</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#as_toggle%3F%3AGPhoto2%3A%3ACameraWidget%3A%3AToggle%3F-instance-method" class="tooltip">
+      <span>as_toggle? : GPhoto2::CameraWidget::Toggle?</span>
+    as_toggle?</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#as_window%3AGPhoto2%3A%3ACameraWidget%3A%3AWindow-instance-method" class="tooltip">
+      <span>as_window : GPhoto2::CameraWidget::Window</span>
+    as_window</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#as_window%3F%3AGPhoto2%3A%3ACameraWidget%3A%3AWindow%3F-instance-method" class="tooltip">
+      <span>as_window? : GPhoto2::CameraWidget::Window?</span>
+    as_window?</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#children%3AArray%28Base%29-instance-method" class="tooltip">
+      <span>children : Array(Base)</span>
+    children</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#close%3AVoid-instance-method" class="tooltip">
+      <span>close : Void</span>
+    close</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#flatten%28map%3D%7B%7DofString%3D%3EBase%29%3AHash%28String%2CBase%29-instance-method" class="tooltip">
+      <span>flatten(map = {} <span class="k">of</span> <span class="t">String</span> => <span class="t">Base</span>) : Hash(String, Base)</span>
+    flatten</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#id%3ALibC%3A%3AInt-instance-method" class="tooltip">
+      <span>id : LibC::Int</span>
+    id</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#in%3F%28other%29-instance-method" class="tooltip">
+      <span>in?(other)<br/>in?(other : ::Range)</span>
+    in?</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#info%3AString-instance-method" class="tooltip">
+      <span>info : String</span>
+    info</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#label%3AString-instance-method" class="tooltip">
+      <span>label : String</span>
+    label</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#name%3AString-instance-method" class="tooltip">
+      <span>name : String</span>
+    name</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#parent%3ABase%3F-instance-method" class="tooltip">
+      <span>parent : Base?</span>
+    parent</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#readonly%3F-instance-method" class="tooltip">
+      <span>readonly?</span>
+    readonly?</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#to_s%28io%29-instance-method" class="tooltip">
+      <span>to_s(io)</span>
+    to_s</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#type%3ALibGPhoto2%3A%3ACameraWidgetType-instance-method" class="tooltip">
+      <span>type : LibGPhoto2::CameraWidgetType</span>
+    type</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#value-instance-method" class="tooltip">
+      <span>value</span>
+    value</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#value%3D%28value%29-instance-method" class="tooltip">
+      <span>value=(value)</span>
+    value=</a>
+    
+  
+
+
+    
+
+  <h3>Class methods inherited from class <code><a href="../../GPhoto2/CameraWidget/Base.html">GPhoto2::CameraWidget::Base</a></code></h3>
+  
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#new%28ptr%3A%3A%3APointer%28LibGPhoto2%3A%3ACameraWidget%29%2Cparent%3ABase%3F%3Dnil%29-class-method" class="tooltip">
+      <span>new(ptr : ::Pointer(LibGPhoto2::CameraWidget), parent : Base? = <span class="n">nil</span>)</span>
+    new</a>
+    
+  
+
+
+  
+    
+
+  <h3>Instance methods inherited from module <code><a href="../../GPhoto2/Struct.html">GPhoto2::Struct</a>(LibGPhoto2::CameraWidget)</code></h3>
+  
+  
+    <a href="../../GPhoto2/Struct.html#ptr-instance-method" class="tooltip">
+      <span>ptr</span>
+    ptr</a>, 
+    
+  
+    <a href="../../GPhoto2/Struct.html#ptr%3F%3A%3A%3APointer%28T%29%3F-instance-method" class="tooltip">
+      <span>ptr? : ::Pointer(T)?</span>
+    ptr?</a>, 
+    
+  
+    <a href="../../GPhoto2/Struct.html#to_unsafe%3A%3A%3APointer%28T%29-instance-method" class="tooltip">
+      <span>to_unsafe : ::Pointer(T)</span>
+    to_unsafe</a>, 
+    
+  
+    <a href="../../GPhoto2/Struct.html#wrapped%3AT-instance-method" class="tooltip">
+      <span>wrapped : T</span>
+    wrapped</a>
+    
+  
+
+
+    
+
+  <h3>Class methods inherited from module <code><a href="../../GPhoto2/Struct.html">GPhoto2::Struct</a>(LibGPhoto2::CameraWidget)</code></h3>
+  
+  
+    <a href="../../GPhoto2/Struct.html#new%28ptr%3A%3A%3APointer%28T%29%3F%3Dnil%29-class-method" class="tooltip">
+      <span>new(ptr : ::Pointer(T)? = <span class="n">nil</span>)</span>
+    new</a>
+    
+  
+
+
+  
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+  
+</div>
+
+
+
+
+
+
+
+</div>
+
+</body>
+</html>
