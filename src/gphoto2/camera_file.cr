@@ -18,6 +18,13 @@ module GPhoto2
 
     protected delegate :context, to: @camera
 
+    # Returns a new string formed by joining the strings using `/`.
+    #
+    # NOTE: OS-independent substitute of `File.join` applicable to *libgphoto2* fs.
+    def self.join(*args : String) : String
+      args.join '/', &.chomp('/')
+    end
+
     def initialize(@camera : Camera, @folder : String? = nil, @name : String? = nil)
       new
     end
@@ -80,7 +87,7 @@ module GPhoto2
 
     # Returns full file path (within the camera filesystem).
     def path : String
-      File.join folder, name
+      self.class.join folder, name
     end
 
     def_equals @camera, @folder, @name

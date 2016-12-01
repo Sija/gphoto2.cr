@@ -36,7 +36,7 @@ module GPhoto2
       when "."
         self
       else
-        self.class.new(@camera, File.join(@path, name))
+        self.class.new(@camera, CameraFile.join(@path, name))
       end
     end
 
