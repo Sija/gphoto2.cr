@@ -1,8 +1,6 @@
 module GPhoto2
   class Camera
     module Configuration
-      @dirty : Bool = false
-
       # Returns camera `CameraWidget::Window` root configuration widget.
       getter window : CameraWidget::Window { get_config.as(CameraWidget::Window) }
 
@@ -177,7 +175,7 @@ module GPhoto2
       # camera[:iso] = 400
       # camera.dirty? # => true
       # ```
-      getter? :dirty
+      getter? dirty = false
 
       private def reset : Void
         @window = nil

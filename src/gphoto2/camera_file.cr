@@ -10,12 +10,10 @@ module GPhoto2
     # Initial buffer size used in `#read`.
     BUFFER_SIZE = 256 * 1024
 
-    @camera : Camera
-    @data_and_size : {UInt8*, LibC::ULong}?
-
     getter! folder : String
     getter! name : String
 
+    protected getter camera : Camera
     protected delegate :context, to: @camera
 
     # Returns a new string formed by joining the strings using `/`.
@@ -106,11 +104,9 @@ module GPhoto2
       preview? ? PREVIEW_FILENAME : name
     end
 
-    private def data_and_size
-      @data_and_size ||= begin
-        get unless preview?
-        get_data_and_size
-      end
+    private getter data_and_size : {UInt8*, LibC::ULong} do
+      get unless preview?
+      get_data_and_size
     end
 
     private def get_data_and_size
