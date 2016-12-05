@@ -134,7 +134,7 @@ module GPhoto2
 
     private def _read(type = LibGPhoto2::CameraFileType::Normal)
       buffer = Bytes.new(BUFFER_SIZE)
-      offset, size = _read(buffer, 0, type)
+      offset, size = _read(buffer, 0_u64, type)
 
       data = Pointer(UInt8).malloc(size)
       data.copy_from(buffer.to_unsafe, size)
