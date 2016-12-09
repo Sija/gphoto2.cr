@@ -17,6 +17,14 @@ module GPhoto2
       def /(path) : CameraFolder
         filesystem(path)
       end
+
+      # Clear the filesystem.
+      #
+      # Resets the filesystem. All cached information including the folder tree
+      # will get lost and will be queried again on demand.
+      def filesystem_reset : Void
+        context.check! LibGPhoto2.gp_filesystem_reset(wrapped.fs)
+      end
     end
   end
 end

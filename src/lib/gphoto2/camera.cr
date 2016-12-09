@@ -1,3 +1,4 @@
+require "./camera_filesystem"
 require "./camera_file"
 
 @[Link("libgphoto2")]
@@ -112,9 +113,6 @@ lib LibGPhoto2
   struct CameraText
     text : LibC::Char[32768] # 32 * 1024
   end
-
-  # TODO?
-  alias CameraFilesystem = Void*
 
   struct CameraFunctions
     pre_func : CameraPrePostFunc
