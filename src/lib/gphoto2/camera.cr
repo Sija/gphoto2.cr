@@ -55,8 +55,8 @@ lib LibGPhoto2
   # Aliases
   #
 
-  alias CameraPrivateLibrary      = Void*
-  alias CameraPrivateCore         = Void*
+  alias CameraPrivateLibrary      = Void
+  alias CameraPrivateCore         = Void
 
   alias CameraGetConfigFunc       = Camera*, CameraWidget**, GPContext* -> LibC::Int
   alias CameraSetConfigFunc       = Camera*, CameraWidget*, GPContext* -> LibC::Int
