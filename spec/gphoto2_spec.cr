@@ -1,24 +1,11 @@
 require "./spec_helper"
-require "yaml"
 
-VERSION_PATTERN = /^\d+(\.\d+){2,3}(-\w+)?$/
-ENV_DEBUG_KEY   = "DEBUG"
+ENV_DEBUG_KEY = "DEBUG"
 
 describe GPhoto2 do
-  describe "VERSION" do
-    it "should have proper format" do
-      GPhoto2::VERSION.should match VERSION_PATTERN
-    end
-
-    it "should match shard.yml" do
-      version = YAML.parse(File.read(File.join(__DIR__, "..", "shard.yml")))["version"].as_s
-      version.should eq GPhoto2::VERSION
-    end
-  end
-
   describe ".library_version" do
     it "should have proper format" do
-      GPhoto2.library_version.should match VERSION_PATTERN
+      GPhoto2.library_version.should match /^\d+(\.\d+){2,3}(-\w+)?$/
     end
   end
 
