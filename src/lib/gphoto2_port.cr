@@ -41,8 +41,8 @@ lib LibGPhoto2Port
   # Aliases
   #
 
-  alias GPPortPrivateLibrary = Void*
-  alias GPPortPrivateCore = Void*
+  alias GPPortPrivateLibrary = Void
+  alias GPPortPrivateCore = Void
 
   #
   # Structs
@@ -87,8 +87,8 @@ lib LibGPhoto2Port
     settings : GPPortSettings
     settings_pending : GPPortSettings
     timeout : LibC::Int
-    pl : GPPortPrivateLibrary
-    pc : GPPortPrivateCore
+    pl : GPPortPrivateLibrary*
+    pc : GPPortPrivateCore*
   end
 
   #

@@ -27,7 +27,7 @@ module GPhoto2
             CameraFile.new(self, path.folder, path.name)
           when .folder_added?
             path = CameraFilePath.new(data_ptr.as(LibGPhoto2::CameraFilePath*))
-            CameraFolder.new(self, File.join(path.folder, path.name))
+            CameraFolder.new(self, CameraFile.join(path.folder, path.name))
           when .unknown?
             data_ptr.null? ? nil : String.new(data_ptr.as(LibC::Char*))
           else

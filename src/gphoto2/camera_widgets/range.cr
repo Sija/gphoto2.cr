@@ -5,7 +5,7 @@ module GPhoto2
     class Range < Base
       def range : Array(LibC::Float)
         min, max, inc = get_range
-        min.step(by: inc, limit: max).to_a
+        min.step(to: max, by: inc).to_a
       end
 
       private def get_range

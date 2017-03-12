@@ -10,13 +10,18 @@ module GPhoto2
     # Initial buffer size used in `#read`.
     BUFFER_SIZE = 256 * 1024
 
-    @camera : Camera
-    @data_and_size : {UInt8*, LibC::ULong}?
-
     getter! folder : String
     getter! name : String
 
+    protected getter camera : Camera
     protected delegate :context, to: @camera
+
+    # Returns a new string formed by joining the strings using `/`.
+    #
+    # NOTE: OS-independent substitute of `File.join` applicable to *libgphoto2* fs.
+    def self.join(*args : String) : String
+      args.join '/', &.chomp('/')
+    end
 
     def initialize(@camera : Camera, @folder : String? = nil, @name : String? = nil)
       new
@@ -80,7 +85,7 @@ module GPhoto2
 
     # Returns full file path (within the camera filesystem).
     def path : String
-      File.join folder, name
+      self.class.join folder, name
     end
 
     def_equals @camera, @folder, @name
@@ -99,11 +104,9 @@ module GPhoto2
       preview? ? PREVIEW_FILENAME : name
     end
 
-    private def data_and_size
-      @data_and_size ||= begin
-        get unless preview?
-        get_data_and_size
-      end
+    private getter data_and_size : {UInt8*, LibC::ULong} do
+      get unless preview?
+      get_data_and_size
     end
 
     private def get_data_and_size
@@ -127,7 +130,7 @@ module GPhoto2
 
     private def _read(type = LibGPhoto2::CameraFileType::Normal)
       buffer = Bytes.new(BUFFER_SIZE)
-      offset, size = _read(buffer, 0, type)
+      offset, size = _read(buffer, 0_u64, type)
 
       data = Pointer(UInt8).malloc(size)
       data.copy_from(buffer.to_unsafe, size)

@@ -81,7 +81,8 @@ module GPhoto2
         if GPhoto2.check?(rc)
           return rc
         else
-          message = @last_error || GPhoto2.result_as_string(rc)
+          message, @last_error = @last_error, nil
+          message ||= GPhoto2.result_as_string(rc)
           raise Error.new(message, rc)
         end
       end

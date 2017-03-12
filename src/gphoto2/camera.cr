@@ -14,10 +14,6 @@ module GPhoto2
     getter model : String
     getter port : String
 
-    @context : Context?
-    @abilities : CameraAbilities?
-    @port_info : PortInfo?
-
     protected setter abilities : CameraAbilities?
     protected setter port_info : PortInfo?
 

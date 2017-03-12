@@ -1,3 +1,4 @@
+require "./camera_filesystem"
 require "./camera_file"
 
 @[Link("libgphoto2")]
@@ -54,8 +55,8 @@ lib LibGPhoto2
   # Aliases
   #
 
-  alias CameraPrivateLibrary      = Void*
-  alias CameraPrivateCore         = Void*
+  alias CameraPrivateLibrary      = Void
+  alias CameraPrivateCore         = Void
 
   alias CameraGetConfigFunc       = Camera*, CameraWidget**, GPContext* -> LibC::Int
   alias CameraSetConfigFunc       = Camera*, CameraWidget*, GPContext* -> LibC::Int
@@ -112,9 +113,6 @@ lib LibGPhoto2
   struct CameraText
     text : LibC::Char[32768] # 32 * 1024
   end
-
-  # TODO?
-  alias CameraFilesystem = Void*
 
   struct CameraFunctions
     pre_func : CameraPrePostFunc

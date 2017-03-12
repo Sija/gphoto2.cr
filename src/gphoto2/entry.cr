@@ -1,8 +1,5 @@
 module GPhoto2
   class Entry
-    @camera_list : CameraList
-    @index : Int32
-
     def initialize(@camera_list : CameraList, @index : Int32); end
 
     def name : String
