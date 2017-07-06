@@ -10,15 +10,15 @@ module GPhoto2
   def self.logger : Logger
     @@logger ||= Logger.new(STDERR).tap do |logger|
       severity_colors = {
-        "UNKNOWN" => :dark_gray,
-        "ERROR"   => :light_red,
-        "WARN"    => :red,
-        "INFO"    => :blue,
-        "DEBUG"   => :green,
-        "FATAL"   => :cyan,
+        Logger::Severity::UNKNOWN => :dark_gray,
+        Logger::Severity::ERROR   => :light_red,
+        Logger::Severity::WARN    => :red,
+        Logger::Severity::INFO    => :blue,
+        Logger::Severity::DEBUG   => :green,
+        Logger::Severity::FATAL   => :cyan,
       }
       logger.formatter = Logger::Formatter.new do |severity, datetime, progname, message, io|
-        io << severity.rjust(5).colorize(severity_colors[severity]? || :green)
+        io << severity.to_s.rjust(5).colorize(severity_colors[severity]? || :green)
         io << " [" << progname.colorize(:cyan) << "]" unless progname.empty?
         io << " -- " << message
       end
