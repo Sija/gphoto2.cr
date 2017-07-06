@@ -7,7 +7,7 @@ It also includes a facade to interact with the library in a more idiomatic Cryst
 
 ### Prerequisites
 
-  * Crystal >= 0.19.1
+  * Crystal >= 0.23.0
   * libgphoto2 >= 2.5.2
   * libgphoto2_port >= 0.10.1
 
