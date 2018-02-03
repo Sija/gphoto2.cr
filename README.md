@@ -1,4 +1,5 @@
 # gphoto2.cr [![Build Status](https://travis-ci.org/Sija/gphoto2.cr.svg?branch=master)](https://travis-ci.org/Sija/gphoto2.cr)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FSija%2Fgphoto2.cr.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FSija%2Fgphoto2.cr?ref=badge_shield)
 
 **gphoto2.cr** provides an FFI for common functions in [libgphoto2][gphoto].
 It also includes a facade to interact with the library in a more idiomatic Crystal way.
@@ -180,3 +181,7 @@ crystal spec
 ## Contributors
 
 - [@Sija](https://github.com/Sija) Sijawusz Pur Rahnama - creator, maintainer
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FSija%2Fgphoto2.cr.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FSija%2Fgphoto2.cr?ref=badge_large)
