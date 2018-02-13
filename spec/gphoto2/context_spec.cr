@@ -7,7 +7,7 @@ module GPhoto2
         context = Context.new
         context.@ptr.should be_a Pointer(LibGPhoto2::GPContext)
         context.close
-        context.@ptr.should be_nil
+        context.@ptr.should be_a Nil
       end
     end
   end
