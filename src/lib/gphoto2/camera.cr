@@ -111,7 +111,7 @@ lib LibGPhoto2
   end
 
   struct CameraText
-    text : LibC::Char[32768] # 32 * 1024
+    text : LibC::Char[32_768] # 32 * 1024
   end
 
   struct CameraFunctions
