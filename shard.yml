@@ -4,6 +4,10 @@ version: 0.7.3-dev
 authors:
   - Sijawusz Pur Rahnama <sija@sija.pl>
 
+development_dependencies:
+  ameba:
+    github: veelenga/ameba
+
 crystal: 0.23.0
 
 libraries:
