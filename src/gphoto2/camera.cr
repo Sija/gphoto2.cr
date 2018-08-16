@@ -75,7 +75,7 @@ module GPhoto2
     # ```
     def self.first : Void
       camera = first
-      autorelease(camera) { |camera| yield camera }
+      autorelease(camera) { yield camera }
     end
 
     # ```
@@ -103,7 +103,7 @@ module GPhoto2
     # ```
     def self.open(model : String, port : String) : Void
       camera = open(model, port)
-      autorelease(camera) { |camera| yield camera }
+      autorelease(camera) { yield camera }
     end
 
     # Filters devices by a given condition.

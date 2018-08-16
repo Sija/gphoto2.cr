@@ -7,7 +7,7 @@ require "../src/gphoto2"
 # continues to autofocus until it is successful.
 
 GPhoto2::Camera.first do |camera|
-  loop do |i|
+  loop do
     begin
       camera.update(autofocusdrive: true)
     rescue GPhoto2::Error
