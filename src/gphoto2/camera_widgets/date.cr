@@ -17,7 +17,7 @@ module GPhoto2
         when Int
           set_value Time.epoch(value)
         when String
-          set_value Time.parse(value, "%F %T %z")
+          set_value Time.parse!(value, "%F %T %z")
         else
           raise ArgumentError.new "Invalid value type, expected Time | Int | String, got #{value.class}"
         end
