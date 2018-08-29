@@ -7,7 +7,7 @@ It also includes a facade to interact with the library in a more idiomatic Cryst
 
 ### Prerequisites
 
-  * Crystal >= 0.23.0
+  * Crystal >= 0.26.0
   * libgphoto2 >= 2.5.2
   * libgphoto2_port >= 0.10.1
 
@@ -32,7 +32,7 @@ Add this to your application's `shard.yml`:
 ```yaml
 dependencies:
   gphoto2:
-    github: sija/gphoto2.cr
+    github: Sija/gphoto2.cr
 ```
 
 ## Usage
@@ -166,7 +166,7 @@ crystal spec
 
 ## Contributing
 
-1. Fork it ( https://github.com/sija/gphoto2.cr/fork )
+1. Fork it ( https://github.com/Sija/gphoto2.cr/fork )
 2. Create your feature branch (git checkout -b my-new-feature)
 3. Commit your changes (git commit -am 'Add some feature')
 4. Push to the branch (git push origin my-new-feature)
