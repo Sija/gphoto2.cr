@@ -75,7 +75,7 @@ module GPhoto2
     # ```
     def self.first : Void
       camera = first
-      autorelease(camera) { |camera| yield camera }
+      autorelease(camera) { yield camera }
     end
 
     # ```
@@ -91,7 +91,7 @@ module GPhoto2
     # end
     # ```
     def self.open(model : String, port : String) : self
-      camera = new(model, port)
+      new(model, port)
     end
 
     # Pass a block to automatically close the camera.
@@ -103,7 +103,7 @@ module GPhoto2
     # ```
     def self.open(model : String, port : String) : Void
       camera = open(model, port)
-      autorelease(camera) { |camera| yield camera }
+      autorelease(camera) { yield camera }
     end
 
     # Filters devices by a given condition.
@@ -214,11 +214,9 @@ module GPhoto2
 
     # Ensures the given camera is finalized when passed a block.
     protected def self.autorelease(camera) : Void
-      begin
-        yield camera
-      ensure
-        camera.close
-      end
+      yield camera
+    ensure
+      camera.close
     end
 
     private def init : Void

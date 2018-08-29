@@ -17,7 +17,7 @@ module GPhoto2
         Logger::Severity::DEBUG   => :green,
         Logger::Severity::FATAL   => :cyan,
       }
-      logger.formatter = Logger::Formatter.new do |severity, datetime, progname, message, io|
+      logger.formatter = Logger::Formatter.new do |severity, _datetime, progname, message, io|
         io << severity.to_s.rjust(5).colorize(severity_colors[severity]? || :green)
         io << " [" << progname.colorize(:cyan) << "]" unless progname.empty?
         io << " -- " << message
@@ -27,7 +27,7 @@ module GPhoto2
   end
 
   if debug?
-    gp_logger = ->(level : LibGPhoto2::GPLogLevel, domain : LibC::Char*, str : LibC::Char*, data : Void*) {
+    gp_logger = ->(level : LibGPhoto2::GPLogLevel, _domain : LibC::Char*, str : LibC::Char*, _data : Void*) {
       severities = {
         LibGPhoto2::GPLogLevel::Error   => Logger::Severity::ERROR,
         LibGPhoto2::GPLogLevel::Verbose => Logger::Severity::INFO,

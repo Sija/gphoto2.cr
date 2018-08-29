@@ -8,12 +8,12 @@ cameras.each do |camera|
 
   puts camera.model.colorize(:green)
   props = {
-    "port"              : camera.port,
-    "driver status"     : abilities.status,
-    "device type"       : abilities.device_type,
-    "operations"        : abilities.operations,
-    "file operations"   : abilities.file_operations,
-    "folder operations" : abilities.folder_operations
+    "port":              camera.port,
+    "driver status":     abilities.status,
+    "device type":       abilities.device_type,
+    "operations":        abilities.operations,
+    "file operations":   abilities.file_operations,
+    "folder operations": abilities.folder_operations,
   }
   props.each do |prop, value|
     puts "  %s: %s" % [prop, value.to_s.colorize(:blue)]

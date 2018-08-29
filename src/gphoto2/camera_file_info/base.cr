@@ -9,20 +9,20 @@ module GPhoto2
         wrapped.fields
       end
 
-      def has_field?(field : String | Symbol)
+      def field?(field : String | Symbol)
         fields.includes? LibGPhoto2::CameraFileInfoFields.parse(field.to_s)
       end
 
       def status : LibGPhoto2::CameraFileStatus?
-        wrapped.status if has_field?(:status)
+        wrapped.status if field?(:status)
       end
 
       def size : LibC::UInt64T?
-        wrapped.size if has_field?(:size)
+        wrapped.size if field?(:size)
       end
 
       def type : String?
-        String.new wrapped.type.to_unsafe if has_field?(:type)
+        String.new wrapped.type.to_unsafe if field?(:type)
       end
     end
   end
