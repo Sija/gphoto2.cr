@@ -82,6 +82,6 @@ module GPhoto2
   def self.check!(rc : Int32) : Int32
     log(rc, backtrace_offset: 1)
     return rc if check?(rc)
-    raise Error.new(result_as_string(rc), rc)
+    raise Error.from_code(rc)
   end
 end
