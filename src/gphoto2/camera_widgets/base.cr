@@ -31,7 +31,7 @@ module GPhoto2
         super ptr
       end
 
-      def close : Void
+      def close : Nil
         free if ptr?
       end
 

@@ -12,7 +12,7 @@ module GPhoto2
       super
     end
 
-    def close : Void
+    def close : Nil
       clear_callbacks
       unref if ptr?
     end

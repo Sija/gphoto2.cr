@@ -73,7 +73,7 @@ module GPhoto2
     #   # ...
     # end
     # ```
-    def self.first : Void
+    def self.first : Nil
       camera = first
       autorelease(camera) { yield camera }
     end
@@ -101,7 +101,7 @@ module GPhoto2
     #   # ...
     # end
     # ```
-    def self.open(model : String, port : String) : Void
+    def self.open(model : String, port : String) : Nil
       camera = open(model, port)
       autorelease(camera) { yield camera }
     end
@@ -142,11 +142,11 @@ module GPhoto2
     #   # ...
     # end
     # ```
-    def autorelease : Void
+    def autorelease : Nil
       self.class.autorelease(self) { |camera| yield camera }
     end
 
-    def close : Void
+    def close : Nil
       @context.try &.close
       @window.try &.close
       unref if ptr?
@@ -156,7 +156,7 @@ module GPhoto2
     # It is recommended that you call this function when you currently don't need the camera.
     #
     # NOTE: The camera will get reinitialized if you try to access the camera again.
-    def exit : Void
+    def exit : Nil
       _exit
     end
 
@@ -183,7 +183,7 @@ module GPhoto2
     #   port.reset
     # end
     # ```
-    def with_port : Void
+    def with_port : Nil
       port = Port.new
       port.info = port_info
       port.open
@@ -213,13 +213,13 @@ module GPhoto2
     def_equals @model, @port
 
     # Ensures the given camera is finalized when passed a block.
-    protected def self.autorelease(camera) : Void
+    protected def self.autorelease(camera) : Nil
       yield camera
     ensure
       camera.close
     end
 
-    private def init : Void
+    private def init : Nil
       new
       set_abilities @abilities || CameraAbilities.find(@model)
       set_port_info @port_info || PortInfo.find(@port)

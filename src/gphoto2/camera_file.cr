@@ -31,7 +31,7 @@ module GPhoto2
       close
     end
 
-    def close : Void
+    def close : Nil
       free if ptr?
     end
 
@@ -41,7 +41,7 @@ module GPhoto2
     end
 
     # Saves file `#data` at given *pathname*.
-    def save(pathname : String = default_filename) : Void
+    def save(pathname : String = default_filename) : Nil
       unless Dir.exists? pathname
         Dir.mkdir_p File.dirname(pathname)
       end
@@ -49,7 +49,7 @@ module GPhoto2
     end
 
     # Deletes file from the camera.
-    def delete : Void
+    def delete : Nil
       _delete
     end
 

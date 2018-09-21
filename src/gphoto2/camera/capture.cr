@@ -35,7 +35,7 @@ module GPhoto2
       # event = camera.wait_for(:file_added)
       # event.data # => CameraFile
       # ```
-      def trigger : Void
+      def trigger : Nil
         save
         trigger_capture
       end
