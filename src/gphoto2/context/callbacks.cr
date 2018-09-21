@@ -1,3 +1,5 @@
+require "./error"
+
 module GPhoto2
   class Context
     module Callbacks
@@ -81,9 +83,13 @@ module GPhoto2
         if GPhoto2.check?(rc)
           return rc
         else
-          message, @last_error = @last_error, nil
-          message ||= GPhoto2.result_as_string(rc)
-          raise Error.new(message, rc)
+          original_error = GPhoto2::Error.from_code(rc)
+          if error_message = @last_error
+            @last_error = nil
+            raise Error.new(error_message, rc, original_error)
+          else
+            raise original_error
+          end
         end
       end
     end
