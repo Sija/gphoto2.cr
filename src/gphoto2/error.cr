@@ -12,12 +12,20 @@ module GPhoto2
   class Error < Exception
     getter code : Int32
 
+    def self.from_code(code : Int32) : Error
+      message = GPhoto2.result_as_string(code)
+      new(message, code)
+    end
+
     def initialize(message : String?, @code : Int32)
       super(message)
     end
 
     def to_s(io)
-      io << message << ' ' << '(' << code << ')'
+      if message
+        io << message << ' '
+      end
+      io << '(' << code << ')'
     end
   end
 end

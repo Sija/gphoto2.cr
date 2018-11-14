@@ -1,3 +1,5 @@
+require "./error"
+
 module GPhoto2
   class Context
     module Callbacks
@@ -8,7 +10,7 @@ module GPhoto2
         # Sets *{{key.id}}* callback. Pass `nil` to remove it.
         #
         # See: [LibGPhoto2#gp_context_set_{{key.id}}_func](http://www.gphoto.org/doc/api/gphoto2-context_8h.html)
-        def {{key.id}}_callback=(callback : {{callback_type.id}}?) : Void
+        def {{key.id}}_callback=(callback : {{callback_type.id}}?) : Nil
           if callback
             set_{{key.id}}_callback(&callback)
           else
@@ -70,7 +72,7 @@ module GPhoto2
         end
       end
 
-      def clear_callbacks : Void
+      def clear_callbacks : Nil
         {% for key in %w(cancel idle error status message) %}
           unset_{{key.id}}_callback if {{key.id}}_callback?
         {% end %}
@@ -81,9 +83,13 @@ module GPhoto2
         if GPhoto2.check?(rc)
           return rc
         else
-          message, @last_error = @last_error, nil
-          message ||= GPhoto2.result_as_string(rc)
-          raise Error.new(message, rc)
+          original_error = GPhoto2::Error.from_code(rc)
+          if error_message = @last_error
+            @last_error = nil
+            raise Error.new(error_message, rc, original_error)
+          else
+            raise original_error
+          end
         end
       end
     end

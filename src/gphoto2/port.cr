@@ -21,15 +21,15 @@ module GPhoto2
       info
     end
 
-    def open : Void
+    def open : Nil
       _open
     end
 
-    def close : Void
+    def close : Nil
       _close
     end
 
-    def reset : Void
+    def reset : Nil
       _reset
     end
 

@@ -38,7 +38,7 @@ module GPhoto2
       # camera[:aperture] # => 4
       # camera[:iso]      # => 400
       # ```
-      def preserving_config(keys : Array(String | Symbol) = nil) : Void
+      def preserving_config(keys : Array(String | Symbol)? = nil) : Nil
         config_snapshot = keys ? config.select(keys.map &.to_s) : config
         config_snapshot = config_snapshot.reduce({} of String => String) do |memo, (key, widget)|
           memo[key] = widget.to_s rescue NotImplementedError
@@ -58,7 +58,7 @@ module GPhoto2
       end
 
       # :nodoc:
-      def preserving_config(*keys) : Void
+      def preserving_config(*keys) : Nil
         preserving_config(keys.to_a) { |camera| yield camera }
       end
 
@@ -72,7 +72,7 @@ module GPhoto2
       # camera.reload
       # camera[:iso] # => 800
       # ```
-      def reload : Void
+      def reload : Nil
         @window.try &.close
         reset
         config
@@ -177,7 +177,7 @@ module GPhoto2
       # ```
       getter? dirty = false
 
-      private def reset : Void
+      private def reset : Nil
         @window = nil
         @config = nil
         @dirty = false
