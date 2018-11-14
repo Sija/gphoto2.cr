@@ -14,7 +14,7 @@ module GPhoto2
       end
 
       def mtime : Time?
-        Time.epoch(wrapped.mtime) if field?(:mtime)
+        Time.unix(wrapped.mtime) if field?(:mtime)
       end
 
       def width : LibC::UInt32T?
