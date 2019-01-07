@@ -10,21 +10,23 @@ module GPhoto2
       getter parent : Base?
 
       macro inherited
-        {% factory_id = @type.name.gsub(/^GPhoto2::CameraWidget::/, "").underscore %}
+        {% unless @type.abstract? %}
+          {% factory_id = @type.name.gsub(/^GPhoto2::CameraWidget::/, "").underscore %}
 
-        ::GPhoto2::CameraWidget.widgets[{{factory_id.stringify}}] = self
+          ::GPhoto2::CameraWidget.widgets[{{factory_id.stringify}}] = self
 
-        class ::GPhoto2::CameraWidget::Base
-          # Returns widget as `{{factory_id.capitalize}}`, `nil` otherwise.
-          def as_{{factory_id}}? : {{@type.name}}?
-            self.as?({{@type.name}})
+          class ::GPhoto2::CameraWidget::Base
+            # Returns widget as `{{factory_id.capitalize}}`, `nil` otherwise.
+            def as_{{factory_id}}? : {{@type.name}}?
+              self.as?({{@type.name}})
+            end
+
+            # Returns widget as `{{factory_id.capitalize}}`, raises otherwise.
+            def as_{{factory_id}} : {{@type.name}}
+              self.as({{@type.name}})
+            end
           end
-
-          # Returns widget as `{{factory_id.capitalize}}`, raises otherwise.
-          def as_{{factory_id}} : {{@type.name}}
-            self.as({{@type.name}})
-          end
-        end
+        {% end %}
       end
 
       def initialize(ptr : LibGPhoto2::CameraWidget*, @parent : Base? = nil)
