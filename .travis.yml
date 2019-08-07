@@ -1,14 +1,22 @@
 sudo: required
-dist: trusty
+dist: bionic
 
 language: crystal
+
+crystal:
+  - latest
+  - nightly
+
+matrix:
+  allow_failures:
+    - crystal: nightly
 
 addons:
   apt:
     packages:
       - libgphoto2-6
       - libgphoto2-dev
-      - libgphoto2-port10
+      - libgphoto2-port12
 
 install:
   - shards install

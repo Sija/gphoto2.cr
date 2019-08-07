@@ -81,7 +81,7 @@ module GPhoto2
       def check!(rc : Int32) : Int32
         GPhoto2.log rc, backtrace_offset: 1
         if GPhoto2.check?(rc)
-          return rc
+          rc
         else
           original_error = GPhoto2::Error.from_code(rc)
           if error_message = @last_error
