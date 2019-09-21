@@ -11,7 +11,7 @@ module GPhoto2
     end
 
     protected def ptr=(ptr) : T*?
-      # GPhoto2.log ptr, backtrace_offset: 1
+      # Debug.log ptr, backtrace_offset: 1
       if ptr
         self.ptr.copy_from(ptr, 1)
       else
