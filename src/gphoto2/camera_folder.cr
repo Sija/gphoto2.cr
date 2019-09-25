@@ -61,8 +61,8 @@ module GPhoto2
 
     # Deletes all files and/or folders.
     def clear(files : Bool = true, folders : Bool = false) : Nil
-      folder_delete_all if files
-      folders.each &.delete if folders
+      self.folder_delete_all if files
+      self.folders.each &.delete if folders
     end
 
     # Deletes this folder from the camera.
