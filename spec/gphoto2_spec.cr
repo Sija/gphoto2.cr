@@ -1,7 +1,5 @@
 require "./spec_helper"
 
-ENV_DEBUG_KEY = "DEBUG"
-
 describe GPhoto2 do
   describe ".library_version" do
     it "should have proper format" do
@@ -70,41 +68,6 @@ describe GPhoto2 do
     context "the return code is a value" do
       it "returns back the value" do
         GPhoto2.check!(10).should eq 10
-      end
-    end
-  end
-
-  describe ".debug?" do
-    context "ENV debug key is set to '1'" do
-      debug_flag = ENV[ENV_DEBUG_KEY]?
-      begin
-        ENV[ENV_DEBUG_KEY] = "1"
-        it "should be true" do
-          GPhoto2.debug?.should be_true
-        end
-      ensure
-        ENV[ENV_DEBUG_KEY] = debug_flag
-      end
-    end
-    context "ENV debug key is set to value other than '1'" do
-      debug_flag = ENV[ENV_DEBUG_KEY]?
-      begin
-        ENV[ENV_DEBUG_KEY] = "10"
-        it "should be false" do
-          GPhoto2.debug?.should be_false
-        end
-      ensure
-        ENV[ENV_DEBUG_KEY] = debug_flag
-      end
-    end
-    context "ENV debug key is unset" do
-      debug_flag = ENV.delete ENV_DEBUG_KEY
-      begin
-        it "should be false" do
-          GPhoto2.debug?.should be_false
-        end
-      ensure
-        ENV[ENV_DEBUG_KEY] = debug_flag
       end
     end
   end
