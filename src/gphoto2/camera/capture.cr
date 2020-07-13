@@ -9,12 +9,7 @@ module GPhoto2
       # file.save
       # ```
       def capture : CameraFile
-        capture LibGPhoto2::CameraCaptureType::Image
-      end
-
-      # :nodoc:
-      def capture(type : Symbol) : CameraFile
-        capture LibGPhoto2::CameraCaptureType.parse(type.to_s)
+        capture :image
       end
 
       # :nodoc:
