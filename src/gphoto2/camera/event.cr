@@ -14,7 +14,8 @@ module GPhoto2
       end
 
       private def wait_for_event(timeout) : CameraEvent
-        context.check! LibGPhoto2.gp_camera_wait_for_event(self, timeout, out type, out data_ptr, context)
+        context.check! \
+          LibGPhoto2.gp_camera_wait_for_event(self, timeout, out type, out data_ptr, context)
         data =
           case type
           when .file_added?
@@ -24,9 +25,7 @@ module GPhoto2
             path = CameraFilePath.new(data_ptr.as(LibGPhoto2::CameraFilePath*))
             CameraFolder.new(self, CameraFile.join(path.folder, path.name))
           when .unknown?
-            data_ptr.null? ? nil : String.new(data_ptr.as(LibC::Char*))
-          else
-            nil
+            String.new(data_ptr.as(LibC::Char*)) if data_ptr
           end
         CameraEvent.new(type, data)
       end

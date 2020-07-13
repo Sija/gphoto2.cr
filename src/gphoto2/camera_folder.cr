@@ -3,9 +3,11 @@ module GPhoto2
     # Returns folder path.
     getter path : String
 
-    protected delegate :context, to: @camera
+    protected delegate :context,
+      to: @camera
 
-    def initialize(@camera : Camera, @path : String = "/"); end
+    def initialize(@camera : Camera, @path : String = "/")
+    end
 
     # Returns `true` if folder `#path` is */*.
     def root?
@@ -31,10 +33,8 @@ module GPhoto2
     # Returns `CameraFolder` by *name*, relative to current `#path`.
     def cd(name : String) : self
       case name
-      when ".."
-        up
-      when "."
-        self
+      when ".." then up
+      when "."  then self
       else
         self.class.new(@camera, CameraFile.join(@path, name))
       end

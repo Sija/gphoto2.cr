@@ -7,7 +7,7 @@ crystal:
   - latest
   - nightly
 
-matrix:
+jobs:
   allow_failures:
     - crystal: nightly
 

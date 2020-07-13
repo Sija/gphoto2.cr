@@ -191,17 +191,17 @@ module GPhoto2
 
       private def get_name
         GPhoto2.check! LibGPhoto2.gp_widget_get_name(self, out ptr)
-        !ptr ? nil : String.new ptr
+        String.new ptr if ptr
       end
 
       private def get_label
         GPhoto2.check! LibGPhoto2.gp_widget_get_label(self, out ptr)
-        !ptr ? nil : String.new ptr
+        String.new ptr if ptr
       end
 
       private def get_info
         GPhoto2.check! LibGPhoto2.gp_widget_get_info(self, out ptr)
-        !ptr ? nil : String.new ptr
+        String.new ptr if ptr
       end
 
       private def count_children

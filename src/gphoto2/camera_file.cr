@@ -42,10 +42,8 @@ module GPhoto2
 
     # Saves file `#data` at given *pathname*.
     def save(pathname : String = default_filename) : Nil
-      unless Dir.exists? pathname
-        Dir.mkdir_p File.dirname(pathname)
-      end
-      File.open pathname, "w", &.write(to_slice)
+      Dir.mkdir_p File.dirname(pathname)
+      File.write pathname, to_slice
     end
 
     # Deletes file from the camera.
@@ -80,7 +78,7 @@ module GPhoto2
 
     # Returns file extension in lowercase (without leading dot).
     def extension : String
-      File.extname(name).split('.').last.downcase
+      File.extname(name).lstrip('.').downcase
     end
 
     # Returns full file path (within the camera filesystem).

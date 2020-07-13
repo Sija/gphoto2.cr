@@ -23,12 +23,12 @@ module GPhoto2
 
     private def get_name
       GPhoto2.check! LibGPhoto2Port.gp_port_info_get_name(self, out ptr)
-      !ptr ? nil : String.new ptr
+      String.new ptr if ptr
     end
 
     private def get_path
       GPhoto2.check! LibGPhoto2Port.gp_port_info_get_path(self, out ptr)
-      !ptr ? nil : String.new ptr
+      String.new ptr if ptr
     end
 
     private def get_type

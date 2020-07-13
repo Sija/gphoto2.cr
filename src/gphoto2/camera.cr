@@ -124,7 +124,8 @@ module GPhoto2
       end
     end
 
-    def initialize(@model : String, @port : String); end
+    def initialize(@model : String, @port : String)
+    end
 
     def ptr
       init unless ptr?

@@ -35,7 +35,7 @@ module GPhoto2
       protected def set_value(value)
         case value
         when Regex
-          matches = choices.select &.try &.match(value)
+          matches = choices.select(value)
           super matches.first
         else
           super
@@ -49,7 +49,7 @@ module GPhoto2
       private def get_choice(i)
         ptr = Pointer(LibC::Char).null
         GPhoto2.check! LibGPhoto2.gp_widget_get_choice(self, i, pointerof(ptr))
-        !ptr ? nil : String.new ptr
+        String.new ptr if ptr
       end
     end
   end

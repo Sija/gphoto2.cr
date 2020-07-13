@@ -15,12 +15,14 @@ require "./gphoto2/*"
     gp_log_level = LibGPhoto2::GPLogLevel.parse(ENV["LIB_LOG_LEVEL"]? || "debug")
     gp_logger =
       ->(level : LibGPhoto2::GPLogLevel, _domain : LibC::Char*, str : LibC::Char*, _data : Void*) {
-        progname, message = "libgphoto2", String.new(str)
+        proc = ->(emitter : Log::Emitter) do
+          emitter.emit(String.new(str), progname: "libgphoto2")
+        end
         logger = Debug.logger
         case level
-        in .error?   then logger.error &.emit(message, progname: progname)
-        in .verbose? then logger.notice &.emit(message, progname: progname)
-        in .debug?   then logger.debug &.emit(message, progname: progname)
+        in .error?   then logger.error &proc
+        in .verbose? then logger.notice &proc
+        in .debug?   then logger.debug &proc
         end
       }
     LibGPhoto2.gp_log_add_func(gp_log_level, gp_logger, nil)

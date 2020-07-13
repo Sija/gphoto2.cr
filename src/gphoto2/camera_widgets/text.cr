@@ -6,7 +6,7 @@ module GPhoto2
       protected def get_value
         ptr = Pointer(LibC::Char).null
         get_value_ptr pointerof(ptr)
-        !ptr ? nil : String.new ptr
+        String.new ptr if ptr
       end
 
       protected def set_value(value)
@@ -18,7 +18,8 @@ module GPhoto2
         when Symbol, Number
           set_value value.to_s
         else
-          raise ArgumentError.new "Invalid value type, expected String | Symbol | Number, got #{value.class}"
+          raise ArgumentError.new \
+            "Invalid value type, expected String | Symbol | Number, got #{value.class}"
         end
       end
     end
