@@ -41,9 +41,10 @@ module GPhoto2
     end
 
     # Saves file `#data` at given *pathname*.
-    def save(pathname : String = default_filename) : Nil
-      Dir.mkdir_p File.dirname(pathname)
-      File.write pathname, to_slice
+    def save(path : String | Path = default_filename) : Nil
+      path = Path[path] if path.is_a?(String)
+      Dir.mkdir_p(path.dirname)
+      File.write(path, to_slice)
     end
 
     # Deletes file from the camera.
