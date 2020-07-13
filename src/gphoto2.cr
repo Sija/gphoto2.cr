@@ -9,21 +9,20 @@ require "./gphoto2/*"
     settings.max_path_length = nil
   end
 
-  Debug::Logger.configure do |settings|
-    settings.progname = "gphoto2.cr"
-  end
+  Debug::Logger.settings.progname = "gphoto2.cr"
 
   if Debug.enabled?
     gp_log_level = LibGPhoto2::GPLogLevel.parse(ENV["LIB_LOG_LEVEL"]? || "debug")
-    gp_logger = ->(level : LibGPhoto2::GPLogLevel, _domain : LibC::Char*, str : LibC::Char*, _data : Void*) {
-      severities = {
-        :error   => :error,
-        :verbose => :info,
-        :debug   => :debug,
-      } of LibGPhoto2::GPLogLevel => Logger::Severity
-
-      Debug.logger.log(severities[level], String.new(str), "libgphoto2")
-    }
+    gp_logger =
+      ->(level : LibGPhoto2::GPLogLevel, _domain : LibC::Char*, str : LibC::Char*, _data : Void*) {
+        progname, message = "libgphoto2", String.new(str)
+        logger = Debug.logger
+        case level
+        in .error?   then logger.error &.emit(message, progname: progname)
+        in .verbose? then logger.notice &.emit(message, progname: progname)
+        in .debug?   then logger.debug &.emit(message, progname: progname)
+        end
+      }
     LibGPhoto2.gp_log_add_func(gp_log_level, gp_logger, nil)
   end
 {% end %}
