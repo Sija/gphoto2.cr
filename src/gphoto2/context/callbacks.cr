@@ -79,7 +79,7 @@ module GPhoto2
       end
 
       def check!(rc : Int32) : Int32
-        Debug.log(rc, backtrace_offset: 1)
+        Debug.log(rc, backtrace_offset: 1, progname: "gphoto2.cr")
         if GPhoto2.check?(rc)
           rc
         else

@@ -9,8 +9,6 @@ require "./gphoto2/*"
     settings.max_path_length = nil
   end
 
-  Debug::Logger.settings.progname = "gphoto2.cr"
-
   if Debug.enabled?
     gp_log_level = LibGPhoto2::GPLogLevel.parse(ENV["LIB_LOG_LEVEL"]? || "debug")
     gp_logger =
@@ -45,7 +43,7 @@ module GPhoto2
   end
 
   def check!(rc : Int32) : Int32
-    Debug.log(rc, backtrace_offset: 1)
+    Debug.log(rc, backtrace_offset: 1, progname: "gphoto2.cr")
     if check?(rc)
       rc
     else
