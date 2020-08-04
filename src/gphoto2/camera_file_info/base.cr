@@ -12,8 +12,8 @@ module GPhoto2
         wrapped.fields
       end
 
-      def field?(field : String | Symbol)
-        fields.includes? CameraFileInfoFields.parse(field.to_s)
+      def field?(field : CameraFileInfoFields)
+        fields.includes?(field)
       end
 
       def status : CameraFileStatus?
