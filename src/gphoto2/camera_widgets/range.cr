@@ -29,7 +29,8 @@ module GPhoto2
         when Int, String
           set_value value.to_f32
         else
-          raise ArgumentError.new "Invalid value type, expected Float | Int | String, got #{value.class}"
+          raise ArgumentError.new \
+            "Invalid value type, expected Float | Int | String, got #{value.class}"
         end
       end
     end

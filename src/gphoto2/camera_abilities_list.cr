@@ -4,7 +4,10 @@ module GPhoto2
   class CameraAbilitiesList
     include Struct(LibGPhoto2::CameraAbilitiesList)
 
-    def initialize(@context : Context, @port_info_list : PortInfoList = PortInfoList.new)
+    @context : Context
+    @port_info_list : PortInfoList
+
+    def initialize(@context, @port_info_list = PortInfoList.new)
       new
       load
     end

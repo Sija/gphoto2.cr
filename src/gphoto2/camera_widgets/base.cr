@@ -13,7 +13,7 @@ module GPhoto2
 
       macro inherited
         {% unless @type.abstract? %}
-          {% factory_id = @type.name.gsub(/^GPhoto2::CameraWidget::/, "").underscore %}
+          {% factory_id = @type.name.gsub(/^(.+)::(.+)$/, "\\2").underscore %}
 
           ::GPhoto2::CameraWidget.widgets[{{factory_id.stringify}}] = self
 
@@ -31,7 +31,7 @@ module GPhoto2
         {% end %}
       end
 
-      def initialize(ptr : LibGPhoto2::CameraWidget*, @parent : Base? = nil)
+      def initialize(ptr : LibGPhoto2::CameraWidget*, @parent = nil)
         super ptr
       end
 
@@ -155,9 +155,7 @@ module GPhoto2
       # ```
       def in?(other : ::Range)
         value = self.to_s
-        other.includes? (value =~ /^\-?\d+\.\d+$/) \
-          ? value.to_f
-          : value.to_i
+        other.includes? (value =~ /^\-?\d+\.\d+$/) ? value.to_f : value.to_i
       end
 
       protected abstract def get_value

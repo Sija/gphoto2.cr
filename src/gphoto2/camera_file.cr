@@ -16,7 +16,8 @@ module GPhoto2
     getter! name : String
 
     protected getter camera : Camera
-    protected delegate :context, to: @camera
+    protected delegate :context,
+      to: @camera
 
     # Returns a new string formed by joining the strings using `/`.
     #
@@ -25,7 +26,7 @@ module GPhoto2
       args.join '/', &.chomp('/')
     end
 
-    def initialize(@camera : Camera, @folder : String? = nil, @name : String? = nil)
+    def initialize(@camera, @folder = nil, @name = nil)
       new
     end
 
@@ -44,8 +45,7 @@ module GPhoto2
 
     # Saves file `#data` at given *pathname*.
     def save(path : String | Path = default_filename) : Nil
-      path = Path[path] if path.is_a?(String)
-      Dir.mkdir_p(path.dirname)
+      Dir.mkdir_p(Path[path].dirname)
       File.write(path, to_slice)
     end
 

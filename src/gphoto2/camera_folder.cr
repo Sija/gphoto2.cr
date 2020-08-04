@@ -3,10 +3,11 @@ module GPhoto2
     # Returns folder path.
     getter path : String
 
+    protected getter camera : Camera
     protected delegate :context,
       to: @camera
 
-    def initialize(@camera : Camera, @path : String = "/")
+    def initialize(@camera, @path = "/")
     end
 
     # Returns `true` if folder `#path` is */*.
@@ -16,8 +17,7 @@ module GPhoto2
 
     # Returns folder name.
     def name : String
-      return "/" if root?
-      @path.split('/').last
+      File.basename(@path)
     end
 
     # Lists folders.

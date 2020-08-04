@@ -1,33 +1,38 @@
 module GPhoto2
   class Camera
     module Event
-      def wait(timeout : Int32 = 2000) : CameraEvent
+      def wait(timeout : Time::Span = 2.seconds) : CameraEvent
         wait_for_event(timeout)
       end
 
-      def wait_for(event_type : CameraEventType) : CameraEvent
-        event = wait
+      def wait_for(event_type : CameraEventType, timeout : Time::Span = 2.seconds) : CameraEvent
+        event = wait timeout
         until event.type == event_type
-          event = wait
+          event = wait timeout
         end
         event
       end
 
-      private def wait_for_event(timeout) : CameraEvent
+      private def wait_for_event(timeout : Time::Span) : CameraEvent
+        timeout_ms = timeout.total_milliseconds.to_i
         context.check! \
-          LibGPhoto2.gp_camera_wait_for_event(self, timeout, out type, out data_ptr, context)
+          LibGPhoto2.gp_camera_wait_for_event(self, timeout_ms, out type, out data_ptr, context)
         data =
           case type
           when .file_added?
-            path = CameraFilePath.new(data_ptr.as(LibGPhoto2::CameraFilePath*))
+            path = build_path(data_ptr)
             CameraFile.new(self, path.folder, path.name)
           when .folder_added?
-            path = CameraFilePath.new(data_ptr.as(LibGPhoto2::CameraFilePath*))
+            path = build_path(data_ptr)
             CameraFolder.new(self, CameraFile.join(path.folder, path.name))
           when .unknown?
             String.new(data_ptr.as(LibC::Char*)) if data_ptr
           end
         CameraEvent.new(type, data)
+      end
+
+      private def build_path(data_ptr)
+        CameraFilePath.new(data_ptr.as(LibGPhoto2::CameraFilePath*))
       end
     end
   end

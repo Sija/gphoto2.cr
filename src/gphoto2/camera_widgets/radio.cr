@@ -35,8 +35,9 @@ module GPhoto2
       protected def set_value(value)
         case value
         when Regex
-          matches = choices.select(value)
-          super matches.first
+          match = choices.select(value).first? || \
+             raise ArgumentError.new("Value not found")
+          super match
         else
           super
         end

@@ -26,28 +26,26 @@ module GPhoto2
     # ```
     def self.all : Array(self)
       context = Context.new
-
       port_info_list = PortInfoList.new
       abilities_list = CameraAbilitiesList.new(context, port_info_list)
-      cameras = abilities_list.detect
 
-      entries = cameras.to_a.map do |entry|
-        camera = Camera.new(model: entry.name, port: entry.value)
-
-        # See: `CameraAbilities.find`
-        if abilities = abilities_list[camera.model]
-          camera.abilities = abilities
+      cameras = abilities_list.detect.to_a
+      cameras.map do |entry|
+        Camera.new(model: entry.name, port: entry.value).tap do |camera|
+          # See: `CameraAbilities.find`
+          camera.abilities = abilities_list[camera.model]
+          # See: `PortInfo.find`
+          camera.port_info = port_info_list[camera.port]
         end
-        # See: `PortInfo.find`
-        if port_info = port_info_list[camera.port]
-          camera.port_info = port_info
-        end
-
-        camera
       end
+    ensure
+      context.try &.close
+    end
 
-      context.close
-      entries
+    # Returns first available camera, or `nil` when no devices
+    # are detected.
+    def self.first? : self?
+      all.first?
     end
 
     # Returns first available camera or raises `NoDevicesError`
@@ -63,9 +61,7 @@ module GPhoto2
     # end
     # ```
     def self.first : self
-      cameras = all
-      raise NoDevicesError.new if cameras.empty?
-      cameras.first
+      first? || raise NoDevicesError.new
     end
 
     # Pass a block to automatically close the camera.
@@ -76,8 +72,7 @@ module GPhoto2
     # end
     # ```
     def self.first : Nil
-      camera = first
-      autorelease(camera) { yield camera }
+      first.autorelease { |camera| yield camera }
     end
 
     # ```
@@ -104,8 +99,7 @@ module GPhoto2
     # end
     # ```
     def self.open(model : String, port : String) : Nil
-      camera = open(model, port)
-      autorelease(camera) { yield camera }
+      open(model, port).autorelease { |camera| yield camera }
     end
 
     # Filters devices by a given condition.
@@ -120,13 +114,13 @@ module GPhoto2
     # # Select a camera by its port.
     # camera = GPhoto2::Camera.where(port: "usb:250,004").first
     # ```
-    def self.where(model : String | Regex = nil, port : String | Regex = nil) : Array(self)
+    def self.where(*, model : String | Regex? = nil, port : String | Regex? = nil) : Array(self)
       all.select do |camera|
         (!model || camera.model.match model) && (!port || camera.port.match port)
       end
     end
 
-    def initialize(@model : String, @port : String)
+    def initialize(@model, @port)
     end
 
     def ptr
@@ -146,7 +140,7 @@ module GPhoto2
     # end
     # ```
     def autorelease : Nil
-      self.class.autorelease(self) { |camera| yield camera }
+      yield self ensure close
     end
 
     def close : Nil
@@ -206,17 +200,10 @@ module GPhoto2
     # camera.can? :capture_image # => true
     # ```
     def can?(operation : CameraOperation)
-      abilities.operations.includes? operation
+      abilities.operations.includes?(operation)
     end
 
     def_equals @model, @port
-
-    # Ensures the given camera is finalized when passed a block.
-    protected def self.autorelease(camera) : Nil
-      yield camera
-    ensure
-      camera.close
-    end
 
     private def init : Nil
       new
