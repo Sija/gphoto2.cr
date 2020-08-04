@@ -12,12 +12,14 @@ module GPhoto2
     end
 
     private def get_name
-      GPhoto2.check! LibGPhoto2.gp_list_get_name(@camera_list, @index, out ptr)
+      GPhoto2.check! \
+        LibGPhoto2.gp_list_get_name(@camera_list, @index, out ptr)
       String.new ptr if ptr
     end
 
     private def get_value
-      GPhoto2.check! LibGPhoto2.gp_list_get_value(@camera_list, @index, out ptr)
+      GPhoto2.check! \
+        LibGPhoto2.gp_list_get_value(@camera_list, @index, out ptr)
       String.new ptr if ptr
     end
   end

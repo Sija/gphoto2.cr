@@ -58,18 +58,21 @@ module GPhoto2
       end
 
       private def _capture(type)
-        context.check! LibGPhoto2.gp_camera_capture(self, type, out path, context)
+        context.check! \
+          LibGPhoto2.gp_camera_capture(self, type, out path, context)
         CameraFilePath.new pointerof(path)
       end
 
       private def capture_preview
         file = CameraFile.new self
-        context.check! LibGPhoto2.gp_camera_capture_preview(self, file, context)
+        context.check! \
+          LibGPhoto2.gp_camera_capture_preview(self, file, context)
         file
       end
 
       private def trigger_capture
-        context.check! LibGPhoto2.gp_camera_trigger_capture(self, context)
+        context.check! \
+          LibGPhoto2.gp_camera_trigger_capture(self, context)
       end
     end
   end

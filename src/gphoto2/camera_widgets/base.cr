@@ -164,54 +164,65 @@ module GPhoto2
       protected abstract def set_value(value)
 
       protected def get_value_ptr(ptr)
-        GPhoto2.check! LibGPhoto2.gp_widget_get_value(self, ptr)
+        GPhoto2.check! \
+          LibGPhoto2.gp_widget_get_value(self, ptr)
       end
 
       protected def set_value_ptr(ptr)
-        GPhoto2.check! LibGPhoto2.gp_widget_set_value(self, ptr)
+        GPhoto2.check! \
+          LibGPhoto2.gp_widget_set_value(self, ptr)
       end
 
       private def free
-        GPhoto2.check! LibGPhoto2.gp_widget_free(self)
+        GPhoto2.check! \
+          LibGPhoto2.gp_widget_free(self)
         self.ptr = nil
       end
 
       private def get_readonly
-        GPhoto2.check! LibGPhoto2.gp_widget_get_readonly(self, out readonly)
+        GPhoto2.check! \
+          LibGPhoto2.gp_widget_get_readonly(self, out readonly)
         readonly
       end
 
       private def get_type
-        GPhoto2.check! LibGPhoto2.gp_widget_get_type(self, out type)
+        GPhoto2.check! \
+          LibGPhoto2.gp_widget_get_type(self, out type)
         type
       end
 
       private def get_id
-        GPhoto2.check! LibGPhoto2.gp_widget_get_id(self, out id)
+        GPhoto2.check! \
+          LibGPhoto2.gp_widget_get_id(self, out id)
         id
       end
 
       private def get_name
-        GPhoto2.check! LibGPhoto2.gp_widget_get_name(self, out ptr)
+        GPhoto2.check! \
+          LibGPhoto2.gp_widget_get_name(self, out ptr)
         String.new ptr if ptr
       end
 
       private def get_label
-        GPhoto2.check! LibGPhoto2.gp_widget_get_label(self, out ptr)
+        GPhoto2.check! \
+          LibGPhoto2.gp_widget_get_label(self, out ptr)
         String.new ptr if ptr
       end
 
       private def get_info
-        GPhoto2.check! LibGPhoto2.gp_widget_get_info(self, out ptr)
+        GPhoto2.check! \
+          LibGPhoto2.gp_widget_get_info(self, out ptr)
         String.new ptr if ptr
       end
 
       private def count_children
-        GPhoto2.check! LibGPhoto2.gp_widget_count_children(self)
+        GPhoto2.check! \
+          LibGPhoto2.gp_widget_count_children(self)
       end
 
       private def get_child(index)
-        GPhoto2.check! LibGPhoto2.gp_widget_get_child(self, index, out widget)
+        GPhoto2.check! \
+          LibGPhoto2.gp_widget_get_child(self, index, out widget)
         CameraWidget.factory(widget, self)
       end
     end

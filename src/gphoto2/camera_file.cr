@@ -92,12 +92,14 @@ module GPhoto2
     def_equals @camera, @folder, @name
 
     private def new
-      GPhoto2.check! LibGPhoto2.gp_file_new(out ptr)
+      GPhoto2.check! \
+        LibGPhoto2.gp_file_new(out ptr)
       self.ptr = ptr
     end
 
     private def free
-      GPhoto2.check! LibGPhoto2.gp_file_free(self)
+      GPhoto2.check! \
+        LibGPhoto2.gp_file_free(self)
       self.ptr = nil
     end
 
@@ -111,18 +113,21 @@ module GPhoto2
     end
 
     private def get_data_and_size
-      GPhoto2.check! LibGPhoto2.gp_file_get_data_and_size(self, out data, out size)
+      GPhoto2.check! \
+        LibGPhoto2.gp_file_get_data_and_size(self, out data, out size)
       {data, size}
     end
 
     private def get(type = CameraFileType::Normal)
-      context.check! LibGPhoto2.gp_camera_file_get(@camera, folder, name, type, self, context)
+      context.check! \
+        LibGPhoto2.gp_camera_file_get(@camera, folder, name, type, self, context)
     end
 
     private def _read(buffer, offset, type)
       size = buffer.size.to_u64
 
-      context.check! LibGPhoto2.gp_camera_file_read(@camera, folder, name, type,
+      context.check! \
+        LibGPhoto2.gp_camera_file_read(@camera, folder, name, type,
         offset, buffer, pointerof(size), context)
 
       offset += size
@@ -146,12 +151,14 @@ module GPhoto2
     end
 
     private def get_info
-      context.check! LibGPhoto2.gp_camera_file_get_info(@camera, folder, name, out info, context)
+      context.check! \
+        LibGPhoto2.gp_camera_file_get_info(@camera, folder, name, out info, context)
       CameraFileInfo.new info
     end
 
     private def _delete
-      context.check! LibGPhoto2.gp_camera_file_delete(@camera, folder, name, context)
+      context.check! \
+        LibGPhoto2.gp_camera_file_delete(@camera, folder, name, context)
     end
   end
 end

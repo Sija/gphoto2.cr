@@ -88,22 +88,26 @@ module GPhoto2
 
     private def folder_list_files
       list = CameraList.new
-      context.check! LibGPhoto2.gp_camera_folder_list_files(@camera, @path, list, context)
+      context.check! \
+        LibGPhoto2.gp_camera_folder_list_files(@camera, @path, list, context)
       list.to_a.map { |f| open f.name }
     end
 
     private def folder_list_folders
       list = CameraList.new
-      context.check! LibGPhoto2.gp_camera_folder_list_folders(@camera, @path, list, context)
+      context.check! \
+        LibGPhoto2.gp_camera_folder_list_folders(@camera, @path, list, context)
       list.to_a.map { |f| cd f.name }
     end
 
     private def folder_delete_all
-      context.check! LibGPhoto2.gp_camera_folder_delete_all(@camera, @path, context)
+      context.check! \
+        LibGPhoto2.gp_camera_folder_delete_all(@camera, @path, context)
     end
 
     private def folder_remove_dir
-      context.check! LibGPhoto2.gp_camera_folder_remove_dir(@camera, parent_path, name, context)
+      context.check! \
+        LibGPhoto2.gp_camera_folder_remove_dir(@camera, parent_path, name, context)
     end
   end
 end

@@ -28,29 +28,35 @@ module GPhoto2
     end
 
     private def new
-      GPhoto2.check! LibGPhoto2Port.gp_port_info_list_new(out ptr)
+      GPhoto2.check! \
+        LibGPhoto2Port.gp_port_info_list_new(out ptr)
       self.ptr = ptr
     end
 
     private def free
-      GPhoto2.check! LibGPhoto2Port.gp_port_info_list_free(self)
+      GPhoto2.check! \
+        LibGPhoto2Port.gp_port_info_list_free(self)
       self.ptr = nil
     end
 
     private def load
-      GPhoto2.check! LibGPhoto2Port.gp_port_info_list_load(self)
+      GPhoto2.check! \
+        LibGPhoto2Port.gp_port_info_list_load(self)
     end
 
     private def count
-      GPhoto2.check! LibGPhoto2Port.gp_port_info_list_count(self)
+      GPhoto2.check! \
+        LibGPhoto2Port.gp_port_info_list_count(self)
     end
 
     private def _lookup_path(port)
-      GPhoto2.check! LibGPhoto2Port.gp_port_info_list_lookup_path(self, port)
+      GPhoto2.check! \
+        LibGPhoto2Port.gp_port_info_list_lookup_path(self, port)
     end
 
     private def get_info(index)
-      GPhoto2.check! LibGPhoto2Port.gp_port_info_list_get_info(self, index, out info)
+      GPhoto2.check! \
+        LibGPhoto2Port.gp_port_info_list_get_info(self, index, out info)
       PortInfo.new info
     end
   end

@@ -225,30 +225,35 @@ module GPhoto2
     end
 
     private def new
-      GPhoto2.check! LibGPhoto2.gp_camera_new(out ptr)
+      GPhoto2.check! \
+        LibGPhoto2.gp_camera_new(out ptr)
       self.ptr = ptr
     end
 
     private def _exit
-      context.check! LibGPhoto2.gp_camera_exit(self, context)
+      context.check! \
+        LibGPhoto2.gp_camera_exit(self, context)
     end
 
     private def set_port_info(port_info : PortInfo)
       # Need to use `@ptr` instead of `self`, since we call
       # `#init` inside of overridden `#ptr` method.
-      GPhoto2.check! LibGPhoto2.gp_camera_set_port_info(@ptr, port_info)
+      GPhoto2.check! \
+        LibGPhoto2.gp_camera_set_port_info(@ptr, port_info)
       @port_info = port_info
     end
 
     private def set_abilities(abilities : CameraAbilities)
       # Need to use `@ptr` instead of `self`, since we call
       # `#init` inside of overridden `#ptr` method.
-      GPhoto2.check! LibGPhoto2.gp_camera_set_abilities(@ptr, abilities.wrapped)
+      GPhoto2.check! \
+        LibGPhoto2.gp_camera_set_abilities(@ptr, abilities.wrapped)
       @abilities = abilities
     end
 
     private def unref
-      GPhoto2.check! LibGPhoto2.gp_camera_unref(self)
+      GPhoto2.check! \
+        LibGPhoto2.gp_camera_unref(self)
       self.ptr = nil
     end
   end

@@ -32,31 +32,37 @@ module GPhoto2
     end
 
     private def new
-      GPhoto2.check! LibGPhoto2.gp_abilities_list_new(out ptr)
+      GPhoto2.check! \
+        LibGPhoto2.gp_abilities_list_new(out ptr)
       self.ptr = ptr
     end
 
     private def free
-      GPhoto2.check! LibGPhoto2.gp_abilities_list_free(self)
+      GPhoto2.check! \
+        LibGPhoto2.gp_abilities_list_free(self)
       self.ptr = nil
     end
 
     private def load
-      @context.check! LibGPhoto2.gp_abilities_list_load(self, @context)
+      @context.check! \
+        LibGPhoto2.gp_abilities_list_load(self, @context)
     end
 
     private def _detect
       camera_list = CameraList.new
-      @context.check! LibGPhoto2.gp_abilities_list_detect(self, @port_info_list, camera_list, @context)
+      @context.check! \
+        LibGPhoto2.gp_abilities_list_detect(self, @port_info_list, camera_list, @context)
       camera_list
     end
 
     private def _lookup_model(model)
-      GPhoto2.check! LibGPhoto2.gp_abilities_list_lookup_model(self, model)
+      GPhoto2.check! \
+        LibGPhoto2.gp_abilities_list_lookup_model(self, model)
     end
 
     private def get_abilities(index)
-      GPhoto2.check! LibGPhoto2.gp_abilities_list_get_abilities(self, index, out abilities)
+      GPhoto2.check! \
+        LibGPhoto2.gp_abilities_list_get_abilities(self, index, out abilities)
       CameraAbilities.new pointerof(abilities)
     end
   end

@@ -34,34 +34,41 @@ module GPhoto2
     end
 
     private def new
-      GPhoto2.check! LibGPhoto2Port.gp_port_new(out ptr)
+      GPhoto2.check! \
+        LibGPhoto2Port.gp_port_new(out ptr)
       self.ptr = ptr
     end
 
     private def free
-      GPhoto2.check! LibGPhoto2Port.gp_port_free(self)
+      GPhoto2.check! \
+        LibGPhoto2Port.gp_port_free(self)
       self.ptr = nil
     end
 
     private def _open
-      GPhoto2.check! LibGPhoto2Port.gp_port_open(self)
+      GPhoto2.check! \
+        LibGPhoto2Port.gp_port_open(self)
     end
 
     private def _close
-      GPhoto2.check! LibGPhoto2Port.gp_port_close(self)
+      GPhoto2.check! \
+        LibGPhoto2Port.gp_port_close(self)
     end
 
     private def _reset
-      GPhoto2.check! LibGPhoto2Port.gp_port_reset(self)
+      GPhoto2.check! \
+        LibGPhoto2Port.gp_port_reset(self)
     end
 
     private def get_info
-      GPhoto2.check! LibGPhoto2Port.gp_port_get_info(self, out port_info)
+      GPhoto2.check! \
+        LibGPhoto2Port.gp_port_get_info(self, out port_info)
       PortInfo.new(port_info)
     end
 
     private def set_info(port_info)
-      GPhoto2.check! LibGPhoto2Port.gp_port_set_info(self, port_info)
+      GPhoto2.check! \
+        LibGPhoto2Port.gp_port_set_info(self, port_info)
     end
   end
 end
