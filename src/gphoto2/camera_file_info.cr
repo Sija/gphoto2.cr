@@ -11,7 +11,7 @@ module GPhoto2
     end
 
     private def fields_any?(info)
-      info.fields != LibGPhoto2::CameraFileInfoFields::None
+      info.fields != CameraFileInfoFields::None
     end
 
     private def get_info(info, klass)

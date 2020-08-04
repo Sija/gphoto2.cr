@@ -5,7 +5,7 @@ module GPhoto2
         wait_for_event(timeout)
       end
 
-      def wait_for(event_type : LibGPhoto2::CameraEventType) : CameraEvent
+      def wait_for(event_type : CameraEventType) : CameraEvent
         event = wait
         until event.type == event_type
           event = wait

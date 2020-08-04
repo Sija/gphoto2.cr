@@ -1,5 +1,7 @@
 module GPhoto2
+  alias CameraEventType = LibGPhoto2::CameraEventType
+
   record CameraEvent(T),
-    type : LibGPhoto2::CameraEventType,
+    type : CameraEventType,
     data : T
 end

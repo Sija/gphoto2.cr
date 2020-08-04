@@ -10,7 +10,7 @@ require "./gphoto2/*"
   end
 
   if Debug.enabled?
-    gp_log_level = LibGPhoto2::GPLogLevel.parse(ENV["LIB_LOG_LEVEL"]? || "debug")
+    gp_log_level = GPhoto2::LogLevel.parse(ENV["LIB_LOG_LEVEL"]? || "debug")
     gp_logger =
       ->(level : LibGPhoto2::GPLogLevel, _domain : LibC::Char*, str : LibC::Char*, _data : Void*) {
         proc = ->(emitter : Log::Emitter) do
@@ -30,7 +30,10 @@ require "./gphoto2/*"
 module GPhoto2
   extend self
 
-  def library_version(verbosity : LibGPhoto2::GPVersionVerbosity = :short) : String
+  alias VersionVerbosity = LibGPhoto2::GPVersionVerbosity
+  alias LogLevel = LibGPhoto2::GPLogLevel
+
+  def library_version(verbosity : VersionVerbosity = :short) : String
     String.new LibGPhoto2.gp_library_version(verbosity).value
   end
 
