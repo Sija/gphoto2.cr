@@ -25,4 +25,4 @@ install:
 
 script:
   - crystal spec
-  - bin/ameba src
+  - bin/ameba
