@@ -19,7 +19,8 @@ module GPhoto2
         when String
           set_value Time.parse!(value, "%F %T %z")
         else
-          raise ArgumentError.new "Invalid value type, expected Time | Int | String, got #{value.class}"
+          raise ArgumentError.new \
+            "Invalid value type, expected Time | Int | String, got #{value.class}"
         end
       end
     end

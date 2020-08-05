@@ -1,4 +1,6 @@
 module GPhoto2
+  alias CameraCaptureType = LibGPhoto2::CameraCaptureType
+
   class Camera
     module Capture
       # ```
@@ -9,16 +11,11 @@ module GPhoto2
       # file.save
       # ```
       def capture : CameraFile
-        capture LibGPhoto2::CameraCaptureType::Image
+        capture :image
       end
 
       # :nodoc:
-      def capture(type : Symbol) : CameraFile
-        capture LibGPhoto2::CameraCaptureType.parse(type.to_s)
-      end
-
-      # :nodoc:
-      def capture(type : LibGPhoto2::CameraCaptureType) : CameraFile
+      def capture(type : CameraCaptureType) : CameraFile
         save
         path = _capture(type)
         CameraFile.new(self, path.folder, path.name)
@@ -61,18 +58,21 @@ module GPhoto2
       end
 
       private def _capture(type)
-        context.check! LibGPhoto2.gp_camera_capture(self, type, out path, context)
+        context.check! \
+          LibGPhoto2.gp_camera_capture(self, type, out path, context)
         CameraFilePath.new pointerof(path)
       end
 
       private def capture_preview
         file = CameraFile.new self
-        context.check! LibGPhoto2.gp_camera_capture_preview(self, file, context)
+        context.check! \
+          LibGPhoto2.gp_camera_capture_preview(self, file, context)
         file
       end
 
       private def trigger_capture
-        context.check! LibGPhoto2.gp_camera_trigger_capture(self, context)
+        context.check! \
+          LibGPhoto2.gp_camera_trigger_capture(self, context)
       end
     end
   end

@@ -1,5 +1,5 @@
 name: gphoto2
-version: 0.7.6
+version: 0.8.0
 
 authors:
   - Sijawusz Pur Rahnama <sija@sija.pl>
@@ -7,14 +7,14 @@ authors:
 dependencies:
   debug:
     github: Sija/debug.cr
-    version: ~> 1.1
+    version: ~> 2.0
 
 development_dependencies:
   ameba:
     github: crystal-ameba/ameba
-    version: ~> 0.10.0
+    version: ~> 0.13.0
 
-crystal: 0.27.0
+crystal: 0.35.1
 
 libraries:
   libgphoto2: ~> 2.5.2

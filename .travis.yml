@@ -7,13 +7,15 @@ crystal:
   - latest
   - nightly
 
-matrix:
+jobs:
   allow_failures:
     - crystal: nightly
 
 addons:
   apt:
     packages:
+      - libevent-dev
+      - libyaml-dev
       - libgphoto2-6
       - libgphoto2-dev
       - libgphoto2-port12
@@ -23,4 +25,4 @@ install:
 
 script:
   - crystal spec
-  - bin/ameba src
+  - bin/ameba

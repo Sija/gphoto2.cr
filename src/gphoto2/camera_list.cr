@@ -21,17 +21,20 @@ module GPhoto2
     end
 
     private def new
-      GPhoto2.check! LibGPhoto2.gp_list_new(out ptr)
+      GPhoto2.check! \
+        LibGPhoto2.gp_list_new(out ptr)
       self.ptr = ptr
     end
 
     private def free
-      GPhoto2.check! LibGPhoto2.gp_list_free(self)
+      GPhoto2.check! \
+        LibGPhoto2.gp_list_free(self)
       self.ptr = nil
     end
 
     private def count
-      GPhoto2.check! LibGPhoto2.gp_list_count(self)
+      GPhoto2.check! \
+        LibGPhoto2.gp_list_count(self)
     end
   end
 end

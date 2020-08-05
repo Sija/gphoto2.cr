@@ -35,21 +35,24 @@ module GPhoto2
       protected def set_value(value)
         case value
         when Regex
-          matches = choices.select &.try &.match(value)
-          super matches.first
+          match = choices.select(value).first? || \
+             raise ArgumentError.new("Value not found")
+          super match
         else
           super
         end
       end
 
       private def count_choices
-        GPhoto2.check! LibGPhoto2.gp_widget_count_choices(self)
+        GPhoto2.check! \
+          LibGPhoto2.gp_widget_count_choices(self)
       end
 
       private def get_choice(i)
         ptr = Pointer(LibC::Char).null
-        GPhoto2.check! LibGPhoto2.gp_widget_get_choice(self, i, pointerof(ptr))
-        !ptr ? nil : String.new ptr
+        GPhoto2.check! \
+          LibGPhoto2.gp_widget_get_choice(self, i, pointerof(ptr))
+        String.new ptr if ptr
       end
     end
   end

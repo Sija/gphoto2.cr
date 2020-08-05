@@ -1,7 +1,9 @@
 module GPhoto2
-  class Exception < ::Exception; end
+  class Exception < ::Exception
+  end
 
-  class NotImplementedError < Exception; end
+  class NotImplementedError < Exception
+  end
 
   class NoDevicesError < Exception
     def initialize

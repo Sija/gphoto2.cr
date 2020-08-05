@@ -2,6 +2,8 @@ require "./struct"
 require "./camera/*"
 
 module GPhoto2
+  alias CameraOperation = LibGPhoto2::CameraOperation
+
   class Camera
     include GPhoto2::Struct(LibGPhoto2::Camera)
 
@@ -24,28 +26,26 @@ module GPhoto2
     # ```
     def self.all : Array(self)
       context = Context.new
-
       port_info_list = PortInfoList.new
       abilities_list = CameraAbilitiesList.new(context, port_info_list)
-      cameras = abilities_list.detect
 
-      entries = cameras.to_a.map do |entry|
-        camera = Camera.new(model: entry.name, port: entry.value)
-
-        # See: `CameraAbilities.find`
-        if abilities = abilities_list[camera.model]
-          camera.abilities = abilities
+      cameras = abilities_list.detect.to_a
+      cameras.map do |entry|
+        Camera.new(model: entry.name, port: entry.value).tap do |camera|
+          # See: `CameraAbilities.find`
+          camera.abilities = abilities_list[camera.model]
+          # See: `PortInfo.find`
+          camera.port_info = port_info_list[camera.port]
         end
-        # See: `PortInfo.find`
-        if port_info = port_info_list[camera.port]
-          camera.port_info = port_info
-        end
-
-        camera
       end
+    ensure
+      context.try &.close
+    end
 
-      context.close
-      entries
+    # Returns first available camera, or `nil` when no devices
+    # are detected.
+    def self.first? : self?
+      all.first?
     end
 
     # Returns first available camera or raises `NoDevicesError`
@@ -61,9 +61,7 @@ module GPhoto2
     # end
     # ```
     def self.first : self
-      cameras = all
-      raise NoDevicesError.new if cameras.empty?
-      cameras.first
+      first? || raise NoDevicesError.new
     end
 
     # Pass a block to automatically close the camera.
@@ -74,8 +72,7 @@ module GPhoto2
     # end
     # ```
     def self.first : Nil
-      camera = first
-      autorelease(camera) { yield camera }
+      first.autorelease { |camera| yield camera }
     end
 
     # ```
@@ -102,8 +99,7 @@ module GPhoto2
     # end
     # ```
     def self.open(model : String, port : String) : Nil
-      camera = open(model, port)
-      autorelease(camera) { yield camera }
+      open(model, port).autorelease { |camera| yield camera }
     end
 
     # Filters devices by a given condition.
@@ -118,13 +114,14 @@ module GPhoto2
     # # Select a camera by its port.
     # camera = GPhoto2::Camera.where(port: "usb:250,004").first
     # ```
-    def self.where(model : String | Regex = nil, port : String | Regex = nil) : Array(self)
+    def self.where(*, model : String | Regex? = nil, port : String | Regex? = nil) : Array(self)
       all.select do |camera|
         (!model || camera.model.match model) && (!port || camera.port.match port)
       end
     end
 
-    def initialize(@model : String, @port : String); end
+    def initialize(@model, @port)
+    end
 
     def ptr
       init unless ptr?
@@ -143,7 +140,7 @@ module GPhoto2
     # end
     # ```
     def autorelease : Nil
-      self.class.autorelease(self) { |camera| yield camera }
+      yield self ensure close
     end
 
     def close : Nil
@@ -197,30 +194,16 @@ module GPhoto2
       end
     end
 
-    # Check camera abilities (see `LibGPhoto2::CameraOperation`).
+    # Check camera abilities (see `CameraOperation`).
     #
     # ```
     # camera.can? :capture_image # => true
     # ```
-    #
-    # See also: `LibGPhoto2::CameraOperation`
-    def can?(operation : Symbol)
-      can? LibGPhoto2::CameraOperation.parse(operation.to_s)
-    end
-
-    # :nodoc:
-    def can?(operation : LibGPhoto2::CameraOperation)
-      abilities.operations.includes? operation
+    def can?(operation : CameraOperation)
+      abilities.operations.includes?(operation)
     end
 
     def_equals @model, @port
-
-    # Ensures the given camera is finalized when passed a block.
-    protected def self.autorelease(camera) : Nil
-      yield camera
-    ensure
-      camera.close
-    end
 
     private def init : Nil
       new
@@ -229,30 +212,35 @@ module GPhoto2
     end
 
     private def new
-      GPhoto2.check! LibGPhoto2.gp_camera_new(out ptr)
+      GPhoto2.check! \
+        LibGPhoto2.gp_camera_new(out ptr)
       self.ptr = ptr
     end
 
     private def _exit
-      context.check! LibGPhoto2.gp_camera_exit(self, context)
+      context.check! \
+        LibGPhoto2.gp_camera_exit(self, context)
     end
 
     private def set_port_info(port_info : PortInfo)
       # Need to use `@ptr` instead of `self`, since we call
       # `#init` inside of overridden `#ptr` method.
-      GPhoto2.check! LibGPhoto2.gp_camera_set_port_info(@ptr, port_info)
+      GPhoto2.check! \
+        LibGPhoto2.gp_camera_set_port_info(@ptr, port_info)
       @port_info = port_info
     end
 
     private def set_abilities(abilities : CameraAbilities)
       # Need to use `@ptr` instead of `self`, since we call
       # `#init` inside of overridden `#ptr` method.
-      GPhoto2.check! LibGPhoto2.gp_camera_set_abilities(@ptr, abilities.wrapped)
+      GPhoto2.check! \
+        LibGPhoto2.gp_camera_set_abilities(@ptr, abilities.wrapped)
       @abilities = abilities
     end
 
     private def unref
-      GPhoto2.check! LibGPhoto2.gp_camera_unref(self)
+      GPhoto2.check! \
+        LibGPhoto2.gp_camera_unref(self)
       self.ptr = nil
     end
   end

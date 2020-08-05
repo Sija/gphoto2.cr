@@ -10,7 +10,8 @@ module GPhoto2
 
       private def get_range
         min, max, inc = LibC::Float[3]
-        GPhoto2.check! LibGPhoto2.gp_widget_get_range(self, pointerof(min), pointerof(max), pointerof(inc))
+        GPhoto2.check! \
+          LibGPhoto2.gp_widget_get_range(self, pointerof(min), pointerof(max), pointerof(inc))
         {min, max, inc}
       end
 
@@ -28,7 +29,8 @@ module GPhoto2
         when Int, String
           set_value value.to_f32
         else
-          raise ArgumentError.new "Invalid value type, expected Float | Int | String, got #{value.class}"
+          raise ArgumentError.new \
+            "Invalid value type, expected Float | Int | String, got #{value.class}"
         end
       end
     end
