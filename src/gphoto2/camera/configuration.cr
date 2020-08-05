@@ -90,7 +90,7 @@ module GPhoto2
         config[key.to_s]
       end
 
-      # ditto
+      # :ditto:
       def []?(key : String | Symbol) : CameraWidget::Base?
         config[key.to_s]?
       end
