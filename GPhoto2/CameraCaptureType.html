@@ -18,7 +18,7 @@
 </svg>
 
   <meta id="repository-name" content="gphoto2">
-  <title>GPhoto2::CameraAbilitiesList - gphoto2 develop-dev</title>
+  <title>GPhoto2::CameraCaptureType - gphoto2 develop-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -96,12 +96,12 @@
       
     </li>
   
-  <li class=" current" data-id="gphoto2/GPhoto2/CameraAbilitiesList" data-name="gphoto2::cameraabilitieslist">
+  <li class=" " data-id="gphoto2/GPhoto2/CameraAbilitiesList" data-name="gphoto2::cameraabilitieslist">
       <a href="../GPhoto2/CameraAbilitiesList.html">CameraAbilitiesList</a>
       
     </li>
   
-  <li class=" " data-id="gphoto2/GPhoto2/CameraCaptureType" data-name="gphoto2::cameracapturetype">
+  <li class=" current" data-id="gphoto2/GPhoto2/CameraCaptureType" data-name="gphoto2::cameracapturetype">
       <a href="../GPhoto2/CameraCaptureType.html">CameraCaptureType</a>
       
     </li>
@@ -350,13 +350,9 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> GPhoto2::CameraAbilitiesList
+  <span class="kind">alias</span> GPhoto2::CameraCaptureType
 
 </h1>
-
-
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../GPhoto2/CameraAbilitiesList.html">GPhoto2::CameraAbilitiesList</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
-
 
 
 
@@ -365,18 +361,16 @@
 
 
   <h2>
-    <a id="included-modules" class="anchor" href="#included-modules">
+    <a id="alias-definition" class="anchor" href="#alias-definition">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>
-    Included Modules
+    Alias Definition
   </h2>
-  <ul class="other-types-list">
-    
-      <li class="other-type"><a href="../GPhoto2/Struct.html">GPhoto2::Struct(LibGPhoto2::CameraAbilitiesList)</a></li>
-    
-  </ul>
+  <code>LibGPhoto2::CameraCaptureType</code>
+
+
 
 
 
@@ -399,67 +393,40 @@
 
 
 
-
-
-  <h2>
-    <a id="constructors" class="anchor" href="#constructors">
+  
+    <h2>
+      <a id="constant-summary" class="anchor" href="#constant-summary">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>
-    Constructors
-  </h2>
-  <ul class="list-summary">
+      Constant Summary
+    </h2>
+  
+  <dl>
     
-      <li class="entry-summary">
-        <a href="#new(context,port_info_list=PortInfoList.new)-class-method" class="signature"><strong>.new</strong>(context, port_info_list = <span class="t">PortInfoList</span>.<span class="k">new</span>)</a>
-        
-      </li>
+      <dt class="entry-const" id="Image">
+        <strong>Image</strong> = <code><span class="n">0</span></code>
+      </dt>
+      
     
-  </ul>
+      <dt class="entry-const" id="Movie">
+        <strong>Movie</strong> = <code><span class="n">1</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="Sound">
+        <strong>Sound</strong> = <code><span class="n">2</span></code>
+      </dt>
+      
+    
+  </dl>
 
 
 
 
 
-  <h2>
-    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Instance Method Summary
-  </h2>
-  <ul class="list-summary">
-    
-      <li class="entry-summary">
-        <a href="#[](index:Int32):CameraAbilities-instance-method" class="signature"><strong>#[]</strong>(index : Int32) : CameraAbilities</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#[](model:String):CameraAbilities-instance-method" class="signature"><strong>#[]</strong>(model : String) : CameraAbilities</a>
-        
-          <div class="summary"><p>See: <code><a href="../GPhoto2/CameraAbilitiesList.html#lookup_model(model:String):Int32-instance-method">#lookup_model</a></code>, <code><a href="../GPhoto2/CameraAbilitiesList.html#[](index:Int32):CameraAbilities-instance-method">#[]</a></code></p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#detect:CameraList-instance-method" class="signature"><strong>#detect</strong> : CameraList</a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#finalize-instance-method" class="signature"><strong>#finalize</strong></a>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#lookup_model(model:String):Int32-instance-method" class="signature"><strong>#lookup_model</strong>(model : String) : Int32</a>
-        
-      </li>
-    
-  </ul>
+
 
 
 
@@ -467,184 +434,12 @@
 
 <div class="methods-inherited">
   
-    
-
-  <h3>Instance methods inherited from module <code><a href="../GPhoto2/Struct.html">GPhoto2::Struct(LibGPhoto2::CameraAbilitiesList)</a></code></h3>
-  
-  
-    <a href="../GPhoto2/Struct.html#ptr-instance-method" class="tooltip">
-      <span>ptr</span>
-    ptr</a>, 
-    
-  
-    <a href="../GPhoto2/Struct.html#ptr?:Pointer(T)?-instance-method" class="tooltip">
-      <span>ptr? : Pointer(T)?</span>
-    ptr?</a>, 
-    
-  
-    <a href="../GPhoto2/Struct.html#to_unsafe:Pointer(T)-instance-method" class="tooltip">
-      <span>to_unsafe : Pointer(T)</span>
-    to_unsafe</a>, 
-    
-  
-    <a href="../GPhoto2/Struct.html#wrapped:T-instance-method" class="tooltip">
-      <span>wrapped : T</span>
-    wrapped</a>
-    
-  
-
-
-    
-
-  <h3>Constructor methods inherited from module <code><a href="../GPhoto2/Struct.html">GPhoto2::Struct(LibGPhoto2::CameraAbilitiesList)</a></code></h3>
-  
-  
-    <a href="../GPhoto2/Struct.html#new(ptr:Pointer(T)?=nil)-class-method" class="tooltip">
-      <span>new(ptr : Pointer(T)? = <span class="n">nil</span>)</span>
-    new</a>
-    
-  
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
-  
 </div>
 
 
-  <h2>
-    <a id="constructor-detail" class="anchor" href="#constructor-detail">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Constructor Detail
-  </h2>
-  
-    <div class="entry-detail" id="new(context,port_info_list=PortInfoList.new)-class-method">
-      <div class="signature">
-        
-        def self.<strong>new</strong>(context, port_info_list = <span class="t">PortInfoList</span>.<span class="k">new</span>)
-
-        <a class="method-permalink" href="#new(context,port_info_list=PortInfoList.new)-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
 
 
 
-
-
-  <h2>
-    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Instance Method Detail
-  </h2>
-  
-    <div class="entry-detail" id="[](index:Int32):CameraAbilities-instance-method">
-      <div class="signature">
-        
-        def <strong>[]</strong>(index : Int32) : <a href="../GPhoto2/CameraAbilities.html">CameraAbilities</a>
-
-        <a class="method-permalink" href="#[](index:Int32):CameraAbilities-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="[](model:String):CameraAbilities-instance-method">
-      <div class="signature">
-        
-        def <strong>[]</strong>(model : String) : <a href="../GPhoto2/CameraAbilities.html">CameraAbilities</a>
-
-        <a class="method-permalink" href="#[](model:String):CameraAbilities-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>See: <code><a href="../GPhoto2/CameraAbilitiesList.html#lookup_model(model:String):Int32-instance-method">#lookup_model</a></code>, <code><a href="../GPhoto2/CameraAbilitiesList.html#[](index:Int32):CameraAbilities-instance-method">#[]</a></code></p>
-        </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="detect:CameraList-instance-method">
-      <div class="signature">
-        
-        def <strong>detect</strong> : <a href="../GPhoto2/CameraList.html">CameraList</a>
-
-        <a class="method-permalink" href="#detect:CameraList-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="finalize-instance-method">
-      <div class="signature">
-        
-        def <strong>finalize</strong>
-
-        <a class="method-permalink" href="#finalize-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="lookup_model(model:String):Int32-instance-method">
-      <div class="signature">
-        
-        def <strong>lookup_model</strong>(model : String) : Int32
-
-        <a class="method-permalink" href="#lookup_model(model:String):Int32-instance-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-      </div>
-    </div>
-  
 
 
 

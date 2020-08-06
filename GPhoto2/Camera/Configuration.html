@@ -2,55 +2,86 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta id="repository-name" content="github.com/Sija/gphoto2.cr">
-  <link href="../../css/style.css" rel="stylesheet" type="text/css" />
-  <script type="text/javascript" src="../../js/doc.js"></script>
-  <title>GPhoto2::Camera::Configuration - github.com/Sija/gphoto2.cr</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 0.34.0">
+<meta name="crystal_docs.project_version" content="develop-dev">
+<meta name="crystal_docs.project_name" content="gphoto2">
+
+
+<link href="../../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../../js/doc.js"></script>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+
+  <meta id="repository-name" content="gphoto2">
+  <title>GPhoto2::Camera::Configuration - gphoto2 develop-dev</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../../";
+  </script>
 </head>
 <body>
 
-<div id="types-list">
-  <div id="search-box">
-    <input type="search" id="search-input" placeholder="Search...">
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../../index.html">
+          gphoto2
+        </a>
+      </h1>
+
+      <span class="project-version">
+        develop-dev
+      </span>
+    </div>
   </div>
 
-  <ul>
-    <li><a href="../../index.html">README</a></li>
-  </ul>
+  <div class="search-results" class="hidden">
+    <ul class="search-list"></ul>
+  </div>
 
-  <ul>
+  <div class="types-list">
+    <ul>
   
-  <li class="parent open current" data-id="github.com/Sija/gphoto2.cr/GPhoto2" data-name="gphoto2">
+  <li class="parent open current" data-id="gphoto2/GPhoto2" data-name="gphoto2">
       <a href="../../GPhoto2.html">GPhoto2</a>
       
         <ul>
   
-  <li class="parent open current" data-id="github.com/Sija/gphoto2.cr/GPhoto2/Camera" data-name="gphoto2::camera">
+  <li class="parent open current" data-id="gphoto2/GPhoto2/Camera" data-name="gphoto2::camera">
       <a href="../../GPhoto2/Camera.html">Camera</a>
       
         <ul>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Camera/Capture" data-name="gphoto2::camera::capture">
+  <li class=" " data-id="gphoto2/GPhoto2/Camera/Capture" data-name="gphoto2::camera::capture">
       <a href="../../GPhoto2/Camera/Capture.html">Capture</a>
       
     </li>
   
-  <li class=" current" data-id="github.com/Sija/gphoto2.cr/GPhoto2/Camera/Configuration" data-name="gphoto2::camera::configuration">
+  <li class=" current" data-id="gphoto2/GPhoto2/Camera/Configuration" data-name="gphoto2::camera::configuration">
       <a href="../../GPhoto2/Camera/Configuration.html">Configuration</a>
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Camera/Event" data-name="gphoto2::camera::event">
+  <li class=" " data-id="gphoto2/GPhoto2/Camera/Event" data-name="gphoto2::camera::event">
       <a href="../../GPhoto2/Camera/Event.html">Event</a>
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Camera/Filesystem" data-name="gphoto2::camera::filesystem">
+  <li class=" " data-id="gphoto2/GPhoto2/Camera/Filesystem" data-name="gphoto2::camera::filesystem">
       <a href="../../GPhoto2/Camera/Filesystem.html">Filesystem</a>
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Camera/Info" data-name="gphoto2::camera::info">
+  <li class=" " data-id="gphoto2/GPhoto2/Camera/Info" data-name="gphoto2::camera::info">
       <a href="../../GPhoto2/Camera/Info.html">Info</a>
       
     </li>
@@ -60,47 +91,57 @@
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraAbilities" data-name="gphoto2::cameraabilities">
+  <li class=" " data-id="gphoto2/GPhoto2/CameraAbilities" data-name="gphoto2::cameraabilities">
       <a href="../../GPhoto2/CameraAbilities.html">CameraAbilities</a>
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraAbilitiesList" data-name="gphoto2::cameraabilitieslist">
+  <li class=" " data-id="gphoto2/GPhoto2/CameraAbilitiesList" data-name="gphoto2::cameraabilitieslist">
       <a href="../../GPhoto2/CameraAbilitiesList.html">CameraAbilitiesList</a>
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraEvent" data-name="gphoto2::cameraevent(t)">
+  <li class=" " data-id="gphoto2/GPhoto2/CameraCaptureType" data-name="gphoto2::cameracapturetype">
+      <a href="../../GPhoto2/CameraCaptureType.html">CameraCaptureType</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraEvent" data-name="gphoto2::cameraevent(t)">
       <a href="../../GPhoto2/CameraEvent.html">CameraEvent</a>
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFile" data-name="gphoto2::camerafile">
+  <li class=" " data-id="gphoto2/GPhoto2/CameraEventType" data-name="gphoto2::cameraeventtype">
+      <a href="../../GPhoto2/CameraEventType.html">CameraEventType</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraFile" data-name="gphoto2::camerafile">
       <a href="../../GPhoto2/CameraFile.html">CameraFile</a>
       
     </li>
   
-  <li class="parent " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFileInfo" data-name="gphoto2::camerafileinfo">
+  <li class="parent " data-id="gphoto2/GPhoto2/CameraFileInfo" data-name="gphoto2::camerafileinfo">
       <a href="../../GPhoto2/CameraFileInfo.html">CameraFileInfo</a>
       
         <ul>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFileInfo/Audio" data-name="gphoto2::camerafileinfo::audio">
+  <li class=" " data-id="gphoto2/GPhoto2/CameraFileInfo/Audio" data-name="gphoto2::camerafileinfo::audio">
       <a href="../../GPhoto2/CameraFileInfo/Audio.html">Audio</a>
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFileInfo/Base" data-name="gphoto2::camerafileinfo::base">
+  <li class=" " data-id="gphoto2/GPhoto2/CameraFileInfo/Base" data-name="gphoto2::camerafileinfo::base">
       <a href="../../GPhoto2/CameraFileInfo/Base.html">Base</a>
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFileInfo/File" data-name="gphoto2::camerafileinfo::file">
+  <li class=" " data-id="gphoto2/GPhoto2/CameraFileInfo/File" data-name="gphoto2::camerafileinfo::file">
       <a href="../../GPhoto2/CameraFileInfo/File.html">File</a>
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFileInfo/Preview" data-name="gphoto2::camerafileinfo::preview">
+  <li class=" " data-id="gphoto2/GPhoto2/CameraFileInfo/Preview" data-name="gphoto2::camerafileinfo::preview">
       <a href="../../GPhoto2/CameraFileInfo/Preview.html">Preview</a>
       
     </li>
@@ -110,72 +151,92 @@
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFilePath" data-name="gphoto2::camerafilepath">
+  <li class=" " data-id="gphoto2/GPhoto2/CameraFileInfoFields" data-name="gphoto2::camerafileinfofields">
+      <a href="../../GPhoto2/CameraFileInfoFields.html">CameraFileInfoFields</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraFilePath" data-name="gphoto2::camerafilepath">
       <a href="../../GPhoto2/CameraFilePath.html">CameraFilePath</a>
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraFolder" data-name="gphoto2::camerafolder">
+  <li class=" " data-id="gphoto2/GPhoto2/CameraFileStatus" data-name="gphoto2::camerafilestatus">
+      <a href="../../GPhoto2/CameraFileStatus.html">CameraFileStatus</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraFileType" data-name="gphoto2::camerafiletype">
+      <a href="../../GPhoto2/CameraFileType.html">CameraFileType</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraFolder" data-name="gphoto2::camerafolder">
       <a href="../../GPhoto2/CameraFolder.html">CameraFolder</a>
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraList" data-name="gphoto2::cameralist">
+  <li class=" " data-id="gphoto2/GPhoto2/CameraList" data-name="gphoto2::cameralist">
       <a href="../../GPhoto2/CameraList.html">CameraList</a>
       
     </li>
   
-  <li class="parent " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraWidget" data-name="gphoto2::camerawidget">
+  <li class=" " data-id="gphoto2/GPhoto2/CameraOperation" data-name="gphoto2::cameraoperation">
+      <a href="../../GPhoto2/CameraOperation.html">CameraOperation</a>
+      
+    </li>
+  
+  <li class="parent " data-id="gphoto2/GPhoto2/CameraWidget" data-name="gphoto2::camerawidget">
       <a href="../../GPhoto2/CameraWidget.html">CameraWidget</a>
       
         <ul>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraWidget/Base" data-name="gphoto2::camerawidget::base">
+  <li class=" " data-id="gphoto2/GPhoto2/CameraWidget/Base" data-name="gphoto2::camerawidget::base">
       <a href="../../GPhoto2/CameraWidget/Base.html">Base</a>
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraWidget/Button" data-name="gphoto2::camerawidget::button">
+  <li class=" " data-id="gphoto2/GPhoto2/CameraWidget/Button" data-name="gphoto2::camerawidget::button">
       <a href="../../GPhoto2/CameraWidget/Button.html">Button</a>
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraWidget/Date" data-name="gphoto2::camerawidget::date">
+  <li class=" " data-id="gphoto2/GPhoto2/CameraWidget/Date" data-name="gphoto2::camerawidget::date">
       <a href="../../GPhoto2/CameraWidget/Date.html">Date</a>
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraWidget/Menu" data-name="gphoto2::camerawidget::menu">
+  <li class=" " data-id="gphoto2/GPhoto2/CameraWidget/Menu" data-name="gphoto2::camerawidget::menu">
       <a href="../../GPhoto2/CameraWidget/Menu.html">Menu</a>
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraWidget/Radio" data-name="gphoto2::camerawidget::radio">
+  <li class=" " data-id="gphoto2/GPhoto2/CameraWidget/Radio" data-name="gphoto2::camerawidget::radio">
       <a href="../../GPhoto2/CameraWidget/Radio.html">Radio</a>
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraWidget/Range" data-name="gphoto2::camerawidget::range">
+  <li class=" " data-id="gphoto2/GPhoto2/CameraWidget/Range" data-name="gphoto2::camerawidget::range">
       <a href="../../GPhoto2/CameraWidget/Range.html">Range</a>
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraWidget/Section" data-name="gphoto2::camerawidget::section">
+  <li class=" " data-id="gphoto2/GPhoto2/CameraWidget/Section" data-name="gphoto2::camerawidget::section">
       <a href="../../GPhoto2/CameraWidget/Section.html">Section</a>
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraWidget/Text" data-name="gphoto2::camerawidget::text">
+  <li class=" " data-id="gphoto2/GPhoto2/CameraWidget/Text" data-name="gphoto2::camerawidget::text">
       <a href="../../GPhoto2/CameraWidget/Text.html">Text</a>
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraWidget/Toggle" data-name="gphoto2::camerawidget::toggle">
+  <li class=" " data-id="gphoto2/GPhoto2/CameraWidget/Toggle" data-name="gphoto2::camerawidget::toggle">
       <a href="../../GPhoto2/CameraWidget/Toggle.html">Toggle</a>
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/CameraWidget/Window" data-name="gphoto2::camerawidget::window">
+  <li class=" " data-id="gphoto2/GPhoto2/CameraWidget/Window" data-name="gphoto2::camerawidget::window">
       <a href="../../GPhoto2/CameraWidget/Window.html">Window</a>
       
     </li>
@@ -185,71 +246,96 @@
       
     </li>
   
-  <li class="parent " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Context" data-name="gphoto2::context">
+  <li class=" " data-id="gphoto2/GPhoto2/CameraWidgetType" data-name="gphoto2::camerawidgettype">
+      <a href="../../GPhoto2/CameraWidgetType.html">CameraWidgetType</a>
+      
+    </li>
+  
+  <li class="parent " data-id="gphoto2/GPhoto2/Context" data-name="gphoto2::context">
       <a href="../../GPhoto2/Context.html">Context</a>
       
         <ul>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Context/Callbacks" data-name="gphoto2::context::callbacks">
+  <li class=" " data-id="gphoto2/GPhoto2/Context/Callbacks" data-name="gphoto2::context::callbacks">
       <a href="../../GPhoto2/Context/Callbacks.html">Callbacks</a>
       
     </li>
   
+  <li class=" " data-id="gphoto2/GPhoto2/Context/Error" data-name="gphoto2::context::error">
+      <a href="../../GPhoto2/Context/Error.html">Error</a>
+      
+    </li>
+  
 </ul>
 
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Entry" data-name="gphoto2::entry">
+  <li class=" " data-id="gphoto2/GPhoto2/ContextFeedback" data-name="gphoto2::contextfeedback">
+      <a href="../../GPhoto2/ContextFeedback.html">ContextFeedback</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/Entry" data-name="gphoto2::entry">
       <a href="../../GPhoto2/Entry.html">Entry</a>
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Error" data-name="gphoto2::error">
+  <li class=" " data-id="gphoto2/GPhoto2/Error" data-name="gphoto2::error">
       <a href="../../GPhoto2/Error.html">Error</a>
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Exception" data-name="gphoto2::exception">
+  <li class=" " data-id="gphoto2/GPhoto2/Exception" data-name="gphoto2::exception">
       <a href="../../GPhoto2/Exception.html">Exception</a>
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/ManagedStruct" data-name="gphoto2::managedstruct(t)">
+  <li class=" " data-id="gphoto2/GPhoto2/LogLevel" data-name="gphoto2::loglevel">
+      <a href="../../GPhoto2/LogLevel.html">LogLevel</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/ManagedStruct" data-name="gphoto2::managedstruct(t)">
       <a href="../../GPhoto2/ManagedStruct.html">ManagedStruct</a>
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/NoDevicesError" data-name="gphoto2::nodeviceserror">
+  <li class=" " data-id="gphoto2/GPhoto2/NoDevicesError" data-name="gphoto2::nodeviceserror">
       <a href="../../GPhoto2/NoDevicesError.html">NoDevicesError</a>
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/NotImplementedError" data-name="gphoto2::notimplementederror">
+  <li class=" " data-id="gphoto2/GPhoto2/NotImplementedError" data-name="gphoto2::notimplementederror">
       <a href="../../GPhoto2/NotImplementedError.html">NotImplementedError</a>
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Port" data-name="gphoto2::port">
+  <li class=" " data-id="gphoto2/GPhoto2/Port" data-name="gphoto2::port">
       <a href="../../GPhoto2/Port.html">Port</a>
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/PortInfo" data-name="gphoto2::portinfo">
+  <li class=" " data-id="gphoto2/GPhoto2/PortInfo" data-name="gphoto2::portinfo">
       <a href="../../GPhoto2/PortInfo.html">PortInfo</a>
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/PortInfoList" data-name="gphoto2::portinfolist">
+  <li class=" " data-id="gphoto2/GPhoto2/PortInfoList" data-name="gphoto2::portinfolist">
       <a href="../../GPhoto2/PortInfoList.html">PortInfoList</a>
       
     </li>
   
-  <li class=" " data-id="github.com/Sija/gphoto2.cr/GPhoto2/Struct" data-name="gphoto2::struct(t)">
+  <li class=" " data-id="gphoto2/GPhoto2/Struct" data-name="gphoto2::struct(t)">
       <a href="../../GPhoto2/Struct.html">Struct</a>
       
     </li>
   
+  <li class=" " data-id="gphoto2/GPhoto2/VersionVerbosity" data-name="gphoto2::versionverbosity">
+      <a href="../../GPhoto2/VersionVerbosity.html">VersionVerbosity</a>
+      
+    </li>
+  
 </ul>
 
       
@@ -257,9 +343,11 @@
   
 </ul>
 
+  </div>
 </div>
 
-<div id="main-content">
+
+<div class="main-content">
 <h1 class="type-name">
 
   <span class="kind">module</span> GPhoto2::Camera::Configuration
@@ -280,23 +368,32 @@
 
 
 
-  <h2>Direct including types</h2>
+  <h2>
+    <a id="direct-including-types" class="anchor" href="#direct-including-types">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Direct including types
+  </h2>
   <ul class="other-types-list">
-  
-    <li class="other-type"><a href="../../GPhoto2/Camera.html">GPhoto2::Camera</a></li>
-  
+    
+      <li class="other-type"><a href="../../GPhoto2/Camera.html">GPhoto2::Camera</a></li>
+    
   </ul>
 
 
 
 
-  <h2>Defined in:</h2>
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
   
-    
-      <a href="https://github.com/Sija/gphoto2.cr/blob/213eb9acf6da04e7e305b002a17de7671ab18c2f/src/gphoto2/camera/configuration.cr#L3" target="_blank">gphoto2/camera/configuration.cr</a>
-    
-    <br/>
-  
 
 
 
@@ -304,32 +401,41 @@
 
 
 
-  <h2>Instance Method Summary</h2>
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#%3C%3C%28widget%3ACameraWidget%3A%3ABase%29%3Aself-instance-method" class="signature"><strong>#<<</strong>(widget : CameraWidget::Base) : self</a>
+        <a href="#self-instance-method" class="signature"><strong>#<<</strong>(widget : CameraWidget::Base) : <span class="k">self</span></a>
         
-          <div class="summary"><pre><code class='language-iso = camera[:iso].as_radio iso.value = iso.choices.first camera << iso ```'></code></pre></div>
+          <div class="summary"><p><code></code>` iso = camera[:iso].as_radio iso.value = iso.choices.first camera &lt;&lt; iso <code></code>`</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#%5B%5D%28key%3AString%7CSymbol%29%3ACameraWidget%3A%3ABase-instance-method" class="signature"><strong>#[]</strong>(key : String | Symbol) : CameraWidget::Base</a>
+        <a href="#[](key:String%7CSymbol):CameraWidget::Base-instance-method" class="signature"><strong>#[]</strong>(key : String | Symbol) : CameraWidget::Base</a>
         
           <div class="summary"><p>Returns the attribute identified by <em>key</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#%5B%5D%3D%28key%3AString%7CSymbol%2Cvalue%29-instance-method" class="signature"><strong>#[]=</strong>(key : String | Symbol, value)</a>
+        <a href="#[]=(key:String%7CSymbol,value)-instance-method" class="signature"><strong>#[]=</strong>(key : String | Symbol, value)</a>
         
           <div class="summary"><p>Updates the attribute identified by <em>key</em> with the specified <em>value</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#%5B%5D%3F%28key%3AString%7CSymbol%29%3ACameraWidget%3A%3ABase%3F-instance-method" class="signature"><strong>#[]?</strong>(key : String | Symbol) : CameraWidget::Base?</a>
+        <a href="#[]?(key:String%7CSymbol):CameraWidget::Base?-instance-method" class="signature"><strong>#[]?</strong>(key : String | Symbol) : CameraWidget::Base?</a>
         
           <div class="summary"><p>Returns the attribute identified by <em>key</em>.</p></div>
         
@@ -343,35 +449,35 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#dirty%3F-instance-method" class="signature"><strong>#dirty?</strong></a>
+        <a href="#dirty?-instance-method" class="signature"><strong>#dirty?</strong></a>
         
           <div class="summary"><p>Returns <code>true</code> if any attributes have unsaved changes.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#preserving_config%28keys%3AArray%28String%7CSymbol%29%3Dnil%2C%26block%29%3AVoid-instance-method" class="signature"><strong>#preserving_config</strong>(keys : Array(String | Symbol) = <span class="n">nil</span>, &block) : Void</a>
+        <a href="#preserving_config(keys:Array(String%7CSymbol)?=nil,&):Nil-instance-method" class="signature"><strong>#preserving_config</strong>(keys : Array(String | Symbol)? = <span class="n">nil</span>, &) : Nil</a>
         
           <div class="summary"><p>Preserves config for a block call.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#reload%3AVoid-instance-method" class="signature"><strong>#reload</strong> : Void</a>
+        <a href="#reload:Nil-instance-method" class="signature"><strong>#reload</strong> : Nil</a>
         
           <div class="summary"><p>Reloads camera configuration.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#save%3ABool-instance-method" class="signature"><strong>#save</strong> : Bool</a>
+        <a href="#save:Bool-instance-method" class="signature"><strong>#save</strong> : Bool</a>
         
           <div class="summary"><p>Updates the configuration on the camera.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#update%28attributes%29%3ABool-instance-method" class="signature"><strong>#update</strong>(attributes) : Bool</a>
+        <a href="#update(attributes):Bool-instance-method" class="signature"><strong>#update</strong>(attributes) : Bool</a>
         
           <div class="summary"><p>Updates camera attributes from the given <code>Hash</code>, <code>NamedTuple</code> or keyword arguments (<code>**kwargs</code>) and saves the configuration.</p></div>
         
@@ -397,95 +503,108 @@
 
 
 
-  <h2>Instance Method Detail</h2>
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
   
-    <div class="entry-detail" id="&lt;&lt;&#40;widget:CameraWidget::Base&#41;:self-instance-method">
+    <div class="entry-detail" id="self-instance-method">
       <div class="signature">
         
-        def <strong><<</strong>(widget : <a href="../../GPhoto2/CameraWidget/Base.html">CameraWidget::Base</a>) : self
+        def <strong><<</strong>(widget : <a href="../../GPhoto2/CameraWidget/Base.html">CameraWidget::Base</a>) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#%3C%3C%28widget%3ACameraWidget%3A%3ABase%29%3Aself-instance-method">#</a>
+        <a class="method-permalink" href="#self-instance-method">#</a>
       </div>
       
-        <div class="doc"><pre><code>iso <span class="o">=</span> camera[<span class="n">:iso</span>].as_radio
+        <div class="doc">
+          
+          <pre><code>iso <span class="o">=</span> camera[<span class="n">:iso</span>].as_radio
 iso.value <span class="o">=</span> iso.choices.first
-camera <span class="o"><<</span> iso</code></pre></div>
+camera <span class="o">&lt;&lt;</span> iso</code></pre>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/213eb9acf6da04e7e305b002a17de7671ab18c2f/src/gphoto2/camera/configuration.cr#L119" target="_blank">View source</a>]
-        
       </div>
     </div>
   
-    <div class="entry-detail" id="&#91;&#93;&#40;key:String|Symbol&#41;:CameraWidget::Base-instance-method">
+    <div class="entry-detail" id="[](key:String|Symbol):CameraWidget::Base-instance-method">
       <div class="signature">
         
         def <strong>[]</strong>(key : String | Symbol) : <a href="../../GPhoto2/CameraWidget/Base.html">CameraWidget::Base</a>
 
-        <a class="method-permalink" href="#%5B%5D%28key%3AString%7CSymbol%29%3ACameraWidget%3A%3ABase-instance-method">#</a>
+        <a class="method-permalink" href="#[](key:String%7CSymbol):CameraWidget::Base-instance-method">#</a>
       </div>
       
-        <div class="doc"><p>Returns the attribute identified by <em>key</em>.</p>
+        <div class="doc">
+          
+          <p>Returns the attribute identified by <em>key</em>.</p>
 
 <p>See: <code><a href="../../GPhoto2/Camera/Configuration.html#config-instance-method">#config</a></code></p>
 
-<pre><code>camera[<span class="n">:whitebalance</span>].to_s  <span class="c"># &#61;&gt; &quot;Automatic&quot;</span>
-camera[<span class="s">&quot;whitebalance&quot;</span>].to_s <span class="c"># &#61;&gt; &quot;Automatic&quot;</span></code></pre></div>
+<pre><code>camera[<span class="n">:whitebalance</span>].to_s  <span class="c"># =&gt; &quot;Automatic&quot;</span>
+camera[<span class="s">&quot;whitebalance&quot;</span>].to_s <span class="c"># =&gt; &quot;Automatic&quot;</span></code></pre>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/213eb9acf6da04e7e305b002a17de7671ab18c2f/src/gphoto2/camera/configuration.cr#L89" target="_blank">View source</a>]
-        
       </div>
     </div>
   
-    <div class="entry-detail" id="&#91;&#93;&#61;&#40;key:String|Symbol,value&#41;-instance-method">
+    <div class="entry-detail" id="[]=(key:String|Symbol,value)-instance-method">
       <div class="signature">
         
         def <strong>[]=</strong>(key : String | Symbol, value)
 
-        <a class="method-permalink" href="#%5B%5D%3D%28key%3AString%7CSymbol%2Cvalue%29-instance-method">#</a>
+        <a class="method-permalink" href="#[]=(key:String%7CSymbol,value)-instance-method">#</a>
       </div>
       
-        <div class="doc"><p>Updates the attribute identified by <em>key</em> with the specified <em>value</em>.</p>
+        <div class="doc">
+          
+          <p>Updates the attribute identified by <em>key</em> with the specified <em>value</em>.</p>
 
-<p>This marks the configuration as "dirty", meaning a call to <code><a href="../../GPhoto2/Camera/Configuration.html#save%3ABool-instance-method">#save</a></code> is
+<p>This marks the configuration as "dirty", meaning a call to <code><a href="../../GPhoto2/Camera/Configuration.html#save:Bool-instance-method">#save</a></code> is
 needed to actually update the configuration on the camera.</p>
 
 <pre><code>camera[<span class="s">&quot;iso&quot;</span>] <span class="o">=</span> <span class="n">800</span>
 camera[<span class="s">&quot;f-number&quot;</span>] <span class="o">=</span> <span class="s">&quot;f/2.8&quot;</span>
-camera[<span class="s">&quot;shutterspeed2&quot;</span>] <span class="o">=</span> <span class="s">&quot;1/60&quot;</span></code></pre></div>
+camera[<span class="s">&quot;shutterspeed2&quot;</span>] <span class="o">=</span> <span class="s">&quot;1/60&quot;</span></code></pre>
+        </div>
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/213eb9acf6da04e7e305b002a17de7671ab18c2f/src/gphoto2/camera/configuration.cr#L108" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="&#91;&#93;?&#40;key:String|Symbol&#41;:CameraWidget::Base?-instance-method">
+    <div class="entry-detail" id="[]?(key:String|Symbol):CameraWidget::Base?-instance-method">
       <div class="signature">
         
         def <strong>[]?</strong>(key : String | Symbol) : <a href="../../GPhoto2/CameraWidget/Base.html">CameraWidget::Base</a>?
 
-        <a class="method-permalink" href="#%5B%5D%3F%28key%3AString%7CSymbol%29%3ACameraWidget%3A%3ABase%3F-instance-method">#</a>
+        <a class="method-permalink" href="#[]?(key:String%7CSymbol):CameraWidget::Base?-instance-method">#</a>
       </div>
       
-        <div class="doc"><p>Returns the attribute identified by <em>key</em>.</p>
+        <div class="doc">
+          
+          <p>Returns the attribute identified by <em>key</em>.</p>
 
 <p>See: <code><a href="../../GPhoto2/Camera/Configuration.html#config-instance-method">#config</a></code></p>
 
-<pre><code>camera[<span class="n">:whitebalance</span>].to_s  <span class="c"># &#61;&gt; &quot;Automatic&quot;</span>
-camera[<span class="s">&quot;whitebalance&quot;</span>].to_s <span class="c"># &#61;&gt; &quot;Automatic&quot;</span></code></pre></div>
+<pre><code>camera[<span class="n">:whitebalance</span>].to_s  <span class="c"># =&gt; &quot;Automatic&quot;</span>
+camera[<span class="s">&quot;whitebalance&quot;</span>].to_s <span class="c"># =&gt; &quot;Automatic&quot;</span></code></pre>
+        </div>
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/213eb9acf6da04e7e305b002a17de7671ab18c2f/src/gphoto2/camera/configuration.cr#L94" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -498,17 +617,18 @@ camera[<span class="s">&quot;whitebalance&quot;</span>].to_s <span class="c"># &
         <a class="method-permalink" href="#config-instance-method">#</a>
       </div>
       
-        <div class="doc"><p>Returns flattened <code>Hash</code> of camera attributes.</p>
+        <div class="doc">
+          
+          <p>Returns flattened <code>Hash</code> of camera attributes.</p>
 
 <pre><code><span class="c"># List camera configuration keys.</span>
-camera.config.keys <span class="c"># &#61;&gt; &#91;&quot;autofocusdrive&quot;, &quot;manualfocusdrive&quot;, &quot;controlmode&quot;, ...&#93;</span></code></pre>
+camera.config.keys <span class="c"># =&gt; [&quot;autofocusdrive&quot;, &quot;manualfocusdrive&quot;, &quot;controlmode&quot;, ...]</span></code></pre>
 
-<p>See also: <code><a href="../../GPhoto2/Camera/Configuration.html#%5B%5D%28key%3AString%7CSymbol%29%3ACameraWidget%3A%3ABase-instance-method">#[]</a></code> and <code><a href="../../GPhoto2/Camera/Configuration.html#%5B%5D%3D%28key%3AString%7CSymbol%2Cvalue%29-instance-method">#[]=</a></code></p></div>
+<p>See also: <code><a href="../../GPhoto2/Camera/Configuration.html#[](key:String%7CSymbol):CameraWidget::Base-instance-method">#[]</a></code> and <code><a href="../../GPhoto2/Camera/Configuration.html#[]=(key:String%7CSymbol,value)-instance-method">#[]=</a></code></p>
+        </div>
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/213eb9acf6da04e7e305b002a17de7671ab18c2f/src/gphoto2/camera/configuration.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -518,36 +638,39 @@ camera.config.keys <span class="c"># &#61;&gt; &#91;&quot;autofocusdrive&quot;, 
         
         def <strong>dirty?</strong>
 
-        <a class="method-permalink" href="#dirty%3F-instance-method">#</a>
+        <a class="method-permalink" href="#dirty?-instance-method">#</a>
       </div>
       
-        <div class="doc"><p>Returns <code>true</code> if any attributes have unsaved changes.</p>
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if any attributes have unsaved changes.</p>
 
-<pre><code>camera.dirty? <span class="c"># &#61;&gt; false</span>
+<pre><code>camera.dirty? <span class="c"># =&gt; false</span>
 camera[<span class="n">:iso</span>] <span class="o">=</span> <span class="n">400</span>
-camera.dirty? <span class="c"># &#61;&gt; true</span></code></pre></div>
+camera.dirty? <span class="c"># =&gt; true</span></code></pre>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/213eb9acf6da04e7e305b002a17de7671ab18c2f/src/gphoto2/camera/configuration.cr#L178" target="_blank">View source</a>]
-        
       </div>
     </div>
   
-    <div class="entry-detail" id="preserving_config&#40;keys:Array&#40;String|Symbol&#41;&#61;nil,&amp;block&#41;:Void-instance-method">
+    <div class="entry-detail" id="preserving_config(keys:Array(String|Symbol)?=nil,&):Nil-instance-method">
       <div class="signature">
         
-        def <strong>preserving_config</strong>(keys : Array(String | Symbol) = <span class="n">nil</span>, &block) : Void
+        def <strong>preserving_config</strong>(keys : Array(String | Symbol)? = <span class="n">nil</span>, &) : Nil
 
-        <a class="method-permalink" href="#preserving_config%28keys%3AArray%28String%7CSymbol%29%3Dnil%2C%26block%29%3AVoid-instance-method">#</a>
+        <a class="method-permalink" href="#preserving_config(keys:Array(String%7CSymbol)?=nil,&):Nil-instance-method">#</a>
       </div>
       
-        <div class="doc"><p>Preserves config for a block call.</p>
+        <div class="doc">
+          
+          <p>Preserves config for a block call.</p>
 
 <pre><code><span class="c"># Original values</span>
-camera[<span class="n">:aperture</span>] <span class="c"># &#61;&gt; 4</span>
-camera[<span class="n">:iso</span>]      <span class="c"># &#61;&gt; 400</span>
+camera[<span class="n">:aperture</span>] <span class="c"># =&gt; 4</span>
+camera[<span class="n">:iso</span>]      <span class="c"># =&gt; 400</span>
 
 <span class="c"># Capture photo with different settings,</span>
 <span class="c"># while preserving original values</span>
@@ -563,38 +686,38 @@ camera.preserving_config <span class="k">do</span>
 <span class="k">end</span>
 
 <span class="c"># Original values are being preserved</span>
-camera[<span class="n">:aperture</span>] <span class="c"># &#61;&gt; 4</span>
-camera[<span class="n">:iso</span>]      <span class="c"># &#61;&gt; 400</span></code></pre></div>
+camera[<span class="n">:aperture</span>] <span class="c"># =&gt; 4</span>
+camera[<span class="n">:iso</span>]      <span class="c"># =&gt; 400</span></code></pre>
+        </div>
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/213eb9acf6da04e7e305b002a17de7671ab18c2f/src/gphoto2/camera/configuration.cr#L41" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="reload:Void-instance-method">
+    <div class="entry-detail" id="reload:Nil-instance-method">
       <div class="signature">
         
-        def <strong>reload</strong> : Void
+        def <strong>reload</strong> : Nil
 
-        <a class="method-permalink" href="#reload%3AVoid-instance-method">#</a>
+        <a class="method-permalink" href="#reload:Nil-instance-method">#</a>
       </div>
       
-        <div class="doc"><p>Reloads camera configuration.</p>
+        <div class="doc">
+          
+          <p>Reloads camera configuration.</p>
 
 <p>All unsaved changes will be lost.</p>
 
-<pre><code>camera[<span class="n">:iso</span>] <span class="c"># &#61;&gt; 800</span>
+<pre><code>camera[<span class="n">:iso</span>] <span class="c"># =&gt; 800</span>
 camera[<span class="n">:iso</span>] <span class="o">=</span> <span class="n">200</span>
 camera.reload
-camera[<span class="n">:iso</span>] <span class="c"># &#61;&gt; 800</span></code></pre></div>
+camera[<span class="n">:iso</span>] <span class="c"># =&gt; 800</span></code></pre>
+        </div>
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/213eb9acf6da04e7e305b002a17de7671ab18c2f/src/gphoto2/camera/configuration.cr#L75" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -604,37 +727,40 @@ camera[<span class="n">:iso</span>] <span class="c"># &#61;&gt; 800</span></code
         
         def <strong>save</strong> : Bool
 
-        <a class="method-permalink" href="#save%3ABool-instance-method">#</a>
+        <a class="method-permalink" href="#save:Bool-instance-method">#</a>
       </div>
       
-        <div class="doc"><p>Updates the configuration on the camera.</p>
+        <div class="doc">
+          
+          <p>Updates the configuration on the camera.</p>
 
 <pre><code>camera[<span class="n">:iso</span>] <span class="o">=</span> <span class="n">800</span>
-camera.save <span class="c"># &#61;&gt; true</span>
-camera.save <span class="c"># &#61;&gt; false &#40;nothing to update&#41;</span></code></pre></div>
+camera.save <span class="c"># =&gt; true</span>
+camera.save <span class="c"># =&gt; false (nothing to update)</span></code></pre>
+        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/213eb9acf6da04e7e305b002a17de7671ab18c2f/src/gphoto2/camera/configuration.cr#L134" target="_blank">View source</a>]
-        
       </div>
     </div>
   
-    <div class="entry-detail" id="update&#40;attributes&#41;:Bool-instance-method">
+    <div class="entry-detail" id="update(attributes):Bool-instance-method">
       <div class="signature">
         
         def <strong>update</strong>(attributes) : Bool
 
-        <a class="method-permalink" href="#update%28attributes%29%3ABool-instance-method">#</a>
+        <a class="method-permalink" href="#update(attributes):Bool-instance-method">#</a>
       </div>
       
-        <div class="doc"><p>Updates camera attributes from the given
+        <div class="doc">
+          
+          <p>Updates camera attributes from the given
 <code>Hash</code>, <code>NamedTuple</code> or keyword arguments (<code>**kwargs</code>)
 and saves the configuration.</p>
 
-<pre><code>camera[<span class="n">:iso</span>]           <span class="c"># &#61;&gt; 800</span>
-camera[<span class="n">:shutterspeed2</span>] <span class="c"># &#61;&gt; &quot;1/30&quot;</span>
+<pre><code>camera[<span class="n">:iso</span>]           <span class="c"># =&gt; 800</span>
+camera[<span class="n">:shutterspeed2</span>] <span class="c"># =&gt; &quot;1/30&quot;</span>
 
 <span class="c"># **kwargs</span>
 camera.update(iso: <span class="n">400</span>, shutterspeed2: <span class="s">&quot;1/60&quot;</span>)
@@ -643,13 +769,12 @@ camera.update({iso: <span class="n">400</span>, shutterspeed2: <span class="s">&
 <span class="c"># Hash</span>
 camera.update({<span class="s">&quot;iso&quot;</span> => <span class="n">400</span>, <span class="s">&quot;shutterspeed2&quot;</span> => <span class="s">&quot;1/60&quot;</span>})
 
-camera[<span class="n">:iso</span>]           <span class="c"># &#61;&gt; 400</span>
-camera[<span class="n">:shutterspeed2</span>] <span class="c"># &#61;&gt; &quot;1/60&quot;</span></code></pre></div>
+camera[<span class="n">:iso</span>]           <span class="c"># =&gt; 400</span>
+camera[<span class="n">:shutterspeed2</span>] <span class="c"># =&gt; &quot;1/60&quot;</span></code></pre>
+        </div>
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/213eb9acf6da04e7e305b002a17de7671ab18c2f/src/gphoto2/camera/configuration.cr#L159" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -662,12 +787,13 @@ camera[<span class="n">:shutterspeed2</span>] <span class="c"># &#61;&gt; &quot;
         <a class="method-permalink" href="#window-instance-method">#</a>
       </div>
       
-        <div class="doc"><p>Returns camera <code><a href="../../GPhoto2/CameraWidget/Window.html">CameraWidget::Window</a></code> root configuration widget.</p></div>
+        <div class="doc">
+          
+          <p>Returns camera <code><a href="../../GPhoto2/CameraWidget/Window.html">CameraWidget::Window</a></code> root configuration widget.</p>
+        </div>
       
       <br/>
       <div>
-        
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/213eb9acf6da04e7e305b002a17de7671ab18c2f/src/gphoto2/camera/configuration.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
