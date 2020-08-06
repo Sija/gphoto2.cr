@@ -15,7 +15,9 @@ module GPhoto2
           ptr = Pointer(LibC::Char).malloc(value.size)
           ptr.copy_from(value.to_unsafe, value.size)
           set_value_ptr ptr
-        when Symbol, Number
+        when Symbol
+          set_value value.to_s.capitalize
+        when Number
           set_value value.to_s
         else
           raise ArgumentError.new \
