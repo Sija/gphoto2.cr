@@ -34,9 +34,13 @@ module GPhoto2
 
       protected def set_value(value)
         case value
-        when Regex, Range
-          match = choices.select(value).first?
-          match || raise ArgumentError.new("Value not found")
+        when Enumerable, Regex
+          match =
+            case value
+            in Enumerable then choices.find &.in?(value)
+            in Regex      then choices.find &.matches?(value)
+            end
+          match || raise ArgumentError.new("No matching value found")
           super match
         else
           super
