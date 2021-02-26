@@ -22,7 +22,7 @@ $ brew install libgphoto2
 #### Debian/Ubuntu
 
 ```
-$ apt-get install libgphoto2-6 libgphoto2-dev libgphoto2-port10
+$ apt-get install libgphoto2-6 libgphoto2-dev libgphoto2-port12
 ```
 
 ### Shard
@@ -70,7 +70,7 @@ camera.autorelease do
   # ...
 end
 
-# check camera abilities (see `LibGPhoto2::CameraOperation`)
+# check camera abilities (see `GPhoto2::CameraOperation`)
 camera.can? :capture_image
 # => true
 
@@ -155,24 +155,26 @@ More examples can be found in [`examples/`][examples]. Documentation can be gene
 ## Development
 
 Enable debug mode by passing `DEBUG=1` env variable:
+
 ```
 DEBUG=1 crystal examples/list_cameras.cr
 ```
 
 Run specs with:
+
 ```
 crystal spec
 ```
 
 ## Contributing
 
-1. Fork it ( https://github.com/Sija/gphoto2.cr/fork )
-2. Create your feature branch (git checkout -b my-new-feature)
-3. Commit your changes (git commit -am 'Add some feature')
-4. Push to the branch (git push origin my-new-feature)
+1. Fork it (<https://github.com/Sija/gphoto2.cr/fork>)
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
 
-## Acknowledgements
+## Thanks! 🎉
 
 - The [gphoto2][gphoto] developers for building such an awesome tool
 - [@zaeleus](https://github.com/zaeleus) for the [ffi-gphoto2](https://github.com/zaeleus/ffi-gphoto2) gem, on which this library is heavily inspired
