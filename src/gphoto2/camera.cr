@@ -225,16 +225,18 @@ module GPhoto2
     private def set_port_info(port_info : PortInfo)
       # Need to use `@ptr` instead of `self`, since we call
       # `#init` inside of overridden `#ptr` method.
+      ptr = @ptr || Pointer(LibGPhoto2::Camera).null
       GPhoto2.check! \
-        LibGPhoto2.gp_camera_set_port_info(@ptr, port_info)
+        LibGPhoto2.gp_camera_set_port_info(ptr, port_info)
       @port_info = port_info
     end
 
     private def set_abilities(abilities : CameraAbilities)
       # Need to use `@ptr` instead of `self`, since we call
       # `#init` inside of overridden `#ptr` method.
+      ptr = @ptr || Pointer(LibGPhoto2::Camera).null
       GPhoto2.check! \
-        LibGPhoto2.gp_camera_set_abilities(@ptr, abilities.wrapped)
+        LibGPhoto2.gp_camera_set_abilities(ptr, abilities.wrapped)
       @abilities = abilities
     end
 

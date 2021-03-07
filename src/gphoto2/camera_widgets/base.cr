@@ -18,12 +18,12 @@ module GPhoto2
           ::GPhoto2::CameraWidget.widgets[{{factory_id.stringify}}] = self
 
           class ::GPhoto2::CameraWidget::Base
-            # Returns widget as `{{factory_id.capitalize}}`, `nil` otherwise.
+            # Returns widget as `{{factory_id.camelcase}}`, `nil` otherwise.
             def as_{{factory_id}}? : {{@type.name}}?
               self.as?({{@type.name}})
             end
 
-            # Returns widget as `{{factory_id.capitalize}}`, raises otherwise.
+            # Returns widget as `{{factory_id.camelcase}}`, raises otherwise.
             def as_{{factory_id}} : {{@type.name}}
               self.as({{@type.name}})
             end
