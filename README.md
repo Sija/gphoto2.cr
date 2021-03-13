@@ -1,4 +1,4 @@
-# gphoto2.cr [![Build Status](https://travis-ci.com/Sija/gphoto2.cr.svg?branch=master)](https://travis-ci.com/Sija/gphoto2.cr) [![Releases](https://img.shields.io/github/release/Sija/gphoto2.cr.svg)](https://github.com/Sija/gphoto2.cr/releases) [![License](https://img.shields.io/github/license/Sija/gphoto2.cr.svg)](https://github.com/Sija/gphoto2.cr/blob/master/LICENSE)
+# gphoto2.cr [![CI](https://github.com/Sija/gphoto2.cr/actions/workflows/ci.yml/badge.svg)](https://github.com/Sija/gphoto2.cr/actions/workflows/ci.yml) [![Releases](https://img.shields.io/github/release/Sija/gphoto2.cr.svg)](https://github.com/Sija/gphoto2.cr/releases) [![License](https://img.shields.io/github/license/Sija/gphoto2.cr.svg)](https://github.com/Sija/gphoto2.cr/blob/master/LICENSE)
 
 **gphoto2.cr** provides an FFI for common functions in [libgphoto2][gphoto].
 It also includes a facade to interact with the library in a more idiomatic Crystal way.
