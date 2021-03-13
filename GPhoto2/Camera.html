@@ -3,28 +3,28 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.34.0">
-<meta name="crystal_docs.project_version" content="develop-dev">
+<meta name="generator" content="Crystal Docs 0.35.1">
+<meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="gphoto2">
+
 
 
 <link href="../css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../js/doc.js"></script>
 
-<svg class="hidden">
-  <symbol id="octicon-link" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
-  </symbol>
-</svg>
-
-  <meta id="repository-name" content="gphoto2">
-  <title>GPhoto2::Camera - gphoto2 develop-dev</title>
+  <meta name="repository-name" content="gphoto2">
+  <title>GPhoto2::Camera - gphoto2 master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
 </head>
 <body>
 
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
 <div class="sidebar">
   <div class="sidebar-header">
     <div class="search-box">
@@ -39,12 +39,12 @@
       </h1>
 
       <span class="project-version">
-        develop-dev
+        master
       </span>
     </div>
   </div>
 
-  <div class="search-results" class="hidden">
+  <div class="search-results hidden">
     <ul class="search-list"></ul>
   </div>
 
@@ -405,6 +405,48 @@
 </a>
     Defined in:
   </h2>
+  
+    
+      <a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera.cr#L7" target="_blank">
+        gphoto2/camera.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera/capture.cr#L4" target="_blank">
+        gphoto2/camera/capture.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera/configuration.cr#L2" target="_blank">
+        gphoto2/camera/configuration.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera/event.cr#L2" target="_blank">
+        gphoto2/camera/event.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera/filesystem.cr#L2" target="_blank">
+        gphoto2/camera/filesystem.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera/info.cr#L2" target="_blank">
+        gphoto2/camera/info.cr
+      </a>
+    
+    <br/>
   
 
 
@@ -849,7 +891,7 @@
           <p>Returns first available camera or raises <code><a href="../GPhoto2/NoDevicesError.html">NoDevicesError</a></code>
 when no devices are detected.</p>
 
-<pre><code>camera <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::</span><span class="t">Camera</span>.first
+<pre><code class="language-crystal">camera <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::</span><span class="t">Camera</span>.first
 
 <span class="k">begin</span>
   <span class="c"># ...</span>
@@ -860,6 +902,8 @@ when no devices are detected.</p>
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera.cr#L63" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -881,6 +925,8 @@ are detected.</p>
       <br/>
       <div>
         
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera.cr#L47" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -895,6 +941,8 @@ are detected.</p>
       <br/>
       <div>
         
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera.cr#L123" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -908,7 +956,7 @@ are detected.</p>
       
         <div class="doc">
           
-          <pre><code>model <span class="o">=</span> <span class="s">&quot;Nikon DSC D5100 (PTP mode)&quot;</span>
+          <pre><code class="language-crystal">model <span class="o">=</span> <span class="s">&quot;Nikon DSC D5100 (PTP mode)&quot;</span>
 port <span class="o">=</span> <span class="s">&quot;usb:250,006&quot;</span>
 
 camera <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::</span><span class="t">Camera</span>.open(model, port)
@@ -922,6 +970,8 @@ camera <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera.cr#L90" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -950,11 +1000,13 @@ camera <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::
           
           <p>Returns all available cameras.</p>
 
-<pre><code>cameras <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::</span><span class="t">Camera</span>.all <span class="c"># =&gt; [#&lt;GPhoto2::Camera&gt;, #&lt;GPhoto2::Camera&gt;, ...]</span></code></pre>
+<pre><code class="language-crystal">cameras <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::</span><span class="t">Camera</span>.all <span class="c"># =&gt; [#&lt;GPhoto2::Camera&gt;, #&lt;GPhoto2::Camera&gt;, ...]</span></code></pre>
         </div>
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera.cr#L27" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -971,13 +1023,15 @@ camera <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::
           
           <p>Pass a block to automatically close the camera.</p>
 
-<pre><code><span class="t">GPhoto2</span><span class="t">::</span><span class="t">Camera</span>.first <span class="k">do</span> <span class="o">|</span>camera<span class="o">|</span>
+<pre><code class="language-crystal"><span class="t">GPhoto2</span><span class="t">::</span><span class="t">Camera</span>.first <span class="k">do</span> <span class="o">|</span>camera<span class="o">|</span>
   <span class="c"># ...</span>
 <span class="k">end</span></code></pre>
         </div>
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera.cr#L74" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -994,13 +1048,15 @@ camera <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::
           
           <p>Pass a block to automatically close the camera.</p>
 
-<pre><code><span class="t">GPhoto2</span><span class="t">::</span><span class="t">Camera</span>.open(model, port) <span class="k">do</span> <span class="o">|</span>camera<span class="o">|</span>
+<pre><code class="language-crystal"><span class="t">GPhoto2</span><span class="t">::</span><span class="t">Camera</span>.open(model, port) <span class="k">do</span> <span class="o">|</span>camera<span class="o">|</span>
   <span class="c"># ...</span>
 <span class="k">end</span></code></pre>
         </div>
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera.cr#L101" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1020,7 +1076,7 @@ camera <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::
 <p>Filter keys can be either <em>model</em> or <em>port</em>. Only the first filter is
 used.</p>
 
-<pre><code><span class="c"># Find the cameras whose model names contain Nikon.</span>
+<pre><code class="language-crystal"><span class="c"># Find the cameras whose model names contain Nikon.</span>
 cameras <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::</span><span class="t">Camera</span>.where(model: <span class="s">/nikon/</span>i)
 
 <span class="c"># Select a camera by its port.</span>
@@ -1029,6 +1085,8 @@ camera <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera.cr#L117" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1065,6 +1123,8 @@ camera <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::
       <br/>
       <div>
         
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera.cr#L206" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -1078,6 +1138,8 @@ camera <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera.cr#L163" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1094,7 +1156,7 @@ camera <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::
           
           <p>Ensures the camera is finalized when passed a block.</p>
 
-<pre><code><span class="c"># Find the cameras whose model names contain Nikon.</span>
+<pre><code class="language-crystal"><span class="c"># Find the cameras whose model names contain Nikon.</span>
 cameras <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::</span><span class="t">Camera</span>.where(model: <span class="s">/nikon/</span>i)
 
 <span class="c"># Pass a block, which will automatically close the camera.</span>
@@ -1105,6 +1167,8 @@ cameras.first.autorelease <span class="k">do</span> <span class="o">|</span>came
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera.cr#L142" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1121,11 +1185,13 @@ cameras.first.autorelease <span class="k">do</span> <span class="o">|</span>came
           
           <p>Check camera abilities (see <code><a href="../GPhoto2/CameraOperation.html">CameraOperation</a></code>).</p>
 
-<pre><code>camera.can? <span class="n">:capture_image</span> <span class="c"># =&gt; true</span></code></pre>
+<pre><code class="language-crystal">camera.can? <span class="n">:capture_image</span> <span class="c"># =&gt; true</span></code></pre>
         </div>
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera.cr#L202" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1141,6 +1207,8 @@ cameras.first.autorelease <span class="k">do</span> <span class="o">|</span>came
       <br/>
       <div>
         
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera.cr#L146" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -1154,6 +1222,8 @@ cameras.first.autorelease <span class="k">do</span> <span class="o">|</span>came
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera.cr#L173" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1180,6 +1250,8 @@ don't need the camera.</p>
       <br/>
       <div>
         
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera.cr#L159" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -1193,6 +1265,8 @@ don't need the camera.</p>
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1208,6 +1282,8 @@ don't need the camera.</p>
       <br/>
       <div>
         
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera.cr#L17" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -1222,6 +1298,8 @@ don't need the camera.</p>
       <br/>
       <div>
         
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera.cr#L168" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -1235,6 +1313,8 @@ don't need the camera.</p>
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera.cr#L126" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1254,7 +1334,7 @@ Port is automatically closed on block exit/exception.</p>
 
 <p>To reset given camera's port you can do:</p>
 
-<pre><code>camera.with_port <span class="k">do</span> <span class="o">|</span>port<span class="o">|</span>
+<pre><code class="language-crystal">camera.with_port <span class="k">do</span> <span class="o">|</span>port<span class="o">|</span>
   camera.exit
   port.reset
 <span class="k">end</span></code></pre>
@@ -1262,6 +1342,8 @@ Port is automatically closed on block exit/exception.</p>
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera.cr#L186" target="_blank">View source</a>]
         
       </div>
     </div>

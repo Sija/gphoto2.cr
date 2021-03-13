@@ -3,28 +3,28 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.34.0">
-<meta name="crystal_docs.project_version" content="develop-dev">
+<meta name="generator" content="Crystal Docs 0.35.1">
+<meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="gphoto2">
+
 
 
 <link href="../../css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../../js/doc.js"></script>
 
-<svg class="hidden">
-  <symbol id="octicon-link" viewBox="0 0 16 16">
-    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
-  </symbol>
-</svg>
-
-  <meta id="repository-name" content="gphoto2">
-  <title>GPhoto2::Camera::Configuration - gphoto2 develop-dev</title>
+  <meta name="repository-name" content="gphoto2">
+  <title>GPhoto2::Camera::Configuration - gphoto2 master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
 </head>
 <body>
 
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
 <div class="sidebar">
   <div class="sidebar-header">
     <div class="search-box">
@@ -39,12 +39,12 @@
       </h1>
 
       <span class="project-version">
-        develop-dev
+        master
       </span>
     </div>
   </div>
 
-  <div class="search-results" class="hidden">
+  <div class="search-results hidden">
     <ul class="search-list"></ul>
   </div>
 
@@ -394,6 +394,13 @@
     Defined in:
   </h2>
   
+    
+      <a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera/configuration.cr#L3" target="_blank">
+        gphoto2/camera/configuration.cr
+      </a>
+    
+    <br/>
+  
 
 
 
@@ -524,13 +531,15 @@
       
         <div class="doc">
           
-          <pre><code>iso <span class="o">=</span> camera[<span class="n">:iso</span>].as_radio
+          <pre><code class="language-crystal">iso <span class="o">=</span> camera[<span class="n">:iso</span>].as_radio
 iso.value <span class="o">=</span> iso.choices.first
 camera <span class="o">&lt;&lt;</span> iso</code></pre>
         </div>
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera/configuration.cr#L119" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -549,12 +558,14 @@ camera <span class="o">&lt;&lt;</span> iso</code></pre>
 
 <p>See: <code><a href="../../GPhoto2/Camera/Configuration.html#config-instance-method">#config</a></code></p>
 
-<pre><code>camera[<span class="n">:whitebalance</span>].to_s  <span class="c"># =&gt; &quot;Automatic&quot;</span>
+<pre><code class="language-crystal">camera[<span class="n">:whitebalance</span>].to_s  <span class="c"># =&gt; &quot;Automatic&quot;</span>
 camera[<span class="s">&quot;whitebalance&quot;</span>].to_s <span class="c"># =&gt; &quot;Automatic&quot;</span></code></pre>
         </div>
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera/configuration.cr#L89" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -574,13 +585,15 @@ camera[<span class="s">&quot;whitebalance&quot;</span>].to_s <span class="c"># =
 <p>This marks the configuration as "dirty", meaning a call to <code><a href="../../GPhoto2/Camera/Configuration.html#save:Bool-instance-method">#save</a></code> is
 needed to actually update the configuration on the camera.</p>
 
-<pre><code>camera[<span class="s">&quot;iso&quot;</span>] <span class="o">=</span> <span class="n">800</span>
+<pre><code class="language-crystal">camera[<span class="s">&quot;iso&quot;</span>] <span class="o">=</span> <span class="n">800</span>
 camera[<span class="s">&quot;f-number&quot;</span>] <span class="o">=</span> <span class="s">&quot;f/2.8&quot;</span>
 camera[<span class="s">&quot;shutterspeed2&quot;</span>] <span class="o">=</span> <span class="s">&quot;1/60&quot;</span></code></pre>
         </div>
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera/configuration.cr#L108" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -599,12 +612,14 @@ camera[<span class="s">&quot;shutterspeed2&quot;</span>] <span class="o">=</span
 
 <p>See: <code><a href="../../GPhoto2/Camera/Configuration.html#config-instance-method">#config</a></code></p>
 
-<pre><code>camera[<span class="n">:whitebalance</span>].to_s  <span class="c"># =&gt; &quot;Automatic&quot;</span>
+<pre><code class="language-crystal">camera[<span class="n">:whitebalance</span>].to_s  <span class="c"># =&gt; &quot;Automatic&quot;</span>
 camera[<span class="s">&quot;whitebalance&quot;</span>].to_s <span class="c"># =&gt; &quot;Automatic&quot;</span></code></pre>
         </div>
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera/configuration.cr#L94" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -621,7 +636,7 @@ camera[<span class="s">&quot;whitebalance&quot;</span>].to_s <span class="c"># =
           
           <p>Returns flattened <code>Hash</code> of camera attributes.</p>
 
-<pre><code><span class="c"># List camera configuration keys.</span>
+<pre><code class="language-crystal"><span class="c"># List camera configuration keys.</span>
 camera.config.keys <span class="c"># =&gt; [&quot;autofocusdrive&quot;, &quot;manualfocusdrive&quot;, &quot;controlmode&quot;, ...]</span></code></pre>
 
 <p>See also: <code><a href="../../GPhoto2/Camera/Configuration.html#[](key:String%7CSymbol):CameraWidget::Base-instance-method">#[]</a></code> and <code><a href="../../GPhoto2/Camera/Configuration.html#[]=(key:String%7CSymbol,value)-instance-method">#[]=</a></code></p>
@@ -629,6 +644,8 @@ camera.config.keys <span class="c"># =&gt; [&quot;autofocusdrive&quot;, &quot;ma
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera/configuration.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -645,13 +662,15 @@ camera.config.keys <span class="c"># =&gt; [&quot;autofocusdrive&quot;, &quot;ma
           
           <p>Returns <code>true</code> if any attributes have unsaved changes.</p>
 
-<pre><code>camera.dirty? <span class="c"># =&gt; false</span>
+<pre><code class="language-crystal">camera.dirty? <span class="c"># =&gt; false</span>
 camera[<span class="n">:iso</span>] <span class="o">=</span> <span class="n">400</span>
 camera.dirty? <span class="c"># =&gt; true</span></code></pre>
         </div>
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera/configuration.cr#L178" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -668,7 +687,7 @@ camera.dirty? <span class="c"># =&gt; true</span></code></pre>
           
           <p>Preserves config for a block call.</p>
 
-<pre><code><span class="c"># Original values</span>
+<pre><code class="language-crystal"><span class="c"># Original values</span>
 camera[<span class="n">:aperture</span>] <span class="c"># =&gt; 4</span>
 camera[<span class="n">:iso</span>]      <span class="c"># =&gt; 400</span>
 
@@ -693,6 +712,8 @@ camera[<span class="n">:iso</span>]      <span class="c"># =&gt; 400</span></cod
       <br/>
       <div>
         
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera/configuration.cr#L41" target="_blank">View source</a>]
+        
       </div>
     </div>
   
@@ -710,7 +731,7 @@ camera[<span class="n">:iso</span>]      <span class="c"># =&gt; 400</span></cod
 
 <p>All unsaved changes will be lost.</p>
 
-<pre><code>camera[<span class="n">:iso</span>] <span class="c"># =&gt; 800</span>
+<pre><code class="language-crystal">camera[<span class="n">:iso</span>] <span class="c"># =&gt; 800</span>
 camera[<span class="n">:iso</span>] <span class="o">=</span> <span class="n">200</span>
 camera.reload
 camera[<span class="n">:iso</span>] <span class="c"># =&gt; 800</span></code></pre>
@@ -718,6 +739,8 @@ camera[<span class="n">:iso</span>] <span class="c"># =&gt; 800</span></code></p
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera/configuration.cr#L75" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -734,13 +757,15 @@ camera[<span class="n">:iso</span>] <span class="c"># =&gt; 800</span></code></p
           
           <p>Updates the configuration on the camera.</p>
 
-<pre><code>camera[<span class="n">:iso</span>] <span class="o">=</span> <span class="n">800</span>
+<pre><code class="language-crystal">camera[<span class="n">:iso</span>] <span class="o">=</span> <span class="n">800</span>
 camera.save <span class="c"># =&gt; true</span>
 camera.save <span class="c"># =&gt; false (nothing to update)</span></code></pre>
         </div>
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera/configuration.cr#L134" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -759,7 +784,7 @@ camera.save <span class="c"># =&gt; false (nothing to update)</span></code></pre
 <code>Hash</code>, <code>NamedTuple</code> or keyword arguments (<code>**kwargs</code>)
 and saves the configuration.</p>
 
-<pre><code>camera[<span class="n">:iso</span>]           <span class="c"># =&gt; 800</span>
+<pre><code class="language-crystal">camera[<span class="n">:iso</span>]           <span class="c"># =&gt; 800</span>
 camera[<span class="n">:shutterspeed2</span>] <span class="c"># =&gt; &quot;1/30&quot;</span>
 
 <span class="c"># **kwargs</span>
@@ -775,6 +800,8 @@ camera[<span class="n">:shutterspeed2</span>] <span class="c"># =&gt; &quot;1/60
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera/configuration.cr#L159" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -794,6 +821,8 @@ camera[<span class="n">:shutterspeed2</span>] <span class="c"># =&gt; &quot;1/60
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera/configuration.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
