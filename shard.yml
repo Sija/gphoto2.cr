@@ -14,7 +14,7 @@ development_dependencies:
     github: crystal-ameba/ameba
     version: ~> 0.14.0
 
-crystal: 0.35.1
+crystal: ">= 0.35.1"
 
 libraries:
   libgphoto2: ~> 2.5.2
