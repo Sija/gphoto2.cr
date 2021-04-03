@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.35.1">
+<meta name="generator" content="Crystal Docs 0.36.1">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="gphoto2">
 
@@ -395,7 +395,7 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera/configuration.cr#L3" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera/configuration.cr#L3" target="_blank">
         gphoto2/camera/configuration.cr
       </a>
     
@@ -449,7 +449,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#config-instance-method" class="signature"><strong>#config</strong></a>
+        <a href="#config:Hash(String,CameraWidget::Base)-instance-method" class="signature"><strong>#config</strong> : Hash(String, CameraWidget::Base)</a>
         
           <div class="summary"><p>Returns flattened <code>Hash</code> of camera attributes.</p></div>
         
@@ -491,7 +491,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#window-instance-method" class="signature"><strong>#window</strong></a>
+        <a href="#window:CameraWidget::Window-instance-method" class="signature"><strong>#window</strong> : CameraWidget::Window</a>
         
           <div class="summary"><p>Returns camera <code><a href="../../GPhoto2/CameraWidget/Window.html">CameraWidget::Window</a></code> root configuration widget.</p></div>
         
@@ -539,7 +539,7 @@ camera <span class="o">&lt;&lt;</span> iso</code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera/configuration.cr#L119" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera/configuration.cr#L119" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -556,7 +556,7 @@ camera <span class="o">&lt;&lt;</span> iso</code></pre>
           
           <p>Returns the attribute identified by <em>key</em>.</p>
 
-<p>See: <code><a href="../../GPhoto2/Camera/Configuration.html#config-instance-method">#config</a></code></p>
+<p>See: <code><a href="../../GPhoto2/Camera/Configuration.html#config:Hash(String,CameraWidget::Base)-instance-method">#config</a></code></p>
 
 <pre><code class="language-crystal">camera[<span class="n">:whitebalance</span>].to_s  <span class="c"># =&gt; &quot;Automatic&quot;</span>
 camera[<span class="s">&quot;whitebalance&quot;</span>].to_s <span class="c"># =&gt; &quot;Automatic&quot;</span></code></pre>
@@ -565,7 +565,7 @@ camera[<span class="s">&quot;whitebalance&quot;</span>].to_s <span class="c"># =
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera/configuration.cr#L89" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera/configuration.cr#L89" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -593,7 +593,7 @@ camera[<span class="s">&quot;shutterspeed2&quot;</span>] <span class="o">=</span
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera/configuration.cr#L108" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera/configuration.cr#L108" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -610,7 +610,7 @@ camera[<span class="s">&quot;shutterspeed2&quot;</span>] <span class="o">=</span
           
           <p>Returns the attribute identified by <em>key</em>.</p>
 
-<p>See: <code><a href="../../GPhoto2/Camera/Configuration.html#config-instance-method">#config</a></code></p>
+<p>See: <code><a href="../../GPhoto2/Camera/Configuration.html#config:Hash(String,CameraWidget::Base)-instance-method">#config</a></code></p>
 
 <pre><code class="language-crystal">camera[<span class="n">:whitebalance</span>].to_s  <span class="c"># =&gt; &quot;Automatic&quot;</span>
 camera[<span class="s">&quot;whitebalance&quot;</span>].to_s <span class="c"># =&gt; &quot;Automatic&quot;</span></code></pre>
@@ -619,17 +619,17 @@ camera[<span class="s">&quot;whitebalance&quot;</span>].to_s <span class="c"># =
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera/configuration.cr#L94" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera/configuration.cr#L94" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="config-instance-method">
+    <div class="entry-detail" id="config:Hash(String,CameraWidget::Base)-instance-method">
       <div class="signature">
         
-        def <strong>config</strong>
+        def <strong>config</strong> : Hash(String, <a href="../../GPhoto2/CameraWidget/Base.html">CameraWidget::Base</a>)
 
-        <a class="method-permalink" href="#config-instance-method">#</a>
+        <a class="method-permalink" href="#config:Hash(String,CameraWidget::Base)-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -645,7 +645,7 @@ camera.config.keys <span class="c"># =&gt; [&quot;autofocusdrive&quot;, &quot;ma
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera/configuration.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera/configuration.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -670,7 +670,7 @@ camera.dirty? <span class="c"># =&gt; true</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera/configuration.cr#L178" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera/configuration.cr#L178" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -712,7 +712,7 @@ camera[<span class="n">:iso</span>]      <span class="c"># =&gt; 400</span></cod
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera/configuration.cr#L41" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera/configuration.cr#L41" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -740,7 +740,7 @@ camera[<span class="n">:iso</span>] <span class="c"># =&gt; 800</span></code></p
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera/configuration.cr#L75" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera/configuration.cr#L75" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -765,7 +765,7 @@ camera.save <span class="c"># =&gt; false (nothing to update)</span></code></pre
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera/configuration.cr#L134" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera/configuration.cr#L134" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -801,17 +801,17 @@ camera[<span class="n">:shutterspeed2</span>] <span class="c"># =&gt; &quot;1/60
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera/configuration.cr#L159" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera/configuration.cr#L159" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="window-instance-method">
+    <div class="entry-detail" id="window:CameraWidget::Window-instance-method">
       <div class="signature">
         
-        def <strong>window</strong>
+        def <strong>window</strong> : <a href="../../GPhoto2/CameraWidget/Window.html">CameraWidget::Window</a>
 
-        <a class="method-permalink" href="#window-instance-method">#</a>
+        <a class="method-permalink" href="#window:CameraWidget::Window-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -822,7 +822,7 @@ camera[<span class="n">:shutterspeed2</span>] <span class="c"># =&gt; &quot;1/60
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/a052059b/src/gphoto2/camera/configuration.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera/configuration.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
