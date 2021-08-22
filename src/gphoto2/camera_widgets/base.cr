@@ -69,6 +69,23 @@ module GPhoto2
         get_info.not_nil!
       end
 
+      private EMPTY_VALUES = {"none"}
+
+      # Returns widget `value` unless it's empty or is known to be
+      # an empty string, like `none` or raises `NotImplementedError`.
+      def value?
+        begin
+          value = self.value
+        rescue NotImplementedError
+          return
+        end
+        string_value = value.to_s.presence
+        if !string_value || string_value.downcase.in?(EMPTY_VALUES)
+          return
+        end
+        value
+      end
+
       # Returns widget value.
       def value
         get_value
