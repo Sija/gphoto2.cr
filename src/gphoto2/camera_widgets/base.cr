@@ -101,7 +101,7 @@ module GPhoto2
       # ```
       # puts camera[:whitebalance].to_s # => "Automatic"
       # ```
-      def to_s(io)
+      def to_s(io : IO)
         io << value
       end
 
@@ -142,7 +142,7 @@ module GPhoto2
       # ```
       # camera[:autoexposuremode].in? %w(Manual Bulb)
       # ```
-      def in?(other)
+      def in?(other : Enumerable)
         other.any? { |value| self == value }
       end
 

@@ -23,7 +23,7 @@ module GPhoto2
       super(message)
     end
 
-    def to_s(io)
+    def to_s(io : IO)
       if message
         io << message << ' '
       end
