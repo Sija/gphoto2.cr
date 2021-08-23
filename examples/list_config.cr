@@ -15,18 +15,17 @@ def visit(widget, level = 0)
   indent += "  "
 
   puts "#{indent}label: #{widget.label.colorize(:yellow)}"
-  puts "#{indent}info: #{widget.info.colorize(:yellow)}" if !widget.info.try(&.empty?)
+  puts "#{indent}info: #{widget.info.colorize(:yellow)}" if widget.info.presence
   puts "#{indent}type: #{widget.type.colorize(:magenta)}"
   puts "#{indent}value: #{widget.value.try(&.colorize(:blue)) || "<nil>".colorize(:red)}"
 
-  case widget.type
-  when .range?
-    range = widget.as(GPhoto2::CameraWidget::Range).range
+  case widget
+  when GPhoto2::CameraWidget::Range
+    range = widget.range
     step = (range.size > 1) ? range[1] - range[0] : 1.0
-    puts "#{indent}options: #{range.first}..#{range.last}:step(#{step})"
-  when .radio?, .menu?
-    choices = widget.as(GPhoto2::CameraWidget::Radio).choices
-    puts "#{indent}options: #{choices.inspect.colorize(:dark_gray)}"
+    puts "#{indent}range: #{range.first..range.last}/#{step}"
+  when GPhoto2::CameraWidget::Radio
+    puts "#{indent}options: #{widget.choices.inspect.colorize(:dark_gray)}"
   end
 end
 

@@ -14,7 +14,7 @@ GPhoto2::Camera.first do |camera|
   camera.trigger
 
   # Wait for the camera to process all the images.
-  queue = N.times.map do
+  queue = Array.new(N) do
     event = camera.wait_for(:file_added)
 
     # The event data contains a `CameraFile` when the `:file_added` event is
