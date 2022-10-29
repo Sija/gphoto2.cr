@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.36.1">
+<meta name="generator" content="Crystal Docs 1.5.0">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="gphoto2">
 
@@ -395,7 +395,7 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera/filesystem.cr#L3" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera/filesystem.cr#L3" target="_blank">
         gphoto2/camera/filesystem.cr
       </a>
     
@@ -421,21 +421,21 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#/(path):CameraFolder-instance-method" class="signature"><strong>#/</strong>(path) : CameraFolder</a>
+        <a href="#/%28path%29%3ACameraFolder-instance-method" class="signature"><strong>#/</strong>(path) : CameraFolder</a>
         
           <div class="summary"><p>Returns <code><a href="../../GPhoto2/CameraFolder.html">CameraFolder</a></code> instance of the given <em>path</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#filesystem(path:String=&quot;/&quot;):CameraFolder-instance-method" class="signature"><strong>#filesystem</strong>(path : String = <span class="s">&quot;/&quot;</span>) : CameraFolder</a>
+        <a href="#filesystem%28path%3AString%3D%22/%22%29%3ACameraFolder-instance-method" class="signature"><strong>#filesystem</strong>(path : String = <span class="s">&quot;/&quot;</span>) : CameraFolder</a>
         
           <div class="summary"><p>Returns <code><a href="../../GPhoto2/CameraFolder.html">CameraFolder</a></code> instance of the given <em>path</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#filesystem_reset:Nil-instance-method" class="signature"><strong>#filesystem_reset</strong> : Nil</a>
+        <a href="#filesystem_reset%3ANil-instance-method" class="signature"><strong>#filesystem_reset</strong> : Nil</a>
         
           <div class="summary"><p>Clear the filesystem.</p></div>
         
@@ -470,22 +470,21 @@
         
         def <strong>/</strong>(path) : <a href="../../GPhoto2/CameraFolder.html">CameraFolder</a>
 
-        <a class="method-permalink" href="#/(path):CameraFolder-instance-method">#</a>
+        <a class="method-permalink" href="#/%28path%29%3ACameraFolder-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns <code><a href="../../GPhoto2/CameraFolder.html">CameraFolder</a></code> instance of the given <em>path</em>.</p>
-
-<pre><code class="language-crystal"># Get a list of filenames in a path.
-folder = camera/"store_00010001/DCIM/100D5100"
-folder.files.map(&.name) # => ["DSC_0001.JPG", "DSC_0002.JPG", ...]</code></pre>
+<pre><code class="language-crystal"><span class="c"># Get a list of filenames in a path.</span>
+folder <span class="o">=</span> camera<span class="o">/</span><span class="s">&quot;store_00010001/DCIM/100D5100&quot;</span>
+folder.files.map(<span class="o">&amp;</span>.name) <span class="c"># =&gt; [&quot;DSC_0001.JPG&quot;, &quot;DSC_0002.JPG&quot;, ...]</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera/filesystem.cr#L17" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera/filesystem.cr#L17" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -495,22 +494,21 @@ folder.files.map(&.name) # => ["DSC_0001.JPG", "DSC_0002.JPG", ...]</code></pre>
         
         def <strong>filesystem</strong>(path : String = <span class="s">&quot;/&quot;</span>) : <a href="../../GPhoto2/CameraFolder.html">CameraFolder</a>
 
-        <a class="method-permalink" href="#filesystem(path:String=&quot;/&quot;):CameraFolder-instance-method">#</a>
+        <a class="method-permalink" href="#filesystem%28path%3AString%3D%22/%22%29%3ACameraFolder-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns <code><a href="../../GPhoto2/CameraFolder.html">CameraFolder</a></code> instance of the given <em>path</em>.</p>
-
-<pre><code class="language-crystal"># Get a list of filenames in a path.
-folder = camera/"store_00010001/DCIM/100D5100"
-folder.files.map(&.name) # => ["DSC_0001.JPG", "DSC_0002.JPG", ...]</code></pre>
+<pre><code class="language-crystal"><span class="c"># Get a list of filenames in a path.</span>
+folder <span class="o">=</span> camera<span class="o">/</span><span class="s">&quot;store_00010001/DCIM/100D5100&quot;</span>
+folder.files.map(<span class="o">&amp;</span>.name) <span class="c"># =&gt; [&quot;DSC_0001.JPG&quot;, &quot;DSC_0002.JPG&quot;, ...]</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera/filesystem.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera/filesystem.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -520,13 +518,12 @@ folder.files.map(&.name) # => ["DSC_0001.JPG", "DSC_0002.JPG", ...]</code></pre>
         
         def <strong>filesystem_reset</strong> : Nil
 
-        <a class="method-permalink" href="#filesystem_reset:Nil-instance-method">#</a>
+        <a class="method-permalink" href="#filesystem_reset%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Clear the filesystem.</p>
-
 <p>Resets the filesystem. All cached information including the folder tree
 will get lost and will be queried again on demand.</p>
         </div>
@@ -534,7 +531,7 @@ will get lost and will be queried again on demand.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera/filesystem.cr#L25" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera/filesystem.cr#L25" target="_blank">View source</a>]
         
       </div>
     </div>

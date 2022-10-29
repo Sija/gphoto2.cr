@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.36.1">
+<meta name="generator" content="Crystal Docs 1.5.0">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="gphoto2">
 
@@ -407,42 +407,42 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera.cr#L7" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera.cr#L7" target="_blank">
         gphoto2/camera.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera/capture.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera/capture.cr#L4" target="_blank">
         gphoto2/camera/capture.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera/configuration.cr#L2" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera/configuration.cr#L2" target="_blank">
         gphoto2/camera/configuration.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera/event.cr#L2" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera/event.cr#L2" target="_blank">
         gphoto2/camera/event.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera/filesystem.cr#L2" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera/filesystem.cr#L2" target="_blank">
         gphoto2/camera/filesystem.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera/info.cr#L2" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera/info.cr#L2" target="_blank">
         gphoto2/camera/info.cr
       </a>
     
@@ -464,28 +464,28 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#first:self-class-method" class="signature"><strong>.first</strong> : <span class="k">self</span></a>
+        <a href="#first%3Aself-class-method" class="signature"><strong>.first</strong> : <span class="k">self</span></a>
         
           <div class="summary"><p>Returns first available camera or raises <code><a href="../GPhoto2/NoDevicesError.html">NoDevicesError</a></code> when no devices are detected.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#first?:self?-class-method" class="signature"><strong>.first?</strong> : <span class="k">self</span>?</a>
+        <a href="#first%3F%3Aself%3F-class-method" class="signature"><strong>.first?</strong> : <span class="k">self</span>?</a>
         
           <div class="summary"><p>Returns first available camera, or <code>nil</code> when no devices are detected.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#new(model,port)-class-method" class="signature"><strong>.new</strong>(model, port)</a>
+        <a href="#new%28model%3AString%2Cport%3AString%29-class-method" class="signature"><strong>.new</strong>(model : String, port : String)</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#open(model:String,port:String):self-class-method" class="signature"><strong>.open</strong>(model : String, port : String) : <span class="k">self</span></a>
+        <a href="#open%28model%3AString%2Cport%3AString%29%3Aself-class-method" class="signature"><strong>.open</strong>(model : String, port : String) : <span class="k">self</span></a>
         
-          <div class="summary"><pre><code class="language-model = "Nikon DSC D5100 (PTP mode)" port = "usb:250,006""></code></pre></div>
+          <div class="summary"><pre><code class="language-model"></code></pre></div>
         
       </li>
     
@@ -504,28 +504,28 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#all:Array(self)-class-method" class="signature"><strong>.all</strong> : Array(<span class="k">self</span>)</a>
+        <a href="#all%3AArray%28self%29-class-method" class="signature"><strong>.all</strong> : Array(<span class="k">self</span>)</a>
         
           <div class="summary"><p>Returns all available cameras.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#first(&):Nil-class-method" class="signature"><strong>.first</strong>(&) : Nil</a>
+        <a href="#first%28%26%29%3ANil-class-method" class="signature"><strong>.first</strong>(&) : Nil</a>
         
           <div class="summary"><p>Pass a block to automatically close the camera.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#open(model:String,port:String,&):Nil-class-method" class="signature"><strong>.open</strong>(model : String, port : String, &) : Nil</a>
+        <a href="#open%28model%3AString%2Cport%3AString%2C%26%29%3ANil-class-method" class="signature"><strong>.open</strong>(model : String, port : String, &) : Nil</a>
         
           <div class="summary"><p>Pass a block to automatically close the camera.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#where(*,model:String%7CRegex?=nil,port:String%7CRegex?=nil):Array(self)-class-method" class="signature"><strong>.where</strong>(*, model : String | Regex? = <span class="n">nil</span>, port : String | Regex? = <span class="n">nil</span>) : Array(<span class="k">self</span>)</a>
+        <a href="#where%28%2A%2Cmodel%3AString%7CRegex%3F%3Dnil%2Cport%3AString%7CRegex%3F%3Dnil%29%3AArray%28self%29-class-method" class="signature"><strong>.where</strong>(*, model : String | Regex? = <span class="n">nil</span>, port : String | Regex? = <span class="n">nil</span>) : Array(<span class="k">self</span>)</a>
         
           <div class="summary"><p>Filters devices by a given condition.</p></div>
         
@@ -546,60 +546,60 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#==(other:self)-instance-method" class="signature"><strong>#==</strong>(other : <span class="k">self</span>)</a>
+        <a href="#%3D%3D%28other%3Aself%29-instance-method" class="signature"><strong>#==</strong>(other : <span class="k">self</span>)</a>
         
           <div class="summary"><p>Returns <code>true</code> if this reference is the same as <em>other</em>.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#abilities:CameraAbilities-instance-method" class="signature"><strong>#abilities</strong> : CameraAbilities</a>
+        <a href="#abilities%3ACameraAbilities-instance-method" class="signature"><strong>#abilities</strong> : CameraAbilities</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#autorelease(&):Nil-instance-method" class="signature"><strong>#autorelease</strong>(&) : Nil</a>
+        <a href="#autorelease%28%26%29%3ANil-instance-method" class="signature"><strong>#autorelease</strong>(&) : Nil</a>
         
           <div class="summary"><p>Ensures the camera is finalized when passed a block.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#can?(operation:CameraOperation)-instance-method" class="signature"><strong>#can?</strong>(operation : CameraOperation)</a>
+        <a href="#can%3F%28operation%3ACameraOperation%29-instance-method" class="signature"><strong>#can?</strong>(operation : CameraOperation)</a>
         
           <div class="summary"><p>Check camera abilities (see <code><a href="../GPhoto2/CameraOperation.html">CameraOperation</a></code>).</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#close:Nil-instance-method" class="signature"><strong>#close</strong> : Nil</a>
+        <a href="#close%3ANil-instance-method" class="signature"><strong>#close</strong> : Nil</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#context:Context-instance-method" class="signature"><strong>#context</strong> : Context</a>
+        <a href="#context%3AContext-instance-method" class="signature"><strong>#context</strong> : Context</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#exit:Nil-instance-method" class="signature"><strong>#exit</strong> : Nil</a>
+        <a href="#exit%3ANil-instance-method" class="signature"><strong>#exit</strong> : Nil</a>
         
           <div class="summary"><p>Closes a connection to the camera and therefore gives other application the possibility to access the camera, too.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#model:String-instance-method" class="signature"><strong>#model</strong> : String</a>
+        <a href="#model%3AString-instance-method" class="signature"><strong>#model</strong> : String</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#port:String-instance-method" class="signature"><strong>#port</strong> : String</a>
+        <a href="#port%3AString-instance-method" class="signature"><strong>#port</strong> : String</a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#port_info:PortInfo-instance-method" class="signature"><strong>#port_info</strong> : PortInfo</a>
+        <a href="#port_info%3APortInfo-instance-method" class="signature"><strong>#port_info</strong> : PortInfo</a>
         
       </li>
     
@@ -609,7 +609,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#with_port(&):Nil-instance-method" class="signature"><strong>#with_port</strong>(&) : Nil</a>
+        <a href="#with_port%28%26%29%3ANil-instance-method" class="signature"><strong>#with_port</strong>(&) : Nil</a>
         
           <div class="summary"><p>Yields opened instance of <code><a href="../GPhoto2/Port.html">Port</a></code> with already associated camera's <code><a href="../GPhoto2/PortInfo.html">PortInfo</a></code>.</p></div>
         
@@ -628,17 +628,17 @@
   <h3>Instance methods inherited from module <code><a href="../GPhoto2/Camera/Info.html">GPhoto2::Camera::Info</a></code></h3>
   
   
-    <a href="../GPhoto2/Camera/Info.html#about_text:String-instance-method" class="tooltip">
+    <a href="../GPhoto2/Camera/Info.html#about_text%3AString-instance-method" class="tooltip">
       <span>about_text : String</span>
     about_text</a>, 
     
   
-    <a href="../GPhoto2/Camera/Info.html#manual_text:String-instance-method" class="tooltip">
+    <a href="../GPhoto2/Camera/Info.html#manual_text%3AString-instance-method" class="tooltip">
       <span>manual_text : String</span>
     manual_text</a>, 
     
   
-    <a href="../GPhoto2/Camera/Info.html#summary_text:String-instance-method" class="tooltip">
+    <a href="../GPhoto2/Camera/Info.html#summary_text%3AString-instance-method" class="tooltip">
       <span>summary_text : String</span>
     summary_text</a>
     
@@ -657,17 +657,17 @@
   <h3>Instance methods inherited from module <code><a href="../GPhoto2/Camera/Filesystem.html">GPhoto2::Camera::Filesystem</a></code></h3>
   
   
-    <a href="../GPhoto2/Camera/Filesystem.html#/(path):CameraFolder-instance-method" class="tooltip">
+    <a href="../GPhoto2/Camera/Filesystem.html#/%28path%29%3ACameraFolder-instance-method" class="tooltip">
       <span>/(path) : CameraFolder</span>
     /</a>, 
     
   
-    <a href="../GPhoto2/Camera/Filesystem.html#filesystem(path:String=&quot;/&quot;):CameraFolder-instance-method" class="tooltip">
+    <a href="../GPhoto2/Camera/Filesystem.html#filesystem%28path%3AString%3D%22/%22%29%3ACameraFolder-instance-method" class="tooltip">
       <span>filesystem(path : String = <span class="s">&quot;/&quot;</span>) : CameraFolder</span>
     filesystem</a>, 
     
   
-    <a href="../GPhoto2/Camera/Filesystem.html#filesystem_reset:Nil-instance-method" class="tooltip">
+    <a href="../GPhoto2/Camera/Filesystem.html#filesystem_reset%3ANil-instance-method" class="tooltip">
       <span>filesystem_reset : Nil</span>
     filesystem_reset</a>
     
@@ -686,12 +686,12 @@
   <h3>Instance methods inherited from module <code><a href="../GPhoto2/Camera/Event.html">GPhoto2::Camera::Event</a></code></h3>
   
   
-    <a href="../GPhoto2/Camera/Event.html#wait(timeout:Time::Span=2.seconds):CameraEvent-instance-method" class="tooltip">
+    <a href="../GPhoto2/Camera/Event.html#wait%28timeout%3ATime%3A%3ASpan%3D2.seconds%29%3ACameraEvent-instance-method" class="tooltip">
       <span>wait(timeout : Time::Span = <span class="n">2</span>.seconds) : CameraEvent</span>
     wait</a>, 
     
   
-    <a href="../GPhoto2/Camera/Event.html#wait_for(event_type:CameraEventType,timeout:Time::Span=2.seconds):CameraEvent-instance-method" class="tooltip">
+    <a href="../GPhoto2/Camera/Event.html#wait_for%28event_type%3ACameraEventType%2Ctimeout%3ATime%3A%3ASpan%3D2.seconds%29%3ACameraEvent-instance-method" class="tooltip">
       <span>wait_for(event_type : CameraEventType, timeout : Time::Span = <span class="n">2</span>.seconds) : CameraEvent</span>
     wait_for</a>
     
@@ -710,57 +710,57 @@
   <h3>Instance methods inherited from module <code><a href="../GPhoto2/Camera/Configuration.html">GPhoto2::Camera::Configuration</a></code></h3>
   
   
-    <a href="../GPhoto2/Camera/Configuration.html#self-instance-method" class="tooltip">
+    <a href="../GPhoto2/Camera/Configuration.html#%3C%3C%28widget%3ACameraWidget%3A%3ABase%29%3Aself-instance-method" class="tooltip">
       <span><<(widget : CameraWidget::Base) : <span class="k">self</span></span>
     <<</a>, 
     
   
-    <a href="../GPhoto2/Camera/Configuration.html#[](key:String%7CSymbol):CameraWidget::Base-instance-method" class="tooltip">
+    <a href="../GPhoto2/Camera/Configuration.html#%5B%5D%28key%3AString%7CSymbol%29%3ACameraWidget%3A%3ABase-instance-method" class="tooltip">
       <span>[](key : String | Symbol) : CameraWidget::Base</span>
     []</a>, 
     
   
-    <a href="../GPhoto2/Camera/Configuration.html#[]=(key:String%7CSymbol,value)-instance-method" class="tooltip">
+    <a href="../GPhoto2/Camera/Configuration.html#%5B%5D%3D%28key%3AString%7CSymbol%2Cvalue%29-instance-method" class="tooltip">
       <span>[]=(key : String | Symbol, value)</span>
     []=</a>, 
     
   
-    <a href="../GPhoto2/Camera/Configuration.html#[]?(key:String%7CSymbol):CameraWidget::Base?-instance-method" class="tooltip">
+    <a href="../GPhoto2/Camera/Configuration.html#%5B%5D%3F%28key%3AString%7CSymbol%29%3ACameraWidget%3A%3ABase%3F-instance-method" class="tooltip">
       <span>[]?(key : String | Symbol) : CameraWidget::Base?</span>
     []?</a>, 
     
   
-    <a href="../GPhoto2/Camera/Configuration.html#config:Hash(String,CameraWidget::Base)-instance-method" class="tooltip">
+    <a href="../GPhoto2/Camera/Configuration.html#config%3AHash%28String%2CCameraWidget%3A%3ABase%29-instance-method" class="tooltip">
       <span>config : Hash(String, CameraWidget::Base)</span>
     config</a>, 
     
   
-    <a href="../GPhoto2/Camera/Configuration.html#dirty?-instance-method" class="tooltip">
+    <a href="../GPhoto2/Camera/Configuration.html#dirty%3F-instance-method" class="tooltip">
       <span>dirty?</span>
     dirty?</a>, 
     
   
-    <a href="../GPhoto2/Camera/Configuration.html#preserving_config(keys:Array(String%7CSymbol)?=nil,&):Nil-instance-method" class="tooltip">
+    <a href="../GPhoto2/Camera/Configuration.html#preserving_config%28keys%3AArray%28String%7CSymbol%29%3F%3Dnil%2C%26%29%3ANil-instance-method" class="tooltip">
       <span>preserving_config(keys : Array(String | Symbol)? = <span class="n">nil</span>, &) : Nil</span>
     preserving_config</a>, 
     
   
-    <a href="../GPhoto2/Camera/Configuration.html#reload:Nil-instance-method" class="tooltip">
+    <a href="../GPhoto2/Camera/Configuration.html#reload%3ANil-instance-method" class="tooltip">
       <span>reload : Nil</span>
     reload</a>, 
     
   
-    <a href="../GPhoto2/Camera/Configuration.html#save:Bool-instance-method" class="tooltip">
+    <a href="../GPhoto2/Camera/Configuration.html#save%3ABool-instance-method" class="tooltip">
       <span>save : Bool</span>
     save</a>, 
     
   
-    <a href="../GPhoto2/Camera/Configuration.html#update(attributes):Bool-instance-method" class="tooltip">
+    <a href="../GPhoto2/Camera/Configuration.html#update%28attributes%29%3ABool-instance-method" class="tooltip">
       <span>update(attributes) : Bool</span>
     update</a>, 
     
   
-    <a href="../GPhoto2/Camera/Configuration.html#window:CameraWidget::Window-instance-method" class="tooltip">
+    <a href="../GPhoto2/Camera/Configuration.html#window%3ACameraWidget%3A%3AWindow-instance-method" class="tooltip">
       <span>window : CameraWidget::Window</span>
     window</a>
     
@@ -779,17 +779,17 @@
   <h3>Instance methods inherited from module <code><a href="../GPhoto2/Camera/Capture.html">GPhoto2::Camera::Capture</a></code></h3>
   
   
-    <a href="../GPhoto2/Camera/Capture.html#capture:CameraFile-instance-method" class="tooltip">
+    <a href="../GPhoto2/Camera/Capture.html#capture%3ACameraFile-instance-method" class="tooltip">
       <span>capture : CameraFile</span>
     capture</a>, 
     
   
-    <a href="../GPhoto2/Camera/Capture.html#preview:CameraFile-instance-method" class="tooltip">
+    <a href="../GPhoto2/Camera/Capture.html#preview%3ACameraFile-instance-method" class="tooltip">
       <span>preview : CameraFile</span>
     preview</a>, 
     
   
-    <a href="../GPhoto2/Camera/Capture.html#trigger:Nil-instance-method" class="tooltip">
+    <a href="../GPhoto2/Camera/Capture.html#trigger%3ANil-instance-method" class="tooltip">
       <span>trigger : Nil</span>
     trigger</a>
     
@@ -808,22 +808,22 @@
   <h3>Instance methods inherited from module <code><a href="../GPhoto2/Struct.html">GPhoto2::Struct(LibGPhoto2::Camera)</a></code></h3>
   
   
-    <a href="../GPhoto2/Struct.html#ptr:Pointer(T)-instance-method" class="tooltip">
+    <a href="../GPhoto2/Struct.html#ptr%3APointer%28T%29-instance-method" class="tooltip">
       <span>ptr : Pointer(T)</span>
     ptr</a>, 
     
   
-    <a href="../GPhoto2/Struct.html#ptr?:Pointer(T)?-instance-method" class="tooltip">
+    <a href="../GPhoto2/Struct.html#ptr%3F%3APointer%28T%29%3F-instance-method" class="tooltip">
       <span>ptr? : Pointer(T)?</span>
     ptr?</a>, 
     
   
-    <a href="../GPhoto2/Struct.html#to_unsafe:Pointer(T)-instance-method" class="tooltip">
+    <a href="../GPhoto2/Struct.html#to_unsafe%3APointer%28T%29-instance-method" class="tooltip">
       <span>to_unsafe : Pointer(T)</span>
     to_unsafe</a>, 
     
   
-    <a href="../GPhoto2/Struct.html#wrapped:T-instance-method" class="tooltip">
+    <a href="../GPhoto2/Struct.html#wrapped%3AT-instance-method" class="tooltip">
       <span>wrapped : T</span>
     wrapped</a>
     
@@ -835,7 +835,7 @@
   <h3>Constructor methods inherited from module <code><a href="../GPhoto2/Struct.html">GPhoto2::Struct(LibGPhoto2::Camera)</a></code></h3>
   
   
-    <a href="../GPhoto2/Struct.html#new(ptr:Pointer(T)?=nil)-class-method" class="tooltip">
+    <a href="../GPhoto2/Struct.html#new%28ptr%3APointer%28T%29%3F%3Dnil%29-class-method" class="tooltip">
       <span>new(ptr : Pointer(T)? = <span class="n">nil</span>)</span>
     new</a>
     
@@ -883,14 +883,13 @@
         
         def self.<strong>first</strong> : <span class="k">self</span>
 
-        <a class="method-permalink" href="#first:self-class-method">#</a>
+        <a class="method-permalink" href="#first%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns first available camera or raises <code><a href="../GPhoto2/NoDevicesError.html">NoDevicesError</a></code>
 when no devices are detected.</p>
-
 <pre><code class="language-crystal">camera <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::</span><span class="t">Camera</span>.first
 
 <span class="k">begin</span>
@@ -903,7 +902,7 @@ when no devices are detected.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera.cr#L63" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera.cr#L63" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -913,7 +912,7 @@ when no devices are detected.</p>
         
         def self.<strong>first?</strong> : <span class="k">self</span>?
 
-        <a class="method-permalink" href="#first?:self?-class-method">#</a>
+        <a class="method-permalink" href="#first%3F%3Aself%3F-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -925,23 +924,23 @@ are detected.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera.cr#L47" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera.cr#L47" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="new(model,port)-class-method">
+    <div class="entry-detail" id="new(model:String,port:String)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(model, port)
+        def self.<strong>new</strong>(model : String, port : String)
 
-        <a class="method-permalink" href="#new(model,port)-class-method">#</a>
+        <a class="method-permalink" href="#new%28model%3AString%2Cport%3AString%29-class-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera.cr#L123" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera.cr#L123" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -951,7 +950,7 @@ are detected.</p>
         
         def self.<strong>open</strong>(model : String, port : String) : <span class="k">self</span>
 
-        <a class="method-permalink" href="#open(model:String,port:String):self-class-method">#</a>
+        <a class="method-permalink" href="#open%28model%3AString%2Cport%3AString%29%3Aself-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -971,7 +970,7 @@ camera <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera.cr#L90" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera.cr#L90" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -993,36 +992,34 @@ camera <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::
         
         def self.<strong>all</strong> : Array(<span class="k">self</span>)
 
-        <a class="method-permalink" href="#all:Array(self)-class-method">#</a>
+        <a class="method-permalink" href="#all%3AArray%28self%29-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns all available cameras.</p>
-
 <pre><code class="language-crystal">cameras <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::</span><span class="t">Camera</span>.all <span class="c"># =&gt; [#&lt;GPhoto2::Camera&gt;, #&lt;GPhoto2::Camera&gt;, ...]</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera.cr#L27" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera.cr#L27" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="first(&):Nil-class-method">
+    <div class="entry-detail" id="first(&amp;):Nil-class-method">
       <div class="signature">
         
         def self.<strong>first</strong>(&) : Nil
 
-        <a class="method-permalink" href="#first(&):Nil-class-method">#</a>
+        <a class="method-permalink" href="#first%28%26%29%3ANil-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Pass a block to automatically close the camera.</p>
-
 <pre><code class="language-crystal"><span class="t">GPhoto2</span><span class="t">::</span><span class="t">Camera</span>.first <span class="k">do</span> <span class="o">|</span>camera<span class="o">|</span>
   <span class="c"># ...</span>
 <span class="k">end</span></code></pre>
@@ -1031,23 +1028,22 @@ camera <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera.cr#L74" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera.cr#L74" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="open(model:String,port:String,&):Nil-class-method">
+    <div class="entry-detail" id="open(model:String,port:String,&amp;):Nil-class-method">
       <div class="signature">
         
         def self.<strong>open</strong>(model : String, port : String, &) : Nil
 
-        <a class="method-permalink" href="#open(model:String,port:String,&):Nil-class-method">#</a>
+        <a class="method-permalink" href="#open%28model%3AString%2Cport%3AString%2C%26%29%3ANil-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Pass a block to automatically close the camera.</p>
-
 <pre><code class="language-crystal"><span class="t">GPhoto2</span><span class="t">::</span><span class="t">Camera</span>.open(model, port) <span class="k">do</span> <span class="o">|</span>camera<span class="o">|</span>
   <span class="c"># ...</span>
 <span class="k">end</span></code></pre>
@@ -1056,7 +1052,7 @@ camera <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera.cr#L101" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera.cr#L101" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1066,16 +1062,14 @@ camera <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::
         
         def self.<strong>where</strong>(*, model : String | Regex? = <span class="n">nil</span>, port : String | Regex? = <span class="n">nil</span>) : Array(<span class="k">self</span>)
 
-        <a class="method-permalink" href="#where(*,model:String%7CRegex?=nil,port:String%7CRegex?=nil):Array(self)-class-method">#</a>
+        <a class="method-permalink" href="#where%28%2A%2Cmodel%3AString%7CRegex%3F%3Dnil%2Cport%3AString%7CRegex%3F%3Dnil%29%3AArray%28self%29-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Filters devices by a given condition.</p>
-
 <p>Filter keys can be either <em>model</em> or <em>port</em>. Only the first filter is
 used.</p>
-
 <pre><code class="language-crystal"><span class="c"># Find the cameras whose model names contain Nikon.</span>
 cameras <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::</span><span class="t">Camera</span>.where(model: <span class="s">/nikon/</span>i)
 
@@ -1086,7 +1080,7 @@ camera <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera.cr#L117" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera.cr#L117" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1108,7 +1102,7 @@ camera <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::
         
         def <strong>==</strong>(other : <span class="k">self</span>)
 
-        <a class="method-permalink" href="#==(other:self)-instance-method">#</a>
+        <a class="method-permalink" href="#%3D%3D%28other%3Aself%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1123,7 +1117,7 @@ camera <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera.cr#L206" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera.cr#L206" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1133,29 +1127,28 @@ camera <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::
         
         def <strong>abilities</strong> : <a href="../GPhoto2/CameraAbilities.html">CameraAbilities</a>
 
-        <a class="method-permalink" href="#abilities:CameraAbilities-instance-method">#</a>
+        <a class="method-permalink" href="#abilities%3ACameraAbilities-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera.cr#L163" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera.cr#L163" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="autorelease(&):Nil-instance-method">
+    <div class="entry-detail" id="autorelease(&amp;):Nil-instance-method">
       <div class="signature">
         
         def <strong>autorelease</strong>(&) : Nil
 
-        <a class="method-permalink" href="#autorelease(&):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#autorelease%28%26%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Ensures the camera is finalized when passed a block.</p>
-
 <pre><code class="language-crystal"><span class="c"># Find the cameras whose model names contain Nikon.</span>
 cameras <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::</span><span class="t">Camera</span>.where(model: <span class="s">/nikon/</span>i)
 
@@ -1168,7 +1161,7 @@ cameras.first.autorelease <span class="k">do</span> <span class="o">|</span>came
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera.cr#L142" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera.cr#L142" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1178,20 +1171,19 @@ cameras.first.autorelease <span class="k">do</span> <span class="o">|</span>came
         
         def <strong>can?</strong>(operation : <a href="../GPhoto2/CameraOperation.html">CameraOperation</a>)
 
-        <a class="method-permalink" href="#can?(operation:CameraOperation)-instance-method">#</a>
+        <a class="method-permalink" href="#can%3F%28operation%3ACameraOperation%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Check camera abilities (see <code><a href="../GPhoto2/CameraOperation.html">CameraOperation</a></code>).</p>
-
 <pre><code class="language-crystal">camera.can? <span class="n">:capture_image</span> <span class="c"># =&gt; true</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera.cr#L202" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera.cr#L202" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1201,13 +1193,13 @@ cameras.first.autorelease <span class="k">do</span> <span class="o">|</span>came
         
         def <strong>close</strong> : Nil
 
-        <a class="method-permalink" href="#close:Nil-instance-method">#</a>
+        <a class="method-permalink" href="#close%3ANil-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera.cr#L146" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera.cr#L146" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1217,13 +1209,13 @@ cameras.first.autorelease <span class="k">do</span> <span class="o">|</span>came
         
         def <strong>context</strong> : <a href="../GPhoto2/Context.html">Context</a>
 
-        <a class="method-permalink" href="#context:Context-instance-method">#</a>
+        <a class="method-permalink" href="#context%3AContext-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera.cr#L173" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera.cr#L173" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1233,24 +1225,22 @@ cameras.first.autorelease <span class="k">do</span> <span class="o">|</span>came
         
         def <strong>exit</strong> : Nil
 
-        <a class="method-permalink" href="#exit:Nil-instance-method">#</a>
+        <a class="method-permalink" href="#exit%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Closes a connection to the camera and therefore gives other application
 the possibility to access the camera, too.</p>
-
 <p>It is recommended that you call this function when you currently
 don't need the camera.</p>
-
 <p><span class="flag purple">NOTE</span>  The camera will get reinitialized if you try to access the camera again.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera.cr#L159" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera.cr#L159" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1260,13 +1250,13 @@ don't need the camera.</p>
         
         def <strong>model</strong> : String
 
-        <a class="method-permalink" href="#model:String-instance-method">#</a>
+        <a class="method-permalink" href="#model%3AString-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1276,13 +1266,13 @@ don't need the camera.</p>
         
         def <strong>port</strong> : String
 
-        <a class="method-permalink" href="#port:String-instance-method">#</a>
+        <a class="method-permalink" href="#port%3AString-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera.cr#L17" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera.cr#L17" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1292,13 +1282,13 @@ don't need the camera.</p>
         
         def <strong>port_info</strong> : <a href="../GPhoto2/PortInfo.html">PortInfo</a>
 
-        <a class="method-permalink" href="#port_info:PortInfo-instance-method">#</a>
+        <a class="method-permalink" href="#port_info%3APortInfo-instance-method">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera.cr#L168" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera.cr#L168" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1314,26 +1304,24 @@ don't need the camera.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera.cr#L126" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera.cr#L126" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="with_port(&):Nil-instance-method">
+    <div class="entry-detail" id="with_port(&amp;):Nil-instance-method">
       <div class="signature">
         
         def <strong>with_port</strong>(&) : Nil
 
-        <a class="method-permalink" href="#with_port(&):Nil-instance-method">#</a>
+        <a class="method-permalink" href="#with_port%28%26%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Yields opened instance of <code><a href="../GPhoto2/Port.html">Port</a></code> with already associated camera's <code><a href="../GPhoto2/PortInfo.html">PortInfo</a></code>.
 Port is automatically closed on block exit/exception.</p>
-
 <p>To reset given camera's port you can do:</p>
-
 <pre><code class="language-crystal">camera.with_port <span class="k">do</span> <span class="o">|</span>port<span class="o">|</span>
   camera.exit
   port.reset
@@ -1343,7 +1331,7 @@ Port is automatically closed on block exit/exception.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera.cr#L186" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera.cr#L186" target="_blank">View source</a>]
         
       </div>
     </div>

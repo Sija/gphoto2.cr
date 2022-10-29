@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.36.1">
+<meta name="generator" content="Crystal Docs 1.5.0">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="gphoto2">
 
@@ -348,215 +348,199 @@
 
 
 <div class="main-content">
-<h1><a id="gphoto2.cr-cihttpsgithub.comsijagphoto2.cractionsworkflowsci.ymlbadge.svghttpsgithub.comsijagphoto2.cractionsworkflowsci.yml-releaseshttpsimg.shields.iogithubreleasesijagphoto2.cr.svghttpsgithub.comsijagphoto2.crreleases-licensehttpsimg.shields.iogithublicensesijagphoto2.cr.svghttpsgithub.comsijagphoto2.crblobmasterlicense" class="anchor" href="#gphoto2.cr-cihttpsgithub.comsijagphoto2.cractionsworkflowsci.ymlbadge.svghttpsgithub.comsijagphoto2.cractionsworkflowsci.yml-releaseshttpsimg.shields.iogithubreleasesijagphoto2.cr.svghttpsgithub.comsijagphoto2.crreleases-licensehttpsimg.shields.iogithublicensesijagphoto2.cr.svghttpsgithub.comsijagphoto2.crblobmasterlicense">
-  <svg class="octicon-link" aria-hidden="true">
+<h1><a id="gphoto2.cr-ci-releases-license" class="anchor" href="#gphoto2.cr-ci-releases-license">  <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
-</a>gphoto2.cr <a href="https://github.com/Sija/gphoto2.cr/actions/workflows/ci.yml"><img src="https://github.com/Sija/gphoto2.cr/actions/workflows/ci.yml/badge.svg" alt="CI"/></a> <a href="https://github.com/Sija/gphoto2.cr/releases"><img src="https://img.shields.io/github/release/Sija/gphoto2.cr.svg" alt="Releases"/></a> <a href="https://github.com/Sija/gphoto2.cr/blob/master/LICENSE"><img src="https://img.shields.io/github/license/Sija/gphoto2.cr.svg" alt="License"/></a></h1>
-
-<p><strong>gphoto2.cr</strong> provides an FFI for common functions in [libgphoto2][gphoto].
+</a>gphoto2.cr <a href="https://github.com/Sija/gphoto2.cr/actions/workflows/ci.yml"><img src="https://github.com/Sija/gphoto2.cr/actions/workflows/ci.yml/badge.svg" alt="CI" /></a> <a href="https://github.com/Sija/gphoto2.cr/releases"><img src="https://img.shields.io/github/release/Sija/gphoto2.cr.svg" alt="Releases" /></a> <a href="https://github.com/Sija/gphoto2.cr/blob/master/LICENSE"><img src="https://img.shields.io/github/license/Sija/gphoto2.cr.svg" alt="License" /></a></h1>
+<p><strong>gphoto2.cr</strong> provides an FFI for common functions in <a href="http://www.gphoto.org/">libgphoto2</a>.
 It also includes a facade to interact with the library in a more idiomatic Crystal way.</p>
-
 <h2><a id="installation" class="anchor" href="#installation">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Installation</h2>
-
 <h3><a id="prerequisites" class="anchor" href="#prerequisites">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Prerequisites</h3>
-
-<ul><li>Crystal >= 0.35.1</li><li>libgphoto2 >= 2.5.2</li><li>libgphoto2_port >= 0.10.1</li></ul></ul>
-
+<ul>
+<li>Crystal &gt;= 0.35.1</li>
+<li>libgphoto2 &gt;= 2.5.2</li>
+<li>libgphoto2_port &gt;= 0.10.1</li>
+</ul>
 <p>To install the latest libgphoto2, you can use <code>homebrew</code> or <code>apt-get</code>, depending on the platform:</p>
-
 <h4><a id="mac-os-x" class="anchor" href="#mac-os-x">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Mac OS X</h4>
-
 <pre><code class="language-crystal">$ brew install libgphoto2</code></pre>
-
 <h4><a id="debianubuntu" class="anchor" href="#debianubuntu">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Debian/Ubuntu</h4>
-
 <pre><code class="language-crystal">$ apt-get install libgphoto2-6 libgphoto2-dev libgphoto2-port12</code></pre>
-
 <h3><a id="shard" class="anchor" href="#shard">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Shard</h3>
-
 <p>Add this to your application's <code>shard.yml</code>:</p>
-
 <pre><code class="language-yaml">dependencies:
   gphoto2:
     github: Sija/gphoto2.cr</code></pre>
-
 <h2><a id="usage" class="anchor" href="#usage">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Usage</h2>
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;gphoto2&quot;</span>
 
-<pre><code class="language-crystal">require "gphoto2"
+<span class="c"># list available cameras</span>
+cameras <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::</span><span class="t">Camera</span>.all
+<span class="c"># =&gt; [#, ...]</span>
 
-# list available cameras
-cameras = GPhoto2::Camera.all
-# => [#, ...]
+<span class="c"># list found cameras by model and port path</span>
+cameras.map { <span class="o">|</span>c<span class="o">|</span> [c.model, c.port] }
+<span class="c"># =&gt; [[&quot;Nikon DSC D5100 (PTP mode)&quot;, &quot;usb:250,006&quot;], ...]</span>
 
-# list found cameras by model and port path
-cameras.map { |c| [c.model, c.port] }
-# => [["Nikon DSC D5100 (PTP mode)", "usb:250,006"], ...]
+<span class="c"># use the first camera</span>
+camera <span class="o">=</span> cameras.first
 
-# use the first camera
-camera = cameras.first
+<span class="c"># ...or more conveniently</span>
+camera <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::</span><span class="t">Camera</span>.first
 
-# ...or more conveniently
-camera = GPhoto2::Camera.first
+<span class="c"># search by model name</span>
+camera <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::</span><span class="t">Camera</span>.where(model: <span class="s">/nikon/</span>i).first
 
-# search by model name
-camera = GPhoto2::Camera.where(model: /nikon/i).first
-
-# the above examples require the camera be manually closed when done
+<span class="c"># the above examples require the camera be manually closed when done</span>
 camera.close
 
-# pass a block to automatically close the camera
-GPhoto2::Camera.first do |camera|
-  # ...
-end
+<span class="c"># pass a block to automatically close the camera</span>
+<span class="t">GPhoto2</span><span class="t">::</span><span class="t">Camera</span>.first <span class="k">do</span> <span class="o">|</span>camera<span class="o">|</span>
+  <span class="c"># ...</span>
+<span class="k">end</span>
 
-# ...or use `#autorelease` on any `Camera` instance
-camera.autorelease do
-  # ...
-end
+<span class="c"># ...or use `#autorelease` on any `Camera` instance</span>
+camera.autorelease <span class="k">do</span>
+  <span class="c"># ...</span>
+<span class="k">end</span>
 
-# check camera abilities (see `GPhoto2::CameraOperation`)
-camera.can? :capture_image
-# => true
+<span class="c"># check camera abilities (see `GPhoto2::CameraOperation`)</span>
+camera.can? <span class="n">:capture_image</span>
+<span class="c"># =&gt; true</span>
 
-# list camera configuration names
+<span class="c"># list camera configuration names</span>
 camera.config.keys
-# => ["autofocusdrive", "manualfocusdrive", "controlmode", ...]
+<span class="c"># =&gt; [&quot;autofocusdrive&quot;, &quot;manualfocusdrive&quot;, &quot;controlmode&quot;, ...]</span>
 
-# read the current configuration value of an option
-camera[:expprogram].value
-# => "M"
-camera[:whitebalance].value
-# => "Automatic"
+<span class="c"># read the current configuration value of an option</span>
+camera[<span class="n">:expprogram</span>].value
+<span class="c"># =&gt; &quot;M&quot;</span>
+camera[<span class="n">:whitebalance</span>].value
+<span class="c"># =&gt; &quot;Automatic&quot;</span>
 
-# compare the current configuration value
-camera[:whitebalance] == "Automatic"
-camera[:whitebalance] == /Automatic/i
-camera[:whitebalance] == :automatic
-# => true
+<span class="c"># compare the current configuration value</span>
+camera[<span class="n">:whitebalance</span>] <span class="o">==</span> <span class="s">&quot;Automatic&quot;</span>
+camera[<span class="n">:whitebalance</span>] <span class="o">==</span> <span class="s">/Automatic/</span>i
+camera[<span class="n">:whitebalance</span>] <span class="o">==</span> <span class="n">:automatic</span>
+<span class="c"># =&gt; true</span>
 
-# list valid choices of a configuration option
-camera[:whitebalance].as_radio.choices
-# => ["Automatic", "Daylight", "Fluorescent", "Tungsten", ...]
+<span class="c"># list valid choices of a configuration option</span>
+camera[<span class="n">:whitebalance</span>].as_radio.choices
+<span class="c"># =&gt; [&quot;Automatic&quot;, &quot;Daylight&quot;, &quot;Fluorescent&quot;, &quot;Tungsten&quot;, ...]</span>
 
-# check if the configuration has changed
+<span class="c"># check if the configuration has changed</span>
 camera.dirty?
-# => false
+<span class="c"># =&gt; false</span>
 
-# change camera configuration
-camera["iso"] = 800
-camera["f-number"] = "f/4.5"
-camera["shutterspeed2"] = "1/30"
+<span class="c"># change camera configuration</span>
+camera[<span class="s">&quot;iso&quot;</span>] <span class="o">=</span> <span class="n">800</span>
+camera[<span class="s">&quot;f-number&quot;</span>] <span class="o">=</span> <span class="s">&quot;f/4.5&quot;</span>
+camera[<span class="s">&quot;shutterspeed2&quot;</span>] <span class="o">=</span> <span class="s">&quot;1/30&quot;</span>
 
-# set radio widget value to first matching option
-camera[:imageformat] = /Medium(.+?)JPEG/i
+<span class="c"># set radio widget value to first matching option</span>
+camera[<span class="n">:imageformat</span>] <span class="o">=</span> <span class="s">/Medium(.+?)JPEG/</span>i
 
-# check if the configuration has changed
+<span class="c"># check if the configuration has changed</span>
 camera.dirty?
-# => true
+<span class="c"># =&gt; true</span>
 
-# apply the new configuration to the device
+<span class="c"># apply the new configuration to the device</span>
 camera.save
 
-# alternatively, update the camera configuration in one go
-camera.update({ iso: 200, shutterspeed2: "1/60", "f-number": "f/1.8" })
+<span class="c"># alternatively, update the camera configuration in one go</span>
+camera.update({ iso: <span class="n">200</span>, shutterspeed2: <span class="s">&quot;1/60&quot;</span>, <span class="s">&quot;f-number&quot;</span>: <span class="s">&quot;f/1.8&quot;</span> })
 
-# ...do all of above while preserving camera original configuration
-camera.preserving_config do
-  # ...
-end
+<span class="c"># ...do all of above while preserving camera original configuration</span>
+camera.preserving_config <span class="k">do</span>
+  <span class="c"># ...</span>
+<span class="k">end</span>
 
-# take a photo
-file = camera.capture
+<span class="c"># take a photo</span>
+file <span class="o">=</span> camera.capture
 
-# ...and save it to the current working directory
+<span class="c"># ...and save it to the current working directory</span>
 file.save
 
-# ...or to a specific pathname
-file.save("/tmp/out.jpg")
+<span class="c"># ...or to a specific pathname</span>
+file.save(<span class="s">&quot;/tmp/out.jpg&quot;</span>)
 
-# traverse the camera filesystem
-folder = camera/"store_00010001/DCIM/100D5100"
+<span class="c"># traverse the camera filesystem</span>
+folder <span class="o">=</span> camera<span class="o">/</span><span class="s">&quot;store_00010001/DCIM/100D5100&quot;</span>
 
-# list files
-files = folder.files
-folder.files.map(&.name)
-# => ["DSC_0001.JPG", "DSC_0002.JPG", ...]
+<span class="c"># list files</span>
+files <span class="o">=</span> folder.files
+folder.files.map(<span class="o">&amp;</span>.name)
+<span class="c"># =&gt; [&quot;DSC_0001.JPG&quot;, &quot;DSC_0002.JPG&quot;, ...]</span>
 
-# copy a file from the camera
-file = files.first
+<span class="c"># copy a file from the camera</span>
+file <span class="o">=</span> files.first
 file.save
 
-# ...and then delete it from the camera
+<span class="c"># ...and then delete it from the camera</span>
 file.delete</code></pre>
-
-<p>More examples can be found in [<code>examples/</code>][examples]. Documentation can be generated using <code>crystal doc</code> task or [browsed online][docs].</p>
-
-<p>[gphoto]: http://www.gphoto.org/
-[examples]: https://github.com/Sija/gphoto2.cr/tree/master/examples
-[docs]: https://sija.github.io/gphoto2.cr</p>
-
+<p>More examples can be found in <a href="https://github.com/Sija/gphoto2.cr/tree/master/examples"><code>examples/</code></a>. Documentation can be generated using <code>crystal doc</code> task or <a href="https://sija.github.io/gphoto2.cr">browsed online</a>.</p>
 <h2><a id="development" class="anchor" href="#development">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Development</h2>
-
 <p>Enable debug mode by passing <code>DEBUG=1</code> env variable:</p>
-
-<pre><code class="language-crystal">DEBUG=1 crystal examples/list_cameras.cr</code></pre>
-
+<pre><code class="language-crystal"><span class="t">DEBUG</span><span class="o">=</span><span class="n">1</span> crystal examples<span class="o">/</span>list_cameras.cr</code></pre>
 <p>Run specs with:</p>
-
 <pre><code class="language-crystal">crystal spec</code></pre>
-
 <h2><a id="contributing" class="anchor" href="#contributing">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Contributing</h2>
-
-<ol><li>Fork it ()</li><li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li><li>Commit your changes (<code>git commit -am 'Add some feature'</code>)</li><li>Push to the branch (<code>git push origin my-new-feature</code>)</li><li>Create a new Pull Request</li></ol>
-
+<ol>
+<li>Fork it ()</li>
+<li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
+<li>Commit your changes (<code>git commit -am 'Add some feature'</code>)</li>
+<li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
+<li>Create a new Pull Request</li>
+</ol>
 <h2><a id="thanks" class="anchor" href="#thanks">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Thanks! 🎉</h2>
-
-<ul><li>The [gphoto2][gphoto] developers for building such an awesome tool</li><li><a href="https://github.com/zaeleus">@zaeleus</a> for the <a href="https://github.com/zaeleus/ffi-gphoto2">ffi-gphoto2</a> gem, on which this library is heavily inspired</li></ul>
-
+<ul>
+<li>The <a href="http://www.gphoto.org/">gphoto2</a> developers for building such an awesome tool</li>
+<li><a href="https://github.com/zaeleus">@zaeleus</a> for the <a href="https://github.com/zaeleus/ffi-gphoto2">ffi-gphoto2</a> gem, on which this library is heavily inspired</li>
+</ul>
 <h2><a id="contributors" class="anchor" href="#contributors">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>Contributors</h2>
-
-<ul><li><a href="https://github.com/Sija">@Sija</a> Sijawusz Pur Rahnama - creator, maintainer</li></ul>
+<ul>
+<li><a href="https://github.com/Sija">@Sija</a> Sijawusz Pur Rahnama - creator, maintainer</li>
+</ul>
 </div>
 </body>
 </html>

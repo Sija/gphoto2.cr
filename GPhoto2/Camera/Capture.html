@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="generator" content="Crystal Docs 0.36.1">
+<meta name="generator" content="Crystal Docs 1.5.0">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="gphoto2">
 
@@ -395,7 +395,7 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera/capture.cr#L5" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera/capture.cr#L5" target="_blank">
         gphoto2/camera/capture.cr
       </a>
     
@@ -421,21 +421,21 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#capture:CameraFile-instance-method" class="signature"><strong>#capture</strong> : CameraFile</a>
+        <a href="#capture%3ACameraFile-instance-method" class="signature"><strong>#capture</strong> : CameraFile</a>
         
-          <div class="summary"><pre><code class="language-# Take a photo."></code></pre></div>
+          <div class="summary"><pre><code class="language-#"></code></pre></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#preview:CameraFile-instance-method" class="signature"><strong>#preview</strong> : CameraFile</a>
+        <a href="#preview%3ACameraFile-instance-method" class="signature"><strong>#preview</strong> : CameraFile</a>
         
           <div class="summary"><p>Captures a preview from the camera.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#trigger:Nil-instance-method" class="signature"><strong>#trigger</strong> : Nil</a>
+        <a href="#trigger%3ANil-instance-method" class="signature"><strong>#trigger</strong> : Nil</a>
         
           <div class="summary"><p>Triggers a capture and immedately returns.</p></div>
         
@@ -470,7 +470,7 @@
         
         def <strong>capture</strong> : <a href="../../GPhoto2/CameraFile.html">CameraFile</a>
 
-        <a class="method-permalink" href="#capture:CameraFile-instance-method">#</a>
+        <a class="method-permalink" href="#capture%3ACameraFile-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -485,7 +485,7 @@ file.save</code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera/capture.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera/capture.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -495,16 +495,14 @@ file.save</code></pre>
         
         def <strong>preview</strong> : <a href="../../GPhoto2/CameraFile.html">CameraFile</a>
 
-        <a class="method-permalink" href="#preview:CameraFile-instance-method">#</a>
+        <a class="method-permalink" href="#preview%3ACameraFile-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Captures a preview from the camera.</p>
-
 <p>Previews are not stored on the camera but are returned as data in a
 <code><a href="../../GPhoto2/CameraFile.html">GPhoto2::CameraFile</a></code>.</p>
-
 <pre><code class="language-crystal"><span class="c"># Capturing a preview is like using `Camera#capture`.</span>
 file <span class="o">=</span> camera.preview
 
@@ -518,7 +516,7 @@ file.data <span class="c"># =&gt; &quot;\xFF\xD8\xFF\xDB\x00\x84\x00\x06...&quot
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera/capture.cr#L55" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera/capture.cr#L55" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -528,17 +526,15 @@ file.data <span class="c"># =&gt; &quot;\xFF\xD8\xFF\xDB\x00\x84\x00\x06...&quot
         
         def <strong>trigger</strong> : Nil
 
-        <a class="method-permalink" href="#trigger:Nil-instance-method">#</a>
+        <a class="method-permalink" href="#trigger%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Triggers a capture and immedately returns.</p>
-
-<p>A camera trigger is the first half of a <code><a href="../../GPhoto2/Camera/Capture.html#capture:CameraFile-instance-method">#capture</a></code>. Instead of
+<p>A camera trigger is the first half of a <code><a href="../../GPhoto2/Camera/Capture.html#capture%3ACameraFile-instance-method">#capture</a></code>. Instead of
 returning a <code><a href="../../GPhoto2/CameraFile.html">GPhoto2::CameraFile</a></code>, a trigger immediately returns and
 the caller has to poll for events.</p>
-
 <pre><code class="language-crystal">camera.trigger
 event <span class="o">=</span> camera.wait_for(<span class="n">:file_added</span>)
 event.data <span class="c"># =&gt; CameraFile</span></code></pre>
@@ -547,7 +543,7 @@ event.data <span class="c"># =&gt; CameraFile</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/881c3c18/src/gphoto2/camera/capture.cr#L35" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/13f8b2d4/src/gphoto2/camera/capture.cr#L35" target="_blank">View source</a>]
         
       </div>
     </div>
