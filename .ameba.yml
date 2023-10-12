@@ -1,2 +1,9 @@
 Excluded:
   - examples
+
+Lint/NotNil:
+  Enabled: false
+
+Lint/Formatting:
+  Excluded:
+    - src/lib/**/*

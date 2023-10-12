@@ -1,6 +1,6 @@
 module GPhoto2
   module Struct(T)
-    getter  ptr : T* { Pointer(T).null }
+    getter ptr : T* { Pointer(T).null }
     getter? ptr : T*?
 
     def initialize(ptr : T*? = nil)

@@ -71,7 +71,7 @@ module GPhoto2
     #   # ...
     # end
     # ```
-    def self.first : Nil
+    def self.first(&) : Nil
       first.autorelease { |camera| yield camera }
     end
 
@@ -98,7 +98,7 @@ module GPhoto2
     #   # ...
     # end
     # ```
-    def self.open(model : String, port : String) : Nil
+    def self.open(model : String, port : String, &) : Nil
       open(model, port).autorelease { |camera| yield camera }
     end
 
@@ -139,7 +139,7 @@ module GPhoto2
     #   # ...
     # end
     # ```
-    def autorelease : Nil
+    def autorelease(&) : Nil
       yield self ensure close
     end
 
@@ -183,7 +183,7 @@ module GPhoto2
     #   port.reset
     # end
     # ```
-    def with_port : Nil
+    def with_port(&) : Nil
       port = Port.new
       port.info = port_info
       port.open
