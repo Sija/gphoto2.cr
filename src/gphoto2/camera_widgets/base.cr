@@ -69,26 +69,20 @@ module GPhoto2
         get_info.not_nil!
       end
 
-      private EMPTY_VALUES = {"none"}
+      private EMPTY_VALUES = {nil, "none"}
 
       # Returns widget `value` unless it's empty or is known to be
       # an empty string, like `none` or raises `NotImplementedError`.
       def value?
-        begin
-          value = self.value
-        rescue NotImplementedError
-          return
-        end
-        string_value = value.to_s.presence
-        if !string_value || string_value.downcase.in?(EMPTY_VALUES)
-          return
-        end
         value
+      rescue NotImplementedError
       end
 
       # Returns widget value.
       def value
-        get_value
+        get_value.tap do |value|
+          return if value.to_s.presence.try(&.downcase).in?(EMPTY_VALUES)
+        end
       end
 
       # Sets widget value.
