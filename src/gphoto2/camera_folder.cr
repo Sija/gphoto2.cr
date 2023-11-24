@@ -90,14 +90,14 @@ module GPhoto2
       list = CameraList.new
       context.check! \
         LibGPhoto2.gp_camera_folder_list_files(@camera, @path, list, context)
-      list.to_a.map { |f| open f.name }
+      list.to_a.map { |file| open file.name }
     end
 
     private def folder_list_folders
       list = CameraList.new
       context.check! \
         LibGPhoto2.gp_camera_folder_list_folders(@camera, @path, list, context)
-      list.to_a.map { |f| cd f.name }
+      list.to_a.map { |folder| cd folder.name }
     end
 
     private def folder_delete_all
