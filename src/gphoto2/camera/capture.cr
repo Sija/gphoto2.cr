@@ -21,7 +21,7 @@ module GPhoto2
         CameraFile.new(self, path.folder, path.name)
       end
 
-      # Triggers a capture and immedately returns.
+      # Triggers a capture and immediately returns.
       #
       # A camera trigger is the first half of a `#capture`. Instead of
       # returning a `GPhoto2::CameraFile`, a trigger immediately returns and
