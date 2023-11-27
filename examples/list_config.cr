@@ -21,7 +21,7 @@ def visit(widget, level = 0)
 
   case widget
   when GPhoto2::CameraWidget::Range
-    puts "#{indent}range: #{widget.range}/#{range.step}"
+    puts "#{indent}range: #{widget.range}/#{widget.step}"
     puts "#{indent}options: #{widget.choices.inspect.colorize(:dark_gray)}"
   when GPhoto2::CameraWidget::Radio
     puts "#{indent}options: #{widget.choices.inspect.colorize(:dark_gray)}"
