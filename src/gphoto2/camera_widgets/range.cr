@@ -28,7 +28,7 @@ module GPhoto2
       protected def get_value
         ptr = Pointer(LibC::Float).malloc
         get_value_ptr ptr
-        ptr.value
+        ptr.value.to_f32
       end
 
       protected def set_value(value)

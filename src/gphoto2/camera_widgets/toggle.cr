@@ -6,7 +6,7 @@ module GPhoto2
       protected def get_value
         ptr = Pointer(LibC::Int).malloc
         get_value_ptr ptr
-        ptr.value
+        ptr.value == 1
       end
 
       protected def set_value(value)
