@@ -15,17 +15,17 @@ module GPhoto2
         {% unless @type.abstract? %}
           {% factory_id = @type.name.gsub(/^(.+)::(.+)$/, "\\2").underscore %}
 
-          ::GPhoto2::CameraWidget.widgets[{{factory_id.stringify}}] = self
+          ::GPhoto2::CameraWidget.widgets[{{ factory_id.stringify }}] = self
 
           class ::GPhoto2::CameraWidget::Base
-            # Returns widget as `{{factory_id.camelcase}}`, `nil` otherwise.
-            def as_{{factory_id}}? : {{@type.name}}?
-              self.as?({{@type.name}})
+            # Returns widget as `{{ factory_id.camelcase }}`, `nil` otherwise.
+            def as_{{ factory_id }}? : {{ @type.name }}?
+              self.as?({{ @type.name }})
             end
 
-            # Returns widget as `{{factory_id.camelcase}}`, raises otherwise.
-            def as_{{factory_id}} : {{@type.name}}
-              self.as({{@type.name}})
+            # Returns widget as `{{ factory_id.camelcase }}`, raises otherwise.
+            def as_{{ factory_id }} : {{ @type.name }}
+              self.as({{ @type.name }})
             end
           end
         {% end %}
