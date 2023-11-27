@@ -86,7 +86,6 @@ camera[:whitebalance].value
 
 # compare the current configuration value
 camera[:whitebalance] == "Automatic"
-camera[:whitebalance] == /Automatic/i
 camera[:whitebalance] == :automatic
 # => true
 

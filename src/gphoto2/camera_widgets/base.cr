@@ -139,15 +139,6 @@ module GPhoto2
         self.to_s == other.to_s.capitalize
       end
 
-      # Compares `#value` with given `Regex`.
-      #
-      # ```
-      # camera[:whitebalance] == /Automatic/
-      # ```
-      def ==(other : Regex)
-        other === self.to_s
-      end
-
       # Returns `true` if `#value` matches at least one element of the collection.
       #
       # ```
