@@ -1,10 +1,10 @@
 require "./struct"
 
 module GPhoto2
-  alias CameraFileType = LibGPhoto2::CameraFileType
-
   class CameraFile
     include GPhoto2::Struct(LibGPhoto2::CameraFile)
+
+    alias Type = LibGPhoto2::CameraFileType
 
     # The preview data is assumed to be a jpg.
     PREVIEW_FILENAME = "capture_preview.jpg"
@@ -118,7 +118,7 @@ module GPhoto2
       {data, size}
     end
 
-    private def get(type = CameraFileType::Normal)
+    private def get(type = Type::Normal)
       context.check! \
         LibGPhoto2.gp_camera_file_get(@camera, folder, name, type, self, context)
     end
@@ -134,7 +134,7 @@ module GPhoto2
       {offset, size}
     end
 
-    private def _read(type = CameraFileType::Normal)
+    private def _read(type = Type::Normal)
       buffer = Bytes.new(BUFFER_SIZE)
       offset, size = _read(buffer, 0_u64, type)
 

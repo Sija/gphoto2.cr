@@ -2,8 +2,6 @@ require "./struct"
 require "./camera/*"
 
 module GPhoto2
-  alias CameraOperation = LibGPhoto2::CameraOperation
-
   class Camera
     include GPhoto2::Struct(LibGPhoto2::Camera)
 
@@ -12,6 +10,8 @@ module GPhoto2
     include Event
     include Filesystem
     include Info
+
+    alias Operation = LibGPhoto2::CameraOperation
 
     getter model : String
     getter port : String
@@ -194,12 +194,12 @@ module GPhoto2
       end
     end
 
-    # Check camera abilities (see `CameraOperation`).
+    # Check camera abilities (see `Operation`).
     #
     # ```
     # camera.can? :capture_image # => true
     # ```
-    def can?(operation : CameraOperation)
+    def can?(operation : Operation)
       abilities.operations.includes?(operation)
     end
 

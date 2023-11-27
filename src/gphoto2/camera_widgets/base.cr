@@ -2,9 +2,9 @@ require "../error"
 require "../struct"
 
 module GPhoto2
-  alias CameraWidgetType = LibGPhoto2::CameraWidgetType
-
   class CameraWidget
+    alias Type = LibGPhoto2::CameraWidgetType
+
     abstract class Base
       include GPhoto2::Struct(LibGPhoto2::CameraWidget)
 
@@ -45,7 +45,7 @@ module GPhoto2
       end
 
       # Returns type of the widget.
-      def type : CameraWidgetType
+      def type : Type
         get_type
       end
 

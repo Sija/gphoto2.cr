@@ -1,8 +1,8 @@
 module GPhoto2
-  alias CameraCaptureType = LibGPhoto2::CameraCaptureType
-
   class Camera
     module Capture
+      alias Type = LibGPhoto2::CameraCaptureType
+
       # ```
       # # Take a photo.
       # file = camera.capture
@@ -15,7 +15,7 @@ module GPhoto2
       end
 
       # :nodoc:
-      def capture(type : CameraCaptureType) : CameraFile
+      def capture(type : Type) : CameraFile
         save
         path = _capture(type)
         CameraFile.new(self, path.folder, path.name)

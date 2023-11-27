@@ -1,22 +1,22 @@
 require "../managed_struct"
 
 module GPhoto2
-  alias CameraFileInfoFields = LibGPhoto2::CameraFileInfoFields
-  alias CameraFileStatus = LibGPhoto2::CameraFileStatus
-
   class CameraFileInfo
+    alias Fields = LibGPhoto2::CameraFileInfoFields
+    alias Status = LibGPhoto2::CameraFileStatus
+
     abstract class Base
       # include GPhoto2::ManagedStruct(LibGPhoto2::CameraFileInfo)
 
-      def fields : CameraFileInfoFields
+      def fields : Fields
         wrapped.fields
       end
 
-      def field?(field : CameraFileInfoFields)
+      def field?(field : Fields)
         fields.includes?(field)
       end
 
-      def status : CameraFileStatus?
+      def status : Status?
         wrapped.status if field?(:status)
       end
 

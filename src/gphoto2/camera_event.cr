@@ -1,7 +1,11 @@
 module GPhoto2
-  alias CameraEventType = LibGPhoto2::CameraEventType
+  struct CameraEvent(T)
+    alias Type = LibGPhoto2::CameraEventType
 
-  record CameraEvent(T),
-    type : CameraEventType,
-    data : T
+    getter type : Type
+    getter data : T
+
+    def initialize(@type : Type, @data)
+    end
+  end
 end

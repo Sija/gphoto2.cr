@@ -1,9 +1,9 @@
 require "./error"
 
 module GPhoto2
-  alias ContextFeedback = LibGPhoto2::GPContextFeedback
-
   class Context
+    alias Feedback = LibGPhoto2::GPContextFeedback
+
     module Callbacks
       macro set_callback(key, callback_type, args, &block)
         getter! {{ key.id }}_callback : {{ callback_type.id }}
@@ -49,11 +49,7 @@ module GPhoto2
       end
 
       set_callback :cancel, Proc(Bool), [context, data] do
-        if data_as_callback.call
-          ContextFeedback::Cancel
-        else
-          ContextFeedback::OK
-        end
+        data_as_callback.call ? Feedback::Cancel : Feedback::OK
       end
 
       set_callback :idle, Proc(Void), [context, data] do
