@@ -20,8 +20,8 @@ module GPhoto2
         wrapped.status if field?(:status)
       end
 
-      def size : LibC::UInt64T?
-        wrapped.size if field?(:size)
+      def size : UInt64?
+        wrapped.size.to_u64 if field?(:size)
       end
 
       def type : String?

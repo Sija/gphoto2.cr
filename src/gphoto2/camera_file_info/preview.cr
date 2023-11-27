@@ -5,12 +5,12 @@ module GPhoto2
     class Preview < Base
       include GPhoto2::ManagedStruct(LibGPhoto2::CameraFileInfoPreview)
 
-      def width : LibC::UInt32T?
-        wrapped.width if field?(:width)
+      def width : UInt32?
+        wrapped.width.to_u32 if field?(:width)
       end
 
-      def height : LibC::UInt32T?
-        wrapped.height if field?(:height)
+      def height : UInt32?
+        wrapped.height.to_u32 if field?(:height)
       end
     end
   end
