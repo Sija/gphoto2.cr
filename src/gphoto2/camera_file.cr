@@ -60,8 +60,8 @@ module GPhoto2
     end
 
     # Returns file size (in bytes).
-    def size : LibC::ULong
-      data_and_size.last
+    def size : UInt64
+      data_and_size.last.to_u64
     end
 
     # Returns file `#data` as `Bytes`.

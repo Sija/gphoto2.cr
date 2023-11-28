@@ -50,8 +50,8 @@ module GPhoto2
       end
 
       # Returns widget numerical id.
-      def id : LibC::Int
-        get_id
+      def id : Int32
+        get_id.to_i32
       end
 
       # Returns widget name.
