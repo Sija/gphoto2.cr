@@ -40,32 +40,32 @@ module GPhoto2
       end
 
       # Returns `true` if the widget has readonly flag set.
-      def readonly?
+      getter? readonly : Bool do
         get_readonly == 1
       end
 
       # Returns type of the widget.
-      def type : Type
+      getter type : Type do
         get_type
       end
 
       # Returns widget numerical id.
-      def id : Int32
+      getter id : Int32 do
         get_id.to_i32
       end
 
       # Returns widget name.
-      def name : String
+      getter name : String do
         get_name.not_nil!
       end
 
       # Returns widget label.
-      def label : String
+      getter label : String do
         get_label.not_nil!
       end
 
       # Returns widget info if set.
-      def info : String
+      getter info : String do
         get_info.not_nil!
       end
 
