@@ -10,7 +10,7 @@ module GPhoto2
     def initialize(@camera, @path = "/")
     end
 
-    # Returns `true` if folder `#path` is */*.
+    # Returns `true` if folder `#path` is `/`.
     def root?
       @path == "/"
     end
