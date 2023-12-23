@@ -34,7 +34,7 @@ module GPhoto2
 
           # We pass a callback that doesn't form a closure, and pass the boxed_data as
           # the callback data
-          LibGPhoto2.gp_context_set_{{ key.id }}_func self, ->({{args.join(", ").id}}) {
+          LibGPhoto2.gp_context_set_{{ key.id }}_func self, ->({{ args.join(", ").id }}) {
             data_as_callback = Box(typeof(callback)).unbox(data)
 
             {{ block.body }}
@@ -58,7 +58,7 @@ module GPhoto2
 
       {% for key in %w(error status message) %}
         set_callback {{ key.id }}, Proc(String, Void), [context, message, data] do
-          data_as_callback.call(String.new(message))
+          data_as_callback.call String.new(message)
         end
       {% end %}
 
@@ -78,16 +78,14 @@ module GPhoto2
 
       def check!(rc : Int32) : Int32
         Debug.log(rc, backtrace_offset: 1, progname: "gphoto2.cr")
-        if GPhoto2.check?(rc)
-          rc
+        return rc if GPhoto2.check?(rc)
+
+        original_error = GPhoto2::Error.from_code(rc)
+        if error_message = @last_error
+          @last_error = nil
+          raise Error.new(error_message, rc, original_error)
         else
-          original_error = GPhoto2::Error.from_code(rc)
-          if error_message = @last_error
-            @last_error = nil
-            raise Error.new(error_message, rc, original_error)
-          else
-            raise original_error
-          end
+          raise original_error
         end
       end
     end
