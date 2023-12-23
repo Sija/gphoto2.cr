@@ -9,7 +9,7 @@ module GPhoto2
         field?(:permissions) && wrapped.permissions.read?
       end
 
-      def deletable?
+      def removable?
         field?(:permissions) && wrapped.permissions.delete?
       end
 

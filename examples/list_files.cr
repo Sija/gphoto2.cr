@@ -17,11 +17,11 @@ def visit(folder, level = 0)
     type = info.type || "-"
     mtime = info.mtime.try(&.to_s("%Y-%m-%d %H:%M:%S")) || "-"
 
-    if info.readable? || info.deletable?
+    if info.readable? || info.removable?
       flags = String.build do |str|
         str << '['
         str << 'R' if info.readable?
-        str << 'W' if info.deletable?
+        str << 'W' if info.removable?
         str << ']'
       end
     end
