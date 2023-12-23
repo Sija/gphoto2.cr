@@ -50,13 +50,14 @@ module GPhoto2
       CameraFile.new(@camera, @path, name)
     end
 
-    # Returns parent `CameraFolder`.
+    # Returns parent `CameraFolder` or `nil`.
+    def up? : self?
+      self.class.new(@camera, parent_path) unless root?
+    end
+
+    # Returns parent `CameraFolder` or `self`.
     def up : self
-      if root?
-        self # NOTE: would `nil` be more apt here?
-      else
-        self.class.new(@camera, parent_path)
-      end
+      up? || self
     end
 
     # Deletes all files and/or folders.
