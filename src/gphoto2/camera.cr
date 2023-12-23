@@ -10,6 +10,7 @@ module GPhoto2
     include Event
     include Filesystem
     include Info
+    include ID
 
     alias Operation = LibGPhoto2::CameraOperation
 
