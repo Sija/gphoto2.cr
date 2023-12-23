@@ -1,5 +1,9 @@
+require "./camera_folder/*"
+
 module GPhoto2
   class CameraFolder
+    include Compression
+
     # Returns folder path.
     getter path : String
 

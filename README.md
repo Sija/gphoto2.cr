@@ -132,6 +132,9 @@ file.save("/tmp/out.jpg")
 # traverse the camera filesystem
 folder = camera/"store_00010001/DCIM/100D5100"
 
+# generate a zip file
+folder.to_zip_file # => #<File:/tmp/camera.fs-[...].zip (closed)>
+
 # list files
 files = folder.files
 folder.files.map(&.name)
