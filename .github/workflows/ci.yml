@@ -20,23 +20,21 @@ jobs:
         run: sudo apt-get install libevent-dev libyaml-dev libgphoto2-6 libgphoto2-dev libgphoto2-port12
 
       - name: Install Crystal
-        uses: oprypin/install-crystal@v1
+        uses: crystal-lang/install-crystal@v1
         with:
           crystal: ${{ matrix.crystal }}
 
       - name: Download source
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Install dependencies
         run: shards install
-        env:
-          SHARDS_OPTS: --ignore-crystal-version
 
       - name: Run specs
         run: crystal spec
 
-      # - name: Check formatting
-      #   run: crystal tool format --check
+      - name: Check formatting
+        run: crystal tool format src/gphoto2 --check
 
       - name: Run ameba linter
         run: bin/ameba
