@@ -12,7 +12,7 @@ module GPhoto2
       protected def set_value(value)
         case value
         when Int
-          ptr = Pointer(LibC::Int).malloc 1, value.to_i32
+          ptr = Pointer(LibC::Int).malloc 1, LibC::Int.new(value.to_i32)
           set_value_ptr ptr
         when Bool
           set_value value ? 1 : 0

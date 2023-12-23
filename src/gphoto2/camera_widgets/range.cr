@@ -34,7 +34,7 @@ module GPhoto2
       protected def set_value(value)
         case value
         when Float
-          ptr = Pointer(LibC::Float).malloc 1, value.to_f32
+          ptr = Pointer(LibC::Float).malloc 1, LibC::Float.new(value.to_f32)
           set_value_ptr ptr
         when Int, String
           set_value value.to_f32
