@@ -14,7 +14,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="gphoto2">
-  <title>GPhoto2::CameraFileInfo::Status - gphoto2 master</title>
+  <title>GPhoto2::CameraFolder::Compression - gphoto2 master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -157,7 +157,7 @@
       
     </li>
   
-  <li class="parent open current" data-id="gphoto2/GPhoto2/CameraFileInfo" data-name="gphoto2::camerafileinfo">
+  <li class="parent " data-id="gphoto2/GPhoto2/CameraFileInfo" data-name="gphoto2::camerafileinfo">
       <a href="../../GPhoto2/CameraFileInfo.html">CameraFileInfo</a>
       
         <ul>
@@ -187,7 +187,7 @@
       
     </li>
   
-  <li class=" current" data-id="gphoto2/GPhoto2/CameraFileInfo/Status" data-name="gphoto2::camerafileinfo::status">
+  <li class=" " data-id="gphoto2/GPhoto2/CameraFileInfo/Status" data-name="gphoto2::camerafileinfo::status">
       <a href="../../GPhoto2/CameraFileInfo/Status.html">Status</a>
       
     </li>
@@ -202,12 +202,12 @@
       
     </li>
   
-  <li class="parent " data-id="gphoto2/GPhoto2/CameraFolder" data-name="gphoto2::camerafolder">
+  <li class="parent open current" data-id="gphoto2/GPhoto2/CameraFolder" data-name="gphoto2::camerafolder">
       <a href="../../GPhoto2/CameraFolder.html">CameraFolder</a>
       
         <ul>
   
-  <li class=" " data-id="gphoto2/GPhoto2/CameraFolder/Compression" data-name="gphoto2::camerafolder::compression">
+  <li class=" current" data-id="gphoto2/GPhoto2/CameraFolder/Compression" data-name="gphoto2::camerafolder::compression">
       <a href="../../GPhoto2/CameraFolder/Compression.html">Compression</a>
       
     </li>
@@ -386,7 +386,7 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">alias</span> GPhoto2::<wbr>CameraFileInfo::<wbr>Status
+  <span class="kind">module</span> GPhoto2::<wbr>CameraFolder::<wbr>Compression
 
 </h1>
 
@@ -396,23 +396,27 @@
 
 
 
+
+
+
+
+
+
+
+
   <h2>
-    <a id="alias-definition" class="anchor" href="#alias-definition">
+    <a id="direct-including-types" class="anchor" href="#direct-including-types">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>
-    Alias Definition
+    Direct including types
   </h2>
-  <code>LibGPhoto2::CameraFileStatus</code>
-
-
-
-
-
-
-
-
+  <ul class="other-types-list">
+    
+      <li class="other-type"><a href="../../GPhoto2/CameraFolder.html">GPhoto2::CameraFolder</a></li>
+    
+  </ul>
 
 
 
@@ -427,8 +431,8 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/e5e9830c/src/gphoto2/camera_file_info/base.cr#L6" target="_blank">
-        gphoto2/camera_file_info/base.cr
+      <a href="https://github.com/Sija/gphoto2.cr/blob/e5e9830c/src/gphoto2/camera_folder/compression.cr#L5" target="_blank">
+        gphoto2/camera_folder/compression.cr
       </a>
     
     <br/>
@@ -436,35 +440,38 @@
 
 
 
-  
-    <h2>
-      <a id="constant-summary" class="anchor" href="#constant-summary">
+
+
+
+
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>
-      Constant Summary
-    </h2>
-  
-  <dl>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
     
-      <dt class="entry-const" id="Downloaded">
-        <strong>Downloaded</strong> = <code><span class="n">1</span></code>
-      </dt>
-      
+      <li class="entry-summary">
+        <a href="#to_zip_file%28io%3AIO%2Croot%3AString%7CNil%3Dnil%29%3ANil-instance-method" class="signature"><strong>#to_zip_file</strong>(io : IO, root : String | Nil = <span class="n">nil</span>) : Nil</a>
+        
+      </li>
     
-      <dt class="entry-const" id="NotDownloaded">
-        <strong>NotDownloaded</strong> = <code><span class="n">0</span></code>
-      </dt>
-      
+      <li class="entry-summary">
+        <a href="#to_zip_file%28root%3AString%7CNil%3Dnil%29%3AFile-instance-method" class="signature"><strong>#to_zip_file</strong>(root : String | Nil = <span class="n">nil</span>) : File</a>
+        
+      </li>
     
-  </dl>
-
-
-
-
-
-
+      <li class="entry-summary">
+        <a href="#to_zip_file%28root%3AString%7CNil%3Dnil%2C%26%29%3ANil-instance-method" class="signature"><strong>#to_zip_file</strong>(root : String | Nil = <span class="n">nil</span>, &) : Nil</a>
+        
+      </li>
+    
+  </ul>
 
 
 
@@ -478,6 +485,64 @@
 
 
 
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="to_zip_file(io:IO,root:String|Nil=nil):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>to_zip_file</strong>(io : IO, root : String | Nil = <span class="n">nil</span>) : Nil
+
+        <a class="method-permalink" href="#to_zip_file%28io%3AIO%2Croot%3AString%7CNil%3Dnil%29%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/e5e9830c/src/gphoto2/camera_folder/compression.cr#L23" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_zip_file(root:String|Nil=nil):File-instance-method">
+      <div class="signature">
+        
+        def <strong>to_zip_file</strong>(root : String | Nil = <span class="n">nil</span>) : File
+
+        <a class="method-permalink" href="#to_zip_file%28root%3AString%7CNil%3Dnil%29%3AFile-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/e5e9830c/src/gphoto2/camera_folder/compression.cr#L31" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="to_zip_file(root:String|Nil=nil,&amp;):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>to_zip_file</strong>(root : String | Nil = <span class="n">nil</span>, &) : Nil
+
+        <a class="method-permalink" href="#to_zip_file%28root%3AString%7CNil%3Dnil%2C%26%29%3ANil-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/e5e9830c/src/gphoto2/camera_folder/compression.cr#L37" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
 
 
 
