@@ -526,6 +526,9 @@ file.save(<span class="s">&quot;/tmp/out.jpg&quot;</span>)
 <span class="c"># traverse the camera filesystem</span>
 folder <span class="o">=</span> camera<span class="o">/</span><span class="s">&quot;store_00010001/DCIM/100D5100&quot;</span>
 
+<span class="c"># generate a zip file</span>
+folder.to_zip_file <span class="c"># =&gt; #</span>
+
 <span class="c"># list files</span>
 files <span class="o">=</span> folder.files
 folder.files.map(<span class="o">&amp;</span>.name)
