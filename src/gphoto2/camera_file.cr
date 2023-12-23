@@ -30,6 +30,12 @@ module GPhoto2
       new
     end
 
+    def_equals @camera, @folder, @name
+
+    def to_s
+      path
+    end
+
     def finalize
       close
     end
@@ -88,8 +94,6 @@ module GPhoto2
     def path : String
       self.class.join folder, name
     end
-
-    def_equals @camera, @folder, @name
 
     private def new
       GPhoto2.check! \

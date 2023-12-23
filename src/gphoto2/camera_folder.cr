@@ -10,6 +10,12 @@ module GPhoto2
     def initialize(@camera, @path = "/")
     end
 
+    def_equals @camera, @path
+
+    def to_s
+      path
+    end
+
     # Returns `true` if folder `#path` is `/`.
     def root?
       @path == "/"
@@ -74,12 +80,6 @@ module GPhoto2
       # finally, delete itself
       folder_remove_dir
     end
-
-    def to_s
-      name
-    end
-
-    def_equals @camera, @path
 
     private def parent_path
       parent = @path[0...(@path.rindex('/') || 0)]
