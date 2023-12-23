@@ -4,9 +4,7 @@ module GPhoto2
   class CameraWidget
     class Button < Base
       protected def get_value
-        ptr = Pointer(LibGPhoto2::CameraWidgetCallback).null
-        get_value_ptr pointerof(ptr)
-        ptr.value if ptr
+        raise NotImplementedError.new
       end
 
       protected def set_value(value)
