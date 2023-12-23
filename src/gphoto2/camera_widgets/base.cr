@@ -156,8 +156,13 @@ module GPhoto2
       # camera[:iso].in? 100..400
       # ```
       def in?(other : ::Range)
-        value = self.to_s
-        other.includes? (value =~ /^\-?\d+\.\d+$/) ? value.to_f : value.to_i
+        return false unless value = self.value
+
+        if other.begin.class <= Number || other.end.class <= Number
+          !!((num_value = value.to_s.to_f?) && other.includes?(num_value))
+        else
+          other.includes?(value)
+        end
       end
 
       protected abstract def get_value
