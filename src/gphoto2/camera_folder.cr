@@ -33,7 +33,7 @@ module GPhoto2
     # Returns `CameraFolder` by *name*, relative to current `#path`.
     def cd(name : String) : self
       case name
-      when ".." then up
+      when ".." then parent
       when "."  then self
       else
         self.class.new(@camera, CameraFile.join(@path, name))
@@ -51,13 +51,13 @@ module GPhoto2
     end
 
     # Returns parent `CameraFolder` or `nil`.
-    def up? : self?
+    def parent? : self?
       self.class.new(@camera, parent_path) unless root?
     end
 
     # Returns parent `CameraFolder` or `self`.
-    def up : self
-      up? || self
+    def parent : self
+      parent? || self
     end
 
     # Deletes all files and/or folders.
