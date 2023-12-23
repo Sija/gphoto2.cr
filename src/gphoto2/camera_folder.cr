@@ -75,8 +75,8 @@ module GPhoto2
       folder_remove_dir
     end
 
-    def to_s(io : IO)
-      io << name
+    def to_s
+      name
     end
 
     def_equals @camera, @path
