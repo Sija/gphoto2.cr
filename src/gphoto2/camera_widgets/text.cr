@@ -6,7 +6,7 @@ module GPhoto2
       protected def get_value
         ptr = Pointer(LibC::Char).null
         get_value_ptr pointerof(ptr)
-        String.new ptr if ptr
+        ptr ? String.new(ptr) : ""
       end
 
       protected def set_value(value)
