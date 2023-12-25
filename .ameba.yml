@@ -7,3 +7,6 @@ Lint/NotNil:
 Lint/Formatting:
   Excluded:
     - src/lib/**/*
+
+Documentation/DocumentationAdmonition:
+  Admonitions: [FIXME, BUG]
