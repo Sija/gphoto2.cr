@@ -4,6 +4,8 @@ module GPhoto2
   class Port
     include GPhoto2::Struct(LibGPhoto2Port::GPPort)
 
+    alias Type = LibGPhoto2Port::GPPortType
+
     def initialize
       new
     end

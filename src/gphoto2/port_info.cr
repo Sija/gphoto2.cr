@@ -17,7 +17,7 @@ module GPhoto2
       get_path.not_nil!
     end
 
-    def type : LibGPhoto2Port::GPPortType
+    def type : Port::Type
       get_type
     end
 
