@@ -3,14 +3,17 @@ require "./text"
 module GPhoto2
   class CameraWidget
     class Radio < Text
+      # Moves the cursor to the next choice.
       def >>(step : Int32) : String?
         move_by step
       end
 
+      # Moves the cursor to the previous choice.
       def <<(step : Int32) : String?
         move_by -step
       end
 
+      # Moves the cursor by the given *step*.
       def move_by(step : Int32) : String?
         choices = self.choices
         index = choices.index(self.value)

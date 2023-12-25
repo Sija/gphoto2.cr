@@ -3,10 +3,12 @@ module GPhoto2
     def initialize(@camera_list : CameraList, @index : Int32)
     end
 
+    # Returns the name of the entry.
     def name : String
       get_name.not_nil!
     end
 
+    # Returns the value of the entry.
     def value : String
       get_value.not_nil!
     end

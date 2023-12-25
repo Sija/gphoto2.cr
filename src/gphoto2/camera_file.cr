@@ -12,7 +12,10 @@ module GPhoto2
     # Initial buffer size used in `#read`.
     BUFFER_SIZE = 256 * 1024
 
+    # Directory part of the file path.
     getter! folder : String
+
+    # Filename part of the file path.
     getter! name : String
 
     protected getter camera : Camera
@@ -26,20 +29,24 @@ module GPhoto2
       args.join '/', &.chomp('/')
     end
 
+    # NOTE: allocates memory.
     def initialize(@camera, @folder = nil, @name = nil)
       new
     end
 
     def_equals @camera, @folder, @name
 
+    # Returns file `#path`.
     def to_s
       path
     end
 
+    # Finalizes object by freeing allocated memory.
     def finalize
       close
     end
 
+    # NOTE: frees allocated memory.
     def close : Nil
       free if ptr?
     end
@@ -60,7 +67,7 @@ module GPhoto2
       _delete
     end
 
-    # Returns file data.
+    # Returns pointer file data.
     def data : UInt8*
       data_and_size.first
     end
@@ -80,7 +87,7 @@ module GPhoto2
       _read
     end
 
-    # Returns `CameraFileInfo` object containing information about the file.
+    # Returns an object containing information about the file.
     def info : CameraFileInfo
       get_info
     end

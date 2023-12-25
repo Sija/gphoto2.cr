@@ -33,14 +33,17 @@ module GPhoto2
   alias VersionVerbosity = LibGPhoto2::GPVersionVerbosity
   alias LogLevel = LibGPhoto2::GPLogLevel
 
+  # Returns the GPhoto2 library version.
   def library_version(verbosity : VersionVerbosity = :short) : String
     String.new LibGPhoto2.gp_library_version(verbosity).value
   end
 
+  # Returns the GPhoto2 return code (*rc*) as a string.
   def result_as_string(rc : Int32) : String
     String.new LibGPhoto2.gp_result_as_string(rc)
   end
 
+  # Checks if the given *rc* is a GPhoto2 error code.
   def check?(rc : Int32) : Bool
     rc >= LibGPhoto2::GP_OK
   end

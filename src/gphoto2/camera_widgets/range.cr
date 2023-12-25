@@ -3,16 +3,19 @@ require "./base"
 module GPhoto2
   class CameraWidget
     class Range < Base
+      # Returns the range of the widget.
       def range : ::Range(Float32, Float32)
         min, max, _ = get_range
         min..max
       end
 
+      # Returns the increment of the widget.
       def step : Float32
         _, _, inc = get_range
         inc
       end
 
+      # Returns the list of choices of the widget.
       def choices : Array(Float32)
         min, max, inc = get_range
         min.step(to: max, by: inc).to_a

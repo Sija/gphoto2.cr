@@ -1,17 +1,20 @@
 require "./struct"
 
 module GPhoto2
+  # Represents a list of camera abilities.
   class CameraAbilitiesList
     include Struct(LibGPhoto2::CameraAbilitiesList)
 
     @context : Context
     @port_info_list : PortInfoList
 
+    # NOTE: allocates memory.
     def initialize(@context, @port_info_list = PortInfoList.new)
       new
       load
     end
 
+    # Finalizes object by freeing allocated memory.
     def finalize
       free
     end

@@ -14,6 +14,7 @@ module GPhoto2
   class Error < Exception
     getter code : Int32
 
+    # Builds a new error from a GPhoto2 error code.
     def self.from_code(code : Int32) : Error
       message = GPhoto2.result_as_string(code)
       new(message, code)

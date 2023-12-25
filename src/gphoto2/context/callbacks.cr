@@ -4,6 +4,7 @@ module GPhoto2
   class Context
     alias Feedback = LibGPhoto2::GPContextFeedback
 
+    # Provides callbacks for libgphoto2.
     module Callbacks
       macro set_callback(key, callback_type, args, &block)
         getter! {{ key.id }}_callback : {{ callback_type.id }}
@@ -70,12 +71,14 @@ module GPhoto2
         end
       end
 
+      # Clears all callbacks.
       def clear_callbacks : Nil
         {% for key in %w(cancel idle error status message) %}
           unset_{{ key.id }}_callback if {{ key.id }}_callback?
         {% end %}
       end
 
+      # Checks if the given *rc* is a GPhoto2 error code.
       def check!(rc : Int32) : Int32
         Debug.log(rc, backtrace_offset: 1, progname: "gphoto2.cr")
         return rc if GPhoto2.check?(rc)

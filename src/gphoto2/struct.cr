@@ -12,6 +12,7 @@ module GPhoto2
       ptr
     end
 
+    # Returns wrapped value.
     def wrapped : T
       ptr.value
     end

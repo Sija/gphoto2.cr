@@ -1,7 +1,8 @@
 module GPhoto2
   class Camera
+    # Provides access to camera configuration.
     module Configuration
-      # Returns camera `CameraWidget::Window` root configuration widget.
+      # Returns camera root configuration widget.
       getter window : CameraWidget::Window { get_config.as(CameraWidget::Window) }
 
       # Returns flattened `Hash` of camera attributes.

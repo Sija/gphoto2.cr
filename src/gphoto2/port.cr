@@ -6,10 +6,12 @@ module GPhoto2
 
     alias Type = LibGPhoto2Port::GPPortType
 
+    # NOTE: allocates memory.
     def initialize
       new
     end
 
+    # Finalizes object by freeing allocated memory.
     def finalize
       free
     end
@@ -23,14 +25,17 @@ module GPhoto2
       info
     end
 
+    # Opens the port.
     def open : Nil
       _open
     end
 
+    # Closes the port.
     def close : Nil
       _close
     end
 
+    # Resets the port.
     def reset : Nil
       _reset
     end

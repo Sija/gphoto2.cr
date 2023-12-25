@@ -1,4 +1,5 @@
 module GPhoto2
+  # Represents file information.
   class CameraFileInfo
     getter! preview : Preview
     getter! file : File

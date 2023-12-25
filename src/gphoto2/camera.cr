@@ -117,7 +117,8 @@ module GPhoto2
     # ```
     def self.where(*, model : String | Regex? = nil, port : String | Regex? = nil) : Array(self)
       all.select do |camera|
-        (!model || camera.model.match model) && (!port || camera.port.match port)
+        (!model || camera.model.match model) &&
+          (!port || camera.port.match port)
       end
     end
 

@@ -7,6 +7,7 @@ module GPhoto2
 
     include Callbacks
 
+    # NOTE: allocates memory.
     def initialize
       new
       super

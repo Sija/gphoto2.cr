@@ -5,6 +5,7 @@ module GPhoto2
   class CameraWidget
     alias Type = LibGPhoto2::CameraWidgetType
 
+    # Represents a widget.
     abstract class Base
       include GPhoto2::Struct(LibGPhoto2::CameraWidget)
 
@@ -35,6 +36,7 @@ module GPhoto2
         super ptr
       end
 
+      # Finalizes object by freeing allocated memory.
       def close : Nil
         free if ptr?
       end

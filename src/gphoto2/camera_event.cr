@@ -1,4 +1,5 @@
 module GPhoto2
+  # Represents a camera event.
   struct CameraEvent(T)
     alias Type = LibGPhoto2::CameraEventType
 

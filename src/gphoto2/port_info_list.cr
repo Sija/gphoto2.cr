@@ -4,11 +4,13 @@ module GPhoto2
   class PortInfoList
     include GPhoto2::Struct(LibGPhoto2Port::GPPortInfoList)
 
+    # NOTE: allocates memory.
     def initialize
       new
       load
     end
 
+    # Finalizes object by freeing allocated memory.
     def finalize
       free
     end

@@ -16,21 +16,22 @@ module GPhoto2
 
     def_equals @camera, @path
 
+    # Returns folder `#path`.
     def to_s
       path
     end
 
     # Returns `true` if folder `#path` is `/`.
     def root?
-      @path == "/"
+      path == "/"
     end
 
     # Returns folder name.
     def name : String
-      File.basename(@path)
+      File.basename(path)
     end
 
-    # Lists folders.
+    # Lists sub-folders.
     def folders : Array(self)
       folder_list_folders
     end
@@ -40,7 +41,7 @@ module GPhoto2
       folder_list_files
     end
 
-    # Returns `CameraFolder` by *name*, relative to current `#path`.
+    # Returns subfolder by *name*, relative to current `#path`.
     def cd(name : String) : self
       case name
       when ".." then parent
@@ -56,28 +57,28 @@ module GPhoto2
       cd(name)
     end
 
-    # Returns `CameraFile` by *name*, relative to current `#path`.
+    # Returns file by *name*, relative to current `#path`.
     def open(name : String) : CameraFile
       CameraFile.new(@camera, @path, name)
     end
 
-    # Returns parent `CameraFolder` or `nil`.
+    # Returns parent folder or `nil`.
     def parent? : self?
       self.class.new(@camera, parent_path) unless root?
     end
 
-    # Returns parent `CameraFolder` or `self`.
+    # Returns parent folder or `self`.
     def parent : self
       parent? || self
     end
 
-    # Deletes all files and/or folders.
+    # Deletes all files and/or sub-folders.
     def clear(files : Bool = true, folders : Bool = false) : Nil
       self.folder_delete_all if files
       self.folders.each &.delete if folders
     end
 
-    # Deletes this folder from the camera.
+    # Deletes this folder (along with all files and subfolders) from the camera.
     def delete : Nil
       raise "Cannot delete root folder" if root?
       # delete files and subfolders
