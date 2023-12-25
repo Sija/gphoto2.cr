@@ -347,8 +347,18 @@
       
     </li>
   
-  <li class=" " data-id="gphoto2/GPhoto2/Port" data-name="gphoto2::port">
+  <li class="parent " data-id="gphoto2/GPhoto2/Port" data-name="gphoto2::port">
       <a href="../../GPhoto2/Port.html">Port</a>
+      
+        <ul>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/Port/Type" data-name="gphoto2::port::type">
+      <a href="../../GPhoto2/Port/Type.html">Type</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -431,7 +441,7 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_folder/compression.cr#L5" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_folder/compression.cr#L5" target="_blank">
         gphoto2/camera_folder/compression.cr
       </a>
     
@@ -459,15 +469,21 @@
       <li class="entry-summary">
         <a href="#to_zip_file%28io%3AIO%2Croot%3AString%7CNil%3Dnil%29%3ANil-instance-method" class="signature"><strong>#to_zip_file</strong>(io : IO, root : String | Nil = <span class="n">nil</span>) : Nil</a>
         
+          <div class="summary"><p>Writes the compressed contents of the folder to <em>io</em>.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#to_zip_file%28root%3AString%7CNil%3Dnil%29%3AFile-instance-method" class="signature"><strong>#to_zip_file</strong>(root : String | Nil = <span class="n">nil</span>) : File</a>
         
+          <div class="summary"><p>Returns a temporary file with the compressed contents of the folder.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#to_zip_file%28root%3AString%7CNil%3Dnil%2C%26%29%3ANil-instance-method" class="signature"><strong>#to_zip_file</strong>(root : String | Nil = <span class="n">nil</span>, &) : Nil</a>
+        
+          <div class="summary"><p>Yields a temporary file with the compressed contents of the folder.</p></div>
         
       </li>
     
@@ -503,10 +519,15 @@
         <a class="method-permalink" href="#to_zip_file%28io%3AIO%2Croot%3AString%7CNil%3Dnil%29%3ANil-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Writes the compressed contents of the folder to <em>io</em>.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_folder/compression.cr#L23" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_folder/compression.cr#L24" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -519,10 +540,15 @@
         <a class="method-permalink" href="#to_zip_file%28root%3AString%7CNil%3Dnil%29%3AFile-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns a temporary file with the compressed contents of the folder.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_folder/compression.cr#L31" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_folder/compression.cr#L33" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -535,10 +561,16 @@
         <a class="method-permalink" href="#to_zip_file%28root%3AString%7CNil%3Dnil%2C%26%29%3ANil-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Yields a temporary file with the compressed contents of the folder.</p>
+<p><span class="flag purple">NOTE</span>  the temporary file will be deleted after the block returns.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_folder/compression.cr#L37" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_folder/compression.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>

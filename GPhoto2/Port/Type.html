@@ -14,7 +14,7 @@
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="gphoto2">
-  <title>GPhoto2::CameraFileInfo::Preview - gphoto2 master</title>
+  <title>GPhoto2::Port::Type - gphoto2 master</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -157,7 +157,7 @@
       
     </li>
   
-  <li class="parent open current" data-id="gphoto2/GPhoto2/CameraFileInfo" data-name="gphoto2::camerafileinfo">
+  <li class="parent " data-id="gphoto2/GPhoto2/CameraFileInfo" data-name="gphoto2::camerafileinfo">
       <a href="../../GPhoto2/CameraFileInfo.html">CameraFileInfo</a>
       
         <ul>
@@ -182,7 +182,7 @@
       
     </li>
   
-  <li class=" current" data-id="gphoto2/GPhoto2/CameraFileInfo/Preview" data-name="gphoto2::camerafileinfo::preview">
+  <li class=" " data-id="gphoto2/GPhoto2/CameraFileInfo/Preview" data-name="gphoto2::camerafileinfo::preview">
       <a href="../../GPhoto2/CameraFileInfo/Preview.html">Preview</a>
       
     </li>
@@ -347,12 +347,12 @@
       
     </li>
   
-  <li class="parent " data-id="gphoto2/GPhoto2/Port" data-name="gphoto2::port">
+  <li class="parent open current" data-id="gphoto2/GPhoto2/Port" data-name="gphoto2::port">
       <a href="../../GPhoto2/Port.html">Port</a>
       
         <ul>
   
-  <li class=" " data-id="gphoto2/GPhoto2/Port/Type" data-name="gphoto2::port::type">
+  <li class=" current" data-id="gphoto2/GPhoto2/Port/Type" data-name="gphoto2::port::type">
       <a href="../../GPhoto2/Port/Type.html">Type</a>
       
     </li>
@@ -396,13 +396,9 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> GPhoto2::<wbr>CameraFileInfo::<wbr>Preview
+  <span class="kind">alias</span> GPhoto2::<wbr>Port::<wbr>Type
 
 </h1>
-
-
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../GPhoto2/CameraFileInfo/Preview.html">GPhoto2::CameraFileInfo::Preview</a></li><li class="superclass"><a href="../../GPhoto2/CameraFileInfo/Base.html">GPhoto2::CameraFileInfo::Base</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
-
 
 
 
@@ -411,18 +407,16 @@
 
 
   <h2>
-    <a id="included-modules" class="anchor" href="#included-modules">
+    <a id="alias-definition" class="anchor" href="#alias-definition">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>
-    Included Modules
+    Alias Definition
   </h2>
-  <ul class="other-types-list">
-    
-      <li class="other-type"><a href="../../GPhoto2/ManagedStruct.html">GPhoto2::ManagedStruct(LibGPhoto2::CameraFileInfoPreview)</a></li>
-    
-  </ul>
+  <code>LibGPhoto2Port::GPPortType</code>
+
+
 
 
 
@@ -443,8 +437,8 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_file_info/preview.cr#L5" target="_blank">
-        gphoto2/camera_file_info/preview.cr
+      <a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/port.cr#L7" target="_blank">
+        gphoto2/port.cr
       </a>
     
     <br/>
@@ -452,37 +446,55 @@
 
 
 
-
-
-
-
-
-
-  <h2>
-    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  
+    <h2>
+      <a id="constant-summary" class="anchor" href="#constant-summary">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
 </a>
-    Instance Method Summary
-  </h2>
-  <ul class="list-summary">
+      Constant Summary
+    </h2>
+  
+  <dl>
     
-      <li class="entry-summary">
-        <a href="#height%3AUInt32%7CNil-instance-method" class="signature"><strong>#height</strong> : UInt32 | Nil</a>
-        
-          <div class="summary"><p>Returns the height of the preview.</p></div>
-        
-      </li>
+      <dt class="entry-const" id="Disk">
+        <strong>Disk</strong> = <code><span class="n">8</span></code>
+      </dt>
+      
     
-      <li class="entry-summary">
-        <a href="#width%3AUInt32%7CNil-instance-method" class="signature"><strong>#width</strong> : UInt32 | Nil</a>
-        
-          <div class="summary"><p>Returns the width of the preview.</p></div>
-        
-      </li>
+      <dt class="entry-const" id="PTPIP">
+        <strong>PTPIP</strong> = <code><span class="n">16</span></code>
+      </dt>
+      
     
-  </ul>
+      <dt class="entry-const" id="Serial">
+        <strong>Serial</strong> = <code><span class="n">1</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="USB">
+        <strong>USB</strong> = <code><span class="n">4</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="USBDiskDirect">
+        <strong>USBDiskDirect</strong> = <code><span class="n">32</span></code>
+      </dt>
+      
+    
+      <dt class="entry-const" id="USBSCSI">
+        <strong>USBSCSI</strong> = <code><span class="n">64</span></code>
+      </dt>
+      
+    
+  </dl>
+
+
+
+
+
+
 
 
 
@@ -490,194 +502,12 @@
 
 <div class="methods-inherited">
   
-    
-
-  <h3>Instance methods inherited from module <code><a href="../../GPhoto2/ManagedStruct.html">GPhoto2::ManagedStruct(LibGPhoto2::CameraFileInfoPreview)</a></code></h3>
-  
-  
-    <a href="../../GPhoto2/ManagedStruct.html#ptr%3APointer%28T%29-instance-method" class="tooltip">
-      <span>ptr : Pointer(T)</span>
-    ptr</a>
-    
-  
-
-
-    
-
-  <h3>Constructor methods inherited from module <code><a href="../../GPhoto2/ManagedStruct.html">GPhoto2::ManagedStruct(LibGPhoto2::CameraFileInfoPreview)</a></code></h3>
-  
-  
-    <a href="../../GPhoto2/ManagedStruct.html#new%28ptr%3APointer%28T%29%7CNil%3Dnil%29-class-method" class="tooltip">
-      <span>new(ptr : Pointer(T) | Nil = <span class="n">nil</span>)</span>
-    new</a>
-    
-  
-
-
-    
-
-
-  
-    
-
-  <h3>Instance methods inherited from module <code><a href="../../GPhoto2/Struct.html">GPhoto2::Struct(LibGPhoto2::CameraFileInfoPreview)</a></code></h3>
-  
-  
-    <a href="../../GPhoto2/Struct.html#ptr%3APointer%28T%29-instance-method" class="tooltip">
-      <span>ptr : Pointer(T)</span>
-    ptr</a>, 
-    
-  
-    <a href="../../GPhoto2/Struct.html#ptr%3F%3APointer%28T%29%7CNil-instance-method" class="tooltip">
-      <span>ptr? : Pointer(T) | Nil</span>
-    ptr?</a>, 
-    
-  
-    <a href="../../GPhoto2/Struct.html#to_unsafe%3APointer%28T%29-instance-method" class="tooltip">
-      <span>to_unsafe : Pointer(T)</span>
-    to_unsafe</a>, 
-    
-  
-    <a href="../../GPhoto2/Struct.html#wrapped%3AT-instance-method" class="tooltip">
-      <span>wrapped : T</span>
-    wrapped</a>
-    
-  
-
-
-    
-
-  <h3>Constructor methods inherited from module <code><a href="../../GPhoto2/Struct.html">GPhoto2::Struct(LibGPhoto2::CameraFileInfoPreview)</a></code></h3>
-  
-  
-    <a href="../../GPhoto2/Struct.html#new%28ptr%3APointer%28T%29%7CNil%3Dnil%29-class-method" class="tooltip">
-      <span>new(ptr : Pointer(T) | Nil = <span class="n">nil</span>)</span>
-    new</a>
-    
-  
-
-
-    
-
-
-  
-    
-
-  <h3>Instance methods inherited from class <code><a href="../../GPhoto2/CameraFileInfo/Base.html">GPhoto2::CameraFileInfo::Base</a></code></h3>
-  
-  
-    <a href="../../GPhoto2/CameraFileInfo/Base.html#field%3F%28field%3AFields%29-instance-method" class="tooltip">
-      <span>field?(field : Fields)</span>
-    field?</a>, 
-    
-  
-    <a href="../../GPhoto2/CameraFileInfo/Base.html#fields%3AFields-instance-method" class="tooltip">
-      <span>fields : Fields</span>
-    fields</a>, 
-    
-  
-    <a href="../../GPhoto2/CameraFileInfo/Base.html#size%3AUInt64%7CNil-instance-method" class="tooltip">
-      <span>size : UInt64 | Nil</span>
-    size</a>, 
-    
-  
-    <a href="../../GPhoto2/CameraFileInfo/Base.html#status%3AStatus%7CNil-instance-method" class="tooltip">
-      <span>status : Status | Nil</span>
-    status</a>, 
-    
-  
-    <a href="../../GPhoto2/CameraFileInfo/Base.html#type%3AString%7CNil-instance-method" class="tooltip">
-      <span>type : String | Nil</span>
-    type</a>
-    
-  
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
-  
 </div>
 
 
 
 
 
-
-  <h2>
-    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Instance Method Detail
-  </h2>
-  
-    <div class="entry-detail" id="height:UInt32|Nil-instance-method">
-      <div class="signature">
-        
-        def <strong>height</strong> : UInt32 | Nil
-
-        <a class="method-permalink" href="#height%3AUInt32%7CNil-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns the height of the preview.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_file_info/preview.cr#L14" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="width:UInt32|Nil-instance-method">
-      <div class="signature">
-        
-        def <strong>width</strong> : UInt32 | Nil
-
-        <a class="method-permalink" href="#width%3AUInt32%7CNil-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns the width of the preview.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_file_info/preview.cr#L9" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
 
 
 

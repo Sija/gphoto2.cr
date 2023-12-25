@@ -347,8 +347,18 @@
       
     </li>
   
-  <li class=" " data-id="gphoto2/GPhoto2/Port" data-name="gphoto2::port">
+  <li class="parent " data-id="gphoto2/GPhoto2/Port" data-name="gphoto2::port">
       <a href="../GPhoto2/Port.html">Port</a>
+      
+        <ul>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/Port/Type" data-name="gphoto2::port::type">
+      <a href="../GPhoto2/Port/Type.html">Type</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -433,7 +443,7 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_file.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_file.cr#L4" target="_blank">
         gphoto2/camera_file.cr
       </a>
     
@@ -489,6 +499,8 @@
       <li class="entry-summary">
         <a href="#new%28camera%3AGPhoto2%3A%3ACamera%2Cfolder%3ANil%7CString%3Dnil%2Cname%3ANil%7CString%3Dnil%29-class-method" class="signature"><strong>.new</strong>(camera : GPhoto2::Camera, folder : Nil | String = <span class="n">nil</span>, name : Nil | String = <span class="n">nil</span>)</a>
         
+          <div class="summary"><p><span class="flag purple">NOTE</span>  allocates memory.</p></div>
+        
       </li>
     
   </ul>
@@ -536,12 +548,14 @@
       <li class="entry-summary">
         <a href="#close%3ANil-instance-method" class="signature"><strong>#close</strong> : Nil</a>
         
+          <div class="summary"><p><span class="flag purple">NOTE</span>  frees allocated memory.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#data%3APointer%28UInt8%29-instance-method" class="signature"><strong>#data</strong> : Pointer(UInt8)</a>
         
-          <div class="summary"><p>Returns file data.</p></div>
+          <div class="summary"><p>Returns pointer file data.</p></div>
         
       </li>
     
@@ -562,32 +576,42 @@
       <li class="entry-summary">
         <a href="#finalize-instance-method" class="signature"><strong>#finalize</strong></a>
         
+          <div class="summary"><p>Finalizes object by freeing allocated memory.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#folder%3AString-instance-method" class="signature"><strong>#folder</strong> : String</a>
+        
+          <div class="summary"><p>Directory part of the file path.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#folder%3F%3AString%7CNil-instance-method" class="signature"><strong>#folder?</strong> : String | Nil</a>
         
+          <div class="summary"><p>Directory part of the file path.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#info%3ACameraFileInfo-instance-method" class="signature"><strong>#info</strong> : CameraFileInfo</a>
         
-          <div class="summary"><p>Returns <code><a href="../GPhoto2/CameraFileInfo.html">CameraFileInfo</a></code> object containing information about the file.</p></div>
+          <div class="summary"><p>Returns an object containing information about the file.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#name%3AString-instance-method" class="signature"><strong>#name</strong> : String</a>
         
+          <div class="summary"><p>Filename part of the file path.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#name%3F%3AString%7CNil-instance-method" class="signature"><strong>#name?</strong> : String | Nil</a>
+        
+          <div class="summary"><p>Filename part of the file path.</p></div>
         
       </li>
     
@@ -629,7 +653,7 @@
       <li class="entry-summary">
         <a href="#to_s-instance-method" class="signature"><strong>#to_s</strong></a>
         
-          <div class="summary"><p>Returns a nicely readable and concise string representation of this object, typically intended for users.</p></div>
+          <div class="summary"><p>Returns file <code><a href="../GPhoto2/CameraFile.html#path%3AString-instance-method">#path</a></code>.</p></div>
         
       </li>
     
@@ -731,10 +755,15 @@
         <a class="method-permalink" href="#new%28camera%3AGPhoto2%3A%3ACamera%2Cfolder%3ANil%7CString%3Dnil%2Cname%3ANil%7CString%3Dnil%29-class-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p><span class="flag purple">NOTE</span>  allocates memory.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_file.cr#L29" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_file.cr#L33" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -768,7 +797,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_file.cr#L25" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_file.cr#L28" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -805,7 +834,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_file.cr#L33" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_file.cr#L37" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -818,10 +847,15 @@
         <a class="method-permalink" href="#close%3ANil-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p><span class="flag purple">NOTE</span>  frees allocated memory.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_file.cr#L43" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_file.cr#L50" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -836,13 +870,13 @@
       
         <div class="doc">
           
-          <p>Returns file data.</p>
+          <p>Returns pointer file data.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_file.cr#L64" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_file.cr#L71" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -863,7 +897,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_file.cr#L59" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_file.cr#L66" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -884,7 +918,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_file.cr#L89" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_file.cr#L96" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -897,10 +931,15 @@
         <a class="method-permalink" href="#finalize-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Finalizes object by freeing allocated memory.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_file.cr#L39" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_file.cr#L45" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -913,10 +952,15 @@
         <a class="method-permalink" href="#folder%3AString-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Directory part of the file path.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_file.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_file.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -929,10 +973,15 @@
         <a class="method-permalink" href="#folder%3F%3AString%7CNil-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Directory part of the file path.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_file.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_file.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -947,13 +996,13 @@
       
         <div class="doc">
           
-          <p>Returns <code><a href="../GPhoto2/CameraFileInfo.html">CameraFileInfo</a></code> object containing information about the file.</p>
+          <p>Returns an object containing information about the file.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_file.cr#L84" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_file.cr#L91" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -966,10 +1015,15 @@
         <a class="method-permalink" href="#name%3AString-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Filename part of the file path.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_file.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_file.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -982,10 +1036,15 @@
         <a class="method-permalink" href="#name%3F%3AString%7CNil-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Filename part of the file path.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_file.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_file.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1006,7 +1065,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_file.cr#L94" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_file.cr#L101" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1027,7 +1086,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_file.cr#L48" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_file.cr#L55" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1048,7 +1107,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_file.cr#L79" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_file.cr#L86" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1069,7 +1128,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_file.cr#L53" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_file.cr#L60" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1090,7 +1149,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_file.cr#L69" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_file.cr#L76" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1105,21 +1164,13 @@
       
         <div class="doc">
           
-            <div class="doc-inherited">
-              Description copied from class Object
-            </div>
-          
-          <p>Returns a nicely readable and concise string representation of this object,
-typically intended for users.</p>
-<p>This method should usually <strong>not</strong> be overridden. It delegates to
-<code>#to_s(IO)</code> which can be overridden for custom implementations.</p>
-<p>Also see <code>#inspect</code>.</p>
+          <p>Returns file <code><a href="../GPhoto2/CameraFile.html#path%3AString-instance-method">#path</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_file.cr#L35" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_file.cr#L40" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1140,7 +1191,7 @@ typically intended for users.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_file.cr#L74" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_file.cr#L81" target="_blank">View source</a>]
         
       </div>
     </div>

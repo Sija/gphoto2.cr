@@ -347,8 +347,18 @@
       
     </li>
   
-  <li class=" " data-id="gphoto2/GPhoto2/Port" data-name="gphoto2::port">
+  <li class="parent " data-id="gphoto2/GPhoto2/Port" data-name="gphoto2::port">
       <a href="../GPhoto2/Port.html">Port</a>
+      
+        <ul>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/Port/Type" data-name="gphoto2::port::type">
+      <a href="../GPhoto2/Port/Type.html">Type</a>
+      
+    </li>
+  
+</ul>
+
       
     </li>
   
@@ -433,14 +443,14 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_folder.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_folder.cr#L4" target="_blank">
         gphoto2/camera_folder.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_folder/compression.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_folder/compression.cr#L4" target="_blank">
         gphoto2/camera_folder/compression.cr
       </a>
     
@@ -499,21 +509,21 @@
       <li class="entry-summary">
         <a href="#cd%28name%3AString%29%3Aself-instance-method" class="signature"><strong>#cd</strong>(name : String) : <span class="k">self</span></a>
         
-          <div class="summary"><p>Returns <code><a href="../GPhoto2/CameraFolder.html">CameraFolder</a></code> by <em>name</em>, relative to current <code><a href="../GPhoto2/CameraFolder.html#path%3AString-instance-method">#path</a></code>.</p></div>
+          <div class="summary"><p>Returns subfolder by <em>name</em>, relative to current <code><a href="../GPhoto2/CameraFolder.html#path%3AString-instance-method">#path</a></code>.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#clear%28files%3ABool%3Dtrue%2Cfolders%3ABool%3Dfalse%29%3ANil-instance-method" class="signature"><strong>#clear</strong>(files : Bool = <span class="n">true</span>, folders : Bool = <span class="n">false</span>) : Nil</a>
         
-          <div class="summary"><p>Deletes all files and/or folders.</p></div>
+          <div class="summary"><p>Deletes all files and/or sub-folders.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#delete%3ANil-instance-method" class="signature"><strong>#delete</strong> : Nil</a>
         
-          <div class="summary"><p>Deletes this folder from the camera.</p></div>
+          <div class="summary"><p>Deletes this folder (along with all files and subfolders) from the camera.</p></div>
         
       </li>
     
@@ -527,7 +537,7 @@
       <li class="entry-summary">
         <a href="#folders%3AArray%28self%29-instance-method" class="signature"><strong>#folders</strong> : Array(<span class="k">self</span>)</a>
         
-          <div class="summary"><p>Lists folders.</p></div>
+          <div class="summary"><p>Lists sub-folders.</p></div>
         
       </li>
     
@@ -541,21 +551,21 @@
       <li class="entry-summary">
         <a href="#open%28name%3AString%29%3ACameraFile-instance-method" class="signature"><strong>#open</strong>(name : String) : CameraFile</a>
         
-          <div class="summary"><p>Returns <code><a href="../GPhoto2/CameraFile.html">CameraFile</a></code> by <em>name</em>, relative to current <code><a href="../GPhoto2/CameraFolder.html#path%3AString-instance-method">#path</a></code>.</p></div>
+          <div class="summary"><p>Returns file by <em>name</em>, relative to current <code><a href="../GPhoto2/CameraFolder.html#path%3AString-instance-method">#path</a></code>.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#parent%3Aself-instance-method" class="signature"><strong>#parent</strong> : <span class="k">self</span></a>
         
-          <div class="summary"><p>Returns parent <code><a href="../GPhoto2/CameraFolder.html">CameraFolder</a></code> or <code>self</code>.</p></div>
+          <div class="summary"><p>Returns parent folder or <code>self</code>.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#parent%3F%3Aself%7CNil-instance-method" class="signature"><strong>#parent?</strong> : <span class="k">self</span> | Nil</a>
         
-          <div class="summary"><p>Returns parent <code><a href="../GPhoto2/CameraFolder.html">CameraFolder</a></code> or <code>nil</code>.</p></div>
+          <div class="summary"><p>Returns parent folder or <code>nil</code>.</p></div>
         
       </li>
     
@@ -576,7 +586,7 @@
       <li class="entry-summary">
         <a href="#to_s-instance-method" class="signature"><strong>#to_s</strong></a>
         
-          <div class="summary"><p>Returns a nicely readable and concise string representation of this object, typically intended for users.</p></div>
+          <div class="summary"><p>Returns folder <code><a href="../GPhoto2/CameraFolder.html#path%3AString-instance-method">#path</a></code>.</p></div>
         
       </li>
     
@@ -650,7 +660,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_folder.cr#L14" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_folder.cr#L14" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -686,7 +696,7 @@ ameba:disable Naming/BinaryOperatorParameterName</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_folder.cr#L55" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_folder.cr#L56" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -711,7 +721,7 @@ ameba:disable Naming/BinaryOperatorParameterName</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_folder.cr#L17" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_folder.cr#L17" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -726,13 +736,13 @@ ameba:disable Naming/BinaryOperatorParameterName</p>
       
         <div class="doc">
           
-          <p>Returns <code><a href="../GPhoto2/CameraFolder.html">CameraFolder</a></code> by <em>name</em>, relative to current <code><a href="../GPhoto2/CameraFolder.html#path%3AString-instance-method">#path</a></code>.</p>
+          <p>Returns subfolder by <em>name</em>, relative to current <code><a href="../GPhoto2/CameraFolder.html#path%3AString-instance-method">#path</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_folder.cr#L44" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_folder.cr#L45" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -747,13 +757,13 @@ ameba:disable Naming/BinaryOperatorParameterName</p>
       
         <div class="doc">
           
-          <p>Deletes all files and/or folders.</p>
+          <p>Deletes all files and/or sub-folders.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_folder.cr#L75" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_folder.cr#L76" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -768,13 +778,13 @@ ameba:disable Naming/BinaryOperatorParameterName</p>
       
         <div class="doc">
           
-          <p>Deletes this folder from the camera.</p>
+          <p>Deletes this folder (along with all files and subfolders) from the camera.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_folder.cr#L81" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_folder.cr#L82" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -795,7 +805,7 @@ ameba:disable Naming/BinaryOperatorParameterName</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_folder.cr#L39" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_folder.cr#L40" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -810,13 +820,13 @@ ameba:disable Naming/BinaryOperatorParameterName</p>
       
         <div class="doc">
           
-          <p>Lists folders.</p>
+          <p>Lists sub-folders.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_folder.cr#L34" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_folder.cr#L35" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -837,7 +847,7 @@ ameba:disable Naming/BinaryOperatorParameterName</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_folder.cr#L29" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_folder.cr#L30" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -852,13 +862,13 @@ ameba:disable Naming/BinaryOperatorParameterName</p>
       
         <div class="doc">
           
-          <p>Returns <code><a href="../GPhoto2/CameraFile.html">CameraFile</a></code> by <em>name</em>, relative to current <code><a href="../GPhoto2/CameraFolder.html#path%3AString-instance-method">#path</a></code>.</p>
+          <p>Returns file by <em>name</em>, relative to current <code><a href="../GPhoto2/CameraFolder.html#path%3AString-instance-method">#path</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_folder.cr#L60" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_folder.cr#L61" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -873,13 +883,13 @@ ameba:disable Naming/BinaryOperatorParameterName</p>
       
         <div class="doc">
           
-          <p>Returns parent <code><a href="../GPhoto2/CameraFolder.html">CameraFolder</a></code> or <code>self</code>.</p>
+          <p>Returns parent folder or <code>self</code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_folder.cr#L70" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_folder.cr#L71" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -894,13 +904,13 @@ ameba:disable Naming/BinaryOperatorParameterName</p>
       
         <div class="doc">
           
-          <p>Returns parent <code><a href="../GPhoto2/CameraFolder.html">CameraFolder</a></code> or <code>nil</code>.</p>
+          <p>Returns parent folder or <code>nil</code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_folder.cr#L65" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_folder.cr#L66" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -921,7 +931,7 @@ ameba:disable Naming/BinaryOperatorParameterName</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_folder.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_folder.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -942,7 +952,7 @@ ameba:disable Naming/BinaryOperatorParameterName</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_folder.cr#L24" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_folder.cr#L25" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -957,21 +967,13 @@ ameba:disable Naming/BinaryOperatorParameterName</p>
       
         <div class="doc">
           
-            <div class="doc-inherited">
-              Description copied from class Object
-            </div>
-          
-          <p>Returns a nicely readable and concise string representation of this object,
-typically intended for users.</p>
-<p>This method should usually <strong>not</strong> be overridden. It delegates to
-<code>#to_s(IO)</code> which can be overridden for custom implementations.</p>
-<p>Also see <code>#inspect</code>.</p>
+          <p>Returns folder <code><a href="../GPhoto2/CameraFolder.html#path%3AString-instance-method">#path</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d78dcefa/src/gphoto2/camera_folder.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7884446c/src/gphoto2/camera_folder.cr#L20" target="_blank">View source</a>]
         
       </div>
     </div>
