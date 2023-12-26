@@ -14,7 +14,6 @@ module GPhoto2
       end
 
       # :ditto:
-      # ameba:disable Naming/BinaryOperatorParameterName
       def /(path) : CameraFolder
         filesystem(path)
       end

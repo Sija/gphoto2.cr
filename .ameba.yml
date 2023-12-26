@@ -8,5 +8,10 @@ Lint/Formatting:
   Excluded:
     - src/lib/**/*
 
+Naming/BinaryOperatorParameterName:
+  Excluded:
+    - src/gphoto2/camera/filesystem.cr
+    - src/gphoto2/camera_folder.cr
+
 Documentation/DocumentationAdmonition:
   Admonitions: [FIXME, BUG]

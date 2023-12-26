@@ -52,7 +52,6 @@ module GPhoto2
     end
 
     # See: `#cd`
-    # ameba:disable Naming/BinaryOperatorParameterName
     def /(name : String) : self
       cd(name)
     end
