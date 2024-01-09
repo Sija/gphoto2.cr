@@ -4,6 +4,9 @@ Excluded:
 Lint/NotNil:
   Enabled: false
 
+Lint/UselessAssign:
+  ExcludeTypeDeclarations: true
+
 Lint/Formatting:
   Excluded:
     - src/lib/**/*
