@@ -12,8 +12,8 @@ module GPhoto2
       protected def set_value(value)
         case value
         when String
-          ptr = Pointer(LibC::Char).malloc(value.size)
-          ptr.copy_from(value.to_unsafe, value.size)
+          ptr = Pointer(LibC::Char).malloc(value.bytesize + 1)
+          ptr.copy_from(value.to_unsafe, value.bytesize)
           set_value_ptr ptr
         when Symbol
           set_value value.to_s.capitalize
