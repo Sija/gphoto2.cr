@@ -17,7 +17,7 @@ development_dependencies:
 crystal: ~> 1.11
 
 libraries:
-  libgphoto2: ~> 2.5.2
-  libgphoto2_port: ~> 0.10.1
+  libgphoto2: ">= 2.5.2"
+  libgphoto2_port: ">= 0.10.1"
 
 license: MIT
