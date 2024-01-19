@@ -9,7 +9,7 @@ module GPhoto2
       # Waits for the specified event type and returns the event.
       #
       # NOTE: this method is blocking.
-      def wait_for(event_type : CameraEventType, timeout : Time::Span = 2.seconds) : CameraEvent
+      def wait_for(event_type : CameraEvent::Type, timeout : Time::Span = 2.seconds) : CameraEvent
         event = wait timeout
         until event.type == event_type
           event = wait timeout
