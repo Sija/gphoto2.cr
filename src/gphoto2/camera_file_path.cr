@@ -1,16 +1,15 @@
 module GPhoto2
   # Represents a path representing a file or folder.
-  class CameraFilePath
-    include GPhoto2::Struct(LibGPhoto2::CameraFilePath)
-
+  struct CameraFilePath
     # Returns the name part of the path.
-    def name : String
-      String.new wrapped.name.to_unsafe
-    end
+    getter name : String
 
     # Returns the folder part of the path.
-    def folder : String
-      String.new wrapped.folder.to_unsafe
+    getter folder : String
+
+    def initialize(path : LibGPhoto2::CameraFilePath)
+      @name = String.new(path.name.to_unsafe)
+      @folder = String.new(path.folder.to_unsafe)
     end
 
     def_equals name, folder

@@ -60,7 +60,7 @@ module GPhoto2
       private def _capture(type)
         context.check! \
           LibGPhoto2.gp_camera_capture(self, type, out path, context)
-        CameraFilePath.new pointerof(path)
+        CameraFilePath.new path
       end
 
       private def capture_preview
