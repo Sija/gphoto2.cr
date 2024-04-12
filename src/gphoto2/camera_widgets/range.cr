@@ -21,13 +21,6 @@ module GPhoto2
         min.step(to: max, by: inc).to_a
       end
 
-      private getter get_range : {Float32, Float32, Float32} do
-        min, max, inc = LibC::Float[3]
-        GPhoto2.check! \
-          LibGPhoto2.gp_widget_get_range(self, pointerof(min), pointerof(max), pointerof(inc))
-        {min.to_f32, max.to_f32, inc.to_f32}
-      end
-
       protected def get_value
         ptr = Pointer(LibC::Float).malloc
         get_value_ptr ptr
@@ -45,6 +38,13 @@ module GPhoto2
           raise ArgumentError.new \
             "Invalid value type, expected Float | Int | String, got #{value.class}"
         end
+      end
+
+      private def get_range
+        min, max, inc = LibC::Float[3]
+        GPhoto2.check! \
+          LibGPhoto2.gp_widget_get_range(self, pointerof(min), pointerof(max), pointerof(inc))
+        {min.to_f32, max.to_f32, inc.to_f32}
       end
     end
   end
