@@ -18,6 +18,22 @@ module GPhoto2
         filesystem(path)
       end
 
+      # Returns `CameraFile` instance of the given *path*.
+      #
+      # ```
+      # file = camera.blob("/store_00010001/DCIM/100D5100/DSC_0001.JPG")
+      # file.name # => "DSC_0001.JPG"
+      # ```
+      def blob(path : Path) : CameraFile
+        fs = self / path.dirname
+        fs.open(path.basename)
+      end
+
+      # :ditto:
+      def blob(path : String) : CameraFile
+        blob(Path.posix(path))
+      end
+
       # Clear the filesystem.
       #
       # Resets the filesystem. All cached information including the folder tree
