@@ -52,7 +52,7 @@ module GPhoto2
         begin
           yield self
         ensure
-          diff = config_snapshot.select { |key, value| self[key] != value }
+          diff = config_snapshot.reject { |key, value| self[key] == value }
           begin
             update diff unless diff.empty?
           rescue GPhoto2::Error
