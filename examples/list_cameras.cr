@@ -9,6 +9,7 @@ cameras.each do |camera|
   puts camera.model.colorize(:green)
   props = {
     "id":                camera.id,
+    "serial number":     camera.serialnumber,
     "port":              camera.port,
     "driver status":     abilities.status,
     "device type":       abilities.device_type,
