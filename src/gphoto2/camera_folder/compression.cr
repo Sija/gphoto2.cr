@@ -6,8 +6,8 @@ module GPhoto2
     module Compression
       private def zip_visitor(zip, folder : CameraFolder, root : String? = nil)
         folder.files.each do |file|
-          pathname = root ? Path.posix(root, file.path).to_s : file.path
-          pathname = pathname.lchop('/')
+          pathname = root ? Path.posix(root, file.path) : file.path
+          pathname = pathname.to_s.lchop('/')
           mtime = file.info.file?.try(&.mtime) || Time.local
 
           entry = Compress::Zip::Writer::Entry.new pathname,

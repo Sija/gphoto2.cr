@@ -17,8 +17,8 @@ module GPhoto2
       # :nodoc:
       def capture(type : Type) : CameraFile
         save
-        path = _capture(type)
-        CameraFile.new(self, path.folder, path.name)
+        path = _capture(type).to_path
+        CameraFile.new(self, path)
       end
 
       # Triggers a capture and immediately returns.
@@ -64,7 +64,7 @@ module GPhoto2
       end
 
       private def capture_preview
-        file = CameraFile.new self
+        file = CameraFile.new(self)
         context.check! \
           LibGPhoto2.gp_camera_capture_preview(self, file, context)
         file

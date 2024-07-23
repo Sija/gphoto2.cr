@@ -13,5 +13,9 @@ module GPhoto2
     end
 
     def_equals name, folder
+
+    def to_path : Path
+      Path.posix(folder) / name
+    end
   end
 end

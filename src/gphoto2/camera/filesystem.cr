@@ -8,8 +8,12 @@ module GPhoto2
       # folder = camera/"store_00010001/DCIM/100D5100"
       # folder.files.map(&.name) # => ["DSC_0001.JPG", "DSC_0002.JPG", ...]
       # ```
-      def filesystem(path : String = "/") : CameraFolder
-        path = "/#{path}" unless path.starts_with? '/'
+      def filesystem(path : Path | String = "/") : CameraFolder
+        path =
+          path.is_a?(String) ? Path.posix(path) : path.to_posix
+
+        path = Path.posix("/").join(path) unless path.absolute?
+
         CameraFolder.new(self, path)
       end
 
@@ -24,14 +28,12 @@ module GPhoto2
       # file = camera.blob("/store_00010001/DCIM/100D5100/DSC_0001.JPG")
       # file.name # => "DSC_0001.JPG"
       # ```
-      def blob(path : Path) : CameraFile
+      def blob(path : Path | String) : CameraFile
+        path =
+          path.is_a?(String) ? Path.posix(path) : path.to_posix
+
         fs = self / path.dirname
         fs.open(path.basename)
-      end
-
-      # :ditto:
-      def blob(path : String) : CameraFile
-        blob(Path.posix(path))
       end
 
       # Clear the filesystem.

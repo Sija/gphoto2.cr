@@ -24,11 +24,9 @@ module GPhoto2
         data =
           case type
           when .file_added?
-            path = build_path(data_ptr)
-            CameraFile.new(self, path.folder, path.name)
+            CameraFile.new(self, build_path(data_ptr))
           when .folder_added?
-            path = build_path(data_ptr)
-            CameraFolder.new(self, CameraFile.join(path.folder, path.name))
+            CameraFolder.new(self, build_path(data_ptr))
           when .unknown?
             String.new(data_ptr.as(LibC::Char*)) if data_ptr
           end
@@ -36,7 +34,7 @@ module GPhoto2
       end
 
       private def build_path(data_ptr)
-        CameraFilePath.new(data_ptr.as(LibGPhoto2::CameraFilePath*))
+        CameraFilePath.new(data_ptr.as(LibGPhoto2::CameraFilePath*)).to_path
       end
     end
   end

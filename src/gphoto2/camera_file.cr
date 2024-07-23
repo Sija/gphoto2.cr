@@ -12,33 +12,39 @@ module GPhoto2
     # Initial buffer size used in `#read`.
     BUFFER_SIZE = 256 * 1024
 
-    # Directory part of the file path.
-    getter! folder : String
-
-    # Filename part of the file path.
-    getter! name : String
+    # Returns file path.
+    getter path : Path
 
     protected getter camera : Camera
     protected delegate :context,
       to: @camera
 
-    # Returns a new string formed by joining the strings using `/`.
-    #
-    # NOTE: OS-independent substitute of `File.join` applicable to *libgphoto2* fs.
-    def self.join(*args : String) : String
-      args.join '/', &.chomp('/')
-    end
-
     # NOTE: allocates memory.
-    def initialize(@camera, @folder = nil, @name = nil)
+    def initialize(@camera, path : Path | String)
+      @path =
+        path.is_a?(String) ? Path.posix(path) : path.to_posix
+
       new
     end
 
-    def_equals @camera, @folder, @name
+    # :ditto:
+    def initialize(@camera)
+      initialize(@camera, PREVIEW_FILENAME)
+    end
+
+    def_equals @camera, @path
 
     # Returns file `#path`.
     def to_s
-      path
+      @path.to_s
+    end
+
+    def name
+      @path.basename
+    end
+
+    def folder
+      @path.dirname
     end
 
     # Finalizes object by freeing allocated memory.
@@ -53,12 +59,14 @@ module GPhoto2
 
     # Returns `true` if file is a preview.
     def preview?
-      !(@folder && @name)
+      to_s == PREVIEW_FILENAME
     end
 
     # Saves file `#data` at given *pathname*.
-    def save(path : String | Path = default_filename) : Nil
-      Dir.mkdir_p(Path[path].dirname)
+    def save(path : Path | String = default_filename) : Nil
+      path = Path[path] if path.is_a?(String)
+
+      Dir.mkdir_p(path.dirname)
       File.write(path, to_slice)
     end
 
@@ -90,16 +98,6 @@ module GPhoto2
     # Returns an object containing information about the file.
     def info : CameraFileInfo
       get_info
-    end
-
-    # Returns file extension in lowercase (without leading dot).
-    def extension : String
-      File.extname(name).lstrip('.').downcase
-    end
-
-    # Returns full file path (within the camera filesystem).
-    def path : String
-      self.class.join folder, name
     end
 
     private def new

@@ -5,30 +5,32 @@ module GPhoto2
     include Compression
 
     # Returns folder path.
-    getter path : String
+    getter path : Path
 
     protected getter camera : Camera
     protected delegate :context,
       to: @camera
 
-    def initialize(@camera, @path = "/")
+    def initialize(@camera, path : Path | String = "/")
+      @path =
+        path.is_a?(String) ? Path.posix(path) : path.to_posix
     end
 
     def_equals @camera, @path
 
-    # Returns folder `#path`.
+    # Returns folder `#path` as string.
     def to_s
-      path
+      @path.to_s
     end
 
     # Returns `true` if folder `#path` is `/`.
     def root?
-      path == "/"
+      to_s == "/"
     end
 
     # Returns folder name.
     def name : String
-      File.basename(path)
+      @path.basename
     end
 
     # Lists sub-folders.
@@ -47,7 +49,7 @@ module GPhoto2
       when ".." then parent
       when "."  then self
       else
-        self.class.new(@camera, CameraFile.join(@path, name))
+        self.class.new(@camera, @path / name)
       end
     end
 
@@ -58,12 +60,12 @@ module GPhoto2
 
     # Returns file by *name*, relative to current `#path`.
     def open(name : String) : CameraFile
-      CameraFile.new(@camera, @path, name)
+      CameraFile.new(@camera, @path / name)
     end
 
     # Returns parent folder or `nil`.
     def parent? : self?
-      self.class.new(@camera, parent_path) unless root?
+      self.class.new(@camera, @path.parent) unless root?
     end
 
     # Returns parent folder or `self`.
@@ -86,34 +88,28 @@ module GPhoto2
       folder_remove_dir
     end
 
-    private def parent_path
-      parent = @path[0...(@path.rindex('/') || 0)]
-      parent = "/" if parent.empty?
-      parent
-    end
-
     private def folder_list_files
       list = CameraList.new
       context.check! \
-        LibGPhoto2.gp_camera_folder_list_files(@camera, @path, list, context)
+        LibGPhoto2.gp_camera_folder_list_files(@camera, @path.to_s, list, context)
       list.to_a.map { |file| open file.name }
     end
 
     private def folder_list_folders
       list = CameraList.new
       context.check! \
-        LibGPhoto2.gp_camera_folder_list_folders(@camera, @path, list, context)
+        LibGPhoto2.gp_camera_folder_list_folders(@camera, @path.to_s, list, context)
       list.to_a.map { |folder| cd folder.name }
     end
 
     private def folder_delete_all
       context.check! \
-        LibGPhoto2.gp_camera_folder_delete_all(@camera, @path, context)
+        LibGPhoto2.gp_camera_folder_delete_all(@camera, @path.to_s, context)
     end
 
     private def folder_remove_dir
       context.check! \
-        LibGPhoto2.gp_camera_folder_remove_dir(@camera, parent_path, name, context)
+        LibGPhoto2.gp_camera_folder_remove_dir(@camera, @path.parent.to_s, name, context)
     end
   end
 end
