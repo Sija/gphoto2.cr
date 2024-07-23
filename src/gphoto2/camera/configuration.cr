@@ -39,8 +39,8 @@ module GPhoto2
       # camera[:aperture] # => 4
       # camera[:iso]      # => 400
       # ```
-      def preserving_config(keys : Array(String | Symbol)? = nil, &) : Nil
-        config_snapshot = keys ? config.select(keys.map &.to_s) : config
+      def preserving_config(keys : Enumerable(String | Symbol)? = nil, &) : Nil
+        config_snapshot = keys ? config.select(keys.map(&.to_s)) : config
         config_snapshot =
           config_snapshot.reduce({} of String => String) do |memo, (key, widget)|
             if value = widget.value?
@@ -64,7 +64,7 @@ module GPhoto2
 
       # :nodoc:
       def preserving_config(*keys, &) : Nil
-        preserving_config(keys.to_a) { |camera| yield camera }
+        preserving_config(keys) { |camera| yield camera }
       end
 
       # Reloads camera configuration.
