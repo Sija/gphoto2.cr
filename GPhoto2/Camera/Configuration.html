@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Crystal Docs 1.11.2">
+<meta name="generator" content="Crystal Docs 1.12.2">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="gphoto2">
 
@@ -457,7 +457,7 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera/configuration.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/3b6289ee/src/gphoto2/camera/configuration.cr#L4" target="_blank">
         gphoto2/camera/configuration.cr
       </a>
     
@@ -527,7 +527,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#preserving_config%28keys%3AArray%28String%7CSymbol%29%7CNil%3Dnil%2C%26%29%3ANil-instance-method" class="signature"><strong>#preserving_config</strong>(keys : Array(String | Symbol) | Nil = <span class="n">nil</span>, &) : Nil</a>
+        <a href="#preserving_config%28keys%3AEnumerable%28String%7CSymbol%29%7CNil%3Dnil%2C%26%29%3ANil-instance-method" class="signature"><strong>#preserving_config</strong>(keys : Enumerable(String | Symbol) | Nil = <span class="n">nil</span>, &) : Nil</a>
         
           <div class="summary"><p>Preserves config for a block call.</p></div>
         
@@ -603,7 +603,7 @@ camera <span class="o">&lt;&lt;</span> iso</code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera/configuration.cr#L124" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/3b6289ee/src/gphoto2/camera/configuration.cr#L124" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -627,7 +627,7 @@ camera[<span class="s">&quot;whitebalance&quot;</span>].to_s <span class="c"># =
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera/configuration.cr#L94" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/3b6289ee/src/gphoto2/camera/configuration.cr#L94" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -653,7 +653,7 @@ camera[<span class="s">&quot;shutterspeed2&quot;</span>] <span class="o">=</span
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera/configuration.cr#L113" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/3b6289ee/src/gphoto2/camera/configuration.cr#L113" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -677,7 +677,7 @@ camera[<span class="s">&quot;whitebalance&quot;</span>].to_s <span class="c"># =
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera/configuration.cr#L99" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/3b6289ee/src/gphoto2/camera/configuration.cr#L99" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -701,7 +701,7 @@ camera.config.keys <span class="c"># =&gt; [&quot;autofocusdrive&quot;, &quot;ma
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera/configuration.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/3b6289ee/src/gphoto2/camera/configuration.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -725,17 +725,17 @@ camera.dirty? <span class="c"># =&gt; true</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera/configuration.cr#L183" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/3b6289ee/src/gphoto2/camera/configuration.cr#L183" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="preserving_config(keys:Array(String|Symbol)|Nil=nil,&amp;):Nil-instance-method">
+    <div class="entry-detail" id="preserving_config(keys:Enumerable(String|Symbol)|Nil=nil,&amp;):Nil-instance-method">
       <div class="signature">
         
-        def <strong>preserving_config</strong>(keys : Array(String | Symbol) | Nil = <span class="n">nil</span>, &) : Nil
+        def <strong>preserving_config</strong>(keys : Enumerable(String | Symbol) | Nil = <span class="n">nil</span>, &) : Nil
 
-        <a class="method-permalink" href="#preserving_config%28keys%3AArray%28String%7CSymbol%29%7CNil%3Dnil%2C%26%29%3ANil-instance-method">#</a>
+        <a class="method-permalink" href="#preserving_config%28keys%3AEnumerable%28String%7CSymbol%29%7CNil%3Dnil%2C%26%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -766,7 +766,7 @@ camera[<span class="n">:iso</span>]      <span class="c"># =&gt; 400</span></cod
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera/configuration.cr#L42" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/3b6289ee/src/gphoto2/camera/configuration.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -792,7 +792,7 @@ camera[<span class="n">:iso</span>] <span class="c"># =&gt; 800</span></code></p
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera/configuration.cr#L80" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/3b6289ee/src/gphoto2/camera/configuration.cr#L80" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -816,7 +816,7 @@ camera.save <span class="c"># =&gt; false (nothing to update)</span></code></pre
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera/configuration.cr#L139" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/3b6289ee/src/gphoto2/camera/configuration.cr#L139" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -851,7 +851,7 @@ camera[<span class="n">:shutterspeed2</span>] <span class="c"># =&gt; &quot;1/60
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera/configuration.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/3b6289ee/src/gphoto2/camera/configuration.cr#L164" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -872,7 +872,7 @@ camera[<span class="n">:shutterspeed2</span>] <span class="c"># =&gt; &quot;1/60
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera/configuration.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/3b6289ee/src/gphoto2/camera/configuration.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>

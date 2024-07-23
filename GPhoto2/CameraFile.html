@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Crystal Docs 1.11.2">
+<meta name="generator" content="Crystal Docs 1.12.2">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="gphoto2">
 
@@ -448,7 +448,7 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera_file.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/3b6289ee/src/gphoto2/camera_file.cr#L4" target="_blank">
         gphoto2/camera_file.cr
       </a>
     
@@ -502,7 +502,14 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28camera%3AGPhoto2%3A%3ACamera%2Cfolder%3ANil%7CString%3Dnil%2Cname%3ANil%7CString%3Dnil%29-class-method" class="signature"><strong>.new</strong>(camera : GPhoto2::Camera, folder : Nil | String = <span class="n">nil</span>, name : Nil | String = <span class="n">nil</span>)</a>
+        <a href="#new%28camera%3AGPhoto2%3A%3ACamera%2Cpath%3APath%7CString%29-class-method" class="signature"><strong>.new</strong>(camera : GPhoto2::Camera, path : Path | String)</a>
+        
+          <div class="summary"><p><span class="flag purple">NOTE</span>  allocates memory.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new%28camera%3AGPhoto2%3A%3ACamera%29-class-method" class="signature"><strong>.new</strong>(camera : GPhoto2::Camera)</a>
         
           <div class="summary"><p><span class="flag purple">NOTE</span>  allocates memory.</p></div>
         
@@ -511,25 +518,6 @@
   </ul>
 
 
-
-  <h2>
-    <a id="class-method-summary" class="anchor" href="#class-method-summary">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Class Method Summary
-  </h2>
-  <ul class="list-summary">
-    
-      <li class="entry-summary">
-        <a href="#join%28%2Aargs%3AString%29%3AString-class-method" class="signature"><strong>.join</strong>(*args : String) : String</a>
-        
-          <div class="summary"><p>Returns a new string formed by joining the strings using <code>/</code>.</p></div>
-        
-      </li>
-    
-  </ul>
 
 
 
@@ -574,13 +562,6 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#extension%3AString-instance-method" class="signature"><strong>#extension</strong> : String</a>
-        
-          <div class="summary"><p>Returns file extension in lowercase (without leading dot).</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
         <a href="#finalize-instance-method" class="signature"><strong>#finalize</strong></a>
         
           <div class="summary"><p>Finalizes object by freeing allocated memory.</p></div>
@@ -588,16 +569,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#folder%3AString-instance-method" class="signature"><strong>#folder</strong> : String</a>
-        
-          <div class="summary"><p>Directory part of the file path.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#folder%3F%3AString%7CNil-instance-method" class="signature"><strong>#folder?</strong> : String | Nil</a>
-        
-          <div class="summary"><p>Directory part of the file path.</p></div>
+        <a href="#folder-instance-method" class="signature"><strong>#folder</strong></a>
         
       </li>
     
@@ -609,23 +581,14 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#name%3AString-instance-method" class="signature"><strong>#name</strong> : String</a>
-        
-          <div class="summary"><p>Filename part of the file path.</p></div>
+        <a href="#name-instance-method" class="signature"><strong>#name</strong></a>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#name%3F%3AString%7CNil-instance-method" class="signature"><strong>#name?</strong> : String | Nil</a>
+        <a href="#path%3APath-instance-method" class="signature"><strong>#path</strong> : Path</a>
         
-          <div class="summary"><p>Filename part of the file path.</p></div>
-        
-      </li>
-    
-      <li class="entry-summary">
-        <a href="#path%3AString-instance-method" class="signature"><strong>#path</strong> : String</a>
-        
-          <div class="summary"><p>Returns full file path (within the camera filesystem).</p></div>
+          <div class="summary"><p>Returns file path.</p></div>
         
       </li>
     
@@ -644,7 +607,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#save%28path%3AString%7CPath%3Ddefault_filename%29%3ANil-instance-method" class="signature"><strong>#save</strong>(path : String | Path = default_filename) : Nil</a>
+        <a href="#save%28path%3APath%7CString%3Ddefault_filename%29%3ANil-instance-method" class="signature"><strong>#save</strong>(path : Path | String = default_filename) : Nil</a>
         
           <div class="summary"><p>Saves file <code><a href="../GPhoto2/CameraFile.html#data%3APointer%28UInt8%29-instance-method">#data</a></code> at given <em>pathname</em>.</p></div>
         
@@ -660,7 +623,7 @@
       <li class="entry-summary">
         <a href="#to_s-instance-method" class="signature"><strong>#to_s</strong></a>
         
-          <div class="summary"><p>Returns file <code><a href="../GPhoto2/CameraFile.html#path%3AString-instance-method">#path</a></code>.</p></div>
+          <div class="summary"><p>Returns file <code><a href="../GPhoto2/CameraFile.html#path%3APath-instance-method">#path</a></code>.</p></div>
         
       </li>
     
@@ -761,12 +724,12 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(camera:GPhoto2::Camera,folder:Nil|String=nil,name:Nil|String=nil)-class-method">
+    <div class="entry-detail" id="new(camera:GPhoto2::Camera,path:Path|String)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(camera : <a href="../GPhoto2/Camera.html">GPhoto2::Camera</a>, folder : Nil | String = <span class="n">nil</span>, name : Nil | String = <span class="n">nil</span>)
+        def self.<strong>new</strong>(camera : <a href="../GPhoto2/Camera.html">GPhoto2::Camera</a>, path : Path | String)
 
-        <a class="method-permalink" href="#new%28camera%3AGPhoto2%3A%3ACamera%2Cfolder%3ANil%7CString%3Dnil%2Cname%3ANil%7CString%3Dnil%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28camera%3AGPhoto2%3A%3ACamera%2Cpath%3APath%7CString%29-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -777,45 +740,34 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera_file.cr#L33" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/3b6289ee/src/gphoto2/camera_file.cr#L23" target="_blank">View source</a>]
         
       </div>
     </div>
   
-
-
-
-  <h2>
-    <a id="class-method-detail" class="anchor" href="#class-method-detail">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Class Method Detail
-  </h2>
-  
-    <div class="entry-detail" id="join(*args:String):String-class-method">
+    <div class="entry-detail" id="new(camera:GPhoto2::Camera)-class-method">
       <div class="signature">
         
-        def self.<strong>join</strong>(*args : String) : String
+        def self.<strong>new</strong>(camera : <a href="../GPhoto2/Camera.html">GPhoto2::Camera</a>)
 
-        <a class="method-permalink" href="#join%28%2Aargs%3AString%29%3AString-class-method">#</a>
+        <a class="method-permalink" href="#new%28camera%3AGPhoto2%3A%3ACamera%29-class-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Returns a new string formed by joining the strings using <code>/</code>.</p>
-<p><span class="flag purple">NOTE</span>  OS-independent substitute of <code>File.join</code> applicable to <em>libgphoto2</em> fs.</p>
+          <p><span class="flag purple">NOTE</span>  allocates memory.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera_file.cr#L28" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/3b6289ee/src/gphoto2/camera_file.cr#L31" target="_blank">View source</a>]
         
       </div>
     </div>
   
+
+
 
 
 
@@ -850,7 +802,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera_file.cr#L37" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/3b6289ee/src/gphoto2/camera_file.cr#L35" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -871,7 +823,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera_file.cr#L50" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/3b6289ee/src/gphoto2/camera_file.cr#L56" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -892,7 +844,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera_file.cr#L71" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/3b6289ee/src/gphoto2/camera_file.cr#L79" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -913,28 +865,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera_file.cr#L66" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="extension:String-instance-method">
-      <div class="signature">
-        
-        def <strong>extension</strong> : String
-
-        <a class="method-permalink" href="#extension%3AString-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns file extension in lowercase (without leading dot).</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera_file.cr#L96" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/3b6289ee/src/gphoto2/camera_file.cr#L74" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -955,49 +886,23 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera_file.cr#L45" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/3b6289ee/src/gphoto2/camera_file.cr#L51" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="folder:String-instance-method">
+    <div class="entry-detail" id="folder-instance-method">
       <div class="signature">
         
-        def <strong>folder</strong> : String
+        def <strong>folder</strong>
 
-        <a class="method-permalink" href="#folder%3AString-instance-method">#</a>
+        <a class="method-permalink" href="#folder-instance-method">#</a>
       </div>
-      
-        <div class="doc">
-          
-          <p>Directory part of the file path.</p>
-        </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera_file.cr#L16" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="folder?:String|Nil-instance-method">
-      <div class="signature">
-        
-        def <strong>folder?</strong> : String | Nil
-
-        <a class="method-permalink" href="#folder%3F%3AString%7CNil-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Directory part of the file path.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera_file.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/3b6289ee/src/gphoto2/camera_file.cr#L46" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1018,70 +923,44 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera_file.cr#L91" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/3b6289ee/src/gphoto2/camera_file.cr#L99" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="name:String-instance-method">
+    <div class="entry-detail" id="name-instance-method">
       <div class="signature">
         
-        def <strong>name</strong> : String
+        def <strong>name</strong>
 
-        <a class="method-permalink" href="#name%3AString-instance-method">#</a>
+        <a class="method-permalink" href="#name-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/3b6289ee/src/gphoto2/camera_file.cr#L42" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="path:Path-instance-method">
+      <div class="signature">
+        
+        def <strong>path</strong> : Path
+
+        <a class="method-permalink" href="#path%3APath-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Filename part of the file path.</p>
+          <p>Returns file path.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera_file.cr#L19" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="name?:String|Nil-instance-method">
-      <div class="signature">
-        
-        def <strong>name?</strong> : String | Nil
-
-        <a class="method-permalink" href="#name%3F%3AString%7CNil-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Filename part of the file path.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera_file.cr#L19" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="path:String-instance-method">
-      <div class="signature">
-        
-        def <strong>path</strong> : String
-
-        <a class="method-permalink" href="#path%3AString-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns full file path (within the camera filesystem).</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera_file.cr#L101" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/3b6289ee/src/gphoto2/camera_file.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1102,7 +981,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera_file.cr#L55" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/3b6289ee/src/gphoto2/camera_file.cr#L61" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1123,17 +1002,17 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera_file.cr#L86" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/3b6289ee/src/gphoto2/camera_file.cr#L94" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="save(path:String|Path=default_filename):Nil-instance-method">
+    <div class="entry-detail" id="save(path:Path|String=default_filename):Nil-instance-method">
       <div class="signature">
         
-        def <strong>save</strong>(path : String | Path = default_filename) : Nil
+        def <strong>save</strong>(path : Path | String = default_filename) : Nil
 
-        <a class="method-permalink" href="#save%28path%3AString%7CPath%3Ddefault_filename%29%3ANil-instance-method">#</a>
+        <a class="method-permalink" href="#save%28path%3APath%7CString%3Ddefault_filename%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1144,7 +1023,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera_file.cr#L60" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/3b6289ee/src/gphoto2/camera_file.cr#L66" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1165,7 +1044,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera_file.cr#L76" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/3b6289ee/src/gphoto2/camera_file.cr#L84" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1180,13 +1059,13 @@
       
         <div class="doc">
           
-          <p>Returns file <code><a href="../GPhoto2/CameraFile.html#path%3AString-instance-method">#path</a></code>.</p>
+          <p>Returns file <code><a href="../GPhoto2/CameraFile.html#path%3APath-instance-method">#path</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera_file.cr#L40" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/3b6289ee/src/gphoto2/camera_file.cr#L38" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1207,7 +1086,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/828fbb18/src/gphoto2/camera_file.cr#L81" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/3b6289ee/src/gphoto2/camera_file.cr#L89" target="_blank">View source</a>]
         
       </div>
     </div>
