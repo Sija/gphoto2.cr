@@ -7,13 +7,13 @@ module GPhoto2
       include GPhoto2::ManagedStruct(LibGPhoto2::CameraFileInfoPreview)
 
       # Returns the width of the preview.
-      def width : UInt32?
-        wrapped.width.to_u32 if field?(:width)
+      def width : Int32?
+        wrapped.width.to_i32 if field?(:width)
       end
 
       # Returns the height of the preview.
-      def height : UInt32?
-        wrapped.height.to_u32 if field?(:height)
+      def height : Int32?
+        wrapped.height.to_i32 if field?(:height)
       end
     end
   end
