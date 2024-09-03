@@ -451,7 +451,7 @@ It also includes a facade to interact with the library in a more idiomatic Cryst
 
 <span class="c"># list available cameras</span>
 cameras <span class="o">=</span> <span class="t">GPhoto2</span><span class="t">::</span><span class="t">Camera</span>.all
-<span class="c"># =&gt; [#, ...]</span>
+<span class="c"># =&gt; [#&lt;GPhoto2::Camera&gt;, ...]</span>
 
 <span class="c"># list found cameras by model and port path</span>
 cameras.map { <span class="o">|</span>c<span class="o">|</span> [c.model, c.port] }
@@ -542,7 +542,7 @@ file.save(<span class="s">&quot;/tmp/out.jpg&quot;</span>)
 folder <span class="o">=</span> camera<span class="o">/</span><span class="s">&quot;store_00010001/DCIM/100D5100&quot;</span>
 
 <span class="c"># generate a zip file</span>
-folder.to_zip_file <span class="c"># =&gt; #</span>
+folder.to_zip_file <span class="c"># =&gt; #&lt;File:/tmp/camera.fs-[...].zip (closed)&gt;</span>
 
 <span class="c"># list files</span>
 files <span class="o">=</span> folder.files
@@ -571,7 +571,7 @@ file.delete</code></pre>
   </svg>
 </a>Contributing</h2>
 <ol>
-<li>Fork it ()</li>
+<li>Fork it (<a href="https://github.com/Sija/gphoto2.cr/fork">https://github.com/Sija/gphoto2.cr/fork</a>)</li>
 <li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
 <li>Commit your changes (<code>git commit -am 'Add some feature'</code>)</li>
 <li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
