@@ -63,6 +63,12 @@ module GPhoto2
       CameraFile.new(@camera, @path / name)
     end
 
+    # Creates a new folder and returns it
+    def mkdir(name : String) : CameraFolder
+      folder_make_dir(name)
+      cd(name)
+    end
+
     # Returns parent folder or `nil`.
     def parent? : CameraFolder?
       self.class.new(@camera, @path.parent) unless root?
@@ -110,6 +116,11 @@ module GPhoto2
     private def folder_remove_dir
       context.check! \
         LibGPhoto2.gp_camera_folder_remove_dir(@camera, @path.parent.to_s, name, context)
+    end
+
+    private def folder_make_dir(name)
+      context.check! \
+        LibGPhoto2.gp_camera_folder_make_dir(@camera, @path.to_s, name, context)
     end
   end
 end
