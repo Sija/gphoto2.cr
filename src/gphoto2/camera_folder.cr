@@ -34,7 +34,7 @@ module GPhoto2
     end
 
     # Lists sub-folders.
-    def folders : Array(self)
+    def folders : Array(CameraFolder)
       folder_list_folders
     end
 
@@ -44,7 +44,7 @@ module GPhoto2
     end
 
     # Returns subfolder by *name*, relative to current `#path`.
-    def cd(name : String) : self
+    def cd(name : String) : CameraFolder
       case name
       when ".." then parent
       when "."  then self
@@ -54,7 +54,7 @@ module GPhoto2
     end
 
     # See: `#cd`
-    def /(name : String) : self
+    def /(name : String) : CameraFolder
       cd(name)
     end
 
@@ -64,12 +64,12 @@ module GPhoto2
     end
 
     # Returns parent folder or `nil`.
-    def parent? : self?
+    def parent? : CameraFolder?
       self.class.new(@camera, @path.parent) unless root?
     end
 
     # Returns parent folder or `self`.
-    def parent : self
+    def parent : CameraFolder
       parent? || self
     end
 
