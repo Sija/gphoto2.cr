@@ -12,7 +12,7 @@ module GPhoto2
         path =
           path.is_a?(String) ? Path.posix(path) : path.to_posix
 
-        path = Path.posix("/").join(path) unless path.absolute?
+        path = Path.posix("/", path) unless path.absolute?
 
         CameraFolder.new(self, path)
       end
@@ -31,6 +31,8 @@ module GPhoto2
       def blob(path : Path | String) : CameraFile
         path =
           path.is_a?(String) ? Path.posix(path) : path.to_posix
+
+        path = Path.posix("/", path) unless path.absolute?
 
         fs = self / path.dirname
         fs.open(path.basename)
