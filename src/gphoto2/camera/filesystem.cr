@@ -13,6 +13,7 @@ module GPhoto2
           path.is_a?(String) ? Path.posix(path) : path.to_posix
 
         path = Path.posix("/", path) unless path.absolute?
+        path = path.normalize
 
         CameraFolder.new(self, path)
       end
@@ -33,6 +34,7 @@ module GPhoto2
           path.is_a?(String) ? Path.posix(path) : path.to_posix
 
         path = Path.posix("/", path) unless path.absolute?
+        path = path.normalize
 
         fs = self / path.dirname
         fs.open(path.basename)
