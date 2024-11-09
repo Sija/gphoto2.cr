@@ -69,6 +69,16 @@ module GPhoto2
       CameraFile.new(@camera, @path / name)
     end
 
+    # Uploads a new file and returns it
+    def put(name : String, data : Bytes, type : CameraFile::Type = :normal) : CameraFile
+      # initialize the file with the data
+      open(name).tap(&.data = data).tap do |file|
+        folder_put_file(file, name, type)
+      end
+      # reopen the file to get it "fresh" from the device
+      open(name)
+    end
+
     # Returns parent folder or `nil`.
     def parent? : CameraFolder?
       self.class.new(@camera, @path.parent) unless root?
@@ -121,6 +131,11 @@ module GPhoto2
     private def folder_make_dir(name)
       context.check! \
         LibGPhoto2.gp_camera_folder_make_dir(@camera, @path.to_s, name, context)
+    end
+
+    private def folder_put_file(file, name, type)
+      context.check! \
+        LibGPhoto2.gp_camera_folder_put_file(@camera, @path.to_s, name, type, file, context)
     end
   end
 end
