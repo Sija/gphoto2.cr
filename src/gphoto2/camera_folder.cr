@@ -58,15 +58,15 @@ module GPhoto2
       cd(name)
     end
 
-    # Returns file by *name*, relative to current `#path`.
-    def open(name : String) : CameraFile
-      CameraFile.new(@camera, @path / name)
-    end
-
     # Creates a new folder and returns it
     def mkdir(name : String) : CameraFolder
       folder_make_dir(name)
       cd(name)
+    end
+
+    # Returns file by *name*, relative to current `#path`.
+    def open(name : String) : CameraFile
+      CameraFile.new(@camera, @path / name)
     end
 
     # Returns parent folder or `nil`.
