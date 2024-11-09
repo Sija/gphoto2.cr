@@ -75,6 +75,25 @@ module GPhoto2
       _delete
     end
 
+    # :nodoc:
+    #
+    # Sets file `#data` and `#size` at once.
+    #
+    # NOTE: Given data will be copied to a newly allocated memory.
+    # NOTE: Used internally by the `CameraFolder#put` method.
+    def data=(bytes : Bytes)
+      # We need to allocate memory for the data outside of the GC
+      # to avoid "pointer being freed was not allocated" error.
+      #
+      # It'll be freed by lighphoto2 in `gp_file_free` / `gp_file_clean`,
+      # through the `#finalize -> #close -> #free` call sequence.
+      data = LibC.malloc(bytes.bytesize).as(UInt8*)
+      data.copy_from(bytes.to_unsafe, bytes.size)
+
+      set_data_and_size(data, bytes.bytesize)
+      bytes
+    end
+
     # Returns pointer file data.
     def data : UInt8*
       data_and_size.first
@@ -125,6 +144,11 @@ module GPhoto2
       GPhoto2.check! \
         LibGPhoto2.gp_file_get_data_and_size(self, out data, out size)
       {data, size}
+    end
+
+    private def set_data_and_size(data, size)
+      GPhoto2.check! \
+        LibGPhoto2.gp_file_set_data_and_size(self, data, size)
     end
 
     private def get(type = Type::Normal)
