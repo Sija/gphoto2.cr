@@ -230,7 +230,7 @@ module GPhoto2
 
     private def set_mime_type(mime_type)
       GPhoto2.check! \
-        LibGPhoto2.gp_file_set_mime_type(self, mime_type)
+        LibGPhoto2.gp_file_set_mime_type(self, mime_type.check_no_null_byte)
     end
 
     private def get_mtime

@@ -134,12 +134,12 @@ module GPhoto2
 
     private def folder_make_dir(name)
       context.check! \
-        LibGPhoto2.gp_camera_folder_make_dir(@camera, @path.to_s, name, context)
+        LibGPhoto2.gp_camera_folder_make_dir(@camera, @path.to_s, name.check_no_null_byte, context)
     end
 
     private def folder_put_file(file, name, type)
       context.check! \
-        LibGPhoto2.gp_camera_folder_put_file(@camera, @path.to_s, name, type, file, context)
+        LibGPhoto2.gp_camera_folder_put_file(@camera, @path.to_s, name.check_no_null_byte, type, file, context)
     end
   end
 end
