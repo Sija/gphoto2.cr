@@ -136,6 +136,23 @@ module GPhoto2
       type
     end
 
+    # :nodoc:
+    #
+    # Returns the modification time of the file.
+    def mtime : Time?
+      get_mtime
+    end
+
+    # :nodoc:
+    #
+    # Sets the modification time of the file.
+    #
+    # NOTE: Used internally by the `CameraFolder#put` method.
+    def mtime=(time : Time?)
+      set_mtime(time)
+      time
+    end
+
     # Returns an object containing information about the file.
     def info : CameraFileInfo
       get_info
@@ -214,6 +231,17 @@ module GPhoto2
     private def set_mime_type(mime_type)
       GPhoto2.check! \
         LibGPhoto2.gp_file_set_mime_type(self, mime_type)
+    end
+
+    private def get_mtime
+      GPhoto2.check! \
+        LibGPhoto2.gp_file_get_mtime(self, out mtime)
+      Time.unix(mtime.to_i64) unless mtime == 0
+    end
+
+    private def set_mtime(mtime)
+      GPhoto2.check! \
+        LibGPhoto2.gp_file_set_mtime(self, mtime.try(&.to_unix) || 0)
     end
 
     private def get_info
