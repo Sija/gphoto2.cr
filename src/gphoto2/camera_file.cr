@@ -6,6 +6,9 @@ module GPhoto2
 
     alias Type = LibGPhoto2::CameraFileType
 
+    # The unknown mime type as specified by the libgphoto2.
+    UNKNOWN_MIME_TYPE = "unknown/unknown"
+
     # The preview data is assumed to be a jpg.
     PREVIEW_FILENAME = "capture_preview.jpg"
 
@@ -114,6 +117,25 @@ module GPhoto2
       _read
     end
 
+    # :nodoc:
+    #
+    # Returns the mime type of the file.
+    def mime_type : String?
+      if mime_type = get_mime_type.presence
+        mime_type unless mime_type == UNKNOWN_MIME_TYPE
+      end
+    end
+
+    # :nodoc:
+    #
+    # Sets the mime type of the file.
+    #
+    # NOTE: Used internally by the `CameraFolder#put` method.
+    def mime_type=(type : String?)
+      set_mime_type(type || UNKNOWN_MIME_TYPE)
+      type
+    end
+
     # Returns an object containing information about the file.
     def info : CameraFileInfo
       get_info
@@ -181,6 +203,17 @@ module GPhoto2
         data_with_offset.copy_from(buffer.to_unsafe, size)
       end
       data.to_slice(offset)
+    end
+
+    private def get_mime_type
+      GPhoto2.check! \
+        LibGPhoto2.gp_file_get_mime_type(self, out mime_type)
+      String.new mime_type.not_nil! # ameba:disable Lint/NotNil
+    end
+
+    private def set_mime_type(mime_type)
+      GPhoto2.check! \
+        LibGPhoto2.gp_file_set_mime_type(self, mime_type)
     end
 
     private def get_info
