@@ -70,9 +70,13 @@ module GPhoto2
     end
 
     # Uploads a new file and returns it
-    def put(name : String, data : Bytes, type : CameraFile::Type = :normal) : CameraFile
+    def put(name : String, data : Bytes, type : CameraFile::Type = :normal, *, mime_type : String? = nil, mtime : Time? = nil) : CameraFile
       # initialize the file with the data
-      open(name).tap(&.data = data).tap do |file|
+      open(name).tap do |file|
+        file.data = data
+        file.mime_type = mime_type if mime_type
+        file.mtime = mtime if mtime
+
         folder_put_file(file, name, type)
       end
       # reopen the file to get it "fresh" from the device
