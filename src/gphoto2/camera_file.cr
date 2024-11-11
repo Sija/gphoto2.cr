@@ -225,7 +225,7 @@ module GPhoto2
     private def get_mime_type
       GPhoto2.check! \
         LibGPhoto2.gp_file_get_mime_type(self, out mime_type)
-      String.new mime_type.not_nil! # ameba:disable Lint/NotNil
+      String.new mime_type.not_nil!
     end
 
     private def set_mime_type(mime_type)
