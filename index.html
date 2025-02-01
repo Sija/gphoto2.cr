@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Crystal Docs 1.13.3">
+<meta name="generator" content="Crystal Docs 1.14.0">
 <meta name="crystal_docs.project_version" content="master">
 <meta name="crystal_docs.project_name" content="gphoto2">
 
@@ -403,8 +403,36 @@
     <use href="#octicon-link"/>
   </svg>
 </a>gphoto2.cr <a href="https://github.com/Sija/gphoto2.cr/actions/workflows/ci.yml"><img src="https://github.com/Sija/gphoto2.cr/actions/workflows/ci.yml/badge.svg" alt="CI" /></a> <a href="https://github.com/Sija/gphoto2.cr/releases"><img src="https://img.shields.io/github/release/Sija/gphoto2.cr.svg" alt="Releases" /></a> <a href="https://github.com/Sija/gphoto2.cr/blob/master/LICENSE"><img src="https://img.shields.io/github/license/Sija/gphoto2.cr.svg" alt="License" /></a></h1>
-<p><strong>gphoto2.cr</strong> provides an FFI for common functions in <a href="http://www.gphoto.org/">libgphoto2</a>.
+<p><strong>gphoto2.cr</strong> provides an FFI for common functions in <a href="https://github.com/gphoto/libgphoto2">libgphoto2</a>.
 It also includes a facade to interact with the library in a more idiomatic Crystal way.</p>
+<h2><a id="goals" class="anchor" href="#goals">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Goals</h2>
+<ul>
+<li>Providing a feature parity with <a href="https://github.com/gphoto/libgphoto2">libgphoto2</a> library</li>
+<li>Clean and readable code ✨</li>
+<li>Rock-solid stability 🪨</li>
+<li>High performance 🚀</li>
+</ul>
+<h2><a id="features" class="anchor" href="#features">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Features</h2>
+<ul>
+<li>Multiple cameras support</li>
+<li>Camera detection</li>
+<li>Camera identification</li>
+<li>Camera ability detection</li>
+<li>Camera connection reloading</li>
+<li>Filesystem access (r/w) [^1]</li>
+<li>Configuration (r/w) [^1]</li>
+<li>Image capture [^1]</li>
+<li>Live-view [^1]</li>
+</ul>
+<p>[^1]: Works only with supported cameras</p>
 <h2><a id="installation" class="anchor" href="#installation">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
@@ -416,16 +444,16 @@ It also includes a facade to interact with the library in a more idiomatic Cryst
   </svg>
 </a>Prerequisites</h3>
 <ul>
-<li>Crystal: <code>~&gt; 1.11</code></li>
+<li>Crystal: <code>~&gt; 1.13</code></li>
 <li>libgphoto2: <code>&gt;= 2.5.2</code></li>
 <li>libgphoto2_port: <code>&gt;= 0.10.1</code></li>
 </ul>
 <p>To install the latest libgphoto2, you can use <code>homebrew</code> or <code>apt-get</code>, depending on the platform:</p>
-<h4><a id="mac-os-x" class="anchor" href="#mac-os-x">
+<h4><a id="mac-os" class="anchor" href="#mac-os">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
   </svg>
-</a>Mac OS X</h4>
+</a>macOS</h4>
 <pre><code class="language-crystal">$ brew install libgphoto2</code></pre>
 <h4><a id="debianubuntu" class="anchor" href="#debianubuntu">
   <svg class="octicon-link" aria-hidden="true">
@@ -583,7 +611,7 @@ file.delete</code></pre>
   </svg>
 </a>Thanks! 🎉</h2>
 <ul>
-<li>The <a href="http://www.gphoto.org/">gphoto2</a> developers for building such an awesome tool</li>
+<li>The <a href="http://www.gphoto.org">gphoto2</a> developers for building such an awesome tool</li>
 <li><a href="https://github.com/zaeleus">@zaeleus</a> for the <a href="https://github.com/zaeleus/ffi-gphoto2">ffi-gphoto2</a> gem, on which this library is heavily inspired</li>
 </ul>
 <h2><a id="contributors" class="anchor" href="#contributors">
