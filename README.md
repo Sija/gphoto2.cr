@@ -1,19 +1,40 @@
 # gphoto2.cr [![CI](https://github.com/Sija/gphoto2.cr/actions/workflows/ci.yml/badge.svg)](https://github.com/Sija/gphoto2.cr/actions/workflows/ci.yml) [![Releases](https://img.shields.io/github/release/Sija/gphoto2.cr.svg)](https://github.com/Sija/gphoto2.cr/releases) [![License](https://img.shields.io/github/license/Sija/gphoto2.cr.svg)](https://github.com/Sija/gphoto2.cr/blob/master/LICENSE)
 
-**gphoto2.cr** provides an FFI for common functions in [libgphoto2][gphoto].
+**gphoto2.cr** provides an FFI for common functions in [libgphoto2][libgphoto2].
 It also includes a facade to interact with the library in a more idiomatic Crystal way.
+
+## Goals
+
+- Providing a feature parity with [libgphoto2][libgphoto2] library
+- Clean and readable code ✨
+- Rock-solid stability 🪨
+- High performance 🚀
+
+## Features
+
+- Multiple cameras support
+- Camera detection
+- Camera identification
+- Camera ability detection
+- Camera connection reloading
+- Filesystem access (r/w) [^1]
+- Configuration (r/w) [^1]
+- Image capture [^1]
+- Live-view [^1]
+
+[^1]: Works only with supported cameras
 
 ## Installation
 
 ### Prerequisites
 
-  * Crystal: `~> 1.11`
+  * Crystal: `~> 1.13`
   * libgphoto2: `>= 2.5.2`
   * libgphoto2_port: `>= 0.10.1`
 
 To install the latest libgphoto2, you can use `homebrew` or `apt-get`, depending on the platform:
 
-#### Mac OS X
+#### macOS
 
 ```
 $ brew install libgphoto2
@@ -150,7 +171,7 @@ file.delete
 
 More examples can be found in [`examples/`][examples]. Documentation can be generated using `crystal doc` task or [browsed online][docs].
 
-[gphoto]: http://www.gphoto.org/
+[libgphoto2]: https://github.com/gphoto/libgphoto2
 [examples]: https://github.com/Sija/gphoto2.cr/tree/master/examples
 [docs]: https://sija.github.io/gphoto2.cr
 
@@ -178,7 +199,7 @@ crystal spec
 
 ## Thanks! 🎉
 
-- The [gphoto2][gphoto] developers for building such an awesome tool
+- The [gphoto2](http://www.gphoto.org) developers for building such an awesome tool
 - [@zaeleus](https://github.com/zaeleus) for the [ffi-gphoto2](https://github.com/zaeleus/ffi-gphoto2) gem, on which this library is heavily inspired
 
 ## Contributors
