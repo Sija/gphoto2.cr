@@ -33,7 +33,7 @@ module GPhoto2
 
     # See: `#lookup_model`, `#[]`
     def [](model : String) : CameraAbilities
-      index = self.lookup_model(model)
+      index = lookup_model(model)
       self[index]
     end
 

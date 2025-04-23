@@ -209,8 +209,8 @@ module GPhoto2
 
     private def init : Nil
       new
-      set_abilities @abilities || CameraAbilities.find(@model)
-      set_port_info @port_info || PortInfo.find(@port)
+      set_abilities(@abilities || CameraAbilities.find(@model))
+      set_port_info(@port_info || PortInfo.find(@port))
     end
 
     private def new
