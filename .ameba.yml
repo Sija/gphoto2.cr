@@ -1,20 +1,13 @@
-Excluded:
-  - examples
-
 Lint/NotNil:
   Enabled: false
 
-Lint/UselessAssign:
-  ExcludeTypeDeclarations: true
-
 Lint/Formatting:
   Excluded:
-    - src/lib/**/*
+    - src/lib/gphoto2/camera.cr
+    - src/lib/gphoto2/camera_filesystem.cr
+    - src/lib/gphoto2/gp_context.cr
 
 Naming/BinaryOperatorParameterName:
   Excluded:
     - src/gphoto2/camera/filesystem.cr
     - src/gphoto2/camera_folder.cr
-
-Documentation/DocumentationAdmonition:
-  Admonitions: [FIXME, BUG]
