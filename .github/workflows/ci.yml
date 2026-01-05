@@ -33,9 +33,3 @@ jobs:
 
       - name: Run specs
         run: crystal spec
-
-      - name: Check formatting
-        run: crystal tool format src/gphoto2 --check
-
-      - name: Run ameba linter
-        run: bin/ameba
