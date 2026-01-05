@@ -5,9 +5,10 @@ require "../src/gphoto2"
 def visit(folder, level = 0)
   files = folder.files
 
-  puts \
-    "#{folder.root? ? "/ (root)".colorize(:red) : folder.path.colorize(:green)} " \
-    "#{"(#{files.size} files)".colorize(:dark_gray)}"
+  puts "%s %s" % {
+    folder.root? ? "/ (root)".colorize(:red) : folder.path.colorize(:green),
+    "(#{files.size} files)".colorize(:dark_gray),
+  }
 
   files.each do |file|
     name = file.name
@@ -32,18 +33,21 @@ def visit(folder, level = 0)
     end
     dimensions ||= "-"
 
-    puts \
-      "#{name.ljust(30).colorize(:blue)}  " \
-      "#{type.ljust(25).colorize(:magenta)}  " \
-      "#{flags.ljust(5).colorize(:cyan)}  " \
-      "#{size.rjust(12).colorize(:yellow)}  " \
-      "#{dimensions.rjust(12).colorize(:dark_gray)}  " \
-      "#{mtime.colorize(:green)}"
+    puts "%s  %s  %s  %s  %s  %s" % {
+      name.ljust(30).colorize(:blue),
+      type.ljust(25).colorize(:magenta),
+      flags.ljust(5).colorize(:cyan),
+      size.rjust(12).colorize(:yellow),
+      dimensions.rjust(12).colorize(:dark_gray),
+      mtime.colorize(:green),
+    }
   end
 
   puts
 
-  folder.folders.each { |child| visit(child, level + 1) }
+  folder.folders.each do |child|
+    visit(child, level + 1)
+  end
 end
 
 GPhoto2::Camera.first do |camera|

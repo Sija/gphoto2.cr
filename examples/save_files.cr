@@ -11,8 +11,10 @@ def visit(camera, folder)
     puts folder.path.colorize(:green)
 
     files.each do |file|
-      puts "Saving #{file.folder.colorize(:green)}/#{file.name.colorize(:blue)} ..."
-
+      puts "Saving %s/%s ..." % {
+        file.folder.colorize(:green),
+        file.name.colorize(:blue),
+      }
       path = Path[DEST_PATH, camera.model, file.path]
       file.save path
     end
@@ -21,7 +23,9 @@ def visit(camera, folder)
     puts
   end
 
-  folder.folders.each { |child| visit(camera, child) }
+  folder.folders.each do |child|
+    visit(camera, child)
+  end
 end
 
 GPhoto2::Camera.first do |camera|

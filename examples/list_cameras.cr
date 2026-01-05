@@ -18,7 +18,7 @@ cameras.each do |camera|
     "folder operations": abilities.folder_operations,
   }
   props.each do |prop, value|
-    puts "  %s: %s" % [prop, value.to_s.colorize(:blue)]
+    puts "  %s: %s" % {prop, value.to_s.colorize(:blue)}
   end
 
   camera.close
