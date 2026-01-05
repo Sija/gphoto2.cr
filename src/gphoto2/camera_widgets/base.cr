@@ -129,6 +129,7 @@ module GPhoto2
       # camera[:iso] == 400
       # ```
       def ==(other)
+        # ameba:disable Style/RedundantSelf
         self.to_s == other.to_s
       end
 
@@ -138,6 +139,7 @@ module GPhoto2
       # camera[:whitebalance] == :automatic
       # ```
       def ==(other : Symbol)
+        # ameba:disable Style/RedundantSelf
         self.to_s == other.to_s.capitalize
       end
 

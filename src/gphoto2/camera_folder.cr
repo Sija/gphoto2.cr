@@ -95,6 +95,7 @@ module GPhoto2
 
     # Deletes all files and/or sub-folders.
     def clear(files : Bool = true, folders : Bool = false) : Nil
+      # ameba:disable Style/RedundantSelf
       self.folder_delete_all if files
       self.folders.each &.delete if folders
     end

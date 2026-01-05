@@ -16,7 +16,7 @@ module GPhoto2
       # Moves the cursor by the given *step*.
       def move_by(step : Int32) : String?
         choices = self.choices
-        index = choices.index(self.value)
+        index = choices.index(value)
         if index
           next_value = choices[index + step]?
           if next_value

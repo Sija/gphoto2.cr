@@ -53,6 +53,7 @@ module GPhoto2
         data_as_callback.call ? Feedback::Cancel : Feedback::OK
       end
 
+      # ameba:disable Lint/VoidOutsideLib
       set_callback :idle, Proc(Void), [context, data] do
         data_as_callback.call
       end
