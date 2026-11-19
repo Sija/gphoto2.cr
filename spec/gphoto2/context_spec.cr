@@ -191,6 +191,16 @@ module GPhoto2
         context.close
       end
 
+      it "raises a generic error when the last error message is blank" do
+        context = Context.new
+        LibGPhoto2.gp_context_error(context, " ")
+        error = expect_raises(GPhoto2::Error, "I/O problem") do
+          context.check!(LibGPhoto2::GP_ERROR_IO)
+        end
+        error.should_not be_a Context::Error
+        context.close
+      end
+
       it "raises a generic error without the last error message" do
         context = Context.new
         expect_raises(GPhoto2::Error, "I/O problem") do

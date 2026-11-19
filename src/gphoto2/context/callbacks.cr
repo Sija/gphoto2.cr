@@ -143,7 +143,8 @@ module GPhoto2
         return rc if GPhoto2.check?(rc)
 
         original_error = GPhoto2::Error.from_code(rc)
-        if error_message
+        # Blank messages carry no information, unlike the generic one
+        if error_message = error_message.presence
           raise Error.new(error_message, rc, original_error)
         else
           raise original_error
