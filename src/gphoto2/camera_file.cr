@@ -15,6 +15,10 @@ module GPhoto2
     # Initial buffer size used in `#read`.
     BUFFER_SIZE = 256 * 1024
 
+    # Maximum size of a file read by `#read`, since `Bytes`
+    # can't hold more than `Int32::MAX` bytes.
+    private MAX_READ_SIZE = Int32::MAX
+
     # Maximum buffer size allocated upfront in `#read`, based on the file
     # size reported by the camera, which might be bogus (i.e. `0xFFFFFFFF`).
     MAX_PREALLOCATED_SIZE = 64 * 1024 * 1024
@@ -255,12 +259,14 @@ module GPhoto2
 
       loop do
         if offset == buffer.size
-          # `Bytes` can't hold more than `Int32::MAX` bytes
-          if buffer.size == Int32::MAX
+          if buffer.size == MAX_READ_SIZE
+            # The file might end right at the limit, which needs to be
+            # checked before giving up
+            break if read_chunk(Bytes.new(1), offset.to_u64, type).zero?
             raise Error.from_code(LibGPhoto2::GP_ERROR_FIXED_LIMIT_EXCEEDED)
           end
           # Grow geometrically to keep the number of copies low
-          new_size = Math.min(Math.max(buffer.size.to_i64 * 2, BUFFER_SIZE), Int32::MAX).to_i32
+          new_size = Math.min(Math.max(buffer.size.to_i64 * 2, BUFFER_SIZE), MAX_READ_SIZE).to_i32
           buffer = Bytes.new(new_size).tap(&.copy_from(buffer))
         end
         # Request chunks of (at most) a constant size from the camera
