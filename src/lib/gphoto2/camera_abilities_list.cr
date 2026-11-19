@@ -4,8 +4,11 @@ lib LibGPhoto2
   # Structs
   #
 
+  # NOTE: Internal structure, defined as of libgphoto2 2.5.11
+  # (before that, `maxcount` field was not present).
   struct CameraAbilitiesList
     count : LibC::Int
+    maxcount : LibC::Int
     abilities : CameraAbilities*
   end
 
