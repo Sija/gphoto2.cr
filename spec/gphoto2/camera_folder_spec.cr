@@ -241,6 +241,22 @@ module GPhoto2
     end
 
     describe "#to_zip_file" do
+      it "clamps modification times to the range supported by the format" do
+        with_directory_camera do |camera, dir|
+          path = File.join(dir, "DCIM", "a.jpg")
+          {Time.unix(86_400) => 1980, Time.utc(2110, 1, 1) => 2107}.each do |mtime, year|
+            File.touch(path, mtime)
+            camera.filesystem_reset
+
+            (camera / "DCIM").to_zip_file do |file|
+              Compress::Zip::File.open(file.path) do |zip|
+                zip["DCIM/a.jpg"].time.year.should eq year
+              end
+            end
+          end
+        end
+      end
+
       it "stores modification times as local time" do
         # Make sure the local time differs from UTC (i.e. on CI)
         local = Time::Location.local

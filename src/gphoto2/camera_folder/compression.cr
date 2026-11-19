@@ -17,7 +17,7 @@ module GPhoto2
           # ZIP format stores (time zone-less) MS-DOS timestamps,
           # which are interpreted as local time by the extracting tools
           entry = Compress::Zip::Writer::Entry.new pathname,
-            time: mtime.to_local
+            time: dos_time(mtime.to_local)
 
           begin
             zip.add entry, file.raw_slice
@@ -29,6 +29,19 @@ module GPhoto2
 
         folder.folders.each do |child|
           zip_visitor(zip, child, root)
+        end
+      end
+
+      # MS-DOS timestamps can represent years 1980-2107 only, while
+      # cameras with an unset clock might report i.e. 1970.
+      private def dos_time(time : Time) : Time
+        case time.year
+        when .< 1980
+          Time.local(1980, 1, 1, location: time.location)
+        when .> 2107
+          Time.local(2107, 12, 31, 23, 59, 58, location: time.location)
+        else
+          time
         end
       end
 
