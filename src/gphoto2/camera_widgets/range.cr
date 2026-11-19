@@ -8,6 +8,9 @@ module GPhoto2
 
       private CHOICES_EPSILON = 1e-4
 
+      # Relative tolerance for floating-point roundoff, way below `CHOICES_EPSILON`.
+      private ROUNDOFF_EPSILON = 1e-9
+
       # Returns the range of the widget.
       def range : ::Range(Float32, Float32)
         min, max, _ = get_range
@@ -38,12 +41,13 @@ module GPhoto2
         # the increment) avoids floating-point drift. Values are widened
         # through their shortest decimal representation, so that e.g.
         # `0.3_f32` becomes `0.3` instead of `0.30000001192...`.
-        reported_max = max
         min, max, inc = {min, max, inc}.map(&.to_s.to_f64)
         count = ((max - min) / inc + CHOICES_EPSILON).floor
 
-        # The tolerance must not push the last choice over the maximum
-        count -= 1 if (min + count * inc).to_f32 > reported_max
+        # The tolerance must not push the last choice over the maximum,
+        # while a roundoff error must not drop it (see below)
+        overshoot = (min + count * inc) - max
+        count -= 1 if overshoot > inc * ROUNDOFF_EPSILON
 
         if count >= MAX_CHOICES
           raise GPhoto2::Exception.new \
@@ -51,7 +55,9 @@ module GPhoto2
         end
 
         Array(Float32).new(count.to_i + 1) do |i|
-          (min + i * inc).to_f32
+          # Clamped, so that the roundoff error doesn't exceed the maximum,
+          # i.e. `-0.3 + 3 * 0.1` gives `5.55e-17` instead of `0.0`
+          Math.min(min + i * inc, max).to_f32
         end
       end
 

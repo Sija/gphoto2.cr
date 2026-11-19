@@ -321,6 +321,12 @@ module GPhoto2
         build_range(0, 1, 1).choices.should eq [0f32, 1f32]
       end
 
+      it "keeps the upper bound despite roundoff errors" do
+        build_range(-0.3, 0, 0.1).choices.should eq [-0.3f32, -0.2f32, -0.1f32, 0f32]
+        build_range(-1, 0, 0.1).choices.last.should eq 0f32
+        build_range(0.1, 0.7, 0.2).choices.should eq [0.1f32, 0.3f32, 0.5f32, 0.7f32]
+      end
+
       it "returns choices up to the limit" do
         max = CameraWidget::Range::MAX_CHOICES - 1
         build_range(1, max.to_f32, 1).choices.size.should eq max
