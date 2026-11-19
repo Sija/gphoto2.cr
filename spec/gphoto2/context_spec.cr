@@ -93,6 +93,56 @@ module GPhoto2
         context.close
       end
 
+      it "re-raises exceptions raised by callbacks from #check!" do
+        context = Context.new
+        context.status_callback = ->(message : String) { raise "oops: #{message}" }
+        # Exceptions mustn't propagate through the C code
+        LibGPhoto2.gp_context_status(context, "hello")
+
+        expect_raises(::Exception, "oops: hello") do
+          context.check!(LibGPhoto2::GP_OK)
+        end
+        # Exception is raised only once
+        context.check!(LibGPhoto2::GP_OK).should eq LibGPhoto2::GP_OK
+        context.close
+      end
+
+      it "re-raises the first exception raised by callbacks" do
+        context = Context.new
+        context.status_callback = ->(message : String) { raise "oops: #{message}" }
+        LibGPhoto2.gp_context_status(context, "first")
+        LibGPhoto2.gp_context_status(context, "second")
+
+        expect_raises(::Exception, "oops: first") do
+          context.check!(LibGPhoto2::GP_ERROR)
+        end
+        context.close
+      end
+
+      it "cancels the operation when the cancel callback raises" do
+        context = Context.new
+        failing = true
+        context.cancel_callback = -> { raise "oops" if failing; false }
+        LibGPhoto2.gp_context_cancel(context).cancel?.should be_true
+
+        expect_raises(::Exception, "oops") do
+          context.check!(LibGPhoto2::GP_ERROR_CANCEL)
+        end
+        context.close
+      end
+
+      it "re-raises exceptions raised by the error callback" do
+        context = Context.new
+        context.error_callback = ->(message : String) { raise "oops: #{message}" }
+        LibGPhoto2.gp_context_error(context, "boom")
+        context.last_error.should eq "boom"
+
+        expect_raises(::Exception, "oops: boom") do
+          context.check!(LibGPhoto2::GP_ERROR)
+        end
+        context.close
+      end
+
       it "removes callbacks when set to nil" do
         context = Context.new
         calls = 0

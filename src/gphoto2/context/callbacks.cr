@@ -6,7 +6,7 @@ module GPhoto2
 
     # Provides callbacks for libgphoto2.
     module Callbacks
-      macro set_callback(key, callback_type, args, public_setter = true, &block)
+      macro set_callback(key, callback_type, args, public_setter = true, fallback = nil, &block)
         getter! {{ key.id }}_callback : {{ callback_type.id }}
         private getter {{ key.id }}_box : Pointer(Void)?
 
@@ -29,8 +29,9 @@ module GPhoto2
           @{{ key.id }}_callback = callback
 
           # Since Proc is a {Void*, Void*}, we can't turn that into a Void*, so we
-          # "box" it: we allocate memory and store the Proc there
-          boxed_data = Box.box(callback)
+          # "box" it: we allocate memory and store the Proc there (along with
+          # the state, which can't be reached through the context itself)
+          boxed_data = Box.box({callback, @callback_state})
 
           # We must save this in Crystal-land so the GC doesn't collect it (*)
           @{{ key.id }}_box = boxed_data
@@ -38,9 +39,17 @@ module GPhoto2
           # We pass a callback that doesn't form a closure, and pass the boxed_data as
           # the callback data
           LibGPhoto2.gp_context_set_{{ key.id }}_func self, ->({{ args.join(", ").id }}) {
-            data_as_callback = Box(typeof(callback)).unbox(data)
+            data_as_callback, state =
+              Box(Tuple(typeof(callback), CallbackState)).unbox(data)
 
-            {{ block.body }}
+            begin
+              {{ block.body }}
+            rescue ex
+              # Exceptions can't propagate through the C code calling us, so
+              # they're stored and re-raised later on, from within `#check!`
+              state.exception ||= ex
+              {{ fallback }}
+            end
           }, boxed_data
         end
 
@@ -51,7 +60,8 @@ module GPhoto2
         end
       end
 
-      set_callback :cancel, Proc(Bool), [context, data] do
+      # Cancels the operation if the callback raises.
+      set_callback :cancel, Proc(Bool), [context, data], fallback: Feedback::Cancel do
         data_as_callback.call ? Feedback::Cancel : Feedback::OK
       end
 
@@ -73,19 +83,20 @@ module GPhoto2
 
       # :nodoc:
       #
-      # Holds the last error message, separately from the context, so that
-      # the error callback doesn't need to reference the context itself.
-      # Such a reference cycle would prevent the context from being
-      # ever finalized (and freed) by the GC.
-      class ErrorState
+      # Holds the last error message and the exception raised by a callback,
+      # separately from the context, so that callbacks don't need to reference
+      # the context itself. Such a reference cycle would prevent the context
+      # from being ever finalized (and freed) by the GC.
+      class CallbackState
         property message : String?
+        property exception : ::Exception?
       end
 
-      @error_state = ErrorState.new
+      @callback_state = CallbackState.new
 
       # Returns the last error message reported by libgphoto2.
       def last_error : String?
-        @error_state.message
+        @callback_state.message
       end
 
       def initialize
@@ -97,7 +108,7 @@ module GPhoto2
       # NOTE: Error messages are tracked (see `#last_error`) regardless
       # of the callback being set.
       def error_callback=(callback : Proc(String, Void)?) : Nil
-        state = @error_state
+        state = @callback_state
         set_error_callback do |message|
           state.message = message
           callback.try &.call(message)
@@ -117,11 +128,18 @@ module GPhoto2
       #
       # Raised error is a `Context::Error` carrying the last error message
       # reported by libgphoto2 (if any), or a generic `GPhoto2::Error` otherwise.
+      #
+      # Exception raised by any of the callbacks during the call which returned
+      # *rc* takes precedence, and is re-raised regardless of *rc*.
       def check!(rc : Int32) : Int32
         Debug.log(rc, backtrace_offset: 1, progname: "gphoto2.cr")
         # Error message (if any) belongs to the call which returned *rc*,
         # so it must not leak into the subsequent calls.
-        error_message, @error_state.message = @error_state.message, nil
+        error_message, @callback_state.message = @callback_state.message, nil
+        if exception = @callback_state.exception
+          @callback_state.exception = nil
+          raise exception
+        end
         return rc if GPhoto2.check?(rc)
 
         original_error = GPhoto2::Error.from_code(rc)
