@@ -76,6 +76,12 @@ module GPhoto2
       end
     end
 
+    it "hashes by camera and path" do
+      with_directory_camera do |camera|
+        Set{camera.blob("/DCIM/a.jpg"), camera.blob("DCIM/a.jpg")}.size.should eq 1
+      end
+    end
+
     describe "#data=" do
       it "replaces previously read data" do
         with_directory_camera do |camera|

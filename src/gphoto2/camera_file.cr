@@ -35,7 +35,7 @@ module GPhoto2
       initialize(@camera, PREVIEW_FILENAME)
     end
 
-    def_equals @camera, @path
+    def_equals_and_hash @camera, @path
 
     # Returns file `#path`.
     def to_s(io : IO) : Nil

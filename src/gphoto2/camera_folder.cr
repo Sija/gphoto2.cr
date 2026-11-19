@@ -16,7 +16,7 @@ module GPhoto2
         path.is_a?(String) ? Path.posix(path) : path.to_posix
     end
 
-    def_equals @camera, @path
+    def_equals_and_hash @camera, @path
 
     # Returns folder `#path` as string.
     def to_s(io : IO) : Nil

@@ -22,6 +22,11 @@ module GPhoto2
       Camera.new("A", "disk:/a").should_not eq Camera.new("B", "disk:/a")
     end
 
+    it "hashes by model and port" do
+      Camera.new("A", "disk:/a").hash.should eq Camera.new("A", "disk:/a").hash
+      Set{Camera.new("A", "disk:/a"), Camera.new("A", "disk:/a")}.size.should eq 1
+    end
+
     describe "#abilities" do
       it "returns abilities of the camera model" do
         with_directory_camera do |camera|

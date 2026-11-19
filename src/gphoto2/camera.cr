@@ -211,7 +211,7 @@ module GPhoto2
       abilities.operations.includes?(operation)
     end
 
-    def_equals @model, @port
+    def_equals_and_hash @model, @port
 
     private def init : Nil
       new

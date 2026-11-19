@@ -15,6 +15,12 @@ module GPhoto2
       end
     end
 
+    it "hashes by camera and path" do
+      with_directory_camera do |camera|
+        Set{camera / "DCIM", camera / "/DCIM"}.size.should eq 1
+      end
+    end
+
     describe "#root?" do
       it "returns true only for the root folder" do
         with_directory_camera do |camera|
