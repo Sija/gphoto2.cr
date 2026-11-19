@@ -9,7 +9,9 @@ module GPhoto2
 
         # Empty folders would be lost otherwise, since entries are files only
         if files.empty? && folders.empty?
-          zip.add_dir zip_entry_name(folder.path, root)
+          dirname = zip_entry_name(folder.path, root)
+          # The root folder has no name (it would end up as an absolute "/")
+          zip.add_dir dirname unless dirname.empty?
         end
 
         files.each do |file|

@@ -300,6 +300,18 @@ module GPhoto2
         end
       end
 
+      it "returns an empty archive for an empty root folder" do
+        with_fixture_dir do |dir|
+          FileUtils.rm_rf(File.join(dir, "DCIM"))
+          camera = Camera.new(DIRECTORY_CAMERA_MODEL, "disk:#{dir}")
+          begin
+            zip_entries(camera / "/").should be_empty
+          ensure
+            camera.close
+          end
+        end
+      end
+
       it "keeps the compressed folder itself when empty" do
         with_directory_camera do |camera, dir|
           Dir.mkdir_p(File.join(dir, "DCIM", "sub", "empty"))
