@@ -24,6 +24,13 @@ module GPhoto2
         end
       end
 
+      it "accepts timeouts out of the C int range" do
+        with_fake_camera do |camera|
+          camera.wait(Time::Span::MAX).type.timeout?.should be_true
+          camera.wait(-1.second).type.timeout?.should be_true
+        end
+      end
+
       it "returns file added event" do
         with_fake_camera do |camera|
           FakeDriver.events << FakeDriver::FakeEvent.new(:file_added, "/DCIM/a.jpg")
