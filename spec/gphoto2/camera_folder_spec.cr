@@ -334,6 +334,14 @@ module GPhoto2
         end
       end
 
+      it "refuses entry names pointing outside of the archive" do
+        with_directory_camera do |camera|
+          expect_raises(ArgumentError, "Invalid entry name") do
+            (camera / "DCIM").to_zip_file("../evil") { }
+          end
+        end
+      end
+
       it "removes the temporary file on failure" do
         with_directory_camera do |camera, dir|
           tempfiles = -> { Dir.glob(File.join(Dir.tempdir, "camera.fs-*.zip")) }

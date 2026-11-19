@@ -40,10 +40,19 @@ module GPhoto2
 
       # Returns name of the entry for the given *path*, relative to
       # the compressed folder (and prefixed with *root*, if given).
+      #
+      # Raises `ArgumentError` for names pointing outside of the archive
+      # (i.e. given *root* containing `..`), which would make the extracting
+      # tools write files outside of the target directory.
       private def zip_entry_name(path : Path, root : String?) : String
         pathname = path.relative_to(@path)
         pathname = Path.posix(root, pathname) if root
-        pathname.normalize.to_s.lchop('/')
+
+        name = pathname.normalize.to_s.lchop('/')
+        if name == ".." || name.starts_with?("../")
+          raise ArgumentError.new("Invalid entry name: #{name.inspect}")
+        end
+        name
       end
 
       # MS-DOS timestamps can represent years 1980-2107 only, while
