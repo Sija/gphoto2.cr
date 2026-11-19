@@ -106,5 +106,15 @@ module GPhoto2
         end
       end
     end
+
+    describe "#to_s" do
+      it "returns the folder path" do
+        with_directory_camera do |camera|
+          folder = camera / "DCIM"
+          folder.to_s.should eq "/DCIM"
+          "#{folder}".should eq "/DCIM"
+        end
+      end
+    end
   end
 end

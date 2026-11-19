@@ -75,5 +75,15 @@ module GPhoto2
         camera.blob("/DCIM/a.jpg").should_not eq camera.blob("DCIM/sub/b.jpg")
       end
     end
+
+    describe "#to_s" do
+      it "returns the file path" do
+        with_directory_camera do |camera|
+          file = camera.blob("/DCIM/a.jpg")
+          file.to_s.should eq "/DCIM/a.jpg"
+          "#{file}".should eq "/DCIM/a.jpg"
+        end
+      end
+    end
   end
 end

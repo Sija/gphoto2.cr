@@ -19,8 +19,8 @@ module GPhoto2
     def_equals @camera, @path
 
     # Returns folder `#path` as string.
-    def to_s
-      @path.to_s
+    def to_s(io : IO) : Nil
+      io << @path
     end
 
     # Returns `true` if folder `#path` is `/`.

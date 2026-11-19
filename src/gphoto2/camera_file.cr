@@ -38,8 +38,8 @@ module GPhoto2
     def_equals @camera, @path
 
     # Returns file `#path`.
-    def to_s
-      @path.to_s
+    def to_s(io : IO) : Nil
+      io << @path
     end
 
     def name
