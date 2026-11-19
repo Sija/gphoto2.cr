@@ -72,11 +72,11 @@ module GPhoto2
     # Saves file `#data` at given *path*, defaulting to file `#name`
     # in the current working directory.
     #
-    # When *path* points to an existing directory, the file is saved
-    # inside of it, under its `#name`.
+    # When *path* points to an existing directory (or ends with a path
+    # separator), the file is saved inside of it, under its `#name`.
     def save(path : Path | String = name) : Nil
       path = Path[path] if path.is_a?(String)
-      path /= name if Dir.exists?(path)
+      path /= name if path.ends_with_separator? || Dir.exists?(path)
 
       Dir.mkdir_p(path.dirname)
       File.write(path, raw_slice)

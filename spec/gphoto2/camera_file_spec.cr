@@ -93,6 +93,14 @@ module GPhoto2
           File.read(File.join(target, "a.jpg")).should eq "hello"
         end
       end
+
+      it "saves file data under its name inside a new directory given with a trailing separator" do
+        with_directory_camera do |camera, dir|
+          target = File.join(dir, "out", "new")
+          camera.blob("/DCIM/a.jpg").save(target + File::SEPARATOR)
+          File.read(File.join(target, "a.jpg")).should eq "hello"
+        end
+      end
     end
 
     describe "#delete" do
