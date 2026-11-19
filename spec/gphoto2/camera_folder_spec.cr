@@ -223,6 +223,12 @@ module GPhoto2
         end
       end
 
+      it "returns the value of the block" do
+        with_directory_camera do |camera|
+          (camera / "DCIM").to_zip_file { |file| File.size(file.path) }.should be > 0
+        end
+      end
+
       it "removes the temporary file on failure" do
         with_directory_camera do |camera, dir|
           tempfiles = -> { Dir.glob(File.join(Dir.tempdir, "camera.fs-*.zip")) }

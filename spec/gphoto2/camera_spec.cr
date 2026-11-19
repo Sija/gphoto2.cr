@@ -122,6 +122,10 @@ module GPhoto2
         end
         captured.not_nil!.ptr?.should be_falsey
       end
+
+      it "returns the value of the block" do
+        Camera.open(DIRECTORY_CAMERA_MODEL, "disk:/tmp", &.model).should eq DIRECTORY_CAMERA_MODEL
+      end
     end
 
     describe "#autorelease" do
@@ -134,6 +138,18 @@ module GPhoto2
           end
         end
         camera.ptr?.should be_falsey
+      end
+
+      it "returns the value of the block" do
+        camera = Camera.new(DIRECTORY_CAMERA_MODEL, "disk:/tmp")
+        camera.autorelease { 42 }.should eq 42
+      end
+    end
+
+    describe "#with_port" do
+      it "returns the value of the block" do
+        camera = Camera.new(DIRECTORY_CAMERA_MODEL, "disk:/tmp")
+        camera.with_port(&.info.path).should eq "disk:/tmp"
       end
     end
 

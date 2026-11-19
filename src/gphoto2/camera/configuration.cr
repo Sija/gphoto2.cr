@@ -40,8 +40,10 @@ module GPhoto2
       # camera[:iso]      # => 400
       # ```
       #
+      # Returns the value of the block.
+      #
       # Raises `KeyError` if any of the given *keys* doesn't exist.
-      def preserving_config(keys : Enumerable(String | Symbol)? = nil, &) : Nil
+      def preserving_config(keys : Enumerable(String | Symbol)? = nil, &)
         config_snapshot =
           if keys
             # Unknown keys (i.e. typos) would otherwise go silently unpreserved
@@ -62,19 +64,20 @@ module GPhoto2
             memo
           end
 
-        begin
-          yield self
-        rescue ex
-          # Don't let a failed restore mask the original exception
-          restore_config(config_snapshot) rescue nil
-          raise ex
-        else
-          restore_config(config_snapshot)
-        end
+        result =
+          begin
+            yield self
+          rescue ex
+            # Don't let a failed restore mask the original exception
+            restore_config(config_snapshot) rescue nil
+            raise ex
+          end
+        restore_config(config_snapshot)
+        result
       end
 
       # :nodoc:
-      def preserving_config(*keys, &) : Nil
+      def preserving_config(*keys, &)
         preserving_config(keys) { |camera| yield camera }
       end
 

@@ -165,6 +165,13 @@ module GPhoto2
         end
       end
 
+      it "returns the value of the block" do
+        with_configured_camera do |camera|
+          camera.preserving_config { 42 }.should eq 42
+          camera.preserving_config(:iso) { camera[:iso].to_s }.should eq "100"
+        end
+      end
+
       it "raises on unknown keys" do
         with_configured_camera do |camera|
           called = false

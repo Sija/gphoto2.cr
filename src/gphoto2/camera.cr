@@ -68,13 +68,14 @@ module GPhoto2
     end
 
     # Pass a block to automatically close the camera.
+    # Returns the value of the block.
     #
     # ```
-    # GPhoto2::Camera.first do |camera|
-    #   # ...
+    # file = GPhoto2::Camera.first do |camera|
+    #   camera.capture.tap(&.save)
     # end
     # ```
-    def self.first(&) : Nil
+    def self.first(&)
       first.autorelease { |camera| yield camera }
     end
 
@@ -95,13 +96,14 @@ module GPhoto2
     end
 
     # Pass a block to automatically close the camera.
+    # Returns the value of the block.
     #
     # ```
     # GPhoto2::Camera.open(model, port) do |camera|
     #   # ...
     # end
     # ```
-    def self.open(model : String, port : String, &) : Nil
+    def self.open(model : String, port : String, &)
       open(model, port).autorelease { |camera| yield camera }
     end
 
@@ -134,6 +136,7 @@ module GPhoto2
     end
 
     # Ensures the camera is finalized when passed a block.
+    # Returns the value of the block.
     #
     # ```
     # # Find the cameras whose model names contain Nikon.
@@ -144,7 +147,7 @@ module GPhoto2
     #   # ...
     # end
     # ```
-    def autorelease(&) : Nil
+    def autorelease(&)
       yield self ensure close
     end
 
@@ -189,6 +192,7 @@ module GPhoto2
 
     # Yields opened instance of `Port` with already associated camera's `PortInfo`.
     # Port is automatically closed on block exit/exception.
+    # Returns the value of the block.
     #
     # To reset given camera's port you can do:
     #
@@ -198,7 +202,7 @@ module GPhoto2
     #   port.reset
     # end
     # ```
-    def with_port(&) : Nil
+    def with_port(&)
       port = Port.new
       port.info = port_info
       port.open

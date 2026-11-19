@@ -53,8 +53,10 @@ module GPhoto2
 
       # Yields a temporary file with the compressed contents of the folder.
       #
+      # Returns the value of the block.
+      #
       # NOTE: the temporary file will be deleted after the block returns.
-      def to_zip_file(root : String? = nil, &) : Nil
+      def to_zip_file(root : String? = nil, &)
         tempfile = to_zip_file(root)
         begin
           yield tempfile
