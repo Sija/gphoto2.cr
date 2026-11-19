@@ -12,16 +12,22 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest]
+        os: [ubuntu-latest, macos-latest]
         crystal: [latest, nightly]
     runs-on: ${{ matrix.os }}
 
     steps:
       - name: Update APT package index
+        if: matrix.os == 'ubuntu-latest'
         run: sudo apt-get update -qq
 
       - name: Install APT packages
+        if: matrix.os == 'ubuntu-latest'
         run: sudo apt-get install libevent-dev libyaml-dev libgphoto2-6 libgphoto2-dev libgphoto2-port12
+
+      - name: Install homebrew packages
+        if: matrix.os == 'macos-latest'
+        run: brew install libgphoto2
 
       - name: Install Crystal
         uses: crystal-lang/install-crystal@v1
