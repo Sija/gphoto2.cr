@@ -202,31 +202,36 @@ module GPhoto2
         LibGPhoto2.gp_camera_file_get(@camera, folder, name, type, self, context)
     end
 
-    private def _read(buffer, offset, type)
+    # Reads a chunk of the file starting at *offset* into *buffer*,
+    # returning the number of bytes read.
+    private def read_chunk(buffer : Bytes, offset : UInt64, type : Type) : UInt64
       size = buffer.size.to_u64
 
       context.check! \
         LibGPhoto2.gp_camera_file_read(@camera, folder, name, type,
         offset, buffer, pointerof(size), context)
 
-      offset += size
-      {offset, size}
+      size
     end
 
-    private def _read(type = Type::Normal)
+    private def _read(type = Type::Normal) : Bytes
       buffer = Bytes.new(BUFFER_SIZE)
-      offset, size = _read(buffer, 0_u64, type)
+      offset = 0
 
-      data = Pointer(UInt8).malloc(size)
-      data.copy_from(buffer.to_unsafe, size)
+      loop do
+        # Grow geometrically to keep the number of copies low,
+        # while requesting chunks of a constant size from the camera.
+        if buffer.size - offset < BUFFER_SIZE
+          buffer = Bytes.new(buffer.size * 2).tap(&.copy_from(buffer))
+        end
+        size = read_chunk(buffer[offset, BUFFER_SIZE], offset.to_u64, type)
+        offset += size
 
-      while size == buffer.size
-        offset, size = _read(buffer, offset, type)
-        data = data.realloc(offset)
-        data_with_offset = data + (offset - size)
-        data_with_offset.copy_from(buffer.to_unsafe, size)
+        # A short read means we've reached the end of the file.
+        break if size < BUFFER_SIZE
       end
-      data.to_slice(offset)
+
+      buffer[0, offset]
     end
 
     private def get_mime_type
