@@ -21,6 +21,10 @@ module GPhoto2
       protected def set_value(value)
         case value
         when Int
+          # libgphoto2 stores the value as a C `int`
+          unless LibC::Int::MIN <= value <= LibC::Int::MAX
+            raise ArgumentError.new("Invalid value: #{value}")
+          end
           int = LibC::Int.new(value)
           set_value_ptr pointerof(int)
         when Bool

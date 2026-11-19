@@ -278,6 +278,15 @@ module GPhoto2
         widget.value.should eq 1
       end
 
+      it "rejects values out of the C int range" do
+        widget = build_widget(:toggle)
+        widget.value = 1
+        expect_raises(ArgumentError, "Invalid value: 9223372036854775807") do
+          widget.value = Int64::MAX
+        end
+        widget.value.should eq 1
+      end
+
       it "compares with booleans" do
         widget = build_widget(:toggle)
         widget.value = true
