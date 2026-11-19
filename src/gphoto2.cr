@@ -18,9 +18,9 @@ require "./gphoto2/*"
         end
         logger = Debug.logger
         case level
-        in .error?   then logger.error &proc
-        in .verbose? then logger.notice &proc
-        in .debug?   then logger.debug &proc
+        in .error?         then logger.error &proc
+        in .verbose?       then logger.notice &proc
+        in .debug?, .data? then logger.debug &proc
         end
       }
     LibGPhoto2.gp_log_add_func(gp_log_level, gp_logger, nil)

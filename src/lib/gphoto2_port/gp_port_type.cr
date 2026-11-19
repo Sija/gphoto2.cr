@@ -12,5 +12,6 @@ lib LibGPhoto2Port
     PTPIP
     USBDiskDirect
     USBSCSI
+    IP
   end
 end

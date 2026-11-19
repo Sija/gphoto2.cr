@@ -49,6 +49,7 @@ lib LibGPhoto2
     FileAdded
     FolderAdded
     CaptureComplete
+    FileChanged
   end
 
   #
