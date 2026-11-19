@@ -17,7 +17,11 @@ module GPhoto2
         when Bool
           set_value value ? 1 : 0
         when String
-          set_value value.to_i32
+          case value.downcase
+          when "true"  then set_value true
+          when "false" then set_value false
+          else              set_value value.to_i32
+          end
         else
           raise ArgumentError.new \
             "Invalid value type, expected Int | Bool | String, got #{value.class}"

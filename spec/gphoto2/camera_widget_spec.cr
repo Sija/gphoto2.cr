@@ -196,6 +196,14 @@ module GPhoto2
         widget.value = "1"
         widget.value.should eq 1
       end
+
+      it "accepts boolean strings" do
+        widget = build_widget(:toggle)
+        widget.value = "true"
+        widget.value.should eq 1
+        widget.value = "False"
+        widget.value.should eq 0
+      end
     end
 
     describe CameraWidget::Range do
