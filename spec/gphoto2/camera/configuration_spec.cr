@@ -208,13 +208,18 @@ module GPhoto2
 
       it "raises the original exception when restoring fails" do
         with_configured_camera do |camera|
+          set_config_calls = 0
           expect_raises(::Exception, "oops") do
             camera.preserving_config do
-              camera[:iso] = 400
+              camera.update(iso: 400)
               FakeDriver.fail_set_config = true
+              set_config_calls = FakeDriver.calls[:set_config]
               raise "oops"
             end
           end
+          # The restore was attempted (and failed)
+          FakeDriver.calls[:set_config].should be > set_config_calls
+          FakeDriver.settings["iso"].value.should eq "400"
         end
       end
 
