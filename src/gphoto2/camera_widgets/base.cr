@@ -36,9 +36,12 @@ module GPhoto2
         super ptr
       end
 
-      # Finalizes object by freeing allocated memory.
+      # Frees allocated memory of the widget tree.
+      #
+      # NOTE: Child widgets are owned (and freed) by their root widget,
+      # so calling this method on them does nothing.
       def close : Nil
-        free if ptr?
+        free if ptr? && parent.nil?
       end
 
       # Returns `true` if the widget has readonly flag set.

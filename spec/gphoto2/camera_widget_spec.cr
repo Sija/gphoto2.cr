@@ -134,6 +134,25 @@ module GPhoto2
         end
       end
 
+      describe "#close" do
+        it "frees the widget" do
+          widget = build_widget(:text)
+          widget.close
+          widget.ptr?.should be_nil
+        end
+
+        it "does not free child widgets" do
+          window = build_widget(:window, "main")
+          GPhoto2.check! LibGPhoto2.gp_widget_append(window, build_widget(:text, "owner"))
+
+          child = window.children.first
+          child.close
+          child.ptr?.should be_truthy
+          child.name.should eq "owner"
+          window.close
+        end
+      end
+
       describe "#flatten" do
         it "returns a flat hash of leaf widgets" do
           window = build_widget(:window, "main")
