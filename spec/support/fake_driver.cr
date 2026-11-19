@@ -136,8 +136,12 @@ module GPhoto2::FakeDriver
 
   # :nodoc:
   def build_path(path : String) : LibGPhoto2::CameraFilePath
-    path = Path.posix(path)
-    folder, name = path.dirname, path.basename
+    # Split at the last separator, so that i.e. "/DCIM/" gives an empty name
+    if index = path.rindex('/')
+      folder, name = path[0, index].presence || "/", path[(index + 1)..]
+    else
+      folder, name = "/", path
+    end
 
     file_path = LibGPhoto2::CameraFilePath.new
     file_path.name.to_unsafe.copy_from(name.to_unsafe, name.bytesize)

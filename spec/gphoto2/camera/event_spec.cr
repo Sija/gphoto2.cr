@@ -42,6 +42,17 @@ module GPhoto2
         end
       end
 
+      it "returns no data for file events without a file name" do
+        with_fake_camera do |camera|
+          {"/", "/DCIM/"}.each do |path|
+            FakeDriver.events << FakeDriver::FakeEvent.new(CameraEvent::Type::FileAdded, path)
+            event = camera.wait
+            event.type.file_added?.should be_true
+            event.data.should be_nil
+          end
+        end
+      end
+
       it "returns file added event" do
         with_fake_camera do |camera|
           FakeDriver.events << FakeDriver::FakeEvent.new(:file_added, "/DCIM/a.jpg")

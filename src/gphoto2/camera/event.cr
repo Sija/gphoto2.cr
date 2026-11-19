@@ -34,9 +34,11 @@ module GPhoto2
             if data_ptr
               case type
               when .file_added?, .file_changed?
-                CameraFile.new(self, build_path(data_ptr))
+                file_path = camera_file_path(data_ptr)
+                # Without a name, there's no file to point to
+                CameraFile.new(self, file_path.to_path) unless file_path.name.empty?
               when .folder_added?
-                CameraFolder.new(self, build_path(data_ptr))
+                CameraFolder.new(self, camera_file_path(data_ptr).to_path)
               when .unknown?
                 String.new(data_ptr.as(LibC::Char*))
               end
@@ -48,8 +50,8 @@ module GPhoto2
         end
       end
 
-      private def build_path(data_ptr)
-        CameraFilePath.new(data_ptr.as(LibGPhoto2::CameraFilePath*).value).to_path
+      private def camera_file_path(data_ptr) : CameraFilePath
+        CameraFilePath.new(data_ptr.as(LibGPhoto2::CameraFilePath*).value)
       end
     end
   end
