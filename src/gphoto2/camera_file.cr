@@ -115,6 +115,11 @@ module GPhoto2
       # It'll be freed by libgphoto2 in `gp_file_unref` / `gp_file_clean`,
       # through the `#finalize -> #close -> #free` call sequence.
       data = LibC.malloc(bytes.bytesize).as(UInt8*)
+
+      # NOTE: `malloc(0)` might legitimately return a null pointer
+      if data.null? && !bytes.empty?
+        raise Error.from_code(LibGPhoto2::GP_ERROR_NO_MEMORY)
+      end
       data.copy_from(bytes.to_unsafe, bytes.size)
 
       set_data_and_size(data, bytes.bytesize)
