@@ -27,6 +27,21 @@ module GPhoto2
         context.close
       end
     end
+
+    describe "#close" do
+      it "frees the list" do
+        context = Context.new
+        begin
+          list = CameraAbilitiesList.new(context)
+          list.close
+          list.ptr?.should be_nil
+          # closing again is a no-op
+          list.close
+        ensure
+          context.close
+        end
+      end
+    end
   end
 
   describe CameraAbilities do

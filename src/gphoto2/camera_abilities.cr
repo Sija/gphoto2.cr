@@ -11,11 +11,11 @@ module GPhoto2
     # Returns the abilities of the given *model* camera.
     def self.find(model : String) : self
       context = Context.new
-      begin
-        CameraAbilitiesList.new(context)[model]
-      ensure
-        context.close
-      end
+      list = CameraAbilitiesList.new(context)
+      list[model]
+    ensure
+      list.try &.close
+      context.try &.close
     end
   end
 end

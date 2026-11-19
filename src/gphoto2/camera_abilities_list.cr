@@ -16,7 +16,16 @@ module GPhoto2
 
     # Finalizes object by freeing allocated memory.
     def finalize
-      free
+      close
+    end
+
+    # Frees allocated memory.
+    #
+    # NOTE: The list of all supported models takes up several megabytes,
+    # allocated outside of the GC heap, so it's best to free it right
+    # after use, instead of waiting for the GC.
+    def close : Nil
+      free if ptr?
     end
 
     def detect : CameraList

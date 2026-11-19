@@ -40,6 +40,7 @@ module GPhoto2
         end
       end
     ensure
+      abilities_list.try &.close
       context.try &.close
     end
 
