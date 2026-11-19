@@ -68,6 +68,23 @@ module GPhoto2
         end
       end
 
+      describe "#hash" do
+        it "is consistent with equality" do
+          a, b = build_widget(:text, "foo"), build_widget(:text, "foo")
+          a.value = b.value = "bar"
+          a.hash.should eq b.hash
+          Set{a, b}.size.should eq 1
+          Set{build_widget(:window, "main"), build_widget(:window, "main")}.size.should eq 1
+        end
+
+        it "does not change along with the value" do
+          widget = build_widget(:text, "foo")
+          hash = widget.hash
+          widget.value = "bar"
+          widget.hash.should eq hash
+        end
+      end
+
       describe "#value?" do
         it "returns nil for widgets without value" do
           build_widget(:window).value?.should be_nil

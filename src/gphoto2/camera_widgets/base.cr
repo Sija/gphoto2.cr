@@ -154,6 +154,14 @@ module GPhoto2
           value? == other.value?
       end
 
+      # NOTE: The (writable) `#value` is left out on purpose, so that
+      # the hash of a widget doesn't change along with its value.
+      def hash(hasher)
+        hasher = type.hash(hasher)
+        hasher = name.hash(hasher)
+        hasher
+      end
+
       # Compares `#value` with given *other* using `#to_s`.
       #
       # ```
