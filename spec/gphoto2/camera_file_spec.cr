@@ -127,6 +127,20 @@ module GPhoto2
         end
       end
 
+      it "does not ignore cancellation while looking up the file size" do
+        with_directory_camera do |camera|
+          stub_file_read(camera, "hello".to_slice, reported_size: 5_u64)
+          # Cancel only the first operation, which is the file info lookup
+          checks = 0
+          camera.context.cancel_callback = -> { (checks += 1) == 1 }
+
+          error = expect_raises(GPhoto2::Error) do
+            camera.blob("/DCIM/a.jpg").read
+          end
+          error.code.should eq LibGPhoto2::GP_ERROR_CANCEL
+        end
+      end
+
       it "does not overflow on the maximum reported size" do
         with_directory_camera do |camera|
           stub_file_read(camera, "hello".to_slice, reported_size: UInt64::MAX)

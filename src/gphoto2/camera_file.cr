@@ -285,8 +285,10 @@ module GPhoto2
       when .normal?  then info.file?.try(&.size)
       when .preview? then info.preview?.try(&.size)
       end
-    rescue GPhoto2::Error
-      # File info is not available
+    rescue ex : GPhoto2::Error
+      # Cancellation (see `Context#cancel_callback`) must not be mistaken
+      # for the file info not being available
+      raise ex if ex.code == LibGPhoto2::GP_ERROR_CANCEL
     end
 
     private def get_mime_type
