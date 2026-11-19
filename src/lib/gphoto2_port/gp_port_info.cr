@@ -17,7 +17,7 @@ lib LibGPhoto2Port
   # Functions
   #
 
-  fun gp_port_info_new(info : GPPortInfo*) : LibC::Int
+  fun gp_port_info_new(info : GPPortInfo**) : LibC::Int
   fun gp_port_info_get_name(info : GPPortInfo*, name : LibC::Char**) : LibC::Int
   fun gp_port_info_set_name(info : GPPortInfo*, name : LibC::Char*) : LibC::Int
   fun gp_port_info_get_path(info : GPPortInfo*, path : LibC::Char**) : LibC::Int
