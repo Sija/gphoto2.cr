@@ -15,6 +15,51 @@ module GPhoto2
       end
     end
 
+    describe "#wait" do
+      it "returns a timeout event" do
+        with_fake_camera do |camera|
+          event = camera.wait(10.milliseconds)
+          event.type.timeout?.should be_true
+          event.data.should be_nil
+        end
+      end
+
+      it "returns file added event" do
+        with_fake_camera do |camera|
+          FakeDriver.events << FakeDriver::FakeEvent.new(:file_added, "/DCIM/a.jpg")
+          event = camera.wait
+          event.type.file_added?.should be_true
+          event.data.should eq camera.blob("/DCIM/a.jpg")
+        end
+      end
+
+      it "returns file changed event" do
+        with_fake_camera do |camera|
+          FakeDriver.events << FakeDriver::FakeEvent.new(:file_changed, "/DCIM/a.jpg")
+          camera.wait.data.should eq camera.blob("/DCIM/a.jpg")
+        end
+      end
+
+      it "returns folder added event" do
+        with_fake_camera do |camera|
+          FakeDriver.events << FakeDriver::FakeEvent.new(:folder_added, "/DCIM/sub")
+          camera.wait.data.should eq camera / "DCIM/sub"
+        end
+      end
+    end
+
+    describe "#wait_for" do
+      it "skips events of other types" do
+        with_fake_camera do |camera|
+          FakeDriver.events << FakeDriver::FakeEvent.new(:capture_complete)
+          FakeDriver.events << FakeDriver::FakeEvent.new(:file_added, "/DCIM/a.jpg")
+          event = camera.wait_for(:file_added)
+          event.data.should eq camera.blob("/DCIM/a.jpg")
+          FakeDriver.calls[:wait_for_event].should eq 2
+        end
+      end
+    end
+
     describe "#wait_for" do
       it "waits for an event of the given type" do
         with_directory_camera do |camera|
