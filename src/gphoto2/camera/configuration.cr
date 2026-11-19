@@ -65,17 +65,18 @@ module GPhoto2
             memo
           end
 
-        result =
-          begin
-            yield self
-          rescue ex
-            # Don't let a failed restore mask the original exception
-            restore_config(config_snapshot) rescue nil
-            raise ex
-          end
-
-        restore_config(config_snapshot)
-        result
+        raised = false
+        begin
+          yield self
+        rescue ex
+          raised = true
+          # Don't let a failed restore mask the original exception
+          restore_config(config_snapshot) rescue nil
+          raise ex
+        ensure
+          # NOTE: `ensure` also covers leaving the block with `break`
+          restore_config(config_snapshot) unless raised
+        end
       end
 
       # :nodoc:

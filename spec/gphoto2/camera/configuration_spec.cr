@@ -243,6 +243,16 @@ module GPhoto2
         end
       end
 
+      it "restores the original values when leaving the block with break" do
+        with_configured_camera do |camera|
+          camera.preserving_config do
+            camera.update(iso: 400)
+            break
+          end
+          FakeDriver.settings["iso"].value.should eq "100"
+        end
+      end
+
       it "restores the original values when the block raises" do
         with_configured_camera do |camera|
           expect_raises(::Exception, "oops") do
