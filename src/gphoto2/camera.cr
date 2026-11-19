@@ -105,8 +105,9 @@ module GPhoto2
 
     # Filters devices by a given condition.
     #
-    # Filter keys can be either *model* or *port*. Only the first filter is
-    # used.
+    # Filter keys can be either *model* or *port*. `String` filters must
+    # match exactly, while `Regex` filters are matched against the value.
+    # When both filters are given, cameras must match both of them.
     #
     # ```
     # # Find the cameras whose model names contain Nikon.
@@ -117,8 +118,8 @@ module GPhoto2
     # ```
     def self.where(*, model : String | Regex? = nil, port : String | Regex? = nil) : Array(self)
       all.select do |camera|
-        (!model || camera.model.match model) &&
-          (!port || camera.port.match port)
+        (model.nil? || model === camera.model) &&
+          (port.nil? || port === camera.port)
       end
     end
 

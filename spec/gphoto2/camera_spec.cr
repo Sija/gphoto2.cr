@@ -98,5 +98,15 @@ module GPhoto2
         end
       end
     end
+
+    describe ".where" do
+      it "accepts string filters" do
+        Camera.where(model: "No Such Camera", port: "usb:999,999").should be_empty
+      end
+
+      it "accepts regex filters" do
+        Camera.where(model: /^No Such Camera$/, port: /^usb:999/).should be_empty
+      end
+    end
   end
 end
