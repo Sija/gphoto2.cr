@@ -69,7 +69,7 @@ lib LibGPhoto2
   alias CameraManualFunc          = Camera*, CameraText*, GPContext* -> LibC::Int
   alias CameraAboutFunc           = Camera*, CameraText*, GPContext* -> LibC::Int
 
-  alias CameraTimeoutStartFunc    = Camera*, LibC::UInt, CameraTimeoutFunc, Void* -> LibC::Int
+  alias CameraTimeoutStartFunc    = Camera*, LibC::UInt, CameraTimeoutFunc, Void* -> LibC::UInt
   alias CameraTimeoutStopFunc     = Camera*, LibC::UInt, Void* -> Void
 
   alias CameraPrePostFunc         = Camera*, GPContext* -> LibC::Int

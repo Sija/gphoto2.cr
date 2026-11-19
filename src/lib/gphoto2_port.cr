@@ -136,7 +136,7 @@ lib LibGPhoto2Port
   fun gp_port_seek(port : GPPort*, offset : LibC::Int, whence : LibC::Int) : LibC::Int
   fun gp_port_send_scsi_cmd(port : GPPort*, to_dev : LibC::Int, cmd : LibC::Char*, cmd_size : LibC::Int, sense : LibC::Char*, sense_size : LibC::Int, data : LibC::Char*, data_size : LibC::Int) : LibC::Int
 
-  fun gp_port_set_error(port : GPPort*, format : LibC::Char*) : LibC::Int
+  fun gp_port_set_error(port : GPPort*, format : LibC::Char*, ...) : LibC::Int
   fun gp_port_get_error(port : GPPort*) : LibC::Char*
 
   fun gp_port_message_codeset(codeset : LibC::Char*) : LibC::Char*
