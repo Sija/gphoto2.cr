@@ -97,6 +97,10 @@ module GPhoto2
       path = Path[path] if path.is_a?(String)
       path /= name if path.ends_with_separator? || Dir.exists?(path)
 
+      # Download the data first, so that a failed download
+      # doesn't leave an existing file truncated
+      data
+
       Dir.mkdir_p(path.dirname)
       File.open(path, "w") { |file| write_to(file) }
     end

@@ -199,6 +199,28 @@ module GPhoto2
         end
       end
 
+      it "keeps the existing file when the download fails" do
+        with_directory_camera do |camera, dir|
+          target = File.join(dir, "out", "copy.jpg")
+          Dir.mkdir_p(File.dirname(target))
+          File.write(target, "previous")
+
+          expect_raises(GPhoto2::Error) do
+            camera.blob("/DCIM/missing.jpg").save(target)
+          end
+          File.read(target).should eq "previous"
+        end
+      end
+
+      it "does not create directories when the download fails" do
+        with_directory_camera do |camera, dir|
+          expect_raises(GPhoto2::Error) do
+            camera.blob("/DCIM/missing.jpg").save(File.join(dir, "new", "copy.jpg"))
+          end
+          Dir.exists?(File.join(dir, "new")).should be_false
+        end
+      end
+
       it "saves file data to the given path" do
         with_directory_camera do |camera, dir|
           target = File.join(dir, "out", "copy.jpg")
