@@ -408,6 +408,14 @@ module GPhoto2
         widget.value.should eq "Auto"
       end
 
+      it "accepts iterators" do
+        widget = build_radio(%w[100 200 Auto])
+        widget.value = [300, 200].each
+        widget.value.should eq "200"
+        widget.value = {:manual, :auto}.each
+        widget.value.should eq "Auto"
+      end
+
       it "raises if no choice matches" do
         expect_raises(ArgumentError, "No matching value found") do
           build_radio(%w[100 200]).value = /^3/
