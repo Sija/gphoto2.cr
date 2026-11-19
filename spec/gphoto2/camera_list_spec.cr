@@ -19,5 +19,15 @@ module GPhoto2
         CameraList::Entry.new("baz", ""),
       ]
     end
+
+    describe "#close" do
+      it "frees the list" do
+        list = CameraList.new
+        list.close
+        list.ptr?.should be_nil
+        # closing again is a no-op
+        list.close
+      end
+    end
   end
 end

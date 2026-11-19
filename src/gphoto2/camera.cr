@@ -30,8 +30,8 @@ module GPhoto2
       port_info_list = PortInfoList.new
       abilities_list = CameraAbilitiesList.new(context, port_info_list)
 
-      cameras = abilities_list.detect.to_a
-      cameras.map do |entry|
+      detected = abilities_list.detect
+      detected.to_a.map do |entry|
         Camera.new(model: entry.name, port: entry.value).tap do |camera|
           # See: `CameraAbilities.find`
           camera.abilities = abilities_list[camera.model]
@@ -40,6 +40,7 @@ module GPhoto2
         end
       end
     ensure
+      detected.try &.close
       abilities_list.try &.close
       context.try &.close
     end
