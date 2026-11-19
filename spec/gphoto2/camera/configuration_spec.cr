@@ -270,6 +270,18 @@ module GPhoto2
         end
       end
 
+      it "restores the original values of settings that are still present" do
+        with_configured_camera do |camera|
+          camera.preserving_config do
+            camera.update(iso: 400)
+            # i.e. a setting available only in some of the camera modes
+            FakeDriver.settings.delete("owner")
+            camera.reload
+          end
+          FakeDriver.settings["iso"].value.should eq "100"
+        end
+      end
+
       it "restores the original values when leaving the block with break" do
         with_configured_camera do |camera|
           camera.preserving_config do

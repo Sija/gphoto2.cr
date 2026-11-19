@@ -212,9 +212,14 @@ module GPhoto2
         # the values need to be compared with the ones on the camera too
         saved_config = dirty? ? get_config.flatten : config
 
-        diff = snapshot.reject do |key, value|
-          self[key].raw_value.to_s == value &&
-            saved_config[key].raw_value.to_s == value
+        diff = snapshot.select do |key, value|
+          # Settings might come and go (i.e. depending on the camera mode),
+          # those which are gone can't be restored anymore
+          next false unless (widget = self[key]?) &&
+                            (saved_widget = saved_config[key]?)
+
+          widget.raw_value.to_s != value ||
+            saved_widget.raw_value.to_s != value
         end
         return if diff.empty?
 
