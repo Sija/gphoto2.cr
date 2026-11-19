@@ -11,6 +11,15 @@ module GPhoto2
         end
       end
 
+      it "raises when the driver does not report the captured file path" do
+        with_fake_camera do |camera|
+          FakeDriver.capture_path = nil
+          expect_raises(GPhoto2::Error, "Camera did not report the captured file path") do
+            camera.capture
+          end
+        end
+      end
+
       it "saves dirty configuration first" do
         with_fake_camera do |camera|
           FakeDriver.settings["iso"] = FakeDriver::Setting.new(:text, "100")

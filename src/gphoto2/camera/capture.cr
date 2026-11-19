@@ -58,9 +58,17 @@ module GPhoto2
       end
 
       private def _capture(type)
+        # Zeroed (unlike `out` variables), since drivers aren't guaranteed
+        # to fill it in, which would leave it with leftover stack contents
+        path = LibGPhoto2::CameraFilePath.new
         context.check! \
-          LibGPhoto2.gp_camera_capture(self, type, out path, context)
-        CameraFilePath.new path
+          LibGPhoto2.gp_camera_capture(self, type, pointerof(path), context)
+
+        CameraFilePath.new(path).tap do |file_path|
+          if file_path.name.empty?
+            raise Error.new("Camera did not report the captured file path", LibGPhoto2::GP_ERROR)
+          end
+        end
       end
 
       private def capture_preview

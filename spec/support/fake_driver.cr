@@ -20,7 +20,8 @@ module GPhoto2::FakeDriver
 
   class_getter settings = {} of String => Setting
   class_getter events = Deque(FakeEvent).new
-  class_property capture_path = "/DCIM/a.jpg"
+  # Path of the captured file, `nil` leaves it untouched.
+  class_property capture_path : String? = "/DCIM/a.jpg"
   class_property preview_data = "preview"
   # Text returned by the info functions, `nil` leaves it untouched.
   class_property text : String? = "fake text"
@@ -73,7 +74,9 @@ module GPhoto2::FakeDriver
 
     funcs.capture = ->(_camera : LibGPhoto2::Camera*, _type : LibGPhoto2::CameraCaptureType, path : LibGPhoto2::CameraFilePath*, _context : LibGPhoto2::GPContext*) {
       FakeDriver.calls[:capture] += 1
-      path.value = FakeDriver.build_path(FakeDriver.capture_path)
+      if capture_path = FakeDriver.capture_path
+        path.value = FakeDriver.build_path(capture_path)
+      end
       LibGPhoto2::GP_OK
     }
 
