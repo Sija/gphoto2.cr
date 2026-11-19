@@ -1,6 +1,15 @@
 require "../spec_helper"
 
 module GPhoto2
+  private class FinalizeCountingContext < Context
+    class_property finalized = 0
+
+    def finalize
+      @@finalized += 1
+      super
+    end
+  end
+
   describe Context do
     describe "#close" do
       it "decrements the reference counter" do
@@ -16,6 +25,13 @@ module GPhoto2
         context = Context.new
         context.finalize
         context.ptr?.should be_nil
+      end
+
+      it "gets called by the GC" do
+        FinalizeCountingContext.finalized = 0
+        100.times { FinalizeCountingContext.new }
+        GC.collect
+        FinalizeCountingContext.finalized.should be > 0
       end
 
       it "does nothing after close" do

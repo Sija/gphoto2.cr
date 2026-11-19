@@ -71,8 +71,22 @@ module GPhoto2
         data_as_callback.call String.new(message)
       end
 
+      # :nodoc:
+      #
+      # Holds the last error message, separately from the context, so that
+      # the error callback doesn't need to reference the context itself.
+      # Such a reference cycle would prevent the context from being
+      # ever finalized (and freed) by the GC.
+      class ErrorState
+        property message : String?
+      end
+
+      @error_state = ErrorState.new
+
       # Returns the last error message reported by libgphoto2.
-      getter last_error : String?
+      def last_error : String?
+        @error_state.message
+      end
 
       def initialize
         self.error_callback = nil
@@ -83,8 +97,9 @@ module GPhoto2
       # NOTE: Error messages are tracked (see `#last_error`) regardless
       # of the callback being set.
       def error_callback=(callback : Proc(String, Void)?) : Nil
+        state = @error_state
         set_error_callback do |message|
-          @last_error = message
+          state.message = message
           callback.try &.call(message)
         end
         @error_callback = callback
@@ -106,7 +121,7 @@ module GPhoto2
         Debug.log(rc, backtrace_offset: 1, progname: "gphoto2.cr")
         # Error message (if any) belongs to the call which returned *rc*,
         # so it must not leak into the subsequent calls.
-        error_message, @last_error = @last_error, nil
+        error_message, @error_state.message = @error_state.message, nil
         return rc if GPhoto2.check?(rc)
 
         original_error = GPhoto2::Error.from_code(rc)
