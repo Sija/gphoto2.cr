@@ -38,8 +38,12 @@ module GPhoto2
         # the increment) avoids floating-point drift. Values are widened
         # through their shortest decimal representation, so that e.g.
         # `0.3_f32` becomes `0.3` instead of `0.30000001192...`.
+        reported_max = max
         min, max, inc = {min, max, inc}.map(&.to_s.to_f64)
         count = ((max - min) / inc + CHOICES_EPSILON).floor
+
+        # The tolerance must not push the last choice over the maximum
+        count -= 1 if (min + count * inc).to_f32 > reported_max
 
         if count >= MAX_CHOICES
           raise GPhoto2::Exception.new \

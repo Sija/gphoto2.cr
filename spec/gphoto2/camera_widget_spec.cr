@@ -317,6 +317,8 @@ module GPhoto2
 
       it "does not exceed the upper bound" do
         build_range(0, 1, 0.3).choices.should eq [0f32, 0.3f32, 0.6f32, 0.9f32]
+        build_range(0, 0.99995, 1).choices.should eq [0f32]
+        build_range(0, 1, 1).choices.should eq [0f32, 1f32]
       end
 
       it "returns choices up to the limit" do
