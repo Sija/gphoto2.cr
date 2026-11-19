@@ -62,7 +62,11 @@ module GPhoto2
     end
 
     # Creates a new folder and returns it
+    #
+    # Raises `ArgumentError` if *name* is not a valid folder name
+    # (i.e. it's empty, `.`, `..` or contains a `/`).
     def mkdir(name : String) : CameraFolder
+      validate_name!(name)
       folder_make_dir(name)
       cd(name)
     end
@@ -73,7 +77,12 @@ module GPhoto2
     end
 
     # Uploads a new file and returns it
+    #
+    # Raises `ArgumentError` if *name* is not a valid file name
+    # (i.e. it's empty, `.`, `..` or contains a `/`).
     def put(name : String, data : Bytes, type : CameraFile::Type = :normal, *, mime_type : String? = nil, mtime : Time? = nil) : CameraFile
+      validate_name!(name)
+
       # initialize the file with the data
       file = open(name)
       begin
@@ -114,6 +123,14 @@ module GPhoto2
       clear files: true, folders: true
       # finally, delete itself
       folder_remove_dir
+    end
+
+    # Names are passed to the camera as-is, while the returned objects
+    # have their paths resolved (see `#resolve`), so the two must agree.
+    private def validate_name!(name : String) : Nil
+      if name.empty? || name.in?(".", "..") || name.includes?('/')
+        raise ArgumentError.new("Invalid name: #{name.inspect}")
+      end
     end
 
     private def resolve(name : String) : Path

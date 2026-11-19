@@ -112,6 +112,16 @@ module GPhoto2
           Dir.exists?(File.join(dir, "DCIM", "new")).should be_true
         end
       end
+
+      it "rejects invalid names" do
+        with_directory_camera do |camera|
+          ["", ".", "..", "x/y"].each do |name|
+            expect_raises(ArgumentError, "Invalid name") do
+              (camera / "DCIM").mkdir(name)
+            end
+          end
+        end
+      end
     end
 
     describe "#put" do
@@ -135,6 +145,17 @@ module GPhoto2
         with_directory_camera do |camera|
           file = (camera / "DCIM").put("c.jpg", "data".to_slice)
           String.new(file.to_slice).should eq "data"
+        end
+      end
+
+      it "rejects invalid names" do
+        with_directory_camera do |camera, dir|
+          ["", ".", "..", "sub/c.jpg"].each do |name|
+            expect_raises(ArgumentError, "Invalid name") do
+              (camera / "DCIM").put(name, "data".to_slice)
+            end
+          end
+          File.exists?(File.join(dir, "DCIM", "sub", "c.jpg")).should be_false
         end
       end
     end
