@@ -15,6 +15,11 @@ module GPhoto2
       free
     end
 
+    # Returns number of entries in the list.
+    def size : Int32
+      count
+    end
+
     def lookup_path(port : String) : Int32
       _lookup_path(port)
     end

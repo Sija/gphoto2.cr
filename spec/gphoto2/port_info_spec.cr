@@ -2,6 +2,10 @@ require "../spec_helper"
 
 module GPhoto2
   describe PortInfoList do
+    it "returns number of entries" do
+      PortInfoList.new.size.should be > 0
+    end
+
     it "looks up port info by path" do
       list = PortInfoList.new
       list.lookup_path("disk:/tmp").should be >= 0
