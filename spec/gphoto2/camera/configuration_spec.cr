@@ -92,6 +92,17 @@ module GPhoto2
     end
 
     describe "#reload" do
+      it "returns saved date values" do
+        with_configured_camera do |camera|
+          FakeDriver.settings["datetime"] = FakeDriver::Setting.new(:date, "2020-01-02T03:04:05Z")
+          camera.reload
+          camera[:datetime] = Time.unix(0)
+          camera.save
+          camera.reload
+          camera[:datetime].value.should eq Time.unix(0)
+        end
+      end
+
       it "discards unsaved changes" do
         with_configured_camera do |camera|
           camera[:iso] = 400
