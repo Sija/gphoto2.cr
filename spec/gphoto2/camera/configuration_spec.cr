@@ -243,6 +243,17 @@ module GPhoto2
         end
       end
 
+      it "restores the original values changed back without saving" do
+        with_configured_camera do |camera|
+          camera.preserving_config do
+            camera.update(iso: 400)
+            camera[:iso] = 100
+          end
+          FakeDriver.settings["iso"].value.should eq "100"
+          camera.dirty?.should be_false
+        end
+      end
+
       it "restores the original values when leaving the block with break" do
         with_configured_camera do |camera|
           camera.preserving_config do

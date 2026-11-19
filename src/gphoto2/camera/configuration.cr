@@ -208,8 +208,13 @@ module GPhoto2
       getter? dirty = false
 
       private def restore_config(snapshot : Hash(String, String)) : Nil
+        # Unsaved values don't reflect the camera state, in which case
+        # the values need to be compared with the ones on the camera too
+        saved_config = dirty? ? get_config.flatten : config
+
         diff = snapshot.reject do |key, value|
-          self[key].raw_value.to_s == value
+          self[key].raw_value.to_s == value &&
+            saved_config[key].raw_value.to_s == value
         end
         return if diff.empty?
 
