@@ -16,7 +16,9 @@ module GPhoto2::FakeDriver
     type : CameraEvent::Type,
     path : String? = nil,
     # Whether to leave the event data untouched (allowed by libgphoto2).
-    untouched_data : Bool = false
+    untouched_data : Bool = false,
+    # Whether to leave the event type untouched.
+    untouched_type : Bool = false
 
   class_getter settings = {} of String => Setting
   class_getter events = Deque(FakeEvent).new
@@ -100,7 +102,7 @@ module GPhoto2::FakeDriver
       FakeDriver.calls[:wait_for_event] += 1
       FakeDriver.last_timeout = timeout
       event = FakeDriver.events.shift? || FakeEvent.new(:timeout)
-      type.value = event.type
+      type.value = event.type unless event.untouched_type
       unless event.untouched_data
         data.value =
           if path = event.path
