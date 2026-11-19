@@ -10,8 +10,9 @@ module GPhoto2
 
     # Creates a new widget from the given pointer.
     def self.factory(ptr : LibGPhoto2::CameraWidget*, parent : Base? = nil) : Base
-      type = ptr.value.type.to_s.downcase
-      klass = @@widgets[type]
+      # `CameraWidget` struct is opaque, so its fields shouldn't be accessed directly
+      GPhoto2.check! LibGPhoto2.gp_widget_get_type(ptr, out type)
+      klass = @@widgets[type.to_s.downcase]
       klass.new(ptr, parent)
     end
   end
