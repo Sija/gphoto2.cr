@@ -88,6 +88,13 @@ lib LibGPhoto2
   # Functions
   #
 
+  alias GPSettingsFunc = LibC::Char*, LibC::Char*, LibC::Char*, Void* -> LibC::Int
+
+  # NOTE: available since libgphoto2 2.5.32
+  fun gp_setting_set_get_func(func : GPSettingsFunc, userdata : Void*)
+  # NOTE: available since libgphoto2 2.5.32
+  fun gp_setting_set_set_func(func : GPSettingsFunc, userdata : Void*)
+
   fun gp_setting_set(id : LibC::Char*, key : LibC::Char*, value : LibC::Char*) : LibC::Int
   fun gp_setting_get(id : LibC::Char*, key : LibC::Char*, value : LibC::Char*) : LibC::Int
 
