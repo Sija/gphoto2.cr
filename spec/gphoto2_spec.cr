@@ -5,6 +5,14 @@ describe GPhoto2 do
     it "should have proper format" do
       GPhoto2.library_version.should match /^\d+(\.\d+){2,3}(-\w+)?$/
     end
+
+    it "includes library build details when verbose" do
+      version = GPhoto2.library_version
+      verbose = GPhoto2.library_version(:verbose).lines
+
+      verbose.size.should be > 1
+      verbose.first.should eq version
+    end
   end
 
   describe ".result_as_string" do

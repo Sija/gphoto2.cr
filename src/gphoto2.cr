@@ -34,8 +34,26 @@ module GPhoto2
   alias LogLevel = LibGPhoto2::GPLogLevel
 
   # Returns the GPhoto2 library version.
+  #
+  # With `:verbose` *verbosity*, the version is followed by the
+  # (newline-separated) description of the library build features.
+  #
+  # ```
+  # GPhoto2.library_version           # => "2.5.31"
+  # GPhoto2.library_version(:verbose) # => "2.5.31\nall camlibs (...)\n..."
+  # ```
   def library_version(verbosity : VersionVerbosity = :short) : String
-    String.new LibGPhoto2.gp_library_version(verbosity).value
+    # Returned value is a `NULL`-terminated array of strings
+    list = LibGPhoto2.gp_library_version(verbosity)
+    return String.new(list.value) if verbosity.short?
+
+    String.build do |io|
+      while entry = list.value
+        io << '\n' unless io.empty?
+        io << String.new(entry)
+        list += 1
+      end
+    end
   end
 
   # Returns the GPhoto2 return code (*rc*) as a string.
