@@ -154,6 +154,13 @@ module GPhoto2::FakeDriver
     end
 
     file_path = LibGPhoto2::CameraFilePath.new
+
+    # Both fields are fixed-size, null-terminated strings. Since it's called
+    # from within the stubbed C functions, raising is not an option.
+    if name.bytesize >= file_path.name.size || folder.bytesize >= file_path.folder.size
+      abort "FakeDriver: path too long: #{path.inspect}"
+    end
+
     file_path.name.to_unsafe.copy_from(name.to_unsafe, name.bytesize)
     file_path.folder.to_unsafe.copy_from(folder.to_unsafe, folder.bytesize)
     file_path
@@ -162,6 +169,12 @@ module GPhoto2::FakeDriver
   # :nodoc:
   def write_text(text : LibGPhoto2::CameraText*) : Nil
     value = self.text
+
+    # The text is a fixed-size, null-terminated string. Since it's called
+    # from within the stubbed C functions, raising is not an option.
+    if value.bytesize >= sizeof(LibGPhoto2::CameraText)
+      abort "FakeDriver: text too long (#{value.bytesize} bytes)"
+    end
 
     # `text` is the only field of the struct
     buffer = text.as(LibC::Char*)
