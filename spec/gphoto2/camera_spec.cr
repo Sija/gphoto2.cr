@@ -99,6 +99,36 @@ module GPhoto2
       end
     end
 
+    describe "#serialnumber" do
+      it "returns nil when configuration is not supported" do
+        with_directory_camera do |camera|
+          camera.serialnumber.should be_nil
+        end
+      end
+    end
+
+    describe "#id" do
+      it "is stable for the same model and port" do
+        with_fixture_dir do |dir|
+          a = Camera.new(DIRECTORY_CAMERA_MODEL, "disk:#{dir}")
+          b = Camera.new(DIRECTORY_CAMERA_MODEL, "disk:#{dir}")
+          a.id.should eq b.id
+          a.close
+          b.close
+        end
+      end
+
+      it "differs between ports" do
+        with_fixture_dir do |dir|
+          a = Camera.new(DIRECTORY_CAMERA_MODEL, "disk:#{dir}")
+          b = Camera.new(DIRECTORY_CAMERA_MODEL, "disk:#{dir}/DCIM")
+          a.id.should_not eq b.id
+          a.close
+          b.close
+        end
+      end
+    end
+
     describe "#filesystem" do
       it "returns the root folder by default" do
         with_directory_camera do |camera|
