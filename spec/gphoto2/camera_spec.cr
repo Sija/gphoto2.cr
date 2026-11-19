@@ -1,0 +1,102 @@
+require "../spec_helper"
+
+module GPhoto2
+  describe Camera do
+    it "exposes model and port" do
+      camera = Camera.new("Directory Browse", "disk:/tmp")
+      camera.model.should eq "Directory Browse"
+      camera.port.should eq "disk:/tmp"
+    end
+
+    it "is lazily initialized" do
+      camera = Camera.new("Directory Browse", "disk:/tmp")
+      camera.ptr?.should be_falsey
+      camera.ptr.null?.should be_false
+      camera.close
+      camera.ptr?.should be_falsey
+    end
+
+    it "compares by model and port" do
+      Camera.new("A", "disk:/a").should eq Camera.new("A", "disk:/a")
+      Camera.new("A", "disk:/a").should_not eq Camera.new("A", "disk:/b")
+      Camera.new("A", "disk:/a").should_not eq Camera.new("B", "disk:/a")
+    end
+
+    describe "#abilities" do
+      it "returns abilities of the camera model" do
+        with_directory_camera do |camera|
+          camera.abilities.folder_operations.make_dir?.should be_true
+        end
+      end
+    end
+
+    describe "#can?" do
+      it "checks camera operations" do
+        with_directory_camera do |camera|
+          camera.can?(:capture_image).should be_false
+          camera.can?(:config).should be_false
+        end
+      end
+    end
+
+    describe "#port_info" do
+      it "returns port info of the camera port" do
+        with_directory_camera do |camera, dir|
+          camera.port_info.path.should eq "disk:#{dir}"
+          camera.port_info.type.disk?.should be_true
+        end
+      end
+    end
+
+    describe ".open" do
+      it "closes the camera after the block" do
+        captured = nil
+        Camera.open(DIRECTORY_CAMERA_MODEL, "disk:/tmp") do |camera|
+          camera.ptr
+          camera.ptr?.should be_truthy
+          captured = camera
+        end
+        captured.not_nil!.ptr?.should be_falsey
+      end
+    end
+
+    describe "#autorelease" do
+      it "closes the camera even when the block raises" do
+        camera = Camera.new(DIRECTORY_CAMERA_MODEL, "disk:/tmp")
+        expect_raises(::Exception, "oops") do
+          camera.autorelease do
+            camera.ptr
+            raise "oops"
+          end
+        end
+        camera.ptr?.should be_falsey
+      end
+    end
+
+    describe "#filesystem" do
+      it "returns the root folder by default" do
+        with_directory_camera do |camera|
+          camera.filesystem.root?.should be_true
+        end
+      end
+
+      it "makes relative paths absolute and normalizes them" do
+        with_directory_camera do |camera|
+          camera.filesystem("DCIM/sub/..").path.should eq Path.posix("/DCIM")
+          (camera / "DCIM").path.should eq Path.posix("/DCIM")
+        end
+      end
+    end
+
+    describe "#blob" do
+      it "returns a file by its path" do
+        with_directory_camera do |camera|
+          file = camera.blob("DCIM/a.jpg")
+          file.path.should eq Path.posix("/DCIM/a.jpg")
+          file.name.should eq "a.jpg"
+          String.new(file.to_slice).should eq "hello"
+        end
+      end
+    end
+  end
+end

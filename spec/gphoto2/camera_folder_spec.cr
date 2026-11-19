@@ -1,0 +1,110 @@
+require "../spec_helper"
+
+module GPhoto2
+  describe CameraFolder do
+    it "lists files" do
+      with_directory_camera do |camera|
+        (camera / "DCIM").files.map(&.name).should eq ["a.jpg"]
+      end
+    end
+
+    it "lists folders" do
+      with_directory_camera do |camera|
+        (camera / "DCIM").folders.map(&.path)
+          .should eq [Path.posix("/DCIM/sub")]
+      end
+    end
+
+    describe "#root?" do
+      it "returns true only for the root folder" do
+        with_directory_camera do |camera|
+          (camera / "/").root?.should be_true
+          (camera / "DCIM").root?.should be_false
+        end
+      end
+    end
+
+    describe "#name" do
+      it "returns the folder name" do
+        with_directory_camera do |camera|
+          (camera / "DCIM/sub").name.should eq "sub"
+        end
+      end
+    end
+
+    describe "#cd" do
+      it "handles special names" do
+        with_directory_camera do |camera|
+          folder = camera / "DCIM"
+          folder.cd(".").should eq folder
+          folder.cd("..").root?.should be_true
+          folder.cd("sub").path.should eq Path.posix("/DCIM/sub")
+          (folder / "sub").path.should eq Path.posix("/DCIM/sub")
+        end
+      end
+    end
+
+    describe "#parent" do
+      it "returns the parent folder" do
+        with_directory_camera do |camera|
+          (camera / "DCIM/sub").parent.path.should eq Path.posix("/DCIM")
+        end
+      end
+
+      it "returns itself for the root folder" do
+        with_directory_camera do |camera|
+          root = camera / "/"
+          root.parent?.should be_nil
+          root.parent.should eq root
+        end
+      end
+    end
+
+    describe "#mkdir" do
+      it "creates a folder" do
+        with_directory_camera do |camera, dir|
+          folder = (camera / "DCIM").mkdir("new")
+          folder.path.should eq Path.posix("/DCIM/new")
+          Dir.exists?(File.join(dir, "DCIM", "new")).should be_true
+        end
+      end
+    end
+
+    describe "#put" do
+      it "uploads a file" do
+        with_directory_camera do |camera, dir|
+          file = (camera / "DCIM").put("c.jpg", "data".to_slice)
+          file.path.should eq Path.posix("/DCIM/c.jpg")
+          File.read(File.join(dir, "DCIM", "c.jpg")).should eq "data"
+        end
+      end
+    end
+
+    describe "#clear" do
+      it "deletes files only by default" do
+        with_directory_camera do |camera, dir|
+          (camera / "DCIM").clear
+          File.exists?(File.join(dir, "DCIM", "a.jpg")).should be_false
+          Dir.exists?(File.join(dir, "DCIM", "sub")).should be_true
+        end
+      end
+    end
+
+    describe "#delete" do
+      it "deletes the folder recursively" do
+        with_directory_camera do |camera, dir|
+          (camera / "DCIM").delete
+          Dir.exists?(File.join(dir, "DCIM")).should be_false
+        end
+      end
+
+      it "refuses to delete the root folder" do
+        with_directory_camera do |camera|
+          expect_raises(::Exception, "Cannot delete root folder") do
+            (camera / "/").delete
+          end
+        end
+      end
+    end
+  end
+end
