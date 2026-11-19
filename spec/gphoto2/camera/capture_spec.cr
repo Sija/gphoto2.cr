@@ -47,6 +47,21 @@ module GPhoto2
           String.new(file.to_slice).should eq "preview"
         end
       end
+
+      it "names the preview after the mime type of its data" do
+        with_fake_camera do |camera|
+          FakeDriver.preview_mime_type = LibGPhoto2::GP_MIME_PPM
+          file = camera.preview
+          file.preview?.should be_true
+          file.name.should eq "capture_preview.ppm"
+        end
+      end
+
+      it "keeps the default name for an unknown mime type" do
+        with_fake_camera do |camera|
+          camera.preview.name.should eq CameraFile::PREVIEW_FILENAME
+        end
+      end
     end
   end
 end

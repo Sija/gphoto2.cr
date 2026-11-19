@@ -75,6 +75,7 @@ module GPhoto2
         file = CameraFile.new(self)
         context.check! \
           LibGPhoto2.gp_camera_capture_preview(self, file, context)
+        file.adopt_preview_name
         file
       end
 

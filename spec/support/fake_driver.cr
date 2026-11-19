@@ -25,6 +25,8 @@ module GPhoto2::FakeDriver
   # Path of the captured file, `nil` leaves it untouched.
   class_property capture_path : String? = "/DCIM/a.jpg"
   class_property preview_data = "preview"
+  # Mime type of the preview data, unknown when `nil`.
+  class_property preview_mime_type : String? = nil
   # Text returned by the info functions, `nil` leaves it untouched.
   class_property text : String? = "fake text"
   class_property? fail_set_config = false
@@ -43,6 +45,7 @@ module GPhoto2::FakeDriver
 
     self.capture_path = "/DCIM/a.jpg"
     self.preview_data = "preview"
+    self.preview_mime_type = nil
     self.text = "fake text"
     self.fail_set_config = false
     self.config_untouched = false
@@ -95,6 +98,9 @@ module GPhoto2::FakeDriver
       data = FakeDriver.preview_data
       buffer = LibC.malloc(data.bytesize).as(UInt8*)
       buffer.copy_from(data.to_unsafe, data.bytesize)
+      if mime_type = FakeDriver.preview_mime_type
+        LibGPhoto2.gp_file_set_mime_type(file, mime_type)
+      end
       LibGPhoto2.gp_file_set_data_and_size(file, buffer, data.bytesize)
     }
 

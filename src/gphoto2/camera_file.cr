@@ -9,7 +9,8 @@ module GPhoto2
     # The unknown mime type as specified by the libgphoto2.
     UNKNOWN_MIME_TYPE = "unknown/unknown"
 
-    # The preview data is assumed to be a jpg.
+    # Name of the preview files, used when the mime type of their data
+    # is unknown (otherwise named after it, i.e. `capture_preview.ppm`).
     PREVIEW_FILENAME = "capture_preview.jpg"
 
     # Initial buffer size used in `#read`.
@@ -36,6 +37,22 @@ module GPhoto2
 
     # Returns `true` if file is a preview (see `Camera#preview`).
     getter? preview : Bool = false
+
+    # :nodoc:
+    #
+    # Names the preview after the name given to it by libgphoto2, which
+    # reflects the mime type of its data (i.e. `capture_preview.ppm`),
+    # keeping `PREVIEW_FILENAME` when the mime type is unknown.
+    protected def adopt_preview_name : Nil
+      return unless preview?
+
+      GPhoto2.check! \
+        LibGPhoto2.gp_file_get_name(self, out name_ptr)
+      return if name_ptr.null?
+
+      name = Path.posix(String.new(name_ptr))
+      @path = name unless name.extension.empty?
+    end
 
     # Relative *path* is resolved from the root folder.
     #
