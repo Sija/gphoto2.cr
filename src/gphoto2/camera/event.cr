@@ -34,7 +34,7 @@ module GPhoto2
       end
 
       private def build_path(data_ptr)
-        CameraFilePath.new(data_ptr.as(LibGPhoto2::CameraFilePath*)).to_path
+        CameraFilePath.new(data_ptr.as(LibGPhoto2::CameraFilePath*).value).to_path
       end
     end
   end
