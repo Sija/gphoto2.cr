@@ -17,6 +17,18 @@ module GPhoto2
         PortInfoList.new["foo:bar"]
       end
     end
+
+    it "exposes the entries through the wrapped struct" do
+      list = PortInfoList.new
+      wrapped = list.wrapped
+      # NOTE: The raw list also contains the (unnamed) generic entries,
+      # which are skipped by `#size` and `#[]`.
+      paths = Array.new(wrapped.count) do |i|
+        String.new(wrapped.info[i].value.path)
+      end
+      paths.size.should be >= list.size
+      paths.should contain list[0].path
+    end
   end
 
   describe PortInfo do
