@@ -4,16 +4,16 @@ module GPhoto2
   class CameraWidget
     class Date < Base
       protected def get_value
-        ptr = Pointer(LibC::Int).malloc
-        get_value_ptr ptr
-        Time.unix(ptr.value)
+        value = uninitialized LibC::Int
+        get_value_ptr pointerof(value)
+        Time.unix(value)
       end
 
       protected def set_value(value)
         case value
         when Time
-          ptr = Pointer(LibC::Int).malloc 1, LibC::Int.new(value.to_unix.to_i32)
-          set_value_ptr ptr
+          unix = LibC::Int.new(value.to_unix)
+          set_value_ptr pointerof(unix)
         when Int
           set_value Time.unix(value)
         when String

@@ -12,10 +12,8 @@ module GPhoto2
       protected def set_value(value)
         case value
         when String
-          value.check_no_null_byte
-          ptr = Pointer(LibC::Char).malloc(value.bytesize + 1)
-          ptr.copy_from(value.to_unsafe, value.bytesize + 1)
-          set_value_ptr ptr
+          # libgphoto2 copies the string, so no need to do it here
+          set_value_ptr value.check_no_null_byte.to_unsafe
         when Symbol
           set_value value.to_s.capitalize
         when Number

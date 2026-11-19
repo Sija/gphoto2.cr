@@ -39,16 +39,16 @@ module GPhoto2
       private CHOICES_EPSILON = 1e-4
 
       protected def get_value
-        ptr = Pointer(LibC::Float).malloc
-        get_value_ptr ptr
-        ptr.value.to_f32
+        value = uninitialized LibC::Float
+        get_value_ptr pointerof(value)
+        value.to_f32
       end
 
       protected def set_value(value)
         case value
         when Float
-          ptr = Pointer(LibC::Float).malloc 1, LibC::Float.new(value.to_f32)
-          set_value_ptr ptr
+          float = LibC::Float.new(value)
+          set_value_ptr pointerof(float)
         when Int, String
           set_value value.to_f32
         else

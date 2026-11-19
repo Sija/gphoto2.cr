@@ -4,16 +4,16 @@ module GPhoto2
   class CameraWidget
     class Toggle < Base
       protected def get_value
-        ptr = Pointer(LibC::Int).malloc
-        get_value_ptr ptr
-        ptr.value.to_i32
+        value = uninitialized LibC::Int
+        get_value_ptr pointerof(value)
+        value.to_i32
       end
 
       protected def set_value(value)
         case value
         when Int
-          ptr = Pointer(LibC::Int).malloc 1, LibC::Int.new(value.to_i32)
-          set_value_ptr ptr
+          int = LibC::Int.new(value)
+          set_value_ptr pointerof(int)
         when Bool
           set_value value ? 1 : 0
         when String
