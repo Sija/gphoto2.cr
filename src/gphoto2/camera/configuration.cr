@@ -256,8 +256,15 @@ module GPhoto2
       end
 
       private def get_config
+        # Null-initialized (unlike `out` variables), since drivers aren't
+        # guaranteed to set it, which would leave it pointing to garbage
+        window = Pointer(LibGPhoto2::CameraWidget).null
         context.check! \
-          LibGPhoto2.gp_camera_get_config(self, out window, context)
+          LibGPhoto2.gp_camera_get_config(self, pointerof(window), context)
+
+        if window.null?
+          raise Error.new("Camera did not report its configuration", LibGPhoto2::GP_ERROR)
+        end
         CameraWidget.factory(window)
       end
 

@@ -30,6 +30,15 @@ module GPhoto2
     end
 
     describe "#window" do
+      it "raises when the driver does not report the configuration" do
+        with_fake_camera do |camera|
+          FakeDriver.config_untouched = true
+          expect_raises(GPhoto2::Error, "Camera did not report its configuration") do
+            camera.window
+          end
+        end
+      end
+
       it "returns the root widget" do
         with_configured_camera do |camera|
           camera.window.name.should eq "main"

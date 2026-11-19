@@ -26,6 +26,8 @@ module GPhoto2::FakeDriver
   # Text returned by the info functions, `nil` leaves it untouched.
   class_property text : String? = "fake text"
   class_property? fail_set_config = false
+  # Whether `get_config` leaves the window untouched (and so unset).
+  class_property? config_untouched = false
   # Number of the upcoming `set_config` calls to fail.
   class_property set_config_failures = 0
   class_getter calls = Hash(Symbol, Int32).new(0)
@@ -41,6 +43,7 @@ module GPhoto2::FakeDriver
     self.preview_data = "preview"
     self.text = "fake text"
     self.fail_set_config = false
+    self.config_untouched = false
     self.set_config_failures = 0
     self.last_timeout = nil
   end
@@ -55,7 +58,7 @@ module GPhoto2::FakeDriver
 
     funcs.get_config = ->(_camera : LibGPhoto2::Camera*, window : LibGPhoto2::CameraWidget**, _context : LibGPhoto2::GPContext*) {
       FakeDriver.calls[:get_config] += 1
-      window.value = FakeDriver.build_window
+      window.value = FakeDriver.build_window unless FakeDriver.config_untouched?
       LibGPhoto2::GP_OK
     }
 
