@@ -39,8 +39,16 @@ module GPhoto2
       # camera[:aperture] # => 4
       # camera[:iso]      # => 400
       # ```
+      #
+      # Raises `KeyError` if any of the given *keys* doesn't exist.
       def preserving_config(keys : Enumerable(String | Symbol)? = nil, &) : Nil
-        config_snapshot = keys ? config.select(keys.map(&.to_s)) : config
+        config_snapshot =
+          if keys
+            # Unknown keys (i.e. typos) would otherwise go silently unpreserved
+            keys.to_h { |key| {key.to_s, self[key]} }
+          else
+            config
+          end
         config_snapshot =
           config_snapshot.reduce({} of String => String) do |memo, (key, widget)|
             # Read-only values (i.e. battery level, or the number of

@@ -165,6 +165,16 @@ module GPhoto2
         end
       end
 
+      it "raises on unknown keys" do
+        with_configured_camera do |camera|
+          called = false
+          expect_raises(KeyError) do
+            camera.preserving_config(:iso, :nope) { called = true }
+          end
+          called.should be_false
+        end
+      end
+
       it "restores empty values" do
         with_configured_camera do |camera|
           FakeDriver.settings["mode"] = FakeDriver::Setting.new(:radio, "None", %w(None Auto))
