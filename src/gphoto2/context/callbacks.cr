@@ -82,11 +82,13 @@ module GPhoto2
       # Checks if the given *rc* is a GPhoto2 error code.
       def check!(rc : Int32) : Int32
         Debug.log(rc, backtrace_offset: 1, progname: "gphoto2.cr")
+        # Error message (if any) belongs to the call which returned *rc*,
+        # so it must not leak into the subsequent calls.
+        error_message, @last_error = @last_error, nil
         return rc if GPhoto2.check?(rc)
 
         original_error = GPhoto2::Error.from_code(rc)
-        if error_message = @last_error
-          @last_error = nil
+        if error_message
           raise Error.new(error_message, rc, original_error)
         else
           raise original_error

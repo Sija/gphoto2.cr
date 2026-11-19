@@ -64,6 +64,20 @@ module GPhoto2
         context.close
       end
 
+      it "discards the last error message on success" do
+        context = Context.new
+        LibGPhoto2.gp_context_error(context, "Stale error")
+        context.check!(LibGPhoto2::GP_OK)
+        context.last_error.should be_nil
+
+        error = expect_raises(GPhoto2::Error) do
+          context.check!(LibGPhoto2::GP_ERROR_IO)
+        end
+        error.should_not be_a Context::Error
+        error.message.should eq "I/O problem"
+        context.close
+      end
+
       it "raises a generic error without the last error message" do
         context = Context.new
         expect_raises(GPhoto2::Error, "I/O problem") do
