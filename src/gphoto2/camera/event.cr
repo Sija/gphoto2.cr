@@ -26,8 +26,10 @@ module GPhoto2
       private def wait_for_event(timeout : Time::Span) : CameraEvent
         # libgphoto2 takes a non-negative `int` number of milliseconds
         timeout_ms = timeout.total_milliseconds.clamp(0, Int32::MAX).to_i
+
         context.check! \
           LibGPhoto2.gp_camera_wait_for_event(self, timeout_ms, out type, out data_ptr, context)
+
         begin
           # Drivers aren't guaranteed to pass any data along with the event
           data =

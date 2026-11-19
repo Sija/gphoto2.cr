@@ -19,6 +19,7 @@ module GPhoto2
       # out of bounds (in which case the value is left unchanged).
       def move_by(step : Int32) : String?
         choices = self.choices
+
         # Use the raw value, since `#value` returns `nil` for i.e. `None`
         return unless index = choices.index(get_value)
 
@@ -43,8 +44,10 @@ module GPhoto2
         when Enumerable, Regex
           match =
             case value
-            in Enumerable then choices.find { |choice| value.any? { |item| choice == choice_value(item) } }
-            in Regex      then choices.find &.matches?(value)
+            in Enumerable
+              choices.find { |choice| value.any? { |item| choice == choice_value(item) } }
+            in Regex
+              choices.find &.matches?(value)
             end
           match || raise ArgumentError.new("No matching value found")
           super match

@@ -55,6 +55,7 @@ module GPhoto2
 
         protected def unset_{{ key.id }}_callback
           LibGPhoto2.gp_context_set_{{ key.id }}_func self, nil, nil
+
           @{{ key.id }}_callback = nil
           @{{ key.id }}_box = nil
         end
@@ -133,6 +134,7 @@ module GPhoto2
       # *rc* takes precedence, and is re-raised regardless of *rc*.
       def check!(rc : Int32) : Int32
         Debug.log(rc, backtrace_offset: 1, progname: "gphoto2.cr")
+
         # Error message (if any) belongs to the call which returned *rc*,
         # so it must not leak into the subsequent calls.
         error_message, @callback_state.message = @callback_state.message, nil

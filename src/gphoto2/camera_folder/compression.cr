@@ -10,7 +10,9 @@ module GPhoto2
           pathname = file.path.relative_to(path)
           pathname = Path.posix(root, pathname) if root
           pathname = pathname.to_s.lchop('/')
-          mtime = file.info.file?.try(&.mtime) || Time.local
+
+          mtime = file.info.file?.try(&.mtime) ||
+                  Time.local
 
           entry = Compress::Zip::Writer::Entry.new pathname,
             time: mtime.to_utc

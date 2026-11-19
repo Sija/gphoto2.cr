@@ -28,6 +28,7 @@ module GPhoto2::FakeDriver
     settings.clear
     events.clear
     calls.clear
+
     self.capture_path = "/DCIM/a.jpg"
     self.preview_data = "preview"
     self.text = "fake text"
@@ -47,6 +48,7 @@ module GPhoto2::FakeDriver
       window.value = FakeDriver.build_window
       LibGPhoto2::GP_OK
     }
+
     funcs.set_config = ->(_camera : LibGPhoto2::Camera*, window : LibGPhoto2::CameraWidget*, _context : LibGPhoto2::GPContext*) {
       FakeDriver.calls[:set_config] += 1
       if FakeDriver.fail_set_config?
@@ -56,15 +58,18 @@ module GPhoto2::FakeDriver
         LibGPhoto2::GP_OK
       end
     }
+
     funcs.capture = ->(_camera : LibGPhoto2::Camera*, _type : LibGPhoto2::CameraCaptureType, path : LibGPhoto2::CameraFilePath*, _context : LibGPhoto2::GPContext*) {
       FakeDriver.calls[:capture] += 1
       path.value = FakeDriver.build_path(FakeDriver.capture_path)
       LibGPhoto2::GP_OK
     }
+
     funcs.trigger_capture = ->(_camera : LibGPhoto2::Camera*, _context : LibGPhoto2::GPContext*) {
       FakeDriver.calls[:trigger_capture] += 1
       LibGPhoto2::GP_OK
     }
+
     funcs.capture_preview = ->(_camera : LibGPhoto2::Camera*, file : LibGPhoto2::CameraFile*, _context : LibGPhoto2::GPContext*) {
       FakeDriver.calls[:capture_preview] += 1
       data = FakeDriver.preview_data
@@ -72,6 +77,7 @@ module GPhoto2::FakeDriver
       buffer.copy_from(data.to_unsafe, data.bytesize)
       LibGPhoto2.gp_file_set_data_and_size(file, buffer, data.bytesize)
     }
+
     funcs.wait_for_event = ->(_camera : LibGPhoto2::Camera*, _timeout : LibC::Int, type : LibGPhoto2::CameraEventType*, data : Void**, _context : LibGPhoto2::GPContext*) {
       FakeDriver.calls[:wait_for_event] += 1
       event = FakeDriver.events.shift? || FakeEvent.new(:timeout)
@@ -86,6 +92,7 @@ module GPhoto2::FakeDriver
         end
       LibGPhoto2::GP_OK
     }
+
     {% for name in %w[summary manual about] %}
       funcs.{{ name.id }} = ->(_camera : LibGPhoto2::Camera*, text : LibGPhoto2::CameraText*, _context : LibGPhoto2::GPContext*) {
         FakeDriver.write_text(text)
@@ -129,8 +136,10 @@ module GPhoto2::FakeDriver
 
   private def raw_value(widget) : String
     case widget
-    when CameraWidget::Date then widget.value.as(Time).to_unix.to_s
-    else                         widget.raw_value.to_s
+    when CameraWidget::Date
+      widget.value.as(Time).to_unix.to_s
+    else
+      widget.raw_value.to_s
     end
   end
 
@@ -152,6 +161,7 @@ module GPhoto2::FakeDriver
   # :nodoc:
   def write_text(text : LibGPhoto2::CameraText*) : Nil
     value = self.text
+
     # `text` is the only field of the struct
     buffer = text.as(LibC::Char*)
     buffer.copy_from(value.to_unsafe, value.bytesize)
@@ -163,6 +173,7 @@ module GPhoto2::SpecHelpers
   # Yields a camera with stubbed driver functions (see `FakeDriver`).
   def with_fake_camera(&)
     FakeDriver.reset
+
     with_directory_camera do |camera, dir|
       FakeDriver.install(camera)
       yield camera, dir

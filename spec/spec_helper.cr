@@ -18,9 +18,11 @@ module GPhoto2::SpecHelpers
   # ```
   def with_fixture_dir(&)
     dir = File.tempname("gphoto2-spec")
+
     Dir.mkdir_p(File.join(dir, "DCIM", "sub"))
     File.write(File.join(dir, "DCIM", "a.jpg"), "hello")
     File.write(File.join(dir, "DCIM", "sub", "b.jpg"), "xyz")
+
     begin
       yield dir
     ensure

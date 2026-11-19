@@ -51,6 +51,7 @@ module GPhoto2
           else
             config
           end
+
         config_snapshot =
           config_snapshot.reduce({} of String => String) do |memo, (key, widget)|
             # Read-only values (i.e. battery level, or the number of
@@ -72,6 +73,7 @@ module GPhoto2
             restore_config(config_snapshot) rescue nil
             raise ex
           end
+
         restore_config(config_snapshot)
         result
       end
@@ -141,9 +143,11 @@ module GPhoto2
       # ```
       def <<(widget : CameraWidget::Base) : self
         own_widget = self[widget.name]
+
         # Widgets not belonging to our configuration tree would be
         # ignored by `#save`, so their value needs to be copied over.
         own_widget.copy_value_from(widget) unless own_widget.same?(widget)
+
         @dirty = true
         self
       end
@@ -157,6 +161,7 @@ module GPhoto2
       # ```
       def save : Bool
         return false unless dirty?
+
         set_config
         @dirty = false
         true
@@ -202,7 +207,9 @@ module GPhoto2
       getter? dirty = false
 
       private def restore_config(snapshot : Hash(String, String)) : Nil
-        diff = snapshot.reject { |key, value| self[key].raw_value.to_s == value }
+        diff = snapshot.reject do |key, value|
+          self[key].raw_value.to_s == value
+        end
         return if diff.empty?
 
         begin

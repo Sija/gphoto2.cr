@@ -3,6 +3,11 @@ require "./base"
 module GPhoto2
   class CameraWidget
     class Range < Base
+      # Maximum number of choices returned by `#choices`.
+      MAX_CHOICES = 1_000_000
+
+      private CHOICES_EPSILON = 1e-4
+
       # Returns the range of the widget.
       def range : ::Range(Float32, Float32)
         min, max, _ = get_range
@@ -35,18 +40,16 @@ module GPhoto2
         # `0.3_f32` becomes `0.3` instead of `0.30000001192...`.
         min, max, inc = {min, max, inc}.map(&.to_s.to_f64)
         count = ((max - min) / inc + CHOICES_EPSILON).floor
+
         if count >= MAX_CHOICES
           raise GPhoto2::Exception.new \
             "Too many choices, use #range and #step instead"
         end
 
-        Array(Float32).new(count.to_i + 1) { |i| (min + i * inc).to_f32 }
+        Array(Float32).new(count.to_i + 1) do |i|
+          (min + i * inc).to_f32
+        end
       end
-
-      # Maximum number of choices returned by `#choices`.
-      MAX_CHOICES = 1_000_000
-
-      private CHOICES_EPSILON = 1e-4
 
       protected def get_value
         value = uninitialized LibC::Float

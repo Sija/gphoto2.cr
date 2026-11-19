@@ -142,7 +142,10 @@ module GPhoto2
       # Compares widget with another, based on `#type`, `#name` and `#value`.
       def ==(other : self)
         return true if same?(other)
-        type == other.type && name == other.name && value? == other.value?
+
+        type == other.type &&
+          name == other.name &&
+          value? == other.value?
       end
 
       # Compares `#value` with given *other* using `#to_s`.
