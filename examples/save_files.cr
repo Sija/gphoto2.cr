@@ -17,6 +17,9 @@ def visit(camera, folder)
       }
       path = Path[DEST_PATH, camera.model, file.path]
       file.save path
+      # Free the downloaded data right away, since it's allocated outside
+      # of the GC heap, and therefore doesn't trigger garbage collection
+      file.close
     end
 
     puts "Saved #{files.size} files".colorize(:dark_gray)
