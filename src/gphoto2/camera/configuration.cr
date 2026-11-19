@@ -116,15 +116,19 @@ module GPhoto2
         value
       end
 
+      # Updates the attribute with the value of the given *widget*,
+      # matched by its name.
+      #
       # ```
       # iso = camera[:iso].as_radio
       # iso.value = iso.choices.first
       # camera << iso
       # ```
       def <<(widget : CameraWidget::Base) : self
-        key = widget.name
-        # set_single_config(key, widget)
-        config[key] = widget
+        own_widget = self[widget.name]
+        # Widgets not belonging to our configuration tree would be
+        # ignored by `#save`, so their value needs to be copied over.
+        own_widget.copy_value_from(widget) unless own_widget.same?(widget)
         @dirty = true
         self
       end

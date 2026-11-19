@@ -176,6 +176,13 @@ module GPhoto2
         {% end %}
       end
 
+      # :nodoc:
+      #
+      # Sets the value of this widget to the raw value of the *other* one.
+      def copy_value_from(other : Base) : Nil
+        set_value(other.get_value)
+      end
+
       protected abstract def get_value
       protected abstract def set_value(value)
 

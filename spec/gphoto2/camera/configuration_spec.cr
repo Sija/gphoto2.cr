@@ -113,6 +113,24 @@ module GPhoto2
           FakeDriver.settings["iso"].value.should eq "200"
         end
       end
+
+      it "copies the value of a foreign widget" do
+        with_configured_camera do |camera|
+          widget = build_widget(:text, "owner")
+          widget.value = "Jane"
+          camera << widget
+          camera.save
+          FakeDriver.settings["owner"].value.should eq "Jane"
+        end
+      end
+
+      it "raises for unknown widget" do
+        with_configured_camera do |camera|
+          expect_raises(KeyError) do
+            camera << build_widget(:text, "unknown")
+          end
+        end
+      end
     end
 
     describe "#preserving_config" do
