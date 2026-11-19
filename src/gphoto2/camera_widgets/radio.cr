@@ -43,13 +43,22 @@ module GPhoto2
         when Enumerable, Regex
           match =
             case value
-            in Enumerable then choices.find &.in?(value)
+            in Enumerable then choices.find { |choice| value.any? { |item| choice == choice_value(item) } }
             in Regex      then choices.find &.matches?(value)
             end
           match || raise ArgumentError.new("No matching value found")
           super match
         else
           super
+        end
+      end
+
+      # Converts *value* to a choice, the same way `Text#value=` does.
+      private def choice_value(value) : String?
+        case value
+        when String then value
+        when Symbol then value.to_s.capitalize
+        when Number then value.to_s
         end
       end
 
