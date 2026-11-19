@@ -22,7 +22,8 @@ module GPhoto2::FakeDriver
   class_getter events = Deque(FakeEvent).new
   class_property capture_path = "/DCIM/a.jpg"
   class_property preview_data = "preview"
-  class_property text = "fake text"
+  # Text returned by the info functions, `nil` leaves it untouched.
+  class_property text : String? = "fake text"
   class_property? fail_set_config = false
   # Number of the upcoming `set_config` calls to fail.
   class_property set_config_failures = 0
@@ -182,7 +183,7 @@ module GPhoto2::FakeDriver
 
   # :nodoc:
   def write_text(text : LibGPhoto2::CameraText*) : Nil
-    value = self.text
+    return unless value = self.text
 
     # The text is a fixed-size, null-terminated string. Since it's called
     # from within the stubbed C functions, raising is not an option.
