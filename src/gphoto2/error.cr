@@ -25,7 +25,7 @@ module GPhoto2
     end
 
     def to_s(io : IO)
-      if message
+      if message = self.message.presence
         io << message << ' '
       end
       io << '(' << code << ')'

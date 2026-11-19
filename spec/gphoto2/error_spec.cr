@@ -17,6 +17,7 @@ module GPhoto2
 
       it "includes only the code when there's no message" do
         Error.new(nil, -1).to_s.should eq "(-1)"
+        Error.new("", -1).to_s.should eq "(-1)"
       end
     end
   end
