@@ -14,7 +14,9 @@ module GPhoto2::FakeDriver
   # Event definition, *path* is used for file/folder events.
   record FakeEvent,
     type : CameraEvent::Type,
-    path : String? = nil
+    path : String? = nil,
+    # Whether to leave the event data untouched (allowed by libgphoto2).
+    untouched_data : Bool = false
 
   class_getter settings = {} of String => Setting
   class_getter events = Deque(FakeEvent).new
@@ -92,14 +94,16 @@ module GPhoto2::FakeDriver
       FakeDriver.last_timeout = timeout
       event = FakeDriver.events.shift? || FakeEvent.new(:timeout)
       type.value = event.type
-      data.value =
-        if path = event.path
-          ptr = LibC.malloc(sizeof(LibGPhoto2::CameraFilePath)).as(LibGPhoto2::CameraFilePath*)
-          ptr.value = FakeDriver.build_path(path)
-          ptr.as(Void*)
-        else
-          Pointer(Void).null
-        end
+      unless event.untouched_data
+        data.value =
+          if path = event.path
+            ptr = LibC.malloc(sizeof(LibGPhoto2::CameraFilePath)).as(LibGPhoto2::CameraFilePath*)
+            ptr.value = FakeDriver.build_path(path)
+            ptr.as(Void*)
+          else
+            Pointer(Void).null
+          end
+      end
       LibGPhoto2::GP_OK
     }
 

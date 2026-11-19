@@ -27,8 +27,11 @@ module GPhoto2
         # libgphoto2 takes a non-negative `int` number of milliseconds
         timeout_ms = timeout.total_milliseconds.clamp(0, Int32::MAX).to_i
 
+        # Drivers might leave the data untouched (i.e. on timeout), in which
+        # case it must not end up as an indeterminate pointer passed to `free`
+        data_ptr = Pointer(Void).null
         context.check! \
-          LibGPhoto2.gp_camera_wait_for_event(self, timeout_ms, out type, out data_ptr, context)
+          LibGPhoto2.gp_camera_wait_for_event(self, timeout_ms, out type, pointerof(data_ptr), context)
 
         begin
           # Drivers aren't guaranteed to pass any data along with the event

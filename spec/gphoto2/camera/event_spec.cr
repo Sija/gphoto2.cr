@@ -24,6 +24,15 @@ module GPhoto2
         end
       end
 
+      it "returns no data for events with untouched data" do
+        with_fake_camera do |camera|
+          FakeDriver.events << FakeDriver::FakeEvent.new(:timeout, untouched_data: true)
+          event = camera.wait
+          event.type.timeout?.should be_true
+          event.data.should be_nil
+        end
+      end
+
       it "accepts timeouts out of the C int range" do
         with_fake_camera do |camera|
           camera.wait(Time::Span::MAX).type.timeout?.should be_true
