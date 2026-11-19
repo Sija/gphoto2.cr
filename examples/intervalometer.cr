@@ -9,12 +9,14 @@ GPhoto2::Camera.first do |camera|
   elapsed = Time::Span.zero
 
   while elapsed < DURATION
-    took = Time.measure do
-      file = camera.capture
-      file.save
+    # Measure the whole iteration, so that oversleeping counts too
+    elapsed += Time.measure do
+      took = Time.measure do
+        file = camera.capture
+        file.save
+      end
+      # Account for the capture time, so that photos are evenly spaced
+      sleep(INTERVAL - took) if took < INTERVAL
     end
-    # Account for the capture time, so that photos are evenly spaced
-    sleep(INTERVAL - took) if took < INTERVAL
-    elapsed += {took, INTERVAL}.max
   end
 end
