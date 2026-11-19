@@ -6,20 +6,22 @@ module GPhoto2
 
     # Provides callbacks for libgphoto2.
     module Callbacks
-      macro set_callback(key, callback_type, args, &block)
+      macro set_callback(key, callback_type, args, public_setter = true, &block)
         getter! {{ key.id }}_callback : {{ callback_type.id }}
         private getter {{ key.id }}_box : Pointer(Void)?
 
-        # Sets *{{ key.id }}* callback. Pass `nil` to remove it.
-        #
-        # See: [LibGPhoto2#gp_context_set_{{ key.id }}_func](http://www.gphoto.org/doc/api/gphoto2-context_8h.html)
-        def {{ key.id }}_callback=(callback : {{ callback_type.id }}?) : Nil
-          if callback
-            set_{{ key.id }}_callback(&callback)
-          else
-            unset_{{ key.id }}_callback
+        {% if public_setter %}
+          # Sets *{{ key.id }}* callback. Pass `nil` to remove it.
+          #
+          # See: [LibGPhoto2#gp_context_set_{{ key.id }}_func](http://www.gphoto.org/doc/api/gphoto2-context_8h.html)
+          def {{ key.id }}_callback=(callback : {{ callback_type.id }}?) : Nil
+            if callback
+              set_{{ key.id }}_callback(&callback)
+            else
+              unset_{{ key.id }}_callback
+            end
           end
-        end
+        {% end %}
 
         # The callback for the user doesn't have a Void*
         protected def set_{{ key.id }}_callback(&callback : {{ callback_type.id }})
@@ -58,25 +60,42 @@ module GPhoto2
         data_as_callback.call
       end
 
-      {% for key in %w(error status message) %}
+      {% for key in %w(status message) %}
         set_callback {{ key.id }}, Proc(String, Void), [context, message, data] do
           data_as_callback.call String.new(message)
         end
       {% end %}
 
+      # Public setter is defined below, since it needs to track the last error.
+      set_callback :error, Proc(String, Void), [context, message, data], public_setter: false do
+        data_as_callback.call String.new(message)
+      end
+
+      # Returns the last error message reported by libgphoto2.
       getter last_error : String?
 
       def initialize
+        self.error_callback = nil
+      end
+
+      # Sets *error* callback. Pass `nil` to remove it.
+      #
+      # NOTE: Error messages are tracked (see `#last_error`) regardless
+      # of the callback being set.
+      def error_callback=(callback : Proc(String, Void)?) : Nil
         set_error_callback do |message|
           @last_error = message
+          callback.try &.call(message)
         end
+        @error_callback = callback
       end
 
       # Clears all callbacks.
       def clear_callbacks : Nil
-        {% for key in %w(cancel idle error status message) %}
+        {% for key in %w(cancel idle status message) %}
           unset_{{ key.id }}_callback if {{ key.id }}_callback?
         {% end %}
+        self.error_callback = nil
       end
 
       # Returns the given return code *rc*, or raises if it's an error code.

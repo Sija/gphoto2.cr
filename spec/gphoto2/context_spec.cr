@@ -30,6 +30,38 @@ module GPhoto2
         context.close
       end
 
+      it "calls the error callback while tracking the last error" do
+        context = Context.new
+        messages = [] of String
+        context.error_callback = ->(message : String) { messages << message; nil }
+        LibGPhoto2.gp_context_error(context, "boom")
+        messages.should eq ["boom"]
+        context.last_error.should eq "boom"
+
+        expect_raises(Context::Error, "boom") do
+          context.check!(LibGPhoto2::GP_ERROR)
+        end
+        context.close
+      end
+
+      it "keeps tracking the last error after removing error callback" do
+        context = Context.new
+        context.error_callback = ->(_message : String) { nil }
+        context.error_callback = nil
+        context.error_callback?.should be_nil
+        LibGPhoto2.gp_context_error(context, "boom")
+        context.last_error.should eq "boom"
+        context.close
+      end
+
+      it "keeps tracking the last error after clearing callbacks" do
+        context = Context.new
+        context.clear_callbacks
+        LibGPhoto2.gp_context_error(context, "boom")
+        context.last_error.should eq "boom"
+        context.close
+      end
+
       it "removes callbacks when set to nil" do
         context = Context.new
         calls = 0
