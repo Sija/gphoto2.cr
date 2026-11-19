@@ -12,7 +12,11 @@ module GPhoto2
       protected def set_value(value)
         case value
         when Time
-          unix = LibC::Int.new(value.to_unix)
+          # libgphoto2 stores the value as a (32-bit) C `int`
+          unix = LibC::Int.new!(value.to_unix)
+          unless unix == value.to_unix
+            raise ArgumentError.new("Time out of range: #{value}")
+          end
           set_value_ptr pointerof(unix)
         when Int
           set_value Time.unix(value)

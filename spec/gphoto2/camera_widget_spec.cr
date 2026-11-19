@@ -336,6 +336,20 @@ module GPhoto2
         widget.value.should eq Time.utc(2020, 1, 2, 2, 4, 5)
       end
 
+      it "raises on times out of the C int range" do
+        widget = build_widget(:date)
+        widget.value = Time.unix(Int32::MAX)
+        widget.value.should eq Time.unix(Int32::MAX)
+
+        expect_raises(ArgumentError, "Time out of range: 2040-01-01 00:00:00 UTC") do
+          widget.value = Time.utc(2040, 1, 1)
+        end
+        expect_raises(ArgumentError, "Time out of range") do
+          widget.value = Int32::MIN.to_i64 - 1
+        end
+        widget.value.should eq Time.unix(Int32::MAX)
+      end
+
       it "raises on invalid strings" do
         expect_raises(Time::Format::Error) do
           build_widget(:date).value = "yesterday"
