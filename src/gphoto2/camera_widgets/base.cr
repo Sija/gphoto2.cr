@@ -154,19 +154,26 @@ module GPhoto2
 
       # Returns `true` if `#value` is included in the *other* `::Range`.
       #
+      # Numeric ranges are compared against the numeric `#value`,
+      # `Time` ranges against the `Time` value of `Date` widgets,
+      # other ranges against the `#value` converted to a `String`.
+      #
       # ```
       # camera[:exposurecompensation].in? -1.6..0.6
       # camera[:aperture].in? 4..7.1
       # camera[:iso].in? 100..400
+      # camera[:datetime].in? 1.day.ago..Time.utc
       # ```
-      def in?(other : ::Range)
+      def in?(other : ::Range(B, E)) : Bool forall B, E
         return false unless value = self.value
 
-        if other.begin.class <= Number || other.end.class <= Number
+        {% if B < ::Number || E < ::Number %}
           !!((num_value = value.to_s.to_f?) && other.includes?(num_value))
-        else
-          other.includes?(value)
-        end
+        {% elsif B <= ::Time || E <= ::Time %}
+          value.is_a?(::Time) && other.includes?(value)
+        {% else %}
+          other.includes?(value.to_s)
+        {% end %}
       end
 
       protected abstract def get_value

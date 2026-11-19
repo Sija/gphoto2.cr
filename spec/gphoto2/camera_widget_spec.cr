@@ -70,6 +70,39 @@ module GPhoto2
           widget.in?(%w(Manual Bulb)).should be_true
           widget.in?(%w(Auto)).should be_false
         end
+
+        it "checks against numeric ranges" do
+          widget = build_widget(:text)
+          widget.value = "5.6"
+          widget.in?(4..7.1).should be_true
+          widget.in?(4.0..5.0).should be_false
+          widget.in?(..6).should be_true
+          widget.in?(6..).should be_false
+        end
+
+        it "returns false for non-numeric value in numeric range" do
+          widget = build_widget(:text)
+          widget.value = "Auto"
+          widget.in?(1..2).should be_false
+        end
+
+        it "checks against string ranges" do
+          widget = build_widget(:text)
+          widget.value = "b"
+          widget.in?("a".."c").should be_true
+          widget.in?("c".."d").should be_false
+        end
+
+        it "checks against time ranges" do
+          widget = build_widget(:date)
+          widget.value = Time.unix(1_000)
+          widget.in?(Time.unix(0)..Time.unix(2_000)).should be_true
+          widget.in?(Time.unix(2_000)..).should be_false
+        end
+
+        it "returns false for empty value" do
+          build_widget(:text).in?(1..2).should be_false
+        end
       end
 
       describe "#flatten" do
