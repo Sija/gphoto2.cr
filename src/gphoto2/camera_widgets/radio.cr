@@ -14,15 +14,17 @@ module GPhoto2
       end
 
       # Moves the cursor by the given *step*.
+      #
+      # Returns the new value, or `nil` if the cursor would end up
+      # out of bounds (in which case the value is left unchanged).
       def move_by(step : Int32) : String?
         choices = self.choices
-        index = choices.index(value)
-        if index
-          next_value = choices[index + step]?
-          if next_value
-            self.value = next_value
-          end
-        end
+        return unless index = choices.index(value)
+
+        next_index = index + step
+        return unless 0 <= next_index < choices.size
+
+        self.value = choices[next_index]
       end
 
       # Returns valid choices for a configuration widget.

@@ -202,6 +202,13 @@ module GPhoto2
         (widget >> 1).should be_nil
         widget.value.should eq "400"
       end
+
+      it "does not move before the first choice" do
+        widget = build_radio(%w(100 200 400))
+        widget.value = "100"
+        (widget << 1).should be_nil
+        widget.value.should eq "100"
+      end
     end
   end
 end
