@@ -297,6 +297,20 @@ module GPhoto2
         widget.value = time.to_s
         widget.value.should eq time
       end
+
+      it "accepts ISO 8601 strings" do
+        widget = build_widget(:date)
+        widget.value = "2020-01-02T03:04:05Z"
+        widget.value.should eq Time.utc(2020, 1, 2, 3, 4, 5)
+        widget.value = "2020-01-02T03:04:05+01:00"
+        widget.value.should eq Time.utc(2020, 1, 2, 2, 4, 5)
+      end
+
+      it "raises on invalid strings" do
+        expect_raises(Time::Format::Error) do
+          build_widget(:date).value = "yesterday"
+        end
+      end
     end
 
     describe CameraWidget::Radio do
