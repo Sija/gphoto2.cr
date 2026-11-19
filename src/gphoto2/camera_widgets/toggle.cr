@@ -3,6 +3,15 @@ require "./base"
 module GPhoto2
   class CameraWidget
     class Toggle < Base
+      # Compares the toggle state with the given `Bool`.
+      #
+      # ```
+      # camera[:autofocus] == true
+      # ```
+      def ==(other : Bool)
+        get_value == (other ? 1 : 0)
+      end
+
       protected def get_value
         value = uninitialized LibC::Int
         get_value_ptr pointerof(value)

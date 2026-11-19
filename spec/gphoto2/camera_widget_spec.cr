@@ -197,6 +197,16 @@ module GPhoto2
         widget.value.should eq 1
       end
 
+      it "compares with booleans" do
+        widget = build_widget(:toggle)
+        widget.value = true
+        (widget == true).should be_true
+        (widget == false).should be_false
+        widget.value = false
+        (widget == false).should be_true
+        widget.in?({true}).should be_false
+      end
+
       it "accepts boolean strings" do
         widget = build_widget(:toggle)
         widget.value = "true"
