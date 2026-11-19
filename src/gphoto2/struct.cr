@@ -1,7 +1,11 @@
 module GPhoto2
   module Struct(T)
-    getter ptr : T* { Pointer(T).null }
     getter? ptr : T*?
+
+    # Returns the wrapped pointer, or a null pointer if not set.
+    def ptr : T*
+      @ptr || Pointer(T).null
+    end
 
     def initialize(ptr : T*? = nil)
       self.ptr = ptr
