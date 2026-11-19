@@ -59,7 +59,7 @@ module GPhoto2
     private def get_info(index)
       GPhoto2.check! \
         LibGPhoto2Port.gp_port_info_list_get_info(self, index, out info)
-      PortInfo.new info
+      PortInfo.new(info, self)
     end
   end
 end

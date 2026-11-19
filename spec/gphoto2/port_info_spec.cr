@@ -23,6 +23,19 @@ module GPhoto2
         info.type.disk?.should be_true
         info.name.should be_a String
       end
+
+      it "remains valid after the port info list is garbage-collected" do
+        infos = Array.new(20) { |i| PortInfo.find("disk:/tmp/port-#{i}") }
+        3.times do
+          GC.collect
+          Array.new(20) { PortInfoList.new }
+        end
+        GC.collect
+
+        infos.each_with_index do |info, i|
+          info.path.should eq "disk:/tmp/port-#{i}"
+        end
+      end
     end
   end
 end

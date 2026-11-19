@@ -70,7 +70,7 @@ module GPhoto2
     private def get_info
       GPhoto2.check! \
         LibGPhoto2Port.gp_port_get_info(self, out port_info)
-      PortInfo.new(port_info)
+      PortInfo.new(port_info, self)
     end
 
     private def set_info(port_info)

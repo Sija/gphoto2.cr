@@ -4,6 +4,15 @@ module GPhoto2
   class PortInfo
     include GPhoto2::Struct(LibGPhoto2Port::GPPortInfo)
 
+    # The object owning the memory pointed to by `#ptr`
+    # (i.e. `PortInfoList` or `Port`), kept around so that
+    # it's not garbage-collected (and freed) while in use.
+    @owner : PortInfoList | Port | Nil
+
+    def initialize(ptr : LibGPhoto2Port::GPPortInfo*, @owner : PortInfoList | Port | Nil = nil)
+      super(ptr)
+    end
+
     def self.find(port : String) : self
       port_info_list = PortInfoList.new
       port_info_list[port]
