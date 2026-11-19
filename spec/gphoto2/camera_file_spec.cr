@@ -84,6 +84,22 @@ module GPhoto2
         end
       end
 
+      it "keeps reading after short reads" do
+        with_directory_camera do |camera|
+          data = Bytes.new(3000) { |i| (i % 251).to_u8 }
+          stub_file_read(camera, data, max_read_size: 1000_u64)
+          camera.blob("/DCIM/a.jpg").read.should eq data
+        end
+      end
+
+      it "keeps reading after short reads with a matching reported size" do
+        with_directory_camera do |camera|
+          data = Bytes.new(3000) { |i| (i % 251).to_u8 }
+          stub_file_read(camera, data, reported_size: data.size.to_u64, max_read_size: 1000_u64)
+          camera.blob("/DCIM/a.jpg").read.should eq data
+        end
+      end
+
       it "reads files larger than their reported size" do
         with_directory_camera do |camera|
           data = Bytes.new(CameraFile::BUFFER_SIZE * 2 + 123) { |i| (i % 251).to_u8 }

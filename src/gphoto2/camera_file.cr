@@ -244,8 +244,8 @@ module GPhoto2
 
     private def _read(type = Type::Normal) : Bytes
       # Knowing the file size upfront allows allocating a buffer of the
-      # right size (+1 byte, so that the end of file is detected with
-      # a short read), otherwise it grows as needed.
+      # right size (+1 byte, so that the end of file is detected without
+      # growing it), otherwise it grows as needed.
       capacity = expected_size(type).try do |size|
         Math.min(size + 1, MAX_PREALLOCATED_SIZE.to_u64).to_i32
       end
@@ -265,10 +265,11 @@ module GPhoto2
         # Request chunks of (at most) a constant size from the camera
         chunk_size = Math.min(BUFFER_SIZE, buffer.size - offset)
         size = read_chunk(buffer[offset, chunk_size], offset.to_u64, type)
-        offset += size
 
-        # A short read means we've reached the end of the file.
-        break if size < chunk_size
+        # Drivers might return less data than requested before reaching
+        # the end of the file, which is signaled by an empty read instead.
+        break if size.zero?
+        offset += size
       end
 
       # Don't hold on to the (mostly) unused memory, i.e. when
