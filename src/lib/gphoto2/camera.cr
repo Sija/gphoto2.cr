@@ -154,7 +154,7 @@ lib LibGPhoto2
   #
 
   fun gp_camera_autodetect(list : CameraList*, context : GPContext*) : LibC::Int
-  fun gp_camera_get_storageinfo(camera : Camera*, sifs : Void**, nrofsifs : Void*, context : GPContext*) : LibC::Int
+  fun gp_camera_get_storageinfo(camera : Camera*, sifs : CameraStorageInformation**, nrofsifs : LibC::Int*, context : GPContext*) : LibC::Int
 
   fun gp_camera_new(camera : Camera**) : LibC::Int
   fun gp_camera_init(camera : Camera*, context : GPContext*) : LibC::Int

@@ -10,6 +10,16 @@ describe "libgphoto2 bindings" do
     String.new(path).should eq "disk:/tmp"
   end
 
+  it "returns the number of camera storages" do
+    with_directory_camera do |camera|
+      camera.context.check! \
+        LibGPhoto2.gp_camera_get_storageinfo(camera, out storages, out count, camera.context)
+      count.should eq 1
+      # Allocated by libgphoto2, must be freed by the caller
+      LibC.free(storages)
+    end
+  end
+
   it "defines all camera event types" do
     LibGPhoto2::CameraEventType::FileChanged.value.should eq 5
   end
