@@ -217,45 +217,27 @@ module GPhoto2
 
     def_equals_and_hash @model, @port
 
+    # NOTE: The pointer is assigned only once fully set up, since `#ptr`
+    # (and thus `#to_unsafe`) would otherwise call `#init` recursively.
     private def init : Nil
-      new
-      begin
-        set_abilities(abilities)
-        set_port_info(port_info)
-      rescue ex
-        # Don't leave a half-initialized camera behind
-        unref
-        raise ex
-      end
-    end
-
-    private def new
       GPhoto2.check! \
         LibGPhoto2.gp_camera_new(out ptr)
+      begin
+        GPhoto2.check! \
+          LibGPhoto2.gp_camera_set_abilities(ptr, abilities.wrapped)
+        GPhoto2.check! \
+          LibGPhoto2.gp_camera_set_port_info(ptr, port_info)
+      rescue ex
+        # Don't leave a half-initialized camera behind
+        LibGPhoto2.gp_camera_unref(ptr)
+        raise ex
+      end
       self.ptr = ptr
     end
 
     private def _exit
       context.check! \
         LibGPhoto2.gp_camera_exit(self, context)
-    end
-
-    private def set_port_info(port_info : PortInfo)
-      # Need to use `@ptr` instead of `self`, since we call
-      # `#init` inside of overridden `#ptr` method.
-      ptr = @ptr || Pointer(LibGPhoto2::Camera).null
-      GPhoto2.check! \
-        LibGPhoto2.gp_camera_set_port_info(ptr, port_info)
-      @port_info = port_info
-    end
-
-    private def set_abilities(abilities : CameraAbilities)
-      # Need to use `@ptr` instead of `self`, since we call
-      # `#init` inside of overridden `#ptr` method.
-      ptr = @ptr || Pointer(LibGPhoto2::Camera).null
-      GPhoto2.check! \
-        LibGPhoto2.gp_camera_set_abilities(ptr, abilities.wrapped)
-      @abilities = abilities
     end
 
     private def unref
