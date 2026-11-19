@@ -127,6 +127,13 @@ module GPhoto2
         end
       end
 
+      it "does not overflow on the maximum reported size" do
+        with_directory_camera do |camera|
+          stub_file_read(camera, "hello".to_slice, reported_size: UInt64::MAX)
+          camera.blob("/DCIM/a.jpg").read.should eq "hello".to_slice
+        end
+      end
+
       it "does not hold on to unused memory when the reported size is too large" do
         with_directory_camera do |camera|
           data = "hello".to_slice

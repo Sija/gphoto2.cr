@@ -247,7 +247,8 @@ module GPhoto2
       # right size (+1 byte, so that the end of file is detected without
       # growing it), otherwise it grows as needed.
       capacity = expected_size(type).try do |size|
-        Math.min(size + 1, MAX_PREALLOCATED_SIZE.to_u64).to_i32
+        # NOTE: Capped before adding 1, since the size might be bogus
+        (Math.min(size, MAX_PREALLOCATED_SIZE.to_u64 - 1) + 1).to_i32
       end
       buffer = Bytes.new(capacity || BUFFER_SIZE)
       offset = 0
