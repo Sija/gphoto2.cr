@@ -289,6 +289,17 @@ module GPhoto2
         build_range(0, 1, 0.3).choices.should eq [0f32, 0.3f32, 0.6f32, 0.9f32]
       end
 
+      it "returns choices up to the limit" do
+        max = CameraWidget::Range::MAX_CHOICES - 1
+        build_range(1, max.to_f32, 1).choices.size.should eq max
+      end
+
+      it "raises on too many choices" do
+        expect_raises(GPhoto2::Exception, "Too many choices") do
+          build_range(0, 4294967295, 1).choices
+        end
+      end
+
       it "returns bounds for zero increment" do
         build_range(1, 5, 0).choices.should eq [1, 5]
         build_range(2, 2, 0).choices.should eq [2]
