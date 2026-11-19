@@ -19,7 +19,8 @@ module GPhoto2
       # out of bounds (in which case the value is left unchanged).
       def move_by(step : Int32) : String?
         choices = self.choices
-        return unless index = choices.index(value)
+        # Use the raw value, since `#value` returns `nil` for i.e. `None`
+        return unless index = choices.index(get_value)
 
         next_index = index + step
         return unless 0 <= next_index < choices.size

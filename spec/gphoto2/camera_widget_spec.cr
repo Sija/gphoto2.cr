@@ -265,6 +265,13 @@ module GPhoto2
         widget.value.should eq "400"
       end
 
+      it "moves the cursor from an empty value" do
+        widget = build_radio(%w(None 100 200))
+        widget.value = "None"
+        (widget >> 1).should eq "100"
+        (widget << 1).should eq "None"
+      end
+
       it "does not move before the first choice" do
         widget = build_radio(%w(100 200 400))
         widget.value = "100"
