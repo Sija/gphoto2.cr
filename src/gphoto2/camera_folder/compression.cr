@@ -5,11 +5,15 @@ module GPhoto2
     # Provides methods to compress the contents of the folder.
     module Compression
       private def zip_visitor(zip, folder : CameraFolder, root : String? = nil)
-        folder.files.each do |file|
-          # Store entries relative to the compressed folder
-          pathname = file.path.relative_to(path)
-          pathname = Path.posix(root, pathname) if root
-          pathname = pathname.to_s.lchop('/')
+        files, folders = folder.files, folder.folders
+
+        # Empty folders would be lost otherwise, since entries are files only
+        if files.empty? && folders.empty?
+          zip.add_dir zip_entry_name(folder.path, root)
+        end
+
+        files.each do |file|
+          pathname = zip_entry_name(file.path, root)
 
           mtime = file.info.file?.try(&.mtime) ||
                   Time.local
@@ -27,9 +31,17 @@ module GPhoto2
           end
         end
 
-        folder.folders.each do |child|
+        folders.each do |child|
           zip_visitor(zip, child, root)
         end
+      end
+
+      # Returns name of the entry for the given *path*, relative to
+      # the compressed folder (and prefixed with *root*, if given).
+      private def zip_entry_name(path : Path, root : String?) : String
+        pathname = path.relative_to(@path)
+        pathname = Path.posix(root, pathname) if root
+        pathname.normalize.to_s.lchop('/')
       end
 
       # MS-DOS timestamps can represent years 1980-2107 only, while

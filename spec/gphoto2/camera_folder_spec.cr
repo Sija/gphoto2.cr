@@ -289,6 +289,24 @@ module GPhoto2
         end
       end
 
+      it "keeps empty folders" do
+        with_directory_camera do |camera, dir|
+          Dir.mkdir_p(File.join(dir, "DCIM", "sub", "empty"))
+          zip_entries(camera / "DCIM").should eq({
+            "DCIM/a.jpg"      => "hello",
+            "DCIM/sub/b.jpg"  => "xyz",
+            "DCIM/sub/empty/" => "",
+          })
+        end
+      end
+
+      it "keeps the compressed folder itself when empty" do
+        with_directory_camera do |camera, dir|
+          Dir.mkdir_p(File.join(dir, "DCIM", "sub", "empty"))
+          zip_entries(camera / "DCIM/sub/empty").should eq({"empty/" => ""})
+        end
+      end
+
       it "uses the given root folder name" do
         with_directory_camera do |camera|
           zip_entries(camera / "DCIM", "photos").should eq({
