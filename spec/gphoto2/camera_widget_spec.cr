@@ -118,6 +118,16 @@ module GPhoto2
     end
 
     describe CameraWidget::Range do
+      it "returns range and step" do
+        widget = build_range(1, 3, 0.5)
+        widget.range.should eq 1f32..3f32
+        widget.step.should eq 0.5f32
+      end
+
+      it "returns choices" do
+        build_range(1, 3, 0.5).choices.should eq [1, 1.5, 2, 2.5, 3]
+      end
+
       it "accepts floats, ints and strings" do
         widget = build_range(0, 10, 1)
         widget.value = 2.5

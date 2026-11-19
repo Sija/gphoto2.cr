@@ -41,9 +41,8 @@ module GPhoto2
       end
 
       private def get_range
-        min, max, inc = LibC::Float[3]
         GPhoto2.check! \
-          LibGPhoto2.gp_widget_get_range(self, pointerof(min), pointerof(max), pointerof(inc))
+          LibGPhoto2.gp_widget_get_range(self, out min, out max, out inc)
         {min.to_f32, max.to_f32, inc.to_f32}
       end
     end
