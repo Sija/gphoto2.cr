@@ -6,7 +6,9 @@ module GPhoto2
     module Compression
       private def zip_visitor(zip, folder : CameraFolder, root : String? = nil)
         folder.files.each do |file|
-          pathname = root ? Path.posix(root, file.path) : file.path
+          # Store entries relative to the compressed folder
+          pathname = file.path.relative_to(path)
+          pathname = Path.posix(root, pathname) if root
           pathname = pathname.to_s.lchop('/')
           mtime = file.info.file?.try(&.mtime) || Time.local
 

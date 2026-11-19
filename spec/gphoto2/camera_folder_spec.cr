@@ -1,6 +1,18 @@
 require "../spec_helper"
 
 module GPhoto2
+  private def self.zip_entries(folder, root = nil)
+    entries = {} of String => String
+    folder.to_zip_file(root) do |file|
+      Compress::Zip::File.open(file.path) do |zip|
+        zip.entries.each do |entry|
+          entries[entry.filename] = entry.open(&.gets_to_end)
+        end
+      end
+    end
+    entries
+  end
+
   describe CameraFolder do
     it "lists files" do
       with_directory_camera do |camera|
@@ -109,6 +121,35 @@ module GPhoto2
           expect_raises(::Exception, "Cannot delete root folder") do
             (camera / "/").delete
           end
+        end
+      end
+    end
+
+    describe "#to_zip_file" do
+      it "compresses folder contents" do
+        with_directory_camera do |camera|
+          zip_entries(camera / "DCIM").should eq({
+            "DCIM/a.jpg"     => "hello",
+            "DCIM/sub/b.jpg" => "xyz",
+          })
+        end
+      end
+
+      it "uses the given root folder name" do
+        with_directory_camera do |camera|
+          zip_entries(camera / "DCIM", "photos").should eq({
+            "photos/a.jpg"     => "hello",
+            "photos/sub/b.jpg" => "xyz",
+          })
+        end
+      end
+
+      it "compresses the root folder" do
+        with_directory_camera do |camera|
+          zip_entries(camera / "/").should eq({
+            "DCIM/a.jpg"     => "hello",
+            "DCIM/sub/b.jpg" => "xyz",
+          })
         end
       end
     end
