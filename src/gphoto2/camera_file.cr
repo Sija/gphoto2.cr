@@ -65,8 +65,9 @@ module GPhoto2
       to_s == PREVIEW_FILENAME
     end
 
-    # Saves file `#data` at given *pathname*.
-    def save(path : Path | String = default_filename) : Nil
+    # Saves file `#data` at given *path*, defaulting to file `#name`
+    # in the current working directory.
+    def save(path : Path | String = name) : Nil
       path = Path[path] if path.is_a?(String)
 
       Dir.mkdir_p(path.dirname)
@@ -175,10 +176,6 @@ module GPhoto2
         LibGPhoto2.gp_file_unref(self)
       self.ptr = nil
       @data_and_size = nil
-    end
-
-    private def default_filename
-      preview? ? PREVIEW_FILENAME : name
     end
 
     private getter data_and_size : {UInt8*, LibC::ULong} do

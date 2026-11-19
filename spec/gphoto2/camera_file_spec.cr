@@ -40,6 +40,23 @@ module GPhoto2
     end
 
     describe "#save" do
+      it "saves file data under its name by default" do
+        with_directory_camera do |camera, dir|
+          Dir.cd(File.join(dir, "DCIM", "sub")) do
+            camera.blob("/DCIM/a.jpg").save
+          end
+          File.read(File.join(dir, "DCIM", "sub", "a.jpg")).should eq "hello"
+        end
+      end
+
+      it "names preview files after the preview filename" do
+        with_directory_camera do |camera|
+          file = CameraFile.new(camera)
+          file.preview?.should be_true
+          file.name.should eq CameraFile::PREVIEW_FILENAME
+        end
+      end
+
       it "saves file data to the given path" do
         with_directory_camera do |camera, dir|
           target = File.join(dir, "out", "copy.jpg")
