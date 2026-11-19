@@ -96,6 +96,21 @@ module GPhoto2
     end
 
     describe "#close" do
+      it "keeps the file alive while referenced by libgphoto2" do
+        with_directory_camera do |camera|
+          file = CameraFile.new(camera, "/DCIM/new.jpg")
+          file.data = "abc".to_slice
+
+          ptr = file.ptr
+          GPhoto2.check! LibGPhoto2.gp_file_ref(ptr)
+          file.close
+
+          GPhoto2.check! LibGPhoto2.gp_file_get_data_and_size(ptr, out data, out size)
+          String.new(data, size).should eq "abc"
+          GPhoto2.check! LibGPhoto2.gp_file_unref(ptr)
+        end
+      end
+
       it "discards previously read data" do
         with_directory_camera do |camera|
           file = camera.blob("/DCIM/a.jpg")

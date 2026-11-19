@@ -88,7 +88,7 @@ module GPhoto2
       # We need to allocate memory for the data outside of the GC
       # to avoid "pointer being freed was not allocated" error.
       #
-      # It'll be freed by lighphoto2 in `gp_file_free` / `gp_file_clean`,
+      # It'll be freed by libgphoto2 in `gp_file_unref` / `gp_file_clean`,
       # through the `#finalize -> #close -> #free` call sequence.
       data = LibC.malloc(bytes.bytesize).as(UInt8*)
       data.copy_from(bytes.to_unsafe, bytes.size)
@@ -167,9 +167,12 @@ module GPhoto2
       self.ptr = ptr
     end
 
+    # NOTE: libgphoto2 might hold its own references to the file
+    # (i.e. the filesystem cache, after `CameraFolder#put`), so we
+    # must only drop ours, instead of freeing it unconditionally.
     private def free
       GPhoto2.check! \
-        LibGPhoto2.gp_file_free(self)
+        LibGPhoto2.gp_file_unref(self)
       self.ptr = nil
       @data_and_size = nil
     end
