@@ -35,6 +35,13 @@ module GPhoto2
       end
     end
 
+    it "looks up abilities and port info without initializing the camera" do
+      camera = Camera.new(DIRECTORY_CAMERA_MODEL, "disk:/tmp")
+      camera.can?(:capture_image).should be_false
+      camera.port_info.path.should eq "disk:/tmp"
+      camera.ptr?.should be_nil
+    end
+
     describe "#can?" do
       it "checks camera operations" do
         with_directory_camera do |camera|

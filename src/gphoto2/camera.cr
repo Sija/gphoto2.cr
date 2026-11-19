@@ -168,14 +168,18 @@ module GPhoto2
       _exit if ptr?
     end
 
+    # Returns abilities of the camera model.
+    #
+    # NOTE: Doesn't require the camera to be initialized.
     def abilities : CameraAbilities
-      init unless @abilities
-      @abilities.not_nil!
+      @abilities ||= CameraAbilities.find(@model)
     end
 
+    # Returns info of the camera port.
+    #
+    # NOTE: Doesn't require the camera to be initialized.
     def port_info : PortInfo
-      init unless @port_info
-      @port_info.not_nil!
+      @port_info ||= PortInfo.find(@port)
     end
 
     getter context : Context { Context.new }
@@ -216,8 +220,8 @@ module GPhoto2
     private def init : Nil
       new
       begin
-        set_abilities(@abilities || CameraAbilities.find(@model))
-        set_port_info(@port_info || PortInfo.find(@port))
+        set_abilities(abilities)
+        set_port_info(port_info)
       rescue ex
         # Don't leave a half-initialized camera behind
         unref
