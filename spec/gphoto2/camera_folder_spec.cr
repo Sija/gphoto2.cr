@@ -134,7 +134,6 @@ module GPhoto2
       it "returns a fresh file" do
         with_directory_camera do |camera|
           file = (camera / "DCIM").put("c.jpg", "data".to_slice)
-          file.ptr?.should be_truthy
           String.new(file.to_slice).should eq "data"
         end
       end

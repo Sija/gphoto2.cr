@@ -22,12 +22,10 @@ module GPhoto2
     protected delegate :context,
       to: @camera
 
-    # NOTE: allocates memory.
+    # NOTE: Memory is allocated lazily, on first access to `#ptr`.
     def initialize(@camera, path : Path | String)
       @path =
         path.is_a?(String) ? Path.posix(path) : path.to_posix
-
-      new
     end
 
     # :ditto:
@@ -48,6 +46,12 @@ module GPhoto2
 
     def folder
       @path.dirname
+    end
+
+    # Returns the wrapped pointer, allocating it if needed.
+    def ptr : LibGPhoto2::CameraFile*
+      new unless ptr?
+      super
     end
 
     # Finalizes object by freeing allocated memory.

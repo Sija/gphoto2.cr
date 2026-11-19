@@ -2,6 +2,15 @@ require "../spec_helper"
 
 module GPhoto2
   describe CameraFile do
+    it "allocates memory lazily" do
+      with_directory_camera do |camera|
+        files = (camera / "DCIM").files
+        files.first.ptr?.should be_nil
+        files.first.size.should eq 5
+        files.first.ptr?.should be_truthy
+      end
+    end
+
     it "exposes path parts" do
       with_directory_camera do |camera|
         file = camera.blob("/DCIM/sub/b.jpg")
