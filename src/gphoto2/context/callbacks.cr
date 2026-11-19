@@ -77,7 +77,7 @@ module GPhoto2
       {% end %}
 
       # Public setter is defined below, since it needs to track the last error.
-      set_callback :error, Proc(String, Void), [context, message, data], public_setter: false do
+      set_callback :error, Proc(String, Void), [context, message, data], public_setter: false do # ameba:disable Lint/VoidOutsideLib
         data_as_callback.call String.new(message)
       end
 
@@ -107,7 +107,7 @@ module GPhoto2
       #
       # NOTE: Error messages are tracked (see `#last_error`) regardless
       # of the callback being set.
-      def error_callback=(callback : Proc(String, Void)?) : Nil
+      def error_callback=(callback : Proc(String, Void)?) : Nil # ameba:disable Lint/VoidOutsideLib
         state = @callback_state
         set_error_callback do |message|
           state.message = message

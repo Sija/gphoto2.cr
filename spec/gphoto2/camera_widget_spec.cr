@@ -4,7 +4,7 @@ module GPhoto2
   describe CameraWidget do
     describe ".factory" do
       it "builds widget of a matching class" do
-        {% for type in %w(Window Section Text Range Toggle Radio Menu Button Date) %}
+        {% for type in %w[Window Section Text Range Toggle Radio Menu Button Date] %}
           build_widget(:{{ type.downcase.id }}).should be_a CameraWidget::{{ type.id }}
         {% end %}
       end
@@ -96,8 +96,8 @@ module GPhoto2
         it "checks against collections" do
           widget = build_widget(:text)
           widget.value = "Manual"
-          widget.in?(%w(Manual Bulb)).should be_true
-          widget.in?(%w(Auto)).should be_false
+          widget.in?(%w[Manual Bulb]).should be_true
+          widget.in?(%w[Auto]).should be_false
         end
 
         it "checks against numeric ranges" do
@@ -362,19 +362,19 @@ module GPhoto2
 
     describe CameraWidget::Radio do
       it "returns choices" do
-        build_radio(%w(100 200 400)).choices.should eq %w(100 200 400)
+        build_radio(%w[100 200 400]).choices.should eq %w[100 200 400]
       end
 
       it "accepts collections and regexes" do
-        widget = build_radio(%w(100 200 400))
-        widget.value = %w(300 400)
+        widget = build_radio(%w[100 200 400])
+        widget.value = %w[300 400]
         widget.value.should eq "400"
         widget.value = /^2/
         widget.value.should eq "200"
       end
 
       it "accepts collections of numbers and symbols" do
-        widget = build_radio(%w(100 200 Auto))
+        widget = build_radio(%w[100 200 Auto])
         widget.value = [300, 200]
         widget.value.should eq "200"
         widget.value = {:manual, :auto}
@@ -383,12 +383,12 @@ module GPhoto2
 
       it "raises if no choice matches" do
         expect_raises(ArgumentError, "No matching value found") do
-          build_radio(%w(100 200)).value = /^3/
+          build_radio(%w[100 200]).value = /^3/
         end
       end
 
       it "moves the cursor" do
-        widget = build_radio(%w(100 200 400))
+        widget = build_radio(%w[100 200 400])
         widget.value = "100"
         (widget >> 2).should eq "400"
         widget.value.should eq "400"
@@ -397,21 +397,21 @@ module GPhoto2
       end
 
       it "does not move beyond the last choice" do
-        widget = build_radio(%w(100 200 400))
+        widget = build_radio(%w[100 200 400])
         widget.value = "400"
         (widget >> 1).should be_nil
         widget.value.should eq "400"
       end
 
       it "moves the cursor from an empty value" do
-        widget = build_radio(%w(None 100 200))
+        widget = build_radio(%w[None 100 200])
         widget.value = "None"
         (widget >> 1).should eq "100"
         (widget << 1).should eq "None"
       end
 
       it "does not move before the first choice" do
-        widget = build_radio(%w(100 200 400))
+        widget = build_radio(%w[100 200 400])
         widget.value = "100"
         (widget << 1).should be_nil
         widget.value.should eq "100"

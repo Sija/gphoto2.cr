@@ -7,9 +7,9 @@ module GPhoto2
     # The object owning the memory pointed to by `#ptr`
     # (i.e. `PortInfoList` or `Port`), kept around so that
     # it's not garbage-collected (and freed) while in use.
-    @owner : PortInfoList | Port | Nil
+    @owner : PortInfoList | Port?
 
-    def initialize(ptr : LibGPhoto2Port::GPPortInfo*, @owner : PortInfoList | Port | Nil = nil)
+    def initialize(ptr : LibGPhoto2Port::GPPortInfo*, @owner : PortInfoList | Port? = nil)
       super(ptr)
     end
 

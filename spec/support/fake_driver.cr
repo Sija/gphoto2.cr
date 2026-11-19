@@ -86,7 +86,7 @@ module GPhoto2::FakeDriver
         end
       LibGPhoto2::GP_OK
     }
-    {% for name in %w(summary manual about) %}
+    {% for name in %w[summary manual about] %}
       funcs.{{ name.id }} = ->(_camera : LibGPhoto2::Camera*, text : LibGPhoto2::CameraText*, _context : LibGPhoto2::GPContext*) {
         FakeDriver.write_text(text)
         LibGPhoto2::GP_OK

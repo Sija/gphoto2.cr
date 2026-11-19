@@ -3,7 +3,7 @@ require "../../spec_helper"
 module GPhoto2
   private def self.with_configured_camera(&)
     with_fake_camera do |camera|
-      FakeDriver.settings["iso"] = FakeDriver::Setting.new(:radio, "100", %w(100 200 400))
+      FakeDriver.settings["iso"] = FakeDriver::Setting.new(:radio, "100", %w[100 200 400])
       FakeDriver.settings["owner"] = FakeDriver::Setting.new(:text, "John")
       FakeDriver.settings["flash"] = FakeDriver::Setting.new(:toggle, "0")
       FakeDriver.settings["serialnumber"] = FakeDriver::Setting.new(:text, "SN123", readonly: true)
@@ -15,7 +15,7 @@ module GPhoto2
     describe "#config" do
       it "returns a flat hash of widgets" do
         with_configured_camera do |camera|
-          camera.config.keys.should eq %w(iso owner flash serialnumber)
+          camera.config.keys.should eq %w[iso owner flash serialnumber]
           camera.config["iso"].should be_a CameraWidget::Radio
         end
       end
@@ -184,7 +184,7 @@ module GPhoto2
 
       it "restores empty values" do
         with_configured_camera do |camera|
-          FakeDriver.settings["mode"] = FakeDriver::Setting.new(:radio, "None", %w(None Auto))
+          FakeDriver.settings["mode"] = FakeDriver::Setting.new(:radio, "None", %w[None Auto])
           FakeDriver.settings["artist"] = FakeDriver::Setting.new(:text, "")
           camera.reload
 
@@ -198,7 +198,7 @@ module GPhoto2
 
       it "does not save unchanged values" do
         with_configured_camera do |camera|
-          FakeDriver.settings["mode"] = FakeDriver::Setting.new(:radio, "None", %w(None Auto))
+          FakeDriver.settings["mode"] = FakeDriver::Setting.new(:radio, "None", %w[None Auto])
           camera.reload
 
           camera.preserving_config { }
