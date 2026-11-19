@@ -11,6 +11,21 @@ module GPhoto2
       end
     end
 
+    describe "#finalize" do
+      it "frees the context" do
+        context = Context.new
+        context.finalize
+        context.ptr?.should be_nil
+      end
+
+      it "does nothing after close" do
+        context = Context.new
+        context.close
+        context.finalize
+        context.ptr?.should be_nil
+      end
+    end
+
     describe "callbacks" do
       it "calls the status callback" do
         context = Context.new
