@@ -15,7 +15,12 @@ module GPhoto2
           entry = Compress::Zip::Writer::Entry.new pathname,
             time: mtime.to_utc
 
-          zip.add entry, file.to_slice
+          begin
+            zip.add entry, file.to_slice
+          ensure
+            # free the downloaded data right away, instead of waiting for the GC
+            file.close
+          end
         end
 
         folder.folders.each do |child|
