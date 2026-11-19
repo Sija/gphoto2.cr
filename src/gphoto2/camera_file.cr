@@ -19,6 +19,10 @@ module GPhoto2
     # can't hold more than `Int32::MAX` bytes.
     private MAX_READ_SIZE = Int32::MAX
 
+    # Maximum size of a single chunk written by `#write_to`, since `Bytes`
+    # can't hold more than `Int32::MAX` bytes.
+    private MAX_SLICE_SIZE = Int32::MAX
+
     # Maximum buffer size allocated upfront in `#read`, based on the file
     # size reported by the camera, which might be bogus (i.e. `0xFFFFFFFF`).
     MAX_PREALLOCATED_SIZE = 64 * 1024 * 1024
@@ -94,7 +98,7 @@ module GPhoto2
       path /= name if path.ends_with_separator? || Dir.exists?(path)
 
       Dir.mkdir_p(path.dirname)
-      File.write(path, raw_slice)
+      File.open(path, "w") { |file| write_to(file) }
     end
 
     # Deletes file from the camera.
@@ -144,8 +148,11 @@ module GPhoto2
     # NOTE: The data is copied, since the original buffer is owned by
     # libgphoto2, and freed along with the file (see `#close`).
     # Use `#write_to` or `#save` to avoid the copy.
+    #
+    # NOTE: Raises `OverflowError` for files larger than `Int32::MAX` bytes,
+    # which `Bytes` can't hold; use `#write_to` or `#save` for those instead.
     def to_slice : Bytes
-      raw_slice.dup
+      data.to_slice(size).dup
     end
 
     # Writes file `#data` to the given *io*, without copying it first.
@@ -155,16 +162,15 @@ module GPhoto2
     # file.write_to(STDOUT)
     # ```
     def write_to(io : IO) : Nil
-      io.write(raw_slice)
-    end
-
-    # :nodoc:
-    #
-    # Returns file `#data` as `Bytes`, without copying.
-    #
-    # WARNING: Returned slice is valid only until the file is closed.
-    protected def raw_slice : Bytes
-      data.to_slice(size)
+      # Written in chunks, since `Bytes` can't hold more than `Int32::MAX`
+      # bytes, while files (i.e. videos) might be larger than that
+      ptr, remaining = data, size
+      while remaining > 0
+        chunk_size = Math.min(remaining, MAX_SLICE_SIZE.to_u64)
+        io.write(ptr.to_slice(chunk_size))
+        ptr += chunk_size
+        remaining -= chunk_size
+      end
     end
 
     # Reads file directly from the camera.

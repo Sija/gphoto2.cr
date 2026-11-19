@@ -24,7 +24,7 @@ module GPhoto2
             time: dos_time(mtime.to_local)
 
           begin
-            zip.add entry, file.raw_slice
+            zip.add(entry) { |io| file.write_to(io) }
           ensure
             # free the downloaded data right away, instead of waiting for the GC
             file.close
