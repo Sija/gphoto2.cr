@@ -36,7 +36,13 @@ module GPhoto2
       @owned : Bool
 
       # When *owned* is `nil`, root widgets (without *parent*) own their tree.
+      #
+      # Raises `ArgumentError` when *owned* is `true` for a child widget,
+      # since its memory is owned (and freed) by its root widget.
       def initialize(ptr : LibGPhoto2::CameraWidget*, @parent = nil, *, owned : Bool? = nil)
+        if owned && parent
+          raise ArgumentError.new("Child widgets can't own their memory")
+        end
         @owned = owned.nil? ? parent.nil? : owned
         super ptr
       end

@@ -195,6 +195,16 @@ module GPhoto2
           end
         end
 
+        it "refuses to make child widgets owned" do
+          window = build_widget(:window, "main")
+          child_ptr = build_widget_ptr(:text, "owner")
+          GPhoto2.check! LibGPhoto2.gp_widget_append(window, child_ptr)
+
+          expect_raises(ArgumentError, "Child widgets can't own their memory") do
+            CameraWidget.factory(child_ptr, window, owned: true)
+          end
+        end
+
         it "does not free child widgets" do
           window = build_widget(:window, "main")
           GPhoto2.check! LibGPhoto2.gp_widget_append(window, build_widget_ptr(:text, "owner"))
