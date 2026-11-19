@@ -15,6 +15,10 @@ module GPhoto2
     # Initial buffer size used in `#read`.
     BUFFER_SIZE = 256 * 1024
 
+    # Maximum buffer size allocated upfront in `#read`, based on the file
+    # size reported by the camera, which might be bogus (i.e. `0xFFFFFFFF`).
+    MAX_PREALLOCATED_SIZE = 64 * 1024 * 1024
+
     # Returns file path.
     getter path : Path
 
@@ -236,7 +240,7 @@ module GPhoto2
       # right size (+1 byte, so that the end of file is detected with
       # a short read), otherwise it grows as needed.
       capacity = expected_size(type).try do |size|
-        Math.min(size + 1, Int32::MAX.to_u64).to_i32
+        Math.min(size + 1, MAX_PREALLOCATED_SIZE.to_u64).to_i32
       end
       buffer = Bytes.new(capacity || BUFFER_SIZE)
       offset = 0
