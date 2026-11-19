@@ -32,8 +32,18 @@ module GPhoto2
         {% end %}
       end
 
-      def initialize(ptr : LibGPhoto2::CameraWidget*, @parent = nil)
+      # Whether the widget tree memory is owned (and freed) by this widget.
+      @owned : Bool
+
+      # When *owned* is `nil`, root widgets (without *parent*) own their tree.
+      def initialize(ptr : LibGPhoto2::CameraWidget*, @parent = nil, *, owned : Bool? = nil)
+        @owned = owned.nil? ? parent.nil? : owned
         super ptr
+      end
+
+      # Finalizes object by freeing allocated memory.
+      def finalize
+        close
       end
 
       # Frees allocated memory of the widget tree.
@@ -41,7 +51,7 @@ module GPhoto2
       # NOTE: Child widgets are owned (and freed) by their root widget,
       # so calling this method on them does nothing.
       def close : Nil
-        free if ptr? && parent.nil?
+        free if ptr? && @owned
       end
 
       # Returns `true` if the widget has readonly flag set.

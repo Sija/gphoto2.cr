@@ -111,7 +111,7 @@ module GPhoto2::FakeDriver
       setting.choices.each do |choice|
         LibGPhoto2.gp_widget_add_choice(widget, choice)
       end
-      CameraWidget.factory(widget).value = setting.value unless setting.value.empty?
+      CameraWidget.factory(widget, owned: false).value = setting.value unless setting.value.empty?
       LibGPhoto2.gp_widget_set_changed(widget, 0)
       LibGPhoto2.gp_widget_append(section, widget)
     end
@@ -120,7 +120,7 @@ module GPhoto2::FakeDriver
 
   # :nodoc:
   def store_window(window : LibGPhoto2::CameraWidget*) : Nil
-    CameraWidget.factory(window).flatten.each do |name, widget|
+    CameraWidget.factory(window, owned: false).flatten.each do |name, widget|
       next unless setting = settings[name]?
       next if setting.readonly
       settings[name] = setting.copy_with(value: raw_value(widget))

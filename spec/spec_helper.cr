@@ -43,9 +43,15 @@ module GPhoto2::SpecHelpers
 
   # Builds a standalone widget of the given *type*.
   def build_widget(type : CameraWidget::Type, name : String = type.to_s.downcase) : CameraWidget::Base
+    CameraWidget.factory(build_widget_ptr(type, name))
+  end
+
+  # Builds an unmanaged widget of the given *type*, i.e. to be appended
+  # to another widget (which takes over its ownership).
+  def build_widget_ptr(type : CameraWidget::Type, name : String = type.to_s.downcase) : LibGPhoto2::CameraWidget*
     GPhoto2.check! LibGPhoto2.gp_widget_new(type, name, out ptr)
     GPhoto2.check! LibGPhoto2.gp_widget_set_name(ptr, name)
-    CameraWidget.factory(ptr)
+    ptr
   end
 
   # Builds a radio widget with the given *choices*.

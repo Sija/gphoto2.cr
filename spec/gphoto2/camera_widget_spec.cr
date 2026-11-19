@@ -134,6 +134,27 @@ module GPhoto2
         end
       end
 
+      describe "#finalize" do
+        it "frees root widgets" do
+          widget = build_widget(:text)
+          widget.finalize
+          widget.ptr?.should be_nil
+        end
+
+        it "keeps the tree alive while child widgets are referenced" do
+          # Don't keep a reference to the window itself
+          child = -> {
+            window = build_widget(:window, "main")
+            GPhoto2.check! LibGPhoto2.gp_widget_append(window, build_widget_ptr(:text, "owner"))
+            window.children.first
+          }.call
+
+          GC.collect
+          child.parent.try(&.ptr?).should be_truthy
+          child.name.should eq "owner"
+        end
+      end
+
       describe "#close" do
         it "frees the widget" do
           widget = build_widget(:text)
@@ -141,9 +162,20 @@ module GPhoto2
           widget.ptr?.should be_nil
         end
 
+        it "does not free unowned widgets" do
+          ptr = build_widget_ptr(:text)
+          begin
+            widget = CameraWidget.factory(ptr, owned: false)
+            widget.close
+            widget.ptr?.should eq ptr
+          ensure
+            LibGPhoto2.gp_widget_free(ptr)
+          end
+        end
+
         it "does not free child widgets" do
           window = build_widget(:window, "main")
-          GPhoto2.check! LibGPhoto2.gp_widget_append(window, build_widget(:text, "owner"))
+          GPhoto2.check! LibGPhoto2.gp_widget_append(window, build_widget_ptr(:text, "owner"))
 
           child = window.children.first
           child.close
@@ -156,8 +188,8 @@ module GPhoto2
       describe "#flatten" do
         it "returns a flat hash of leaf widgets" do
           window = build_widget(:window, "main")
-          section = build_widget(:section, "settings")
-          text = build_widget(:text, "owner")
+          section = build_widget_ptr(:section, "settings")
+          text = build_widget_ptr(:text, "owner")
           GPhoto2.check! LibGPhoto2.gp_widget_append(section, text)
           GPhoto2.check! LibGPhoto2.gp_widget_append(window, section)
 
