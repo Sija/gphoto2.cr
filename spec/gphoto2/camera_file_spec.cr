@@ -11,6 +11,22 @@ module GPhoto2
       end
     end
 
+    it "makes relative paths absolute and normalizes them" do
+      with_directory_camera do |camera|
+        file = CameraFile.new(camera, "DCIM/sub/../a.jpg")
+        file.path.should eq Path.posix("/DCIM/a.jpg")
+        file.should eq camera.blob("/DCIM/a.jpg")
+        file.size.should eq 5
+      end
+    end
+
+    it "is a preview only when created without a path" do
+      with_directory_camera do |camera|
+        CameraFile.new(camera).preview?.should be_true
+        CameraFile.new(camera, CameraFile::PREVIEW_FILENAME).preview?.should be_false
+      end
+    end
+
     it "exposes path parts" do
       with_directory_camera do |camera|
         file = camera.blob("/DCIM/sub/b.jpg")

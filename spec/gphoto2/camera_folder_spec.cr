@@ -27,6 +27,15 @@ module GPhoto2
       end
     end
 
+    it "makes relative paths absolute and normalizes them" do
+      with_directory_camera do |camera|
+        folder = CameraFolder.new(camera, "DCIM/sub/..")
+        folder.path.should eq Path.posix("/DCIM")
+        folder.should eq camera / "DCIM"
+        folder.files.map(&.name).should eq ["a.jpg"]
+      end
+    end
+
     it "hashes by camera and path" do
       with_directory_camera do |camera|
         Set{camera / "DCIM", camera / "/DCIM"}.size.should eq 1

@@ -71,6 +71,15 @@ module GPhoto2
     String.new(slice[0, slice.index(0_u8) || slice.size])
   end
 
+  # :nodoc:
+  #
+  # Returns normalized, absolute posix version of the given *path*.
+  def absolute_path(path : Path | String) : Path
+    path = path.is_a?(String) ? Path.posix(path) : path.to_posix
+    path = Path.posix("/", path) unless path.absolute?
+    path.normalize
+  end
+
   # Returns `true` if the given return code *rc* denotes a success
   # (`GP_OK` or a non-negative value), `false` if it's an error code.
   def check?(rc : Int32) : Bool

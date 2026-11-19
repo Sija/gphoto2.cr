@@ -11,9 +11,9 @@ module GPhoto2
     protected delegate :context,
       to: @camera
 
+    # Relative *path* is resolved from the root folder.
     def initialize(@camera, path : Path | String = "/")
-      @path =
-        path.is_a?(String) ? Path.posix(path) : path.to_posix
+      @path = GPhoto2.absolute_path(path)
     end
 
     def_equals_and_hash @camera, @path

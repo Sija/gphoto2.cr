@@ -26,15 +26,22 @@ module GPhoto2
     protected delegate :context,
       to: @camera
 
+    # Returns `true` if file is a preview (see `Camera#preview`).
+    getter? preview : Bool = false
+
+    # Relative *path* is resolved from the root folder.
+    #
     # NOTE: Memory is allocated lazily, on first access to `#ptr`.
     def initialize(@camera, path : Path | String)
-      @path =
-        path.is_a?(String) ? Path.posix(path) : path.to_posix
+      @path = GPhoto2.absolute_path(path)
     end
 
-    # :ditto:
+    # Creates a preview file, which isn't stored on the camera.
+    #
+    # NOTE: Memory is allocated lazily, on first access to `#ptr`.
     def initialize(@camera)
-      initialize(@camera, PREVIEW_FILENAME)
+      @path = Path.posix(PREVIEW_FILENAME)
+      @preview = true
     end
 
     def_equals_and_hash @camera, @path
@@ -66,11 +73,6 @@ module GPhoto2
     # NOTE: frees allocated memory.
     def close : Nil
       free if ptr?
-    end
-
-    # Returns `true` if file is a preview.
-    def preview?
-      to_s == PREVIEW_FILENAME
     end
 
     # Saves file `#data` at given *path*, defaulting to file `#name`
