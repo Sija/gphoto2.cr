@@ -36,6 +36,12 @@ module GPhoto2
         abilities.status.should be_a LibGPhoto2::CameraDriverStatus
         abilities.operations.none?.should be_true
       end
+
+      it "raises on unknown model" do
+        expect_raises(GPhoto2::Error) do
+          CameraAbilities.find("No Such Camera 9000")
+        end
+      end
     end
   end
 end
