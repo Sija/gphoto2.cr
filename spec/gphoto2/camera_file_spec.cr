@@ -73,6 +73,14 @@ module GPhoto2
           File.read(target).should eq "hello"
         end
       end
+
+      it "saves file data under its name inside the given directory" do
+        with_directory_camera do |camera, dir|
+          target = File.join(dir, "DCIM", "sub")
+          camera.blob("/DCIM/a.jpg").save(target)
+          File.read(File.join(target, "a.jpg")).should eq "hello"
+        end
+      end
     end
 
     describe "#delete" do
