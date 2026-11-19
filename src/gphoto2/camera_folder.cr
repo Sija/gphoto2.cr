@@ -44,13 +44,16 @@ module GPhoto2
     end
 
     # Returns subfolder by *name*, relative to current `#path`.
+    #
+    # *name* can contain multiple path segments, including `.` and `..`.
+    #
+    # ```
+    # folder = camera / "DCIM"
+    # folder.cd("..").path       # => Path["/"]
+    # folder.cd("sub/../x").path # => Path["/DCIM/x"]
+    # ```
     def cd(name : String) : CameraFolder
-      case name
-      when ".." then parent
-      when "."  then self
-      else
-        self.class.new(@camera, @path / name)
-      end
+      self.class.new(@camera, resolve(name))
     end
 
     # See: `#cd`
@@ -66,7 +69,7 @@ module GPhoto2
 
     # Returns file by *name*, relative to current `#path`.
     def open(name : String) : CameraFile
-      CameraFile.new(@camera, @path / name)
+      CameraFile.new(@camera, resolve(name))
     end
 
     # Uploads a new file and returns it
@@ -107,6 +110,10 @@ module GPhoto2
       clear files: true, folders: true
       # finally, delete itself
       folder_remove_dir
+    end
+
+    private def resolve(name : String) : Path
+      (@path / name).normalize
     end
 
     private def folder_list_files

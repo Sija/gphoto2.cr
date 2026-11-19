@@ -60,6 +60,32 @@ module GPhoto2
           (folder / "sub").path.should eq Path.posix("/DCIM/sub")
         end
       end
+
+      it "normalizes compound names" do
+        with_directory_camera do |camera|
+          folder = camera / "DCIM"
+          folder.cd("../x").path.should eq Path.posix("/x")
+          folder.cd("sub/../x").path.should eq Path.posix("/DCIM/x")
+          folder.cd("./sub/").path.should eq Path.posix("/DCIM/sub")
+        end
+      end
+
+      it "does not go above the root folder" do
+        with_directory_camera do |camera|
+          (camera / "/").cd("..").root?.should be_true
+          (camera / "DCIM").cd("../..").root?.should be_true
+        end
+      end
+    end
+
+    describe "#open" do
+      it "returns a file by its relative path" do
+        with_directory_camera do |camera|
+          file = (camera / "DCIM/sub").open("../a.jpg")
+          file.path.should eq Path.posix("/DCIM/a.jpg")
+          String.new(file.to_slice).should eq "hello"
+        end
+      end
     end
 
     describe "#parent" do
