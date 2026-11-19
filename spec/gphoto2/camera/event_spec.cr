@@ -58,6 +58,15 @@ module GPhoto2
           FakeDriver.calls[:wait_for_event].should eq 2
         end
       end
+
+      it "raises after the timeout" do
+        with_fake_camera do |camera|
+          error = expect_raises(GPhoto2::Error) do
+            camera.wait_for(:file_added, 50.milliseconds)
+          end
+          error.code.should eq LibGPhoto2::GP_ERROR_TIMEOUT
+        end
+      end
     end
 
     describe "#wait_for" do

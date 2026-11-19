@@ -8,13 +8,19 @@ module GPhoto2
 
       # Waits for the specified event type and returns the event.
       #
+      # Raises `GPhoto2::Error` (with `GP_ERROR_TIMEOUT` code) when
+      # no matching event arrives within the given *timeout*.
+      #
       # NOTE: this method is blocking.
       def wait_for(event_type : CameraEvent::Type, timeout : Time::Span = 2.seconds) : CameraEvent
-        event = wait timeout
-        until event.type == event_type
-          event = wait timeout
+        remaining = timeout
+        loop do
+          event = nil
+          remaining -= Time.measure { event = wait(remaining) }
+
+          return event if event && event.type == event_type
+          raise Error.from_code(LibGPhoto2::GP_ERROR_TIMEOUT) unless remaining.positive?
         end
-        event
       end
 
       private def wait_for_event(timeout : Time::Span) : CameraEvent
