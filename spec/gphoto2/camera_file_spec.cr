@@ -45,6 +45,42 @@ module GPhoto2
             camera.blob("/DCIM/a.jpg").read.should eq data
           end
         end
+
+        it "reads #{size} bytes with a matching reported size" do
+          with_directory_camera do |camera|
+            data = Bytes.new(size) { |i| (i % 251).to_u8 }
+            stub_file_read(camera, data, reported_size: size.to_u64)
+            camera.blob("/DCIM/a.jpg").read.should eq data
+          end
+        end
+      end
+
+      it "reads files larger than their reported size" do
+        with_directory_camera do |camera|
+          data = Bytes.new(CameraFile::BUFFER_SIZE * 2 + 123) { |i| (i % 251).to_u8 }
+          stub_file_read(camera, data, reported_size: 10_u64)
+          camera.blob("/DCIM/a.jpg").read.should eq data
+        end
+      end
+
+      it "allocates only as much memory as needed for the reported size" do
+        with_directory_camera do |camera|
+          data = Bytes.new(CameraFile::BUFFER_SIZE * 2 + 123) { |i| (i % 251).to_u8 }
+          stub_file_read(camera, data, reported_size: data.size.to_u64)
+          bytes = camera.blob("/DCIM/a.jpg").read
+          bytes.should eq data
+          LibGC.size(bytes.to_unsafe).should be < data.size + 64 * 1024
+        end
+      end
+
+      it "does not hold on to unused memory when the reported size is too large" do
+        with_directory_camera do |camera|
+          data = "hello".to_slice
+          stub_file_read(camera, data, reported_size: 10_000_000_u64)
+          bytes = camera.blob("/DCIM/a.jpg").read
+          bytes.should eq data
+          LibGC.size(bytes.to_unsafe).should be < 1024
+        end
       end
     end
 

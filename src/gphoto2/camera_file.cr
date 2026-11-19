@@ -232,21 +232,27 @@ module GPhoto2
     end
 
     private def _read(type = Type::Normal) : Bytes
-      buffer = Bytes.new(BUFFER_SIZE)
+      # Knowing the file size upfront allows allocating a buffer of the
+      # right size (+1 byte, so that the end of file is detected with
+      # a short read), otherwise it grows as needed.
+      capacity = expected_size(type).try do |size|
+        Math.min(size + 1, Int32::MAX.to_u64).to_i32
+      end
+      buffer = Bytes.new(capacity || BUFFER_SIZE)
       offset = 0
 
       loop do
-        # Grow geometrically to keep the number of copies low,
-        # while requesting chunks of a constant size from the camera.
-        if buffer.size - offset < BUFFER_SIZE && buffer.size < Int32::MAX
+        if offset == buffer.size
           # `Bytes` can't hold more than `Int32::MAX` bytes
-          new_size = Math.min(buffer.size.to_i64 * 2, Int32::MAX).to_i32
+          if buffer.size == Int32::MAX
+            raise Error.from_code(LibGPhoto2::GP_ERROR_FIXED_LIMIT_EXCEEDED)
+          end
+          # Grow geometrically to keep the number of copies low
+          new_size = Math.min(Math.max(buffer.size.to_i64 * 2, BUFFER_SIZE), Int32::MAX).to_i32
           buffer = Bytes.new(new_size).tap(&.copy_from(buffer))
         end
+        # Request chunks of (at most) a constant size from the camera
         chunk_size = Math.min(BUFFER_SIZE, buffer.size - offset)
-        if chunk_size.zero?
-          raise Error.from_code(LibGPhoto2::GP_ERROR_FIXED_LIMIT_EXCEEDED)
-        end
         size = read_chunk(buffer[offset, chunk_size], offset.to_u64, type)
         offset += size
 
@@ -254,7 +260,20 @@ module GPhoto2
         break if size < chunk_size
       end
 
-      buffer[0, offset]
+      # Don't hold on to the (mostly) unused memory, i.e. when
+      # the expected size was larger than the actual one
+      offset < buffer.size // 2 ? buffer[0, offset].dup : buffer[0, offset]
+    end
+
+    # Returns the size of the file as reported by the camera, if known.
+    private def expected_size(type : Type) : UInt64?
+      info = get_info
+      case type
+      when .normal?  then info.file?.try(&.size)
+      when .preview? then info.preview?.try(&.size)
+      end
+    rescue GPhoto2::Error
+      # File info is not available
     end
 
     private def get_mime_type
