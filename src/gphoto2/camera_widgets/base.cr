@@ -114,12 +114,16 @@ module GPhoto2
       # ```
       # puts camera[:whitebalance].to_s # => "Automatic"
       # ```
-      def to_s(io : IO)
-        io << value
+      def to_s(io : IO) : Nil
+        # Widgets without value (i.e. `Window`) are represented as empty string
+        io << value?
       end
 
       # Compares widget with another, based on `#type`, `#name` and `#value`.
-      def_equals type, name, value
+      def ==(other : self)
+        return true if same?(other)
+        type == other.type && name == other.name && value? == other.value?
+      end
 
       # Compares `#value` with given *other* using `#to_s`.
       #

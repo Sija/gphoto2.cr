@@ -39,6 +39,35 @@ module GPhoto2
         end
       end
 
+      describe "#to_s" do
+        it "returns string representation of the value" do
+          widget = build_widget(:toggle)
+          widget.value = 1
+          widget.to_s.should eq "1"
+        end
+
+        it "returns empty string for widgets without value" do
+          build_widget(:window).to_s.should eq ""
+          build_widget(:button).to_s.should eq ""
+        end
+      end
+
+      describe "#==(other : self)" do
+        it "compares type, name and value" do
+          a, b = build_widget(:text, "foo"), build_widget(:text, "foo")
+          a.value = b.value = "bar"
+          a.should eq b
+          b.value = "baz"
+          a.should_not eq b
+          a.should_not eq build_widget(:text, "other")
+        end
+
+        it "compares widgets without value" do
+          build_widget(:window, "main").should eq build_widget(:window, "main")
+          build_widget(:button, "a").should_not eq build_widget(:button, "b")
+        end
+      end
+
       describe "#value?" do
         it "returns nil for widgets without value" do
           build_widget(:window).value?.should be_nil
