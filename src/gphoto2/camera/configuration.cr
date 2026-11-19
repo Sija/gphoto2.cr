@@ -47,7 +47,8 @@ module GPhoto2
             # available shots) can't be restored and change on their own.
             next memo if widget.readonly?
 
-            if value = widget.value?
+            # Use raw values, so that the empty ones (i.e. `None`) are restored too
+            unless (value = widget.raw_value).nil?
               memo[key] = value.to_s
             end
             memo
@@ -56,7 +57,7 @@ module GPhoto2
         begin
           yield self
         ensure
-          diff = config_snapshot.reject { |key, value| self[key] == value }
+          diff = config_snapshot.reject { |key, value| self[key].raw_value.to_s == value }
           begin
             update diff unless diff.empty?
           rescue GPhoto2::Error

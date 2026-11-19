@@ -130,7 +130,7 @@ module GPhoto2::FakeDriver
   private def raw_value(widget) : String
     case widget
     when CameraWidget::Date then widget.value.as(Time).to_unix.to_s
-    else                         widget.value?.to_s
+    else                         widget.raw_value.to_s
     end
   end
 

@@ -182,6 +182,15 @@ module GPhoto2
 
       # :nodoc:
       #
+      # Returns the raw widget value, without treating any values as empty
+      # (see `#value`), or `nil` for widgets without value.
+      def raw_value
+        get_value
+      rescue NotImplementedError
+      end
+
+      # :nodoc:
+      #
       # Sets the value of this widget to the raw value of the *other* one.
       def copy_value_from(other : Base) : Nil
         set_value(other.get_value)

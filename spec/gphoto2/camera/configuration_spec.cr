@@ -154,6 +154,30 @@ module GPhoto2
         end
       end
 
+      it "restores empty values" do
+        with_configured_camera do |camera|
+          FakeDriver.settings["mode"] = FakeDriver::Setting.new(:radio, "None", %w(None Auto))
+          FakeDriver.settings["artist"] = FakeDriver::Setting.new(:text, "")
+          camera.reload
+
+          camera.preserving_config do
+            camera.update(mode: "Auto", artist: "Jane")
+          end
+          FakeDriver.settings["mode"].value.should eq "None"
+          FakeDriver.settings["artist"].value.should eq ""
+        end
+      end
+
+      it "does not save unchanged values" do
+        with_configured_camera do |camera|
+          FakeDriver.settings["mode"] = FakeDriver::Setting.new(:radio, "None", %w(None Auto))
+          camera.reload
+
+          camera.preserving_config { }
+          FakeDriver.calls[:set_config].should eq 0
+        end
+      end
+
       it "does not restore read-only values" do
         with_configured_camera do |camera|
           FakeDriver.settings["shots"] = FakeDriver::Setting.new(:text, "10", readonly: true)
