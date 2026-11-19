@@ -171,6 +171,16 @@ module GPhoto2
       end
     end
 
+    describe "#write_to" do
+      it "writes file data to the given IO" do
+        with_directory_camera do |camera|
+          io = IO::Memory.new
+          camera.blob("/DCIM/a.jpg").write_to(io)
+          io.to_s.should eq "hello"
+        end
+      end
+    end
+
     describe "#save" do
       it "saves file data under its name by default" do
         with_directory_camera do |camera, dir|

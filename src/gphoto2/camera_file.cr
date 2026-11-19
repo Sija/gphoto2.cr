@@ -138,8 +138,19 @@ module GPhoto2
     #
     # NOTE: The data is copied, since the original buffer is owned by
     # libgphoto2, and freed along with the file (see `#close`).
+    # Use `#write_to` or `#save` to avoid the copy.
     def to_slice : Bytes
       raw_slice.dup
+    end
+
+    # Writes file `#data` to the given *io*, without copying it first.
+    #
+    # ```
+    # file = camera.preview
+    # file.write_to(STDOUT)
+    # ```
+    def write_to(io : IO) : Nil
+      io.write(raw_slice)
     end
 
     # :nodoc:
