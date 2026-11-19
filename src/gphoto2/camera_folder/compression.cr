@@ -39,9 +39,16 @@ module GPhoto2
 
       # Returns a temporary file with the compressed contents of the folder.
       def to_zip_file(root : String? = nil) : File
-        File.tempfile(prefix: "camera.fs-", suffix: ".zip") do |file|
-          to_zip_file(file, root)
+        tempfile = File.tempfile(prefix: "camera.fs-", suffix: ".zip")
+        begin
+          to_zip_file(tempfile, root)
+        rescue ex
+          # Don't leave a partially written file behind
+          tempfile.close
+          tempfile.delete
+          raise ex
         end
+        tempfile.tap(&.close)
       end
 
       # Yields a temporary file with the compressed contents of the folder.

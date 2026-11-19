@@ -185,6 +185,21 @@ module GPhoto2
         end
       end
 
+      it "removes the temporary file on failure" do
+        with_directory_camera do |camera, dir|
+          tempfiles = -> { Dir.glob(File.join(Dir.tempdir, "camera.fs-*.zip")) }
+          existing = tempfiles.call
+
+          # Make the file unreadable, so that the compression fails midway
+          File.chmod(File.join(dir, "DCIM", "a.jpg"), 0o000)
+
+          expect_raises(GPhoto2::Error) do
+            (camera / "DCIM").to_zip_file { }
+          end
+          (tempfiles.call - existing).should be_empty
+        end
+      end
+
       it "compresses the root folder" do
         with_directory_camera do |camera|
           zip_entries(camera / "/").should eq({
