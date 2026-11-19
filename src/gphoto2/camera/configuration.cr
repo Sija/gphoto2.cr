@@ -43,6 +43,10 @@ module GPhoto2
         config_snapshot = keys ? config.select(keys.map(&.to_s)) : config
         config_snapshot =
           config_snapshot.reduce({} of String => String) do |memo, (key, widget)|
+            # Read-only values (i.e. battery level, or the number of
+            # available shots) can't be restored and change on their own.
+            next memo if widget.readonly?
+
             if value = widget.value?
               memo[key] = value.to_s
             end

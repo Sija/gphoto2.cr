@@ -154,6 +154,20 @@ module GPhoto2
         end
       end
 
+      it "does not restore read-only values" do
+        with_configured_camera do |camera|
+          FakeDriver.settings["shots"] = FakeDriver::Setting.new(:text, "10", readonly: true)
+          camera.reload
+
+          camera.preserving_config do
+            # simulate the camera updating the value on its own
+            FakeDriver.settings["shots"] = FakeDriver::Setting.new(:text, "9", readonly: true)
+            camera.reload
+          end
+          FakeDriver.calls[:set_config].should eq 0
+        end
+      end
+
       it "restores the original values when the block raises" do
         with_configured_camera do |camera|
           expect_raises(::Exception, "oops") do
