@@ -153,7 +153,8 @@ module GPhoto2
     def close : Nil
       @context.try &.close
       @context = nil
-      @window.try &.close
+      # NOTE: The widget tree is not freed explicitly, since its widgets
+      # might still be in use; it gets freed by the GC instead.
       reset
       unref if ptr?
     end

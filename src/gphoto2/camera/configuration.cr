@@ -81,7 +81,8 @@ module GPhoto2
       # camera[:iso] # => 800
       # ```
       def reload : Nil
-        @window.try &.close
+        # NOTE: The previous widget tree is not freed explicitly, since its
+        # widgets might still be in use; it gets freed by the GC instead.
         reset
         config
       end

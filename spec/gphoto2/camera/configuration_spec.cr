@@ -100,6 +100,17 @@ module GPhoto2
           camera[:iso].value.should eq "100"
         end
       end
+
+      it "keeps previously returned widgets usable" do
+        with_configured_camera do |camera|
+          window = camera.window
+          iso = camera[:iso]
+          camera.reload
+
+          window.ptr?.should be_truthy
+          iso.value.should eq "100"
+        end
+      end
     end
 
     describe "#<<" do
