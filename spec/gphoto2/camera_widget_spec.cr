@@ -128,6 +128,22 @@ module GPhoto2
         build_range(1, 3, 0.5).choices.should eq [1, 1.5, 2, 2.5, 3]
       end
 
+      it "returns choices without floating-point drift" do
+        build_range(0, 1, 0.1).choices.should eq [
+          0f32, 0.1f32, 0.2f32, 0.3f32, 0.4f32, 0.5f32,
+          0.6f32, 0.7f32, 0.8f32, 0.9f32, 1f32,
+        ]
+      end
+
+      it "does not exceed the upper bound" do
+        build_range(0, 1, 0.3).choices.should eq [0f32, 0.3f32, 0.6f32, 0.9f32]
+      end
+
+      it "returns bounds for zero increment" do
+        build_range(1, 5, 0).choices.should eq [1, 5]
+        build_range(2, 2, 0).choices.should eq [2]
+      end
+
       it "accepts floats, ints and strings" do
         widget = build_range(0, 10, 1)
         widget.value = 2.5

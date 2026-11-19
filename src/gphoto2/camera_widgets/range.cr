@@ -16,10 +16,27 @@ module GPhoto2
       end
 
       # Returns the list of choices of the widget.
+      #
+      # NOTE: When the widget reports no (or negative) increment, the range
+      # is considered continuous and only its bounds are returned.
       def choices : Array(Float32)
         min, max, inc = get_range
-        min.step(to: max, by: inc).to_a
+
+        if inc <= 0 || min >= max
+          return min == max ? [min] : [min, max]
+        end
+
+        # Computing each choice from its index (instead of accumulating
+        # the increment) avoids floating-point drift. Values are widened
+        # through their shortest decimal representation, so that e.g.
+        # `0.3_f32` becomes `0.3` instead of `0.30000001192...`.
+        min, max, inc = {min, max, inc}.map(&.to_s.to_f64)
+        count = ((max - min) / inc + CHOICES_EPSILON).floor.to_i
+
+        Array(Float32).new(count + 1) { |i| (min + i * inc).to_f32 }
       end
+
+      private CHOICES_EPSILON = 1e-4
 
       protected def get_value
         ptr = Pointer(LibC::Float).malloc
