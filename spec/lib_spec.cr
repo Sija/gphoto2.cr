@@ -1,6 +1,7 @@
 require "./spec_helper"
 
-# Ensures enum values match the ones defined in libgphoto2 headers.
+# Ensures the bindings match libgphoto2 headers (enum values, function
+# signatures), by exercising them directly.
 describe "libgphoto2 bindings" do
   it "allocates new port info" do
     GPhoto2.check! LibGPhoto2Port.gp_port_info_new(out info)
