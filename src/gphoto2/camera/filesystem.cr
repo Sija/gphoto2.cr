@@ -9,13 +9,7 @@ module GPhoto2
       # folder.files.map(&.name) # => ["DSC_0001.JPG", "DSC_0002.JPG", ...]
       # ```
       def filesystem(path : Path | String = "/") : CameraFolder
-        path =
-          path.is_a?(String) ? Path.posix(path) : path.to_posix
-
-        path = Path.posix("/", path) unless path.absolute?
-        path = path.normalize
-
-        CameraFolder.new(self, path)
+        CameraFolder.new(self, absolute_path(path))
       end
 
       # :ditto:
@@ -30,14 +24,7 @@ module GPhoto2
       # file.name # => "DSC_0001.JPG"
       # ```
       def blob(path : Path | String) : CameraFile
-        path =
-          path.is_a?(String) ? Path.posix(path) : path.to_posix
-
-        path = Path.posix("/", path) unless path.absolute?
-        path = path.normalize
-
-        fs = self / path.dirname
-        fs.open(path.basename)
+        CameraFile.new(self, absolute_path(path))
       end
 
       # Clear the filesystem.
@@ -47,6 +34,13 @@ module GPhoto2
       def filesystem_reset : Nil
         context.check! \
           LibGPhoto2.gp_filesystem_reset(wrapped.fs)
+      end
+
+      # Returns normalized, absolute posix version of the given *path*.
+      private def absolute_path(path : Path | String) : Path
+        path = path.is_a?(String) ? Path.posix(path) : path.to_posix
+        path = Path.posix("/", path) unless path.absolute?
+        path.normalize
       end
     end
   end
