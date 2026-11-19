@@ -53,10 +53,13 @@ lib LibGPhoto2
   GP_MIME_JPEG      = "image/jpeg"
   GP_MIME_TIFF      = "image/tiff"
   GP_MIME_BMP       = "image/bmp"
+  GP_MIME_QTKN      = "image/qtkn" # since 2.5.32
+  GP_MIME_QTKT      = "image/qtkt" # since 2.5.32
   GP_MIME_QUICKTIME = "video/quicktime"
   GP_MIME_AVI       = "video/x-msvideo"
   GP_MIME_CRW       = "image/x-canon-raw"
   GP_MIME_CR2       = "image/x-canon-cr2"
+  GP_MIME_CR3       = "image/x-canon-cr3"
   GP_MIME_NEF       = "image/x-nikon-nef"
   GP_MIME_UNKNOWN   = "application/octet-stream"
   GP_MIME_EXIF      = "application/x-exif"
@@ -66,8 +69,11 @@ lib LibGPhoto2
   GP_MIME_ASF       = "audio/x-asf"
   GP_MIME_MPEG      = "video/mpeg"
   GP_MIME_AVCHD     = "video/mp2t"
+  GP_MIME_MPO       = "video/mpo" # since 2.5.32
   GP_MIME_RW2       = "image/x-panasonic-raw2"
   GP_MIME_ARW       = "image/x-sony-arw"
+  GP_MIME_RAF       = "image/x-fuji-raf"  # since 2.5.32
+  GP_MIME_DNG       = "image/x-adobe-dng" # since 2.5.34
 
   #
   # Enums
