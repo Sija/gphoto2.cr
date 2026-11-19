@@ -37,7 +37,7 @@ module GPhoto2
     def initialize(@camera, path : Path | String)
       @path = GPhoto2.absolute_path(path)
       if @path.to_s == "/"
-        raise ArgumentError.new("Invalid file path: #{path.to_s.inspect}")
+        raise ArgumentError.new(%(Invalid file path: "/"))
       end
     end
 
