@@ -178,6 +178,29 @@ module GPhoto2
         end
       end
 
+      it "raises the original exception when restoring fails" do
+        with_configured_camera do |camera|
+          expect_raises(::Exception, "oops") do
+            camera.preserving_config do
+              camera[:iso] = 400
+              FakeDriver.fail_set_config = true
+              raise "oops"
+            end
+          end
+        end
+      end
+
+      it "raises when restoring fails" do
+        with_configured_camera do |camera|
+          expect_raises(GPhoto2::Error) do
+            camera.preserving_config do
+              camera[:iso] = 400
+              FakeDriver.fail_set_config = true
+            end
+          end
+        end
+      end
+
       it "does not restore read-only values" do
         with_configured_camera do |camera|
           FakeDriver.settings["shots"] = FakeDriver::Setting.new(:text, "10", readonly: true)

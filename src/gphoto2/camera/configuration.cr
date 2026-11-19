@@ -56,14 +56,12 @@ module GPhoto2
 
         begin
           yield self
-        ensure
-          diff = config_snapshot.reject { |key, value| self[key].raw_value.to_s == value }
-          begin
-            update diff unless diff.empty?
-          rescue GPhoto2::Error
-            reload
-            update diff
-          end
+        rescue ex
+          # Don't let a failed restore mask the original exception
+          restore_config(config_snapshot) rescue nil
+          raise ex
+        else
+          restore_config(config_snapshot)
         end
       end
 
@@ -190,6 +188,18 @@ module GPhoto2
       # camera.dirty? # => true
       # ```
       getter? dirty = false
+
+      private def restore_config(snapshot : Hash(String, String)) : Nil
+        diff = snapshot.reject { |key, value| self[key].raw_value.to_s == value }
+        return if diff.empty?
+
+        begin
+          update diff
+        rescue GPhoto2::Error
+          reload
+          update diff
+        end
+      end
 
       private def reset : Nil
         @window = nil
