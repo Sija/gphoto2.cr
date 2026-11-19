@@ -437,6 +437,16 @@ module GPhoto2
         (widget << 1).should eq "None"
       end
 
+      it "does not overflow when moving far out of bounds" do
+        widget = build_radio(%w[100 200 400])
+        widget.value = "200"
+        (widget >> Int32::MAX).should be_nil
+        (widget << Int32::MAX).should be_nil
+        (widget << Int32::MIN).should be_nil
+        widget.move_by(Int32::MIN).should be_nil
+        widget.value.should eq "200"
+      end
+
       it "does not move before the first choice" do
         widget = build_radio(%w[100 200 400])
         widget.value = "100"

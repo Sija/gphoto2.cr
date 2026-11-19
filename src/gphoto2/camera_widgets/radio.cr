@@ -10,7 +10,8 @@ module GPhoto2
 
       # Moves the cursor to the previous choice.
       def <<(step : Int32) : String?
-        move_by -step
+        # Widened, since negating `Int32::MIN` would overflow
+        move_cursor -step.to_i64
       end
 
       # Moves the cursor by the given *step*.
@@ -18,15 +19,7 @@ module GPhoto2
       # Returns the new value, or `nil` if the cursor would end up
       # out of bounds (in which case the value is left unchanged).
       def move_by(step : Int32) : String?
-        choices = self.choices
-
-        # Use the raw value, since `#value` returns `nil` for i.e. `None`
-        return unless index = choices.index(get_value)
-
-        next_index = index + step
-        return unless 0 <= next_index < choices.size
-
-        self.value = choices[next_index]
+        move_cursor step.to_i64
       end
 
       # Returns valid choices for a configuration widget.
@@ -54,6 +47,19 @@ module GPhoto2
         else
           super
         end
+      end
+
+      # NOTE: Uses `Int64`, so that moving far out of bounds doesn't overflow.
+      private def move_cursor(step : Int64) : String?
+        choices = self.choices
+
+        # Use the raw value, since `#value` returns `nil` for i.e. `None`
+        return unless index = choices.index(get_value)
+
+        next_index = index.to_i64 + step
+        return unless 0 <= next_index < choices.size
+
+        self.value = choices[next_index]
       end
 
       # Converts *value* to a choice, the same way `Text#value=` does.
