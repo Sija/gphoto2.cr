@@ -173,6 +173,25 @@ module GPhoto2
           end
         end
 
+        it "makes the widget unusable" do
+          widget = build_widget(:text)
+          widget.close
+          expect_raises(GPhoto2::Exception, "Widget has been closed") do
+            widget.value
+          end
+        end
+
+        it "makes child widgets of a closed root unusable" do
+          window = build_widget(:window, "main")
+          GPhoto2.check! LibGPhoto2.gp_widget_append(window, build_widget_ptr(:text, "owner"))
+
+          child = window.children.first
+          window.close
+          expect_raises(GPhoto2::Exception, "Widget has been closed") do
+            child.value = "foo"
+          end
+        end
+
         it "does not free child widgets" do
           window = build_widget(:window, "main")
           GPhoto2.check! LibGPhoto2.gp_widget_append(window, build_widget_ptr(:text, "owner"))

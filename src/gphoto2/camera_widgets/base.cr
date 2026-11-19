@@ -54,6 +54,13 @@ module GPhoto2
         free if ptr? && @owned
       end
 
+      # Raises if the widget, or (since child widgets point to the memory
+      # owned by their root widget) any of its ancestors, has been closed.
+      def to_unsafe : LibGPhoto2::CameraWidget*
+        @parent.try &.to_unsafe
+        @ptr || raise GPhoto2::Exception.new("Widget has been closed")
+      end
+
       # Returns `true` if the widget has readonly flag set.
       getter? readonly : Bool do
         get_readonly == 1
