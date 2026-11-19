@@ -21,16 +21,21 @@ module GPhoto2
         timeout_ms = timeout.total_milliseconds.to_i
         context.check! \
           LibGPhoto2.gp_camera_wait_for_event(self, timeout_ms, out type, out data_ptr, context)
-        data =
-          case type
-          when .file_added?
-            CameraFile.new(self, build_path(data_ptr))
-          when .folder_added?
-            CameraFolder.new(self, build_path(data_ptr))
-          when .unknown?
-            String.new(data_ptr.as(LibC::Char*)) if data_ptr
-          end
-        CameraEvent.new(type, data)
+        begin
+          data =
+            case type
+            when .file_added?, .file_changed?
+              CameraFile.new(self, build_path(data_ptr))
+            when .folder_added?
+              CameraFolder.new(self, build_path(data_ptr))
+            when .unknown?
+              String.new(data_ptr.as(LibC::Char*)) if data_ptr
+            end
+          CameraEvent.new(type, data)
+        ensure
+          # Event data is allocated by libgphoto2 and must be freed by the caller.
+          LibC.free(data_ptr) if data_ptr
+        end
       end
 
       private def build_path(data_ptr)
