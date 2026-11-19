@@ -29,14 +29,17 @@ module GPhoto2
         context.check! \
           LibGPhoto2.gp_camera_wait_for_event(self, timeout_ms, out type, out data_ptr, context)
         begin
+          # Drivers aren't guaranteed to pass any data along with the event
           data =
-            case type
-            when .file_added?, .file_changed?
-              CameraFile.new(self, build_path(data_ptr))
-            when .folder_added?
-              CameraFolder.new(self, build_path(data_ptr))
-            when .unknown?
-              String.new(data_ptr.as(LibC::Char*)) if data_ptr
+            if data_ptr
+              case type
+              when .file_added?, .file_changed?
+                CameraFile.new(self, build_path(data_ptr))
+              when .folder_added?
+                CameraFolder.new(self, build_path(data_ptr))
+              when .unknown?
+                String.new(data_ptr.as(LibC::Char*))
+              end
             end
           CameraEvent.new(type, data)
         ensure
