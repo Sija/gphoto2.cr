@@ -18,6 +18,13 @@ module GPhoto2
       end
     end
 
+    describe "#finalize" do
+      it "does not raise when the list has not been allocated" do
+        # i.e. when `#initialize` failed
+        PortInfoList.allocate.finalize
+      end
+    end
+
     it "exposes the entries through the wrapped struct" do
       list = PortInfoList.new
       wrapped = list.wrapped

@@ -11,8 +11,11 @@ module GPhoto2
     end
 
     # Finalizes object by freeing allocated memory.
+    #
+    # NOTE: The memory might not have been allocated at all (i.e. when
+    # `#initialize` failed), and raising from a finalizer is not an option.
     def finalize
-      free
+      free if ptr?
     end
 
     # Returns number of entries in the list.
