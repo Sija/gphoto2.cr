@@ -14,8 +14,10 @@ module GPhoto2
           mtime = file.info.file?.try(&.mtime) ||
                   Time.local
 
+          # ZIP format stores (time zone-less) MS-DOS timestamps,
+          # which are interpreted as local time by the extracting tools
           entry = Compress::Zip::Writer::Entry.new pathname,
-            time: mtime.to_utc
+            time: mtime.to_local
 
           begin
             zip.add entry, file.raw_slice

@@ -241,6 +241,29 @@ module GPhoto2
     end
 
     describe "#to_zip_file" do
+      it "stores modification times as local time" do
+        # Make sure the local time differs from UTC (i.e. on CI)
+        local = Time::Location.local
+        Time::Location.local = Time::Location.fixed(2 * 3600)
+        begin
+          with_directory_camera do |camera, dir|
+            mtime = Time.local(2024, 6, 1, 12, 0, 0)
+            File.touch(File.join(dir, "DCIM", "a.jpg"), mtime)
+
+            (camera / "DCIM").to_zip_file do |file|
+              Compress::Zip::File.open(file.path) do |zip|
+                # MS-DOS timestamps are read back (as UTC) by `Compress::Zip`
+                time = zip["DCIM/a.jpg"].time
+                {time.year, time.month, time.day, time.hour, time.minute}
+                  .should eq({2024, 6, 1, 12, 0})
+              end
+            end
+          end
+        ensure
+          Time::Location.local = local
+        end
+      end
+
       it "compresses folder contents" do
         with_directory_camera do |camera|
           zip_entries(camera / "DCIM").should eq({
