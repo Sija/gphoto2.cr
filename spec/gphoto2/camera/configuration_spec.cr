@@ -75,6 +75,33 @@ module GPhoto2
     end
 
     describe "#update" do
+      it "reverts the values set when any of them is invalid" do
+        with_configured_camera do |camera|
+          expect_raises(ArgumentError) do
+            camera.update(iso: 400, owner: "Jane", flash: "bogus")
+          end
+          camera[:iso].value.should eq "100"
+          camera[:owner].value.should eq "John"
+          camera.dirty?.should be_false
+
+          # The reverted values must not be saved implicitly later on
+          camera.capture
+          FakeDriver.settings["iso"].value.should eq "100"
+        end
+      end
+
+      it "keeps the unsaved changes made before" do
+        with_configured_camera do |camera|
+          camera[:owner] = "Jane"
+          expect_raises(ArgumentError) do
+            camera.update(iso: 400, flash: "bogus")
+          end
+          camera[:iso].value.should eq "100"
+          camera[:owner].value.should eq "Jane"
+          camera.dirty?.should be_true
+        end
+      end
+
       it "updates and saves given attributes" do
         with_configured_camera do |camera|
           camera.update(iso: 400, owner: "Jane").should be_true

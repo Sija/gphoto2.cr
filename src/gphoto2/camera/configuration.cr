@@ -186,9 +186,26 @@ module GPhoto2
       # camera[:iso]           # => 400
       # camera[:shutterspeed2] # => "1/60"
       # ```
+      #
+      # NOTE: When any of the attributes can't be set (i.e. due to an invalid
+      # value), the ones set before are reverted and the error is reraised.
       def update(attributes) : Bool
-        attributes.each do |key, value|
-          self[key] = value
+        was_dirty = dirty?
+        previous = Array({CameraWidget::Base, typeof(self[""].raw_value)}).new
+        begin
+          attributes.each do |key, value|
+            widget = self[key]
+            previous << {widget, widget.raw_value}
+            self[key] = value
+          end
+        rescue ex
+          # Otherwise the values set so far would be saved along with any
+          # subsequent `#save` (i.e. the one implicitly done by `#capture`)
+          previous.reverse_each do |widget, raw_value|
+            widget.value = raw_value unless raw_value.nil?
+          end
+          @dirty = was_dirty
+          raise ex
         end
         save
       end
