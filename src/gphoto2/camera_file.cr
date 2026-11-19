@@ -79,7 +79,7 @@ module GPhoto2
       path /= name if Dir.exists?(path)
 
       Dir.mkdir_p(path.dirname)
-      File.write(path, to_slice)
+      File.write(path, raw_slice)
     end
 
     # Deletes file from the camera.
@@ -119,8 +119,20 @@ module GPhoto2
       data_and_size.last.to_u64
     end
 
-    # Returns file `#data` as `Bytes`.
+    # Returns a copy of file `#data` as `Bytes`.
+    #
+    # NOTE: The data is copied, since the original buffer is owned by
+    # libgphoto2, and freed along with the file (see `#close`).
     def to_slice : Bytes
+      raw_slice.dup
+    end
+
+    # :nodoc:
+    #
+    # Returns file `#data` as `Bytes`, without copying.
+    #
+    # WARNING: Returned slice is valid only until the file is closed.
+    protected def raw_slice : Bytes
       data.to_slice(size)
     end
 

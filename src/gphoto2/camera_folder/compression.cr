@@ -16,7 +16,7 @@ module GPhoto2
             time: mtime.to_utc
 
           begin
-            zip.add entry, file.to_slice
+            zip.add entry, file.raw_slice
           ensure
             # free the downloaded data right away, instead of waiting for the GC
             file.close

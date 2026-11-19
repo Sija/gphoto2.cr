@@ -48,6 +48,18 @@ module GPhoto2
       end
     end
 
+    describe "#to_slice" do
+      it "returns a copy of the data, valid after the file is closed" do
+        with_directory_camera do |camera|
+          file = camera.blob("/DCIM/a.jpg")
+          bytes = file.to_slice
+          bytes.to_unsafe.should_not eq file.data
+          file.close
+          String.new(bytes).should eq "hello"
+        end
+      end
+    end
+
     describe "#save" do
       it "saves file data under its name by default" do
         with_directory_camera do |camera, dir|
