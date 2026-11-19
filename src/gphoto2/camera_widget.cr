@@ -10,7 +10,7 @@ module GPhoto2
 
     # Creates a new widget from the given pointer.
     #
-    # See `Base#new` for the meaning of *owned*.
+    # See `Base.new` for the meaning of *owned*.
     def self.factory(ptr : LibGPhoto2::CameraWidget*, parent : Base? = nil, *, owned : Bool? = nil) : Base
       # `CameraWidget` struct is opaque, so its fields shouldn't be accessed directly
       GPhoto2.check! LibGPhoto2.gp_widget_get_type(ptr, out type)
