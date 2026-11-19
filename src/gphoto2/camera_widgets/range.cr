@@ -70,6 +70,10 @@ module GPhoto2
       protected def set_value(value)
         case value
         when Float
+          # libgphoto2 stores the value as a C `float`
+          unless value.finite? && value.abs <= Float32::MAX
+            raise ArgumentError.new("Invalid value: #{value}")
+          end
           float = LibC::Float.new(value)
           set_value_ptr pointerof(float)
         when Int, String

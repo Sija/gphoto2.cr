@@ -343,6 +343,17 @@ module GPhoto2
         build_range(2, 2, 0).choices.should eq [2]
       end
 
+      it "rejects non-finite and out of range values" do
+        widget = build_range(0, 10, 1)
+        widget.value = 5
+        [Float32::NAN, Float64::INFINITY, -Float64::INFINITY, 1e300, "nan", "-inf"].each do |value|
+          expect_raises(ArgumentError, "Invalid value") do
+            widget.value = value
+          end
+        end
+        widget.value.should eq 5
+      end
+
       it "accepts floats, ints and strings" do
         widget = build_range(0, 10, 1)
         widget.value = 2.5
