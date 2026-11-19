@@ -53,6 +53,21 @@ module GPhoto2
       end
     end
 
+    describe "#ptr" do
+      it "raises on unknown model" do
+        camera = Camera.new("No Such Camera 9000", "disk:/tmp")
+        expect_raises(GPhoto2::Error) { camera.ptr }
+        camera.ptr?.should be_nil
+      end
+
+      it "keeps raising on subsequent calls after a failure" do
+        camera = Camera.new("No Such Camera 9000", "disk:/tmp")
+        2.times do
+          expect_raises(GPhoto2::Error) { camera.ptr }
+        end
+      end
+    end
+
     describe "#close" do
       it "discards the closed context" do
         with_directory_camera do |camera|

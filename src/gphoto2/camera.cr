@@ -215,8 +215,14 @@ module GPhoto2
 
     private def init : Nil
       new
-      set_abilities(@abilities || CameraAbilities.find(@model))
-      set_port_info(@port_info || PortInfo.find(@port))
+      begin
+        set_abilities(@abilities || CameraAbilities.find(@model))
+        set_port_info(@port_info || PortInfo.find(@port))
+      rescue ex
+        # Don't leave a half-initialized camera behind
+        unref
+        raise ex
+      end
     end
 
     private def new
