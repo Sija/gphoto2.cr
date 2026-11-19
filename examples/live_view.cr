@@ -10,8 +10,8 @@ STDOUT.sync = true
 GPhoto2::Camera.first do |camera|
   loop do
     file = camera.preview
-    # Write the preview image to stdout.
-    STDOUT.write file.to_slice
+    # Write the preview image to stdout (without copying it first)
+    file.write_to(STDOUT)
     # Free the image data right away, since it's allocated outside
     # of the GC heap, and therefore doesn't trigger garbage collection
     file.close
