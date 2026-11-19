@@ -29,5 +29,16 @@ module GPhoto2
         list.close
       end
     end
+
+    describe "#wrapped" do
+      it "raises after the list has been closed" do
+        list = CameraList.new
+        list.wrapped.used.should eq 0
+        list.close
+        expect_raises(GPhoto2::Exception, "GPhoto2::CameraList is closed or not initialized") do
+          list.wrapped
+        end
+      end
+    end
   end
 end

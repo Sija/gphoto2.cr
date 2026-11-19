@@ -17,7 +17,14 @@ module GPhoto2
     end
 
     # Returns wrapped value.
+    #
+    # Raises `GPhoto2::Exception` if there's no value to return,
+    # i.e. after the object has been closed.
     def wrapped : T
+      ptr = to_unsafe
+      if ptr.null?
+        raise GPhoto2::Exception.new("#{self.class} is closed or not initialized")
+      end
       ptr.value
     end
 

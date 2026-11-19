@@ -190,6 +190,9 @@ module GPhoto2
           expect_raises(GPhoto2::Exception, "Widget has been closed") do
             child.value = "foo"
           end
+          expect_raises(GPhoto2::Exception, "Widget has been closed") do
+            child.wrapped
+          end
         end
 
         it "does not free child widgets" do
