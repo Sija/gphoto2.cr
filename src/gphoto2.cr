@@ -43,6 +43,16 @@ module GPhoto2
     String.new LibGPhoto2.gp_result_as_string(rc)
   end
 
+  # :nodoc:
+  #
+  # Returns a `String` from the given fixed-size C *chars* array,
+  # stopping at the first null byte or at the end of the array,
+  # whichever comes first.
+  def string_from(chars : StaticArray(LibC::Char, N)) : String forall N
+    slice = chars.to_slice
+    String.new(slice[0, slice.index(0_u8) || slice.size])
+  end
+
   # Checks if the given *rc* is a GPhoto2 error code.
   def check?(rc : Int32) : Bool
     rc >= LibGPhoto2::GP_OK

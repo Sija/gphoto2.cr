@@ -31,6 +31,23 @@ describe GPhoto2 do
     end
   end
 
+  describe ".string_from" do
+    it "reads up to the first null byte" do
+      chars = StaticArray(LibC::Char, 8).new(0_u8)
+      chars.to_unsafe.copy_from("foo".to_unsafe, 3)
+      GPhoto2.string_from(chars).should eq "foo"
+    end
+
+    it "does not read past the end of the array" do
+      chars = StaticArray(LibC::Char, 4).new('x'.ord.to_u8)
+      GPhoto2.string_from(chars).should eq "xxxx"
+    end
+
+    it "returns empty string for zeroed array" do
+      GPhoto2.string_from(StaticArray(LibC::Char, 4).new(0_u8)).should eq ""
+    end
+  end
+
   describe ".check?" do
     context "the return code is GP_OK" do
       it "returns true" do

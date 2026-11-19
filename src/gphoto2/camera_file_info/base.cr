@@ -29,7 +29,7 @@ module GPhoto2
 
       # Returns the type of the file.
       def type : String?
-        String.new wrapped.type.to_unsafe if field?(:type)
+        GPhoto2.string_from(wrapped.type) if field?(:type)
       end
     end
   end

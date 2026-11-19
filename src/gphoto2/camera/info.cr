@@ -8,7 +8,7 @@ module GPhoto2
       def summary_text : String
         context.check! \
           LibGPhoto2.gp_camera_get_summary(self, out summary, context)
-        String.new summary.text.to_unsafe
+        GPhoto2.string_from(summary.text)
       end
 
       # Retrieves the manual for given camera.
@@ -17,7 +17,7 @@ module GPhoto2
       def manual_text : String
         context.check! \
           LibGPhoto2.gp_camera_get_manual(self, out manual, context)
-        String.new manual.text.to_unsafe
+        GPhoto2.string_from(manual.text)
       end
 
       # Retrieves information about the camera driver.
@@ -27,7 +27,7 @@ module GPhoto2
       def about_text : String
         context.check! \
           LibGPhoto2.gp_camera_get_about(self, out about, context)
-        String.new about.text.to_unsafe
+        GPhoto2.string_from(about.text)
       end
     end
   end

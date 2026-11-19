@@ -15,6 +15,13 @@ module GPhoto2
       path.name.should eq "a.jpg"
     end
 
+    it "handles names filling the whole buffer" do
+      name = "a" * 128
+      path = build_camera_file_path("/DCIM", name)
+      path.name.should eq name
+      path.folder.should eq "/DCIM"
+    end
+
     it "converts to a posix path" do
       build_camera_file_path("/DCIM", "a.jpg").to_path
         .should eq Path.posix("/DCIM/a.jpg")
