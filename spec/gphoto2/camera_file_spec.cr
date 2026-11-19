@@ -20,6 +20,19 @@ module GPhoto2
       end
     end
 
+    it "rejects paths pointing to the root folder" do
+      with_directory_camera do |camera|
+        ["", "/", "DCIM/..", Path.posix("/")].each do |path|
+          expect_raises(ArgumentError, "Invalid file path") do
+            CameraFile.new(camera, path)
+          end
+        end
+        expect_raises(ArgumentError, "Invalid file path") do
+          camera.blob("/")
+        end
+      end
+    end
+
     it "is a preview only when created without a path" do
       with_directory_camera do |camera|
         CameraFile.new(camera).preview?.should be_true
