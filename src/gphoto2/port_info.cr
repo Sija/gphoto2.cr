@@ -18,14 +18,16 @@ module GPhoto2
       port_info_list[port]
     end
 
-    # Returns the name of the port.
+    # Returns the name of the port, or an empty string if not set
+    # (i.e. for a `Port` without any `PortInfo` assigned).
     def name : String
-      get_name.not_nil!
+      get_name || ""
     end
 
-    # Returns the path of the port.
+    # Returns the path of the port, or an empty string if not set
+    # (i.e. for a `Port` without any `PortInfo` assigned).
     def path : String
-      get_path.not_nil!
+      get_path || ""
     end
 
     # Returns the type of the port.
