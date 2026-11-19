@@ -270,8 +270,10 @@ module GPhoto2
           tempfiles = -> { Dir.glob(File.join(Dir.tempdir, "camera.fs-*.zip")) }
           existing = tempfiles.call
 
-          # Make the file unreadable, so that the compression fails midway
-          File.chmod(File.join(dir, "DCIM", "a.jpg"), 0o000)
+          # Remove the (already listed) file, so that the compression
+          # fails midway (regardless of the process privileges)
+          (camera / "DCIM").files
+          File.delete(File.join(dir, "DCIM", "a.jpg"))
 
           expect_raises(GPhoto2::Error) do
             (camera / "DCIM").to_zip_file { }
