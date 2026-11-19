@@ -227,7 +227,8 @@ module GPhoto2
           update diff
         rescue GPhoto2::Error
           reload
-          update diff
+          # Reloaded settings might be gone as well
+          update diff.select { |key, _| self[key]? }
         end
       end
 

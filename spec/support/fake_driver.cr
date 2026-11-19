@@ -22,6 +22,8 @@ module GPhoto2::FakeDriver
   class_property preview_data = "preview"
   class_property text = "fake text"
   class_property? fail_set_config = false
+  # Number of the upcoming `set_config` calls to fail.
+  class_property set_config_failures = 0
   class_getter calls = Hash(Symbol, Int32).new(0)
   # Timeout (in milliseconds) received by the last `wait_for_event` call.
   class_property last_timeout : Int32?
@@ -35,6 +37,7 @@ module GPhoto2::FakeDriver
     self.preview_data = "preview"
     self.text = "fake text"
     self.fail_set_config = false
+    self.set_config_failures = 0
     self.last_timeout = nil
   end
 
@@ -55,6 +58,9 @@ module GPhoto2::FakeDriver
     funcs.set_config = ->(_camera : LibGPhoto2::Camera*, window : LibGPhoto2::CameraWidget*, _context : LibGPhoto2::GPContext*) {
       FakeDriver.calls[:set_config] += 1
       if FakeDriver.fail_set_config?
+        LibGPhoto2::GP_ERROR_IO
+      elsif FakeDriver.set_config_failures > 0
+        FakeDriver.set_config_failures -= 1
         LibGPhoto2::GP_ERROR_IO
       else
         FakeDriver.store_window(window)

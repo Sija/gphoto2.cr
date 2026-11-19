@@ -282,6 +282,19 @@ module GPhoto2
         end
       end
 
+      it "restores the original values when retrying after settings are gone" do
+        with_configured_camera do |camera|
+          camera.preserving_config do
+            camera.update(iso: 400, owner: "Jane")
+            # i.e. a setting available only in some of the camera modes
+            FakeDriver.settings.delete("owner")
+            # Make the first restore attempt fail, to have it retried
+            FakeDriver.set_config_failures = 1
+          end
+          FakeDriver.settings["iso"].value.should eq "100"
+        end
+      end
+
       it "restores the original values when leaving the block with break" do
         with_configured_camera do |camera|
           camera.preserving_config do
