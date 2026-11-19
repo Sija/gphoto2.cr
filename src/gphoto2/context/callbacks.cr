@@ -79,7 +79,10 @@ module GPhoto2
         {% end %}
       end
 
-      # Checks if the given *rc* is a GPhoto2 error code.
+      # Returns the given return code *rc*, or raises if it's an error code.
+      #
+      # Raised error is a `Context::Error` carrying the last error message
+      # reported by libgphoto2 (if any), or a generic `GPhoto2::Error` otherwise.
       def check!(rc : Int32) : Int32
         Debug.log(rc, backtrace_offset: 1, progname: "gphoto2.cr")
         # Error message (if any) belongs to the call which returned *rc*,

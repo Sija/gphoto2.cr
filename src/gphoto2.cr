@@ -53,11 +53,14 @@ module GPhoto2
     String.new(slice[0, slice.index(0_u8) || slice.size])
   end
 
-  # Checks if the given *rc* is a GPhoto2 error code.
+  # Returns `true` if the given return code *rc* denotes a success
+  # (`GP_OK` or a non-negative value), `false` if it's an error code.
   def check?(rc : Int32) : Bool
     rc >= LibGPhoto2::GP_OK
   end
 
+  # Returns the given return code *rc*, or raises `Error`
+  # if it's an error code (see `.check?`).
   def check!(rc : Int32) : Int32
     Debug.log(rc, backtrace_offset: 1, progname: "gphoto2.cr")
     if check?(rc)
