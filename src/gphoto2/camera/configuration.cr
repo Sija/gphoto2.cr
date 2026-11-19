@@ -217,11 +217,6 @@ module GPhoto2
         context.check! \
           LibGPhoto2.gp_camera_set_config(self, window, context)
       end
-
-      private def set_single_config(name, widget)
-        context.check! \
-          LibGPhoto2.gp_camera_set_single_config(self, name, widget, context)
-      end
     end
   end
 end
