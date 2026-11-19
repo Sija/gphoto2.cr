@@ -70,6 +70,15 @@ module GPhoto2
         end
       end
 
+      it "resolves absolute names from the root folder" do
+        with_directory_camera do |camera|
+          folder = camera / "DCIM/sub"
+          folder.cd("/").root?.should be_true
+          folder.cd("/DCIM").path.should eq Path.posix("/DCIM")
+          folder.cd("//DCIM/./sub/..").path.should eq Path.posix("/DCIM")
+        end
+      end
+
       it "does not go above the root folder" do
         with_directory_camera do |camera|
           (camera / "/").cd("..").root?.should be_true
@@ -82,6 +91,14 @@ module GPhoto2
       it "returns a file by its relative path" do
         with_directory_camera do |camera|
           file = (camera / "DCIM/sub").open("../a.jpg")
+          file.path.should eq Path.posix("/DCIM/a.jpg")
+          String.new(file.to_slice).should eq "hello"
+        end
+      end
+
+      it "returns a file by its absolute path" do
+        with_directory_camera do |camera|
+          file = (camera / "DCIM/sub").open("/DCIM/a.jpg")
           file.path.should eq Path.posix("/DCIM/a.jpg")
           String.new(file.to_slice).should eq "hello"
         end
