@@ -27,7 +27,11 @@ module GPhoto2
       it "accepts timeouts out of the C int range" do
         with_fake_camera do |camera|
           camera.wait(Time::Span::MAX).type.timeout?.should be_true
+          FakeDriver.last_timeout.should eq Int32::MAX
           camera.wait(-1.second).type.timeout?.should be_true
+          FakeDriver.last_timeout.should eq 0
+          camera.wait(1.5.seconds)
+          FakeDriver.last_timeout.should eq 1500
         end
       end
 

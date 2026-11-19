@@ -23,6 +23,8 @@ module GPhoto2::FakeDriver
   class_property text = "fake text"
   class_property? fail_set_config = false
   class_getter calls = Hash(Symbol, Int32).new(0)
+  # Timeout (in milliseconds) received by the last `wait_for_event` call.
+  class_property last_timeout : Int32?
 
   def reset : Nil
     settings.clear
@@ -33,6 +35,7 @@ module GPhoto2::FakeDriver
     self.preview_data = "preview"
     self.text = "fake text"
     self.fail_set_config = false
+    self.last_timeout = nil
   end
 
   # Installs stubs on the given *camera*.
@@ -78,8 +81,9 @@ module GPhoto2::FakeDriver
       LibGPhoto2.gp_file_set_data_and_size(file, buffer, data.bytesize)
     }
 
-    funcs.wait_for_event = ->(_camera : LibGPhoto2::Camera*, _timeout : LibC::Int, type : LibGPhoto2::CameraEventType*, data : Void**, _context : LibGPhoto2::GPContext*) {
+    funcs.wait_for_event = ->(_camera : LibGPhoto2::Camera*, timeout : LibC::Int, type : LibGPhoto2::CameraEventType*, data : Void**, _context : LibGPhoto2::GPContext*) {
       FakeDriver.calls[:wait_for_event] += 1
+      FakeDriver.last_timeout = timeout
       event = FakeDriver.events.shift? || FakeEvent.new(:timeout)
       type.value = event.type
       data.value =
