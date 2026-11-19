@@ -146,9 +146,14 @@ module GPhoto2
       yield self ensure close
     end
 
+    # Closes the camera, freeing all associated resources.
+    #
+    # NOTE: The camera will get reinitialized if you try to access it again.
     def close : Nil
       @context.try &.close
+      @context = nil
       @window.try &.close
+      reset
       unref if ptr?
     end
 

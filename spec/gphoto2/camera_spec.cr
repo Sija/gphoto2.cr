@@ -48,6 +48,27 @@ module GPhoto2
       end
     end
 
+    describe "#close" do
+      it "discards the closed context" do
+        with_directory_camera do |camera|
+          context = camera.context
+          camera.close
+          context.ptr?.should be_falsey
+
+          camera.context.should_not be context
+          camera.context.ptr?.should be_truthy
+        end
+      end
+
+      it "allows the camera to be reused" do
+        with_directory_camera do |camera|
+          (camera / "DCIM").files.size.should eq 1
+          camera.close
+          (camera / "DCIM").files.size.should eq 1
+        end
+      end
+    end
+
     describe ".open" do
       it "closes the camera after the block" do
         captured = nil
