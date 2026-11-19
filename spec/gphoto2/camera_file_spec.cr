@@ -27,6 +27,18 @@ module GPhoto2
       end
     end
 
+    describe "#read" do
+      [0, 5, CameraFile::BUFFER_SIZE, CameraFile::BUFFER_SIZE * 2, CameraFile::BUFFER_SIZE * 2 + 123].each do |size|
+        it "reads #{size} bytes in chunks" do
+          with_directory_camera do |camera|
+            data = Bytes.new(size) { |i| (i % 251).to_u8 }
+            stub_file_read(camera, data)
+            camera.blob("/DCIM/a.jpg").read.should eq data
+          end
+        end
+      end
+    end
+
     describe "#save" do
       it "saves file data to the given path" do
         with_directory_camera do |camera, dir|

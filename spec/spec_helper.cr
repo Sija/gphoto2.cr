@@ -1,6 +1,7 @@
 require "spec"
 require "file_utils"
 require "../src/gphoto2"
+require "./support/*"
 
 module GPhoto2::SpecHelpers
   extend self
