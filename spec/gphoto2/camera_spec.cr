@@ -74,6 +74,22 @@ module GPhoto2
       end
     end
 
+    describe "#exit" do
+      it "does not initialize the camera" do
+        camera = Camera.new(DIRECTORY_CAMERA_MODEL, "disk:/tmp")
+        camera.exit
+        camera.ptr?.should be_falsey
+      end
+
+      it "allows the camera to be reused" do
+        with_directory_camera do |camera|
+          (camera / "DCIM").files.size.should eq 1
+          camera.exit
+          (camera / "DCIM").files.size.should eq 1
+        end
+      end
+    end
+
     describe ".open" do
       it "closes the camera after the block" do
         captured = nil

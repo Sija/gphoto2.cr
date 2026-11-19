@@ -165,7 +165,7 @@ module GPhoto2
     #
     # NOTE: The camera will get reinitialized if you try to access the camera again.
     def exit : Nil
-      _exit
+      _exit if ptr?
     end
 
     def abilities : CameraAbilities
