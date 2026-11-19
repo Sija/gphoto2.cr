@@ -76,6 +76,30 @@ module GPhoto2
       end
     end
 
+    describe "#data=" do
+      it "replaces previously read data" do
+        with_directory_camera do |camera|
+          file = camera.blob("/DCIM/a.jpg")
+          String.new(file.to_slice).should eq "hello"
+
+          file.data = "bye".to_slice
+          file.size.should eq 3
+          String.new(file.to_slice).should eq "bye"
+        end
+      end
+    end
+
+    describe "#close" do
+      it "discards previously read data" do
+        with_directory_camera do |camera|
+          file = camera.blob("/DCIM/a.jpg")
+          file.to_slice
+          file.close
+          file.@data_and_size.should be_nil
+        end
+      end
+    end
+
     describe "#to_s" do
       it "returns the file path" do
         with_directory_camera do |camera|

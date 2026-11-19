@@ -94,6 +94,9 @@ module GPhoto2
       data.copy_from(bytes.to_unsafe, bytes.size)
 
       set_data_and_size(data, bytes.bytesize)
+      # Previous data (if any) has been freed by libgphoto2,
+      # and the new data shouldn't get overwritten by a download.
+      @data_and_size = {data, LibC::ULong.new(bytes.bytesize)}
       bytes
     end
 
@@ -168,6 +171,7 @@ module GPhoto2
       GPhoto2.check! \
         LibGPhoto2.gp_file_free(self)
       self.ptr = nil
+      @data_and_size = nil
     end
 
     private def default_filename
