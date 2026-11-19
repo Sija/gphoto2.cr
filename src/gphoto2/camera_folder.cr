@@ -80,6 +80,19 @@ module GPhoto2
       CameraFile.new(@camera, resolve(name))
     end
 
+    # :ditto:
+    #
+    # Yields the file and closes it upon return, returning the value of the block.
+    def open(name : String, &)
+      file = open(name)
+      begin
+        yield file
+      ensure
+        # free the file data right away, instead of waiting for the GC
+        file.close
+      end
+    end
+
     # Uploads a new file and returns it
     #
     # Raises `ArgumentError` if *name* is not a valid file name
@@ -88,16 +101,12 @@ module GPhoto2
       validate_name!(name)
 
       # initialize the file with the data
-      file = open(name)
-      begin
+      open(name) do |file|
         file.data = data
         file.mime_type = mime_type if mime_type
         file.mtime = mtime if mtime
 
         folder_put_file(file, name, type)
-      ensure
-        # free the (copied) data right away, instead of waiting for the GC
-        file.close
       end
       # reopen the file to get it "fresh" from the device
       open(name)

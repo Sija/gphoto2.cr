@@ -112,6 +112,33 @@ module GPhoto2
           String.new(file.to_slice).should eq "hello"
         end
       end
+
+      it "yields the file and closes it after the block" do
+        with_directory_camera do |camera|
+          opened = nil
+          data = (camera / "DCIM").open("a.jpg") do |file|
+            opened = file
+            file.path.should eq Path.posix("/DCIM/a.jpg")
+            String.new(file.to_slice)
+          end
+          data.should eq "hello"
+          opened.not_nil!.ptr?.should be_nil
+        end
+      end
+
+      it "closes the file even when the block raises" do
+        with_directory_camera do |camera|
+          opened = nil
+          expect_raises(::Exception, "oops") do
+            (camera / "DCIM").open("a.jpg") do |file|
+              opened = file
+              file.size
+              raise "oops"
+            end
+          end
+          opened.not_nil!.ptr?.should be_nil
+        end
+      end
     end
 
     describe "#parent" do
