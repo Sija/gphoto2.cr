@@ -46,11 +46,11 @@ module GPhoto2
       # # Capturing a preview is like using `Camera#capture`.
       # file = camera.preview
       #
-      # # The resulting file will have neither a folder nor name.
+      # # The resulting file isn't stored on the camera.
       # file.preview? # => true
       #
       # # But it will contain image data from the camera.
-      # file.data # => "\xFF\xD8\xFF\xDB\x00\x84\x00\x06..."
+      # file.to_slice # => Bytes[255, 216, 255, 219, 0, 132, 0, 6, ...]
       # ```
       def preview : CameraFile
         save
