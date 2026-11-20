@@ -131,7 +131,7 @@ module GPhoto2
 
     # Deletes this folder (along with all files and subfolders) from the camera.
     def delete : Nil
-      raise "Cannot delete root folder" if root?
+      raise GPhoto2::Exception.new("Cannot delete root folder") if root?
       # delete files and subfolders
       clear files: true, folders: true
       # finally, delete itself

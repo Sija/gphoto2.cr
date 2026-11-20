@@ -233,7 +233,7 @@ module GPhoto2
 
       it "refuses to delete the root folder" do
         with_directory_camera do |camera|
-          expect_raises(::Exception, "Cannot delete root folder") do
+          expect_raises(GPhoto2::Exception, "Cannot delete root folder") do
             (camera / "/").delete
           end
         end
