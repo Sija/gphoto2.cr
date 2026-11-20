@@ -336,9 +336,13 @@ module GPhoto2
 
       it "refuses entry names pointing outside of the archive" do
         with_directory_camera do |camera|
-          expect_raises(ArgumentError, "Invalid entry name") do
-            (camera / "DCIM").to_zip_file("../evil") { }
+          ["../evil", "..\\evil", "C:/evil", "c:evil"].each do |root|
+            expect_raises(ArgumentError, "Invalid entry name") do
+              (camera / "DCIM").to_zip_file(root) { }
+            end
           end
+          # Plain names are fine
+          (camera / "DCIM").to_zip_file("photos") { }
         end
       end
 

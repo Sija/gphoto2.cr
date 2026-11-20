@@ -43,13 +43,21 @@ module GPhoto2
       #
       # Raises `ArgumentError` for names pointing outside of the archive
       # (i.e. given *root* containing `..`), which would make the extracting
-      # tools write files outside of the target directory.
+      # tools write files outside of the target directory. That includes
+      # names with a `\` or a drive prefix (i.e. `C:`), which extractors
+      # treating them as Windows paths would interpret as such.
       private def zip_entry_name(path : Path, root : String?) : String
         pathname = path.relative_to(@path)
         pathname = Path.posix(root, pathname) if root
 
         name = pathname.normalize.to_s.lchop('/')
-        if name == ".." || name.starts_with?("../")
+
+        invalid = name == ".." ||
+                  name.starts_with?("../") ||
+                  name.includes?('\\') ||
+                  name.matches?(/\A[A-Za-z]:/)
+
+        if invalid
           raise ArgumentError.new("Invalid entry name: #{name.inspect}")
         end
         name
