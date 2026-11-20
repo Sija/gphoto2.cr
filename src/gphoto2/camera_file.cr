@@ -150,7 +150,13 @@ module GPhoto2
       end
       data.copy_from(bytes.to_unsafe, bytes.size)
 
-      set_data_and_size(data, bytes.bytesize)
+      begin
+        set_data_and_size(data, bytes.bytesize)
+      rescue ex
+        # libgphoto2 takes over the data only when it succeeds
+        LibC.free(data)
+        raise ex
+      end
       # Previous data (if any) has been freed by libgphoto2,
       # and the new data shouldn't get overwritten by a download.
       @data_and_size = {data, LibC::ULong.new(bytes.bytesize)}
