@@ -195,8 +195,11 @@ module GPhoto2
     end
 
     # Reads file directly from the camera.
+    #
+    # NOTE: Preview files aren't stored on the camera, so their
+    # (already captured) data is returned instead, see `#to_slice`.
     def read : Bytes
-      _read
+      preview? ? to_slice : _read
     end
 
     # :nodoc:

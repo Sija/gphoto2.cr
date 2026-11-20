@@ -66,6 +66,13 @@ module GPhoto2
     end
 
     describe "#read" do
+      it "returns the data of preview files" do
+        with_fake_camera do |camera|
+          FakeDriver.preview_data = "preview data"
+          camera.preview.read.should eq "preview data".to_slice
+        end
+      end
+
       [0, 5, CameraFile::BUFFER_SIZE, CameraFile::BUFFER_SIZE * 2, CameraFile::BUFFER_SIZE * 2 + 123].each do |size|
         it "reads #{size} bytes in chunks" do
           with_directory_camera do |camera|
