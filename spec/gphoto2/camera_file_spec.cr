@@ -65,6 +65,16 @@ module GPhoto2
       end
     end
 
+    describe "#info" do
+      it "raises for preview files" do
+        with_fake_camera do |camera|
+          expect_raises(GPhoto2::Error, "Preview files aren't stored on the camera") do
+            camera.preview.info
+          end
+        end
+      end
+    end
+
     describe "#read" do
       it "returns the data of preview files" do
         with_fake_camera do |camera|
@@ -254,6 +264,14 @@ module GPhoto2
     end
 
     describe "#delete" do
+      it "raises for preview files" do
+        with_fake_camera do |camera|
+          expect_raises(GPhoto2::Error, "Preview files aren't stored on the camera") do
+            camera.preview.delete
+          end
+        end
+      end
+
       it "deletes the file from the camera" do
         with_directory_camera do |camera, dir|
           camera.blob("/DCIM/a.jpg").delete

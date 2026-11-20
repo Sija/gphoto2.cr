@@ -123,7 +123,10 @@ module GPhoto2
     end
 
     # Deletes file from the camera.
+    #
+    # Raises `GPhoto2::Error` for preview files, which aren't stored on the camera.
     def delete : Nil
+      check_stored!
       _delete
     end
 
@@ -239,8 +242,17 @@ module GPhoto2
     end
 
     # Returns an object containing information about the file.
+    #
+    # Raises `GPhoto2::Error` for preview files, which aren't stored on the camera.
     def info : CameraFileInfo
+      check_stored!
       get_info
+    end
+
+    # Otherwise libgphoto2 fails with a cryptic "The path '.' is not absolute."
+    private def check_stored! : Nil
+      return unless preview?
+      raise Error.new("Preview files aren't stored on the camera", LibGPhoto2::GP_ERROR_NOT_SUPPORTED)
     end
 
     private def new
