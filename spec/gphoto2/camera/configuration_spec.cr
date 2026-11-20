@@ -81,6 +81,46 @@ module GPhoto2
           FakeDriver.calls[:set_config].should eq 1
         end
       end
+
+      it "keeps the values the driver failed to save pending" do
+        with_configured_camera do |camera|
+          FakeDriver.failing_setting = "owner"
+          camera[:iso].value = "400"
+          camera[:owner].value = "Jane"
+          camera[:flash].value = true
+
+          expect_raises(GPhoto2::Error) { camera.save }
+          FakeDriver.settings["iso"].value.should eq "400"
+          camera.dirty?.should be_true
+
+          FakeDriver.failing_setting = nil
+          FakeDriver.settings["iso"] = FakeDriver.settings["iso"].copy_with(value: "200")
+          camera.save.should be_true
+          FakeDriver.settings["owner"].value.should eq "Jane"
+          FakeDriver.settings["flash"].value.should eq "1"
+          # Already saved values aren't saved again
+          FakeDriver.settings["iso"].value.should eq "200"
+          camera.dirty?.should be_false
+        end
+      end
+
+      it "keeps all of the values pending when the config can't be read" do
+        with_configured_camera do |camera|
+          FakeDriver.failing_setting = "owner"
+          camera[:iso].value = "400"
+          camera[:owner].value = "Jane"
+          FakeDriver.config_untouched = true
+
+          expect_raises(GPhoto2::Error) { camera.save }
+          camera.dirty?.should be_true
+
+          FakeDriver.failing_setting = nil
+          FakeDriver.settings["iso"] = FakeDriver.settings["iso"].copy_with(value: "200")
+          camera.save.should be_true
+          FakeDriver.settings["owner"].value.should eq "Jane"
+          FakeDriver.settings["iso"].value.should eq "400"
+        end
+      end
     end
 
     describe "#dirty?" do

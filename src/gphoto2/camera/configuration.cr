@@ -163,7 +163,13 @@ module GPhoto2
       def save : Bool
         return false unless dirty?
 
-        set_config
+        pending = config.select { |_, widget| widget.changed? }
+        begin
+          set_config
+        rescue ex
+          keep_pending(pending)
+          raise ex
+        end
         # Drivers (i.e. PTP) clear the flags of the saved widgets themselves,
         # make sure none are left behind, so the config isn't dirty anymore
         @config.try &.each_value(&.changed = false)
@@ -238,6 +244,24 @@ module GPhoto2
 
         # Widgets changed directly are flagged by libgphoto2 only
         config.each_value.any?(&.changed?)
+      end
+
+      # Flags the *widgets* whose values didn't make it to the camera
+      # as changed again, so that they're saved by the next `#save`.
+      #
+      # NOTE: Drivers (i.e. PTP, for Canon EOS cameras) clear the flags of
+      # the widgets they failed to save too, without telling which ones
+      # were saved, hence the comparison with the values on the camera.
+      private def keep_pending(widgets : Hash(String, CameraWidget::Base)) : Nil
+        saved_config = get_config.flatten rescue nil
+
+        widgets.each do |key, widget|
+          next if widget.changed?
+          if saved_config && (saved_widget = saved_config[key]?)
+            next if saved_widget.raw_value.to_s == widget.raw_value.to_s
+          end
+          widget.changed = true
+        end
       end
 
       private def restore_config(snapshot : Hash(String, String)) : Nil
