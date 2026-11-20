@@ -30,10 +30,11 @@ module GPhoto2
         when Bool
           set_value value ? 1 : 0
         when String
-          case value.downcase
-          when "true"  then set_value true
-          when "false" then set_value false
-          else              set_value value.to_i32
+          # Same values as accepted by the `gphoto2` CLI tool
+          case value.strip.downcase
+          when "true", "on", "yes"  then set_value true
+          when "false", "off", "no" then set_value false
+          else                           set_value value.to_i32
           end
         else
           raise ArgumentError.new \

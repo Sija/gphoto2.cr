@@ -304,6 +304,14 @@ module GPhoto2
         widget.value = "False"
         widget.value.should eq 0
       end
+
+      it "accepts on/off and yes/no strings" do
+        widget = build_widget(:toggle)
+        {"on" => 1, "Off" => 0, "YES" => 1, " no " => 0}.each do |value, expected|
+          widget.value = value
+          widget.value.should eq expected
+        end
+      end
     end
 
     describe CameraWidget::Range do
