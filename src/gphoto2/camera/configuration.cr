@@ -161,9 +161,11 @@ module GPhoto2
       # camera.save # => false (nothing to update)
       # ```
       def save : Bool
-        return false unless dirty?
-
+        # NOTE: Same as `#dirty?`, but scanning the widgets only once
+        return false unless @dirty || @window
         pending = config.select { |_, widget| widget.changed? }
+        return false unless @dirty || pending.present?
+
         begin
           set_config
         rescue ex

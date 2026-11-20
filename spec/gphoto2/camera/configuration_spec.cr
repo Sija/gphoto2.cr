@@ -73,6 +73,11 @@ module GPhoto2
         with_configured_camera do |camera|
           camera.save.should be_false
           FakeDriver.calls[:set_config].should eq 0
+          FakeDriver.calls[:get_config].should eq 0
+
+          camera.config
+          camera.save.should be_false
+          FakeDriver.calls[:set_config].should eq 0
 
           camera[:iso] = 200
           camera.save.should be_true
