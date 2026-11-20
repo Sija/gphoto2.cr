@@ -10,6 +10,10 @@ module GPhoto2::SpecHelpers
   # as a camera filesystem, allowing to exercise the API without a device.
   DIRECTORY_CAMERA_MODEL = "Directory Browse"
 
+  # Looking up the abilities loads all of the camera drivers, taking tens
+  # of milliseconds, so it's done once only, instead of for every camera.
+  DIRECTORY_CAMERA_ABILITIES = CameraAbilities.find(DIRECTORY_CAMERA_MODEL)
+
   # Creates a temporary directory populated with fixture files:
   #
   # ```text
@@ -35,6 +39,7 @@ module GPhoto2::SpecHelpers
   def with_directory_camera(&)
     with_fixture_dir do |dir|
       camera = Camera.new(DIRECTORY_CAMERA_MODEL, "disk:#{dir}")
+      camera.abilities = DIRECTORY_CAMERA_ABILITIES
       begin
         yield camera, dir
       ensure
@@ -71,6 +76,13 @@ module GPhoto2::SpecHelpers
     GPhoto2.check! LibGPhoto2.gp_widget_set_range(widget, min, max, step)
     widget
   end
+end
+
+# :nodoc:
+class GPhoto2::Camera
+  # Made public, so that the specs can reuse the abilities looked up once
+  # (see `GPhoto2::SpecHelpers::DIRECTORY_CAMERA_ABILITIES`).
+  setter abilities : CameraAbilities?
 end
 
 include GPhoto2::SpecHelpers
