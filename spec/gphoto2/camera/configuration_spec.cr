@@ -99,6 +99,18 @@ module GPhoto2
         end
       end
 
+      it "restores the changed flags of the reverted values" do
+        with_configured_camera do |camera|
+          camera[:owner] = "Jane"
+          expect_raises(ArgumentError) do
+            camera.update(iso: 400, owner: "Jim", flash: "bogus")
+          end
+          # Drivers save the widgets flagged as changed
+          LibGPhoto2.gp_widget_changed(camera[:iso]).should eq 0
+          LibGPhoto2.gp_widget_changed(camera[:owner]).should eq 1
+        end
+      end
+
       it "keeps the unsaved changes made before" do
         with_configured_camera do |camera|
           camera[:owner] = "Jane"
