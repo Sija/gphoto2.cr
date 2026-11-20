@@ -138,9 +138,11 @@ module GPhoto2
       it "does not allocate memory upfront for bogus reported sizes" do
         with_directory_camera do |camera|
           stub_file_read(camera, "hello".to_slice, reported_size: 0xFFFFFFFF_u64)
-          heap_size = GC.stats.heap_size
+          # NOTE: Bytes allocated are counted, since the heap size grows
+          # (in proportion to its current size) at the discretion of the GC
+          total_bytes = GC.stats.total_bytes
           camera.blob("/DCIM/a.jpg").read.should eq "hello".to_slice
-          (GC.stats.heap_size - heap_size).should be <= CameraFile::MAX_PREALLOCATED_SIZE * 2
+          (GC.stats.total_bytes - total_bytes).should be <= CameraFile::MAX_PREALLOCATED_SIZE + 1024 * 1024
         end
       end
 
