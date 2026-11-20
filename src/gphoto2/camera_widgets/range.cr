@@ -25,15 +25,17 @@ module GPhoto2
 
       # Returns the list of choices of the widget.
       #
-      # NOTE: When the widget reports no (or negative) increment, the range
-      # is considered continuous and only its bounds are returned.
+      # NOTE: When the widget reports no (or negative, or NaN) increment,
+      # the range is considered continuous and only its bounds are returned.
       #
       # Raises `GPhoto2::Exception` if the range has more than `MAX_CHOICES`
       # choices (i.e. generic 32-bit ranges), use `#range` and `#step` instead.
       def choices : Array(Float32)
         min, max, inc = get_range
 
-        if inc <= 0 || min >= max
+        # NOTE: Negated, so that NaN values (failing every comparison)
+        # are covered as well, instead of failing further down
+        unless inc > 0 && min < max
           return min == max ? [min] : [min, max]
         end
 

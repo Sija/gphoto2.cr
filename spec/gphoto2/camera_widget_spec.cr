@@ -325,6 +325,15 @@ module GPhoto2
         build_range(1, 3, 0.5).choices.should eq [1, 1.5, 2, 2.5, 3]
       end
 
+      it "returns only the bounds for NaN increment" do
+        build_range(1, 3, Float32::NAN).choices.should eq [1, 3]
+      end
+
+      it "does not raise for NaN bounds" do
+        build_range(Float32::NAN, 3, 1).choices.size.should eq 2
+        build_range(1, Float32::NAN, 1).choices.size.should eq 2
+      end
+
       it "returns choices without floating-point drift" do
         build_range(0, 1, 0.1).choices.should eq [
           0f32, 0.1f32, 0.2f32, 0.3f32, 0.4f32, 0.5f32,
