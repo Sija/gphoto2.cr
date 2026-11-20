@@ -164,6 +164,9 @@ module GPhoto2
         return false unless dirty?
 
         set_config
+        # Drivers (i.e. PTP) clear the flags of the saved widgets themselves,
+        # make sure none are left behind, so the config isn't dirty anymore
+        @config.try &.each_value(&.changed = false)
         @dirty = false
         true
       end
@@ -218,14 +221,24 @@ module GPhoto2
         update(attributes)
       end
 
-      # Returns `true` if any attributes have unsaved changes.
+      @dirty = false
+
+      # Returns `true` if any attributes have unsaved changes, including
+      # the ones changed on the widgets directly (i.e. using
+      # `CameraWidget::Base#value=` or `CameraWidget::Radio#>>`).
       #
       # ```
       # camera.dirty? # => false
       # camera[:iso] = 400
       # camera.dirty? # => true
       # ```
-      getter? dirty = false
+      def dirty? : Bool
+        return true if @dirty
+        return false unless @window
+
+        # Widgets changed directly are flagged by libgphoto2 only
+        config.each_value.any?(&.changed?)
+      end
 
       private def restore_config(snapshot : Hash(String, String)) : Nil
         # Unsaved values don't reflect the camera state, in which case

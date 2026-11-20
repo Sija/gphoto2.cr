@@ -83,6 +83,35 @@ module GPhoto2
       end
     end
 
+    describe "#dirty?" do
+      it "tracks the values changed on the widgets directly" do
+        with_configured_camera do |camera|
+          camera.dirty?.should be_false
+          camera[:iso].value = "400"
+          camera.dirty?.should be_true
+
+          camera.save.should be_true
+          FakeDriver.settings["iso"].value.should eq "400"
+          camera.dirty?.should be_false
+        end
+      end
+
+      it "tracks the radio cursor moves" do
+        with_configured_camera do |camera|
+          camera[:iso].as_radio >> 1
+          camera.save.should be_true
+          FakeDriver.settings["iso"].value.should eq "200"
+        end
+      end
+
+      it "does not load the config" do
+        with_configured_camera do |camera|
+          camera.dirty?.should be_false
+          FakeDriver.calls[:get_config].should eq 0
+        end
+      end
+    end
+
     describe "#update" do
       it "reverts the values set when any of them is invalid" do
         with_configured_camera do |camera|
