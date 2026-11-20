@@ -282,6 +282,16 @@ module GPhoto2
       end
     end
 
+    describe "#mtime" do
+      it "returns nil for timestamps out of range" do
+        with_directory_camera do |camera|
+          file = camera.blob("/DCIM/a.jpg")
+          GPhoto2.check! LibGPhoto2.gp_file_set_mtime(file, Int64::MAX)
+          file.mtime.should be_nil
+        end
+      end
+    end
+
     describe "#mtime=" do
       it "sets the modification time" do
         with_directory_camera do |camera|

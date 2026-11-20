@@ -73,6 +73,16 @@ module GPhoto2
 
   # :nodoc:
   #
+  # Returns `Time` for the given Unix timestamp (in *seconds*), or `nil`
+  # if it's out of the range supported by `Time` (i.e. year 1-9999),
+  # since cameras might report bogus timestamps.
+  def time_from(seconds : Int) : Time?
+    Time.unix(seconds.to_i64)
+  rescue ArgumentError | OverflowError
+  end
+
+  # :nodoc:
+  #
   # Returns normalized, absolute posix version of the given *path*.
   def absolute_path(path : Path | String) : Path
     path = path.is_a?(String) ? Path.posix(path) : path.to_posix

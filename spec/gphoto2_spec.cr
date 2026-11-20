@@ -39,6 +39,18 @@ describe GPhoto2 do
     end
   end
 
+  describe ".time_from" do
+    it "returns the time for the given Unix timestamp" do
+      GPhoto2.time_from(1_000_000).should eq Time.unix(1_000_000)
+    end
+
+    it "returns nil for timestamps out of range" do
+      GPhoto2.time_from(Int64::MAX).should be_nil
+      GPhoto2.time_from(Int64::MIN).should be_nil
+      GPhoto2.time_from(253_402_300_800_i64).should be_nil
+    end
+  end
+
   describe ".string_from" do
     it "reads up to the first null byte" do
       chars = StaticArray(LibC::Char, 8).new(0_u8)

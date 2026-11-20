@@ -375,7 +375,7 @@ module GPhoto2
     private def get_mtime
       GPhoto2.check! \
         LibGPhoto2.gp_file_get_mtime(self, out mtime)
-      Time.unix(mtime.to_i64) unless mtime == 0
+      GPhoto2.time_from(mtime) unless mtime == 0
     end
 
     private def set_mtime(mtime)
