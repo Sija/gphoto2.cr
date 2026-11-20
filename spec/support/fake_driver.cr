@@ -155,10 +155,16 @@ module GPhoto2::FakeDriver
   end
 
   # :nodoc:
+  #
+  # NOTE: Like the actual drivers (i.e. PTP), it saves only the widgets
+  # flagged as changed by libgphoto2, clearing the flag afterwards.
   def store_window(window : LibGPhoto2::CameraWidget*) : Nil
     CameraWidget.factory(window, owned: false).flatten.each do |name, widget|
       next unless setting = settings[name]?
       next if setting.readonly
+      next if LibGPhoto2.gp_widget_changed(widget).zero?
+
+      LibGPhoto2.gp_widget_set_changed(widget, 0)
       settings[name] = setting.copy_with(value: raw_value(widget))
     end
   end

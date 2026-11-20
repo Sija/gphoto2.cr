@@ -111,6 +111,20 @@ module GPhoto2
         end
       end
 
+      it "does not save the reverted values along with subsequent changes" do
+        with_configured_camera do |camera|
+          expect_raises(ArgumentError) do
+            camera.update(iso: 400, flash: "bogus")
+          end
+          # i.e. a value changing on the camera on its own
+          FakeDriver.settings["iso"] = FakeDriver.settings["iso"].copy_with(value: "200")
+
+          camera.update(owner: "Jane")
+          FakeDriver.settings["owner"].value.should eq "Jane"
+          FakeDriver.settings["iso"].value.should eq "200"
+        end
+      end
+
       it "keeps the unsaved changes made before" do
         with_configured_camera do |camera|
           camera[:owner] = "Jane"
