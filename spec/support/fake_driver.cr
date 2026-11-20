@@ -34,6 +34,9 @@ module GPhoto2::FakeDriver
   class_property? config_untouched = false
   # Number of the upcoming `set_config` calls to fail.
   class_property set_config_failures = 0
+  # Name of the setting failing to be saved, which (like Canon EOS cameras
+  # in the PTP driver) gets its flag cleared and stops saving the rest.
+  class_property failing_setting : String? = nil
   class_getter calls = Hash(Symbol, Int32).new(0)
   # Timeout (in milliseconds) received by the last `wait_for_event` call.
   class_property last_timeout : Int32?
@@ -50,6 +53,7 @@ module GPhoto2::FakeDriver
     self.fail_set_config = false
     self.config_untouched = false
     self.set_config_failures = 0
+    self.failing_setting = nil
     self.last_timeout = nil
   end
 
@@ -76,7 +80,6 @@ module GPhoto2::FakeDriver
         LibGPhoto2::GP_ERROR_IO
       else
         FakeDriver.store_window(window)
-        LibGPhoto2::GP_OK
       end
     }
 
@@ -158,15 +161,18 @@ module GPhoto2::FakeDriver
   #
   # NOTE: Like the actual drivers (i.e. PTP), it saves only the widgets
   # flagged as changed by libgphoto2, clearing the flag afterwards.
-  def store_window(window : LibGPhoto2::CameraWidget*) : Nil
+  def store_window(window : LibGPhoto2::CameraWidget*) : Int32
     CameraWidget.factory(window, owned: false).flatten.each do |name, widget|
       next unless setting = settings[name]?
       next if setting.readonly
       next if LibGPhoto2.gp_widget_changed(widget).zero?
 
       LibGPhoto2.gp_widget_set_changed(widget, 0)
+      return LibGPhoto2::GP_ERROR_IO if name == failing_setting
+
       settings[name] = setting.copy_with(value: raw_value(widget))
     end
+    LibGPhoto2::GP_OK
   end
 
   private def raw_value(widget) : String
