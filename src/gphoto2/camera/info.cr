@@ -35,10 +35,19 @@ module GPhoto2
       #
       # NOTE: Unlike `out` variables (which Crystal leaves uninitialized),
       # the text is zeroed, since drivers aren't guaranteed to fill it in.
+      #
+      # NOTE: The (32 KiB) struct is allocated on the heap (which zeroes it)
+      # and read through a pointer, since both its zeroing constructor
+      # (`LibGPhoto2::CameraText.new`, slowing down the compilation by
+      # minutes) and copying its `text` (i.e. by `GPhoto2.string_from`,
+      # by seconds) make LLVM generate huge amounts of code.
       private def camera_text(& : LibGPhoto2::CameraText* -> Int32) : String
-        text = LibGPhoto2::CameraText.new
-        context.check! yield pointerof(text)
-        GPhoto2.string_from(text.text)
+        text = Pointer(LibGPhoto2::CameraText).malloc(1)
+        context.check! yield text
+
+        # `text` is the only field of the struct
+        chars = Slice.new(text.as(LibC::Char*), sizeof(LibGPhoto2::CameraText))
+        String.new(chars[0, chars.index(0_u8) || chars.size])
       end
     end
   end
