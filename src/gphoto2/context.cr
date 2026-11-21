@@ -13,6 +13,11 @@ module GPhoto2
       super
     end
 
+    # Finalizes object by freeing allocated memory.
+    def finalize
+      unref if ptr?
+    end
+
     def close : Nil
       clear_callbacks
       unref if ptr?

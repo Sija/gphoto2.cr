@@ -16,9 +16,10 @@ module GPhoto2
         field?(:permissions) && wrapped.permissions.delete?
       end
 
-      # Returns modification time.
+      # Returns modification time, or `nil` if it's not set
+      # (or out of the range supported by `Time`).
       def mtime : Time?
-        Time.unix(wrapped.mtime) if field?(:mtime)
+        GPhoto2.time_from(wrapped.mtime) if field?(:mtime)
       end
 
       # Returns the width in pixels.

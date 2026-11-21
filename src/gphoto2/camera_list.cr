@@ -15,7 +15,12 @@ module GPhoto2
 
     # Finalizes object by freeing allocated memory.
     def finalize
-      free
+      close
+    end
+
+    # Frees allocated memory.
+    def close : Nil
+      free if ptr?
     end
 
     # Returns number of entries in the list.

@@ -8,8 +8,8 @@ module GPhoto2
     getter folder : String
 
     def initialize(path : LibGPhoto2::CameraFilePath)
-      @name = String.new(path.name.to_unsafe)
-      @folder = String.new(path.folder.to_unsafe)
+      @name = GPhoto2.string_from(path.name)
+      @folder = GPhoto2.string_from(path.folder)
     end
 
     def_equals name, folder

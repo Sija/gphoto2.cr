@@ -32,13 +32,39 @@ module GPhoto2
         {% end %}
       end
 
-      def initialize(ptr : LibGPhoto2::CameraWidget*, @parent = nil)
+      # Whether the widget tree memory is owned (and freed) by this widget.
+      @owned : Bool
+
+      # When *owned* is `nil`, root widgets (without *parent*) own their tree.
+      #
+      # Raises `ArgumentError` when *owned* is `true` for a child widget,
+      # since its memory is owned (and freed) by its root widget.
+      def initialize(ptr : LibGPhoto2::CameraWidget*, @parent = nil, *, owned : Bool? = nil)
+        if owned && parent
+          raise ArgumentError.new("Child widgets can't own their memory")
+        end
+        @owned = owned.nil? ? parent.nil? : owned
         super ptr
       end
 
       # Finalizes object by freeing allocated memory.
+      def finalize
+        close
+      end
+
+      # Frees allocated memory of the widget tree.
+      #
+      # NOTE: Child widgets are owned (and freed) by their root widget,
+      # so calling this method on them does nothing.
       def close : Nil
-        free if ptr?
+        free if ptr? && @owned
+      end
+
+      # Raises if the widget, or (since child widgets point to the memory
+      # owned by their root widget) any of its ancestors, has been closed.
+      def to_unsafe : LibGPhoto2::CameraWidget*
+        @parent.try &.to_unsafe
+        @ptr || raise GPhoto2::Exception.new("Widget has been closed")
       end
 
       # Returns `true` if the widget has readonly flag set.
@@ -114,12 +140,27 @@ module GPhoto2
       # ```
       # puts camera[:whitebalance].to_s # => "Automatic"
       # ```
-      def to_s(io : IO)
-        io << value
+      def to_s(io : IO) : Nil
+        # Widgets without value (i.e. `Window`) are represented as empty string
+        io << value?
       end
 
       # Compares widget with another, based on `#type`, `#name` and `#value`.
-      def_equals type, name, value
+      def ==(other : self)
+        return true if same?(other)
+
+        type == other.type &&
+          name == other.name &&
+          value? == other.value?
+      end
+
+      # NOTE: The (writable) `#value` is left out on purpose, so that
+      # the hash of a widget doesn't change along with its value.
+      def hash(hasher)
+        hasher = type.hash(hasher)
+        hasher = name.hash(hasher)
+        hasher
+      end
 
       # Compares `#value` with given *other* using `#to_s`.
       #
@@ -154,19 +195,42 @@ module GPhoto2
 
       # Returns `true` if `#value` is included in the *other* `::Range`.
       #
+      # Numeric ranges are compared against the numeric `#value`,
+      # `Time` ranges against the `Time` value of `Date` widgets,
+      # other ranges against the `#value` converted to a `String`.
+      #
       # ```
       # camera[:exposurecompensation].in? -1.6..0.6
       # camera[:aperture].in? 4..7.1
       # camera[:iso].in? 100..400
+      # camera[:datetime].in? 1.day.ago..Time.utc
       # ```
-      def in?(other : ::Range)
+      def in?(other : ::Range(B, E)) : Bool forall B, E
         return false unless value = self.value
 
-        if other.begin.class <= Number || other.end.class <= Number
+        {% if B < ::Number || E < ::Number %}
           !!((num_value = value.to_s.to_f?) && other.includes?(num_value))
-        else
-          other.includes?(value)
-        end
+        {% elsif B <= ::Time || E <= ::Time %}
+          value.is_a?(::Time) && other.includes?(value)
+        {% else %}
+          other.includes?(value.to_s)
+        {% end %}
+      end
+
+      # :nodoc:
+      #
+      # Returns the raw widget value, without treating any values as empty
+      # (see `#value`), or `nil` for widgets without value.
+      def raw_value
+        get_value
+      rescue NotImplementedError
+      end
+
+      # :nodoc:
+      #
+      # Sets the value of this widget to the raw value of the *other* one.
+      def copy_value_from(other : Base) : Nil
+        set_value(other.get_value)
       end
 
       protected abstract def get_value
@@ -175,6 +239,26 @@ module GPhoto2
       protected def get_value_ptr(ptr)
         GPhoto2.check! \
           LibGPhoto2.gp_widget_get_value(self, ptr)
+      end
+
+      # :nodoc:
+      #
+      # Returns `true` if the value has been changed, as tracked by
+      # libgphoto2 (and used by camera drivers to pick the values to save).
+      protected def changed? : Bool
+        changed = GPhoto2.check!(LibGPhoto2.gp_widget_changed(self)) != 0
+
+        # NOTE: Reading the flag also resets it in libgphoto2 < 2.5.20,
+        # so it's restored (unset flags stay unset, so these are skipped)
+        self.changed = true if changed
+        changed
+      end
+
+      # :nodoc:
+      protected def changed=(changed : Bool) : Bool
+        GPhoto2.check! \
+          LibGPhoto2.gp_widget_set_changed(self, changed ? 1 : 0)
+        changed
       end
 
       protected def set_value_ptr(ptr)

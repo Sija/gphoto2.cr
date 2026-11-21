@@ -23,8 +23,8 @@ lib LibGPhoto2
   alias GPContextCancelFunc   = GPContext*, Void* -> GPContextFeedback
 
   alias GPContextProgressStartFunc  = GPContext*, LibC::Float, LibC::Char*, Void* -> LibC::UInt
-  alias GPContextProgressUpdateFunc = GPContext*, LibC::Int, LibC::Float, Void* ->
-  alias GPContextProgressStopFunc   = GPContext*, LibC::Int, Void* ->
+  alias GPContextProgressUpdateFunc = GPContext*, LibC::UInt, LibC::Float, Void* ->
+  alias GPContextProgressStopFunc   = GPContext*, LibC::UInt, Void* ->
 
   #
   # Structs

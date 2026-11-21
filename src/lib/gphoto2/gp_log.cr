@@ -8,6 +8,7 @@ lib LibGPhoto2
     Error
     Verbose
     Debug
+    Data
   end
 
   #

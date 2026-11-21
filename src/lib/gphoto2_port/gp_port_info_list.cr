@@ -5,7 +5,7 @@ lib LibGPhoto2Port
   #
 
   struct GPPortInfoList
-    info : GPPortInfo*
+    info : GPPortInfo**
     count : LibC::UInt
     iolib_count : LibC::UInt
   end

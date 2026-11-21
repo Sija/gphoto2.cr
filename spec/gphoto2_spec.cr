@@ -5,6 +5,14 @@ describe GPhoto2 do
     it "should have proper format" do
       GPhoto2.library_version.should match /^\d+(\.\d+){2,3}(-\w+)?$/
     end
+
+    it "includes library build details when verbose" do
+      version = GPhoto2.library_version
+      verbose = GPhoto2.library_version(:verbose).lines
+
+      verbose.size.should be > 1
+      verbose.first.should eq version
+    end
   end
 
   describe ".result_as_string" do
@@ -28,6 +36,35 @@ describe GPhoto2 do
       return_codes.each do |code, string|
         GPhoto2.result_as_string(code).should eq string
       end
+    end
+  end
+
+  describe ".time_from" do
+    it "returns the time for the given Unix timestamp" do
+      GPhoto2.time_from(1_000_000).should eq Time.unix(1_000_000)
+    end
+
+    it "returns nil for timestamps out of range" do
+      GPhoto2.time_from(Int64::MAX).should be_nil
+      GPhoto2.time_from(Int64::MIN).should be_nil
+      GPhoto2.time_from(253_402_300_800_i64).should be_nil
+    end
+  end
+
+  describe ".string_from" do
+    it "reads up to the first null byte" do
+      chars = StaticArray(LibC::Char, 8).new(0_u8)
+      chars.to_unsafe.copy_from("foo".to_unsafe, 3)
+      GPhoto2.string_from(chars).should eq "foo"
+    end
+
+    it "does not read past the end of the array" do
+      chars = StaticArray(LibC::Char, 4).new('x'.ord.to_u8)
+      GPhoto2.string_from(chars).should eq "xxxx"
+    end
+
+    it "returns empty string for zeroed array" do
+      GPhoto2.string_from(StaticArray(LibC::Char, 4).new(0_u8)).should eq ""
     end
   end
 

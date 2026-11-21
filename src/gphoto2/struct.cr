@@ -1,7 +1,11 @@
 module GPhoto2
   module Struct(T)
-    getter ptr : T* { Pointer(T).null }
     getter? ptr : T*?
+
+    # Returns the wrapped pointer, or a null pointer if not set.
+    def ptr : T*
+      @ptr || Pointer(T).null
+    end
 
     def initialize(ptr : T*? = nil)
       self.ptr = ptr
@@ -13,7 +17,14 @@ module GPhoto2
     end
 
     # Returns wrapped value.
+    #
+    # Raises `GPhoto2::Exception` if there's no value to return,
+    # i.e. after the object has been closed.
     def wrapped : T
+      ptr = to_unsafe
+      if ptr.null?
+        raise GPhoto2::Exception.new("#{self.class} is closed or not initialized")
+      end
       ptr.value
     end
 

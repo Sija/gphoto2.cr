@@ -30,8 +30,8 @@ module GPhoto2
       port_info_list = PortInfoList.new
       abilities_list = CameraAbilitiesList.new(context, port_info_list)
 
-      cameras = abilities_list.detect.to_a
-      cameras.map do |entry|
+      detected = abilities_list.detect
+      detected.to_a.map do |entry|
         Camera.new(model: entry.name, port: entry.value).tap do |camera|
           # See: `CameraAbilities.find`
           camera.abilities = abilities_list[camera.model]
@@ -40,6 +40,8 @@ module GPhoto2
         end
       end
     ensure
+      detected.try &.close
+      abilities_list.try &.close
       context.try &.close
     end
 
@@ -66,13 +68,14 @@ module GPhoto2
     end
 
     # Pass a block to automatically close the camera.
+    # Returns the value of the block.
     #
     # ```
-    # GPhoto2::Camera.first do |camera|
-    #   # ...
+    # file = GPhoto2::Camera.first do |camera|
+    #   camera.capture.tap(&.save)
     # end
     # ```
-    def self.first(&) : Nil
+    def self.first(&)
       first.autorelease { |camera| yield camera }
     end
 
@@ -93,20 +96,22 @@ module GPhoto2
     end
 
     # Pass a block to automatically close the camera.
+    # Returns the value of the block.
     #
     # ```
     # GPhoto2::Camera.open(model, port) do |camera|
     #   # ...
     # end
     # ```
-    def self.open(model : String, port : String, &) : Nil
+    def self.open(model : String, port : String, &)
       open(model, port).autorelease { |camera| yield camera }
     end
 
     # Filters devices by a given condition.
     #
-    # Filter keys can be either *model* or *port*. Only the first filter is
-    # used.
+    # Filter keys can be either *model* or *port*. `String` filters must
+    # match exactly, while `Regex` filters are matched against the value.
+    # When both filters are given, cameras must match both of them.
     #
     # ```
     # # Find the cameras whose model names contain Nikon.
@@ -117,8 +122,8 @@ module GPhoto2
     # ```
     def self.where(*, model : String | Regex? = nil, port : String | Regex? = nil) : Array(self)
       all.select do |camera|
-        (!model || camera.model.match model) &&
-          (!port || camera.port.match port)
+        (model.nil? || model === camera.model) &&
+          (port.nil? || port === camera.port)
       end
     end
 
@@ -131,6 +136,7 @@ module GPhoto2
     end
 
     # Ensures the camera is finalized when passed a block.
+    # Returns the value of the block.
     #
     # ```
     # # Find the cameras whose model names contain Nikon.
@@ -141,13 +147,19 @@ module GPhoto2
     #   # ...
     # end
     # ```
-    def autorelease(&) : Nil
+    def autorelease(&)
       yield self ensure close
     end
 
+    # Closes the camera, freeing all associated resources.
+    #
+    # NOTE: The camera will get reinitialized if you try to access it again.
     def close : Nil
       @context.try &.close
-      @window.try &.close
+      @context = nil
+      # NOTE: The widget tree is not freed explicitly, since its widgets
+      # might still be in use; it gets freed by the GC instead.
+      reset
       unref if ptr?
     end
 
@@ -159,23 +171,28 @@ module GPhoto2
     #
     # NOTE: The camera will get reinitialized if you try to access the camera again.
     def exit : Nil
-      _exit
+      _exit if ptr?
     end
 
+    # Returns abilities of the camera model.
+    #
+    # NOTE: Doesn't require the camera to be initialized.
     def abilities : CameraAbilities
-      init unless @abilities
-      @abilities.not_nil!
+      @abilities ||= CameraAbilities.find(@model)
     end
 
+    # Returns info of the camera port.
+    #
+    # NOTE: Doesn't require the camera to be initialized.
     def port_info : PortInfo
-      init unless @port_info
-      @port_info.not_nil!
+      @port_info ||= PortInfo.find(@port)
     end
 
     getter context : Context { Context.new }
 
     # Yields opened instance of `Port` with already associated camera's `PortInfo`.
     # Port is automatically closed on block exit/exception.
+    # Returns the value of the block.
     #
     # To reset given camera's port you can do:
     #
@@ -185,7 +202,7 @@ module GPhoto2
     #   port.reset
     # end
     # ```
-    def with_port(&) : Nil
+    def with_port(&)
       port = Port.new
       port.info = port_info
       port.open
@@ -205,41 +222,29 @@ module GPhoto2
       abilities.operations.includes?(operation)
     end
 
-    def_equals @model, @port
+    def_equals_and_hash @model, @port
 
+    # NOTE: The pointer is assigned only once fully set up, since `#ptr`
+    # (and thus `#to_unsafe`) would otherwise call `#init` recursively.
     private def init : Nil
-      new
-      set_abilities(@abilities || CameraAbilities.find(@model))
-      set_port_info(@port_info || PortInfo.find(@port))
-    end
-
-    private def new
       GPhoto2.check! \
         LibGPhoto2.gp_camera_new(out ptr)
+      begin
+        GPhoto2.check! \
+          LibGPhoto2.gp_camera_set_abilities(ptr, abilities.wrapped)
+        GPhoto2.check! \
+          LibGPhoto2.gp_camera_set_port_info(ptr, port_info)
+      rescue ex
+        # Don't leave a half-initialized camera behind
+        LibGPhoto2.gp_camera_unref(ptr)
+        raise ex
+      end
       self.ptr = ptr
     end
 
     private def _exit
       context.check! \
         LibGPhoto2.gp_camera_exit(self, context)
-    end
-
-    private def set_port_info(port_info : PortInfo)
-      # Need to use `@ptr` instead of `self`, since we call
-      # `#init` inside of overridden `#ptr` method.
-      ptr = @ptr || Pointer(LibGPhoto2::Camera).null
-      GPhoto2.check! \
-        LibGPhoto2.gp_camera_set_port_info(ptr, port_info)
-      @port_info = port_info
-    end
-
-    private def set_abilities(abilities : CameraAbilities)
-      # Need to use `@ptr` instead of `self`, since we call
-      # `#init` inside of overridden `#ptr` method.
-      ptr = @ptr || Pointer(LibGPhoto2::Camera).null
-      GPhoto2.check! \
-        LibGPhoto2.gp_camera_set_abilities(ptr, abilities.wrapped)
-      @abilities = abilities
     end
 
     private def unref

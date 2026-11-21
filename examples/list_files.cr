@@ -1,7 +1,32 @@
 require "../src/gphoto2"
 
-# Recursively list folder contents with extended metadata.
+# Returns the columns describing the given *file*, using `-` for the
+# metadata not reported by the camera.
+private def file_columns(file)
+  # Avoid using `CameraFile#size` here to prevent having to load the data along with it.
+  info = file.info.file?
 
+  size = info.try(&.size).try(&.humanize_bytes)
+  type = info.try(&.type)
+  mtime = info.try(&.mtime).try(&.to_s("%Y-%m-%d %H:%M:%S"))
+
+  if info && (info.readable? || info.removable?)
+    flags = String.build do |str|
+      str << '['
+      str << 'R' if info.readable?
+      str << 'W' if info.removable?
+      str << ']'
+    end
+  end
+
+  if info && (width = info.width) && (height = info.height)
+    dimensions = "#{width} x #{height}"
+  end
+
+  {size, type, flags, dimensions, mtime}.map { |column| column || "-" }
+end
+
+# Recursively list folder contents with extended metadata.
 def visit(folder, level = 0)
   files = folder.files
 
@@ -11,30 +36,10 @@ def visit(folder, level = 0)
   }
 
   files.each do |file|
-    name = file.name
-    info = file.info.file
-    # Avoid using `CameraFile#size` here to prevent having to load the data along with it.
-    size = info.size.try(&.humanize_bytes) || "-"
-    type = info.type || "-"
-    mtime = info.mtime.try(&.to_s("%Y-%m-%d %H:%M:%S")) || "-"
-
-    if info.readable? || info.removable?
-      flags = String.build do |str|
-        str << '['
-        str << 'R' if info.readable?
-        str << 'W' if info.removable?
-        str << ']'
-      end
-    end
-    flags ||= "-"
-
-    if info.width && info.height
-      dimensions = "#{info.width} x #{info.height}"
-    end
-    dimensions ||= "-"
+    size, type, flags, dimensions, mtime = file_columns(file)
 
     puts "%s  %s  %s  %s  %s  %s" % {
-      name.ljust(30).colorize(:blue),
+      file.name.ljust(30).colorize(:blue),
       type.ljust(25).colorize(:magenta),
       flags.ljust(5).colorize(:cyan),
       size.rjust(12).colorize(:yellow),

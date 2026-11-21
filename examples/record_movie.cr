@@ -17,7 +17,7 @@ GPhoto2::Camera.first do |camera|
   camera.update(movie: false)
 
   # Block until the camera finishes with the file.
-  event = camera.wait_for(:file_added)
+  event = camera.wait_for(:file_added, timeout: 1.minute)
 
   # The event data has a camera file that can be saved.
   file = event.data.as(GPhoto2::CameraFile)
