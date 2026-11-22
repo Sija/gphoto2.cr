@@ -348,6 +348,19 @@ module GPhoto2
         end
       end
 
+      it "returns an empty archive for an empty folder given an empty root" do
+        with_directory_camera do |camera, dir|
+          Dir.mkdir_p(File.join(dir, "DCIM", "sub", "empty"))
+          zip_entries(camera / "DCIM/sub/empty", "").should be_empty
+          zip_entries(camera / "DCIM/sub/empty", ".").should be_empty
+          zip_entries(camera / "DCIM", "").should eq({
+            "a.jpg"      => "hello",
+            "sub/b.jpg"  => "xyz",
+            "sub/empty/" => "",
+          })
+        end
+      end
+
       it "uses the given root folder name" do
         with_directory_camera do |camera|
           zip_entries(camera / "DCIM", "photos").should eq({

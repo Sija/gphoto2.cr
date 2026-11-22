@@ -52,6 +52,9 @@ module GPhoto2
         pathname = Path.posix(root, pathname) if root
 
         name = pathname.normalize.to_s.lchop('/')
+        # The compressed folder itself, given an empty *root* (i.e. `""`),
+        # has no name either (it would end up as a `./` entry)
+        return "" if name == "."
 
         invalid = name == ".." ||
                   name.starts_with?("../") ||
