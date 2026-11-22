@@ -491,7 +491,7 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/2e7afb0/src/gphoto2/camera/event.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/7c94d32/src/gphoto2/camera/event.cr#L4" target="_blank">
         gphoto2/camera/event.cr
       </a>
     
@@ -518,6 +518,13 @@
     Instance Method Summary
   </h2>
   <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#each_event%28timeout%3ATime%3A%3ASpan%3D2.seconds%2C%26%29-instance-method" class="signature"><strong>#each_event</strong>(timeout : Time::Span = <span class="n">2</span>.seconds, &)</a>
+        
+          <div class="summary"><p>Waits for events and yields each of them as it arrives, until the block breaks out of the loop (or an error is raised).</p></div>
+        
+      </li>
     
       <li class="entry-summary">
         <a href="#wait%28timeout%3ATime%3A%3ASpan%3D2.seconds%29%3ACameraEvent-instance-method" class="signature"><strong>#wait</strong>(timeout : Time::Span = <span class="n">2</span>.seconds) : CameraEvent</a>
@@ -557,6 +564,45 @@
     Instance Method Detail
   </h2>
   
+    <div class="entry-detail" id="each_event(timeout:Time::Span=2.seconds,&amp;)-instance-method">
+      <div class="signature">
+        
+        def <strong>each_event</strong>(timeout : Time::Span = <span class="n">2</span>.seconds, &)
+
+        <a class="method-permalink" href="#each_event%28timeout%3ATime%3A%3ASpan%3D2.seconds%2C%26%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Waits for events and yields each of them as it arrives, until
+the block breaks out of the loop (or an error is raised).</p>
+<p>Timeout events (see <code><a href="../../LibGPhoto2/CameraEventType.html#Timeout">CameraEvent::Type::Timeout</a></code>) are skipped,
+<em>timeout</em> being the time to wait for each of the events.</p>
+<p>Returns the value given to <code>break</code>.</p>
+<pre><code class="language-crystal">camera.trigger
+camera.each_event <span class="k">do</span> <span class="o">|</span>event<span class="o">|</span>
+  <span class="k">case</span> event.<span class="k">type</span>
+  <span class="k">when</span> .file_added?
+    event.data.<span class="k">as</span>(<span class="t">CameraFile</span>).save
+    <span class="k">break</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+<p><span class="flag purple">NOTE</span>  This method is blocking, as is waiting for each of the events,
+so the other fibers don't get to run in the meantime (unless built
+with <code>-Dpreview_mt</code>). To stop waiting while there are no events, use
+<code><a href="../../GPhoto2/Camera/Event.html#wait%28timeout%3ATime%3A%3ASpan%3D2.seconds%29%3ACameraEvent-instance-method">#wait</a></code> to wait for them one by one, or set <code>Context#cancel_callback</code>,
+which drivers (i.e. PTP) check while waiting, making this method
+raise <code><a href="../../GPhoto2/Error.html">GPhoto2::Error</a></code> with <code>GP_ERROR_CANCEL</code> code.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7c94d32/src/gphoto2/camera/event.cr#L40" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="wait(timeout:Time::Span=2.seconds):CameraEvent-instance-method">
       <div class="signature">
         
@@ -576,7 +622,7 @@ arrives within the given <em>timeout</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/2e7afb0/src/gphoto2/camera/event.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7c94d32/src/gphoto2/camera/event.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -600,7 +646,7 @@ no matching event arrives within the given <em>timeout</em>.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/2e7afb0/src/gphoto2/camera/event.cr#L21" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/7c94d32/src/gphoto2/camera/event.cr#L53" target="_blank">View source</a>]
         
       </div>
     </div>
