@@ -312,8 +312,10 @@ module GPhoto2
 
     # Otherwise libgphoto2 fails with a cryptic "The path '.' is not absolute."
     private def check_stored! : Nil
-      return unless preview?
-      raise Error.new("Preview files aren't stored on the camera", LibGPhoto2::GP_ERROR_NOT_SUPPORTED)
+      if preview?
+        raise Error.new "Preview files aren't stored on the camera",
+          LibGPhoto2::GP_ERROR_NOT_SUPPORTED
+      end
     end
 
     private def new
@@ -409,6 +411,7 @@ module GPhoto2
         # NOTE: Capped before adding 1, since the size might be bogus
         (Math.min(size, MAX_PREALLOCATED_SIZE.to_u64 - 1) + 1).to_i32
       end
+
       # Starts with (at most) a single chunk, since reading the file in chunks
       # might turn out not to be supported (see below), in which case a buffer
       # of the expected size would have been allocated for nothing
@@ -421,7 +424,9 @@ module GPhoto2
             # The file might end right at the limit, which needs to be
             # checked before giving up
             # (see below for the lack of support)
-            return to_slice unless size = try_read_chunk(Bytes.new(1), offset.to_u64, type)
+            unless size = try_read_chunk(Bytes.new(1), offset.to_u64, type)
+              return to_slice
+            end
             break if size.zero?
             raise Error.from_code(LibGPhoto2::GP_ERROR_FIXED_LIMIT_EXCEEDED)
           end
@@ -466,9 +471,8 @@ module GPhoto2
 
     private def get_mime_type
       GPhoto2.check! \
-        LibGPhoto2.gp_file_get_mime_type(self, out mime_type)
-      # NOTE: `Pointer#not_nil!` doesn't check for null pointers
-      mime_type.null? ? "" : String.new(mime_type)
+        LibGPhoto2.gp_file_get_mime_type(self, out ptr)
+      ptr ? String.new(ptr) : ""
     end
 
     private def set_mime_type(mime_type)
