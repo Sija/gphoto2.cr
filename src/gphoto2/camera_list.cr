@@ -2,11 +2,12 @@ require "./struct"
 
 module GPhoto2
   class CameraList
-    include GPhoto2::Struct(LibGPhoto2::CameraList)
-
     record Entry,
       name : String,
       value : String
+
+    include GPhoto2::Struct(LibGPhoto2::CameraList)
+    include Enumerable(Entry)
 
     # NOTE: allocates memory.
     def initialize
@@ -28,10 +29,24 @@ module GPhoto2
       count
     end
 
-    # Returns an array of entries in the list.
-    def to_a : Array(Entry)
-      Array(Entry).new(size) do |i|
-        Entry.new get_name(i), get_value(i)
+    # Returns `true` if the list has no entries.
+    #
+    # NOTE: Overrides `Enumerable#empty?`, so that it doesn't need to fetch
+    # the first entry (see `#each`), which takes two more calls into libgphoto2.
+    def empty? : Bool
+      size.zero?
+    end
+
+    # Yields each entry in the list.
+    #
+    # ```
+    # list.each do |entry|
+    #   puts "#{entry.name}: #{entry.value}"
+    # end
+    # ```
+    def each(& : Entry ->) : Nil
+      size.times do |i|
+        yield Entry.new(get_name(i), get_value(i))
       end
     end
 

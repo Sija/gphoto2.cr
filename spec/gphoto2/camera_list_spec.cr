@@ -20,6 +20,38 @@ module GPhoto2
       ]
     end
 
+    describe "#each" do
+      it "yields the entries in order" do
+        list = CameraList.new
+        GPhoto2.check! LibGPhoto2.gp_list_append(list, "foo", "bar")
+        GPhoto2.check! LibGPhoto2.gp_list_append(list, "baz", nil)
+
+        entries = [] of CameraList::Entry
+        list.each { |entry| entries << entry }
+        entries.should eq list.to_a
+      end
+
+      it "makes the list enumerable" do
+        list = CameraList.new
+        GPhoto2.check! LibGPhoto2.gp_list_append(list, "foo", "bar")
+        GPhoto2.check! LibGPhoto2.gp_list_append(list, "baz", "qux")
+
+        list.map(&.name).should eq %w[foo baz]
+        list.find(&.value.== "qux").try(&.name).should eq "baz"
+        list.empty?.should be_false
+        CameraList.new.empty?.should be_true
+      end
+    end
+
+    describe "#empty?" do
+      it "returns whether the list has any entries" do
+        list = CameraList.new
+        list.empty?.should be_true
+        GPhoto2.check! LibGPhoto2.gp_list_append(list, "foo", "bar")
+        list.empty?.should be_false
+      end
+    end
+
     describe "#close" do
       it "frees the list" do
         list = CameraList.new
