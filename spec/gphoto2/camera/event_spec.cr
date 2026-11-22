@@ -109,6 +109,63 @@ module GPhoto2
       end
     end
 
+    describe "#each_event" do
+      it "yields the events as they arrive, skipping timeouts" do
+        with_fake_camera do |camera|
+          FakeDriver.events << FakeDriver::FakeEvent.new(:capture_complete)
+          FakeDriver.events << FakeDriver::FakeEvent.new(:timeout)
+          FakeDriver.events << FakeDriver::FakeEvent.new(:file_added, "/DCIM/a.jpg")
+
+          events = [] of CameraEvent::Type
+          camera.each_event do |event|
+            events << event.type
+            break if event.type.file_added?
+          end
+          events.should eq [CameraEvent::Type::CaptureComplete, CameraEvent::Type::FileAdded]
+          FakeDriver.calls[:wait_for_event].should eq 3
+        end
+      end
+
+      it "keeps waiting while there are no events" do
+        with_fake_camera do |camera|
+          calls = 0
+          camera.context.idle_callback = -> : Nil {
+            calls += 1
+            FakeDriver.events << FakeDriver::FakeEvent.new(:capture_complete) if calls == 5
+          }
+          event = camera.each_event { |event| break event }
+          event.try(&.type).should eq CameraEvent::Type::CaptureComplete
+          # 4 timeouts, followed by the event (queued before it's returned)
+          FakeDriver.calls[:wait_for_event].should eq 5
+        end
+      end
+
+      it "returns the value given to break" do
+        with_fake_camera do |camera|
+          FakeDriver.events << FakeDriver::FakeEvent.new(:file_added, "/DCIM/a.jpg")
+          file = camera.each_event { |event| break event.data }
+          file.should eq camera.blob("/DCIM/a.jpg")
+        end
+      end
+
+      it "waits for each of the events with the given timeout" do
+        with_fake_camera do |camera|
+          FakeDriver.events << FakeDriver::FakeEvent.new(:capture_complete)
+          camera.each_event(1.5.seconds) { break }
+          FakeDriver.last_timeout.should eq 1500
+        end
+      end
+
+      it "raises when waiting fails" do
+        with_directory_camera do |camera|
+          error = expect_raises(GPhoto2::Error) do
+            camera.each_event(10.milliseconds) { }
+          end
+          error.code.should eq LibGPhoto2::GP_ERROR_NOT_SUPPORTED
+        end
+      end
+    end
+
     describe "#wait_for" do
       it "skips events of other types" do
         with_fake_camera do |camera|

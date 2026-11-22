@@ -12,6 +12,38 @@ module GPhoto2
         wait_for_event(timeout)
       end
 
+      # Waits for events and yields each of them as it arrives, until
+      # the block breaks out of the loop (or an error is raised).
+      #
+      # Timeout events (see `CameraEvent::Type::Timeout`) are skipped,
+      # *timeout* being the time to wait for each of the events.
+      #
+      # Returns the value given to `break`.
+      #
+      # ```
+      # camera.trigger
+      # camera.each_event do |event|
+      #   case event.type
+      #   when .file_added?
+      #     event.data.as(CameraFile).save
+      #     break
+      #   end
+      # end
+      # ```
+      #
+      # NOTE: This method is blocking, as is waiting for each of the events,
+      # so the other fibers don't get to run in the meantime (unless built
+      # with `-Dpreview_mt`). To stop waiting while there are no events, use
+      # `#wait` to wait for them one by one, or set `Context#cancel_callback`,
+      # which drivers (i.e. PTP) check while waiting, making this method
+      # raise `GPhoto2::Error` with `GP_ERROR_CANCEL` code.
+      def each_event(timeout : Time::Span = 2.seconds, &)
+        loop do
+          event = wait(timeout)
+          yield event unless event.type.timeout?
+        end
+      end
+
       # Waits for the specified event type and returns the event.
       #
       # Raises `GPhoto2::Error` (with `GP_ERROR_TIMEOUT` code) when
