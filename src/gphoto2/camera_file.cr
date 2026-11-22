@@ -16,6 +16,12 @@ module GPhoto2
     # Initial buffer size used in `#read`.
     BUFFER_SIZE = 256 * 1024
 
+    # Maximum size of a chunk requested from the camera at once by `#read`
+    # and `#write_to`, the same as used by libgphoto2 itself for reading
+    # files in chunks (i.e. in its PTP driver). Larger chunks mean fewer
+    # round trips, while some cameras might not handle these too large.
+    CHUNK_SIZE = 1024 * 1024
+
     # Maximum size of a file read by `#read`, since `Bytes`
     # can't hold more than `Int32::MAX` bytes.
     private MAX_READ_SIZE = Int32::MAX
@@ -318,7 +324,7 @@ module GPhoto2
 
     # Writes the file to *io*, as read from the camera chunk by chunk.
     private def stream_to(io : IO, type : Type = :normal) : Nil
-      buffer = Bytes.new(BUFFER_SIZE)
+      buffer = Bytes.new(CHUNK_SIZE)
       offset = 0_u64
 
       loop do
@@ -394,7 +400,7 @@ module GPhoto2
           buffer = Bytes.new(new_size).tap(&.copy_from(buffer))
         end
         # Request chunks of (at most) a constant size from the camera
-        chunk_size = Math.min(BUFFER_SIZE, buffer.size - offset)
+        chunk_size = Math.min(CHUNK_SIZE, buffer.size - offset)
         size = read_chunk(buffer[offset, chunk_size], offset.to_u64, type)
 
         # Drivers might return less data than requested before reaching

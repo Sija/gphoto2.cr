@@ -293,7 +293,7 @@ module GPhoto2
 
       it "doesn't download the files as a whole" do
         with_directory_camera do |camera|
-          data = Bytes.new(CameraFile::BUFFER_SIZE * 2 + 123) { |i| (i % 251).to_u8 }
+          data = Bytes.new(CameraFile::CHUNK_SIZE * 2 + 123) { |i| (i % 251).to_u8 }
           stub = stub_file_read(camera, data, reported_size: data.size.to_u64, max_read_size: 1000_u64)
 
           entries = {} of String => Bytes

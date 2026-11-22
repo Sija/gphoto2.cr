@@ -83,7 +83,7 @@ module GPhoto2
         end
       end
 
-      [0, 5, CameraFile::BUFFER_SIZE, CameraFile::BUFFER_SIZE * 2, CameraFile::BUFFER_SIZE * 2 + 123].each do |size|
+      [0, 5, CameraFile::BUFFER_SIZE, CameraFile::BUFFER_SIZE * 2, CameraFile::BUFFER_SIZE * 2 + 123, CameraFile::CHUNK_SIZE, CameraFile::CHUNK_SIZE * 2 + 123].each do |size|
         it "reads #{size} bytes in chunks" do
           with_directory_camera do |camera|
             data = Bytes.new(size) { |i| (i % 251).to_u8 }
@@ -220,7 +220,7 @@ module GPhoto2
 
       it "reads the file in chunks, without downloading it as a whole" do
         with_directory_camera do |camera|
-          data = Bytes.new(CameraFile::BUFFER_SIZE * 2 + 123) { |i| (i % 251).to_u8 }
+          data = Bytes.new(CameraFile::CHUNK_SIZE * 2 + 123) { |i| (i % 251).to_u8 }
           stub = stub_file_read(camera, data, max_read_size: 1000_u64)
 
           io = IO::Memory.new
@@ -230,9 +230,22 @@ module GPhoto2
         end
       end
 
+      it "reads the file in chunks of the given size" do
+        with_directory_camera do |camera|
+          data = Bytes.new(CameraFile::CHUNK_SIZE * 2 + 123) { |i| (i % 251).to_u8 }
+          stub = stub_file_read(camera, data)
+
+          io = IO::Memory.new
+          camera.blob("/DCIM/a.jpg").write_to(io)
+          io.to_slice.should eq data
+          # Including the empty read, signaling the end of file
+          stub.reads.should eq 4
+        end
+      end
+
       it "downloads the file when reading it in chunks is not supported" do
         with_directory_camera do |camera|
-          data = Bytes.new(CameraFile::BUFFER_SIZE * 2 + 123) { |i| (i % 251).to_u8 }
+          data = Bytes.new(CameraFile::CHUNK_SIZE * 2 + 123) { |i| (i % 251).to_u8 }
           stub = stub_file_read(camera, data, unsupported_from: 0_u64)
 
           io = IO::Memory.new
@@ -244,8 +257,8 @@ module GPhoto2
 
       it "downloads the rest of the file when reading it in chunks stops being supported" do
         with_directory_camera do |camera|
-          data = Bytes.new(CameraFile::BUFFER_SIZE * 2 + 123) { |i| (i % 251).to_u8 }
-          stub = stub_file_read(camera, data, unsupported_from: CameraFile::BUFFER_SIZE.to_u64)
+          data = Bytes.new(CameraFile::CHUNK_SIZE * 2 + 123) { |i| (i % 251).to_u8 }
+          stub = stub_file_read(camera, data, unsupported_from: CameraFile::CHUNK_SIZE.to_u64)
 
           io = IO::Memory.new
           camera.blob("/DCIM/a.jpg").write_to(io)

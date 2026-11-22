@@ -10,6 +10,8 @@ module GPhoto2::SpecHelpers
     getter unsupported_from : UInt64?
     # Number of times the file has been downloaded as a whole.
     property downloads = 0
+    # Number of the partial reads of the file.
+    property reads = 0
 
     def initialize(@data, @reported_size, @max_read_size, @unsupported_from)
     end
@@ -55,6 +57,7 @@ module GPhoto2::SpecHelpers
       LibGPhoto2.gp_context_idle(context)
 
       file = Box(StubbedFile).unbox(user_data)
+      file.reads += 1
       if (limit = file.unsupported_from) && offset >= limit
         LibGPhoto2::GP_ERROR_NOT_SUPPORTED
       else
