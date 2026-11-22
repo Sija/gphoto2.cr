@@ -376,6 +376,17 @@ module GPhoto2
         end
       end
 
+      it "allows the block to move the temporary file away" do
+        with_directory_camera do |camera, dir|
+          target = File.join(dir, "kept.zip")
+          (camera / "DCIM").to_zip_file do |file|
+            File.rename(file.path, target)
+            file.path
+          end.try { |path| File.exists?(path).should be_false }
+          File.size(target).should be > 0
+        end
+      end
+
       it "refuses entry names pointing outside of the archive" do
         with_directory_camera do |camera|
           ["../evil", "..\\evil", "C:/evil", "c:evil"].each do |root|

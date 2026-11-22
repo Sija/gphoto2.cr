@@ -107,13 +107,14 @@ module GPhoto2
       #
       # Returns the value of the block.
       #
-      # NOTE: the temporary file will be deleted after the block returns.
+      # NOTE: the temporary file will be deleted after the block returns,
+      # unless the block has moved (or deleted) it already.
       def to_zip_file(root : String? = nil, &)
         tempfile = to_zip_file(root)
         begin
           yield tempfile
         ensure
-          tempfile.delete
+          File.delete?(tempfile.path)
         end
       end
     end
