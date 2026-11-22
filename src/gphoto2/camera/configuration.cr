@@ -361,12 +361,19 @@ module GPhoto2
         # guaranteed to set it, which would leave it pointing to garbage
         window = Pointer(LibGPhoto2::CameraWidget).null
         rc = LibGPhoto2.gp_camera_get_config(self, pointerof(window), context)
-        return unless context.check?(rc) { |code| yield code }
+        begin
+          return unless context.check?(rc) { |code| yield code }
 
-        if window.null?
-          raise Error.new("Camera did not report its configuration", LibGPhoto2::GP_ERROR)
+          if window.null?
+            raise Error.new("Camera did not report its configuration", LibGPhoto2::GP_ERROR)
+          end
+          CameraWidget.factory(window)
+        rescue ex
+          # The widget tree is ours after a successful call (even when one of
+          # the callbacks raised), until owned by the wrapper (see `.factory`)
+          LibGPhoto2.gp_widget_free(window) if GPhoto2.check?(rc) && !window.null?
+          raise ex
         end
-        CameraWidget.factory(window)
       end
 
       private def set_config
