@@ -76,6 +76,16 @@ module GPhoto2
         get_value.to_s.to_f64 == other
       end
 
+      # Compares the `#value` with the number given as a string (as accepted
+      # by `#value=`) numerically, or with `#to_s` if it's not a number.
+      #
+      # ```
+      # camera[:exposurecompensation] == "0.30"
+      # ```
+      def ==(other : String) : Bool
+        (number = other.to_f64?) ? self == number : super
+      end
+
       protected def get_value
         value = uninitialized LibC::Float
         get_value_ptr pointerof(value)

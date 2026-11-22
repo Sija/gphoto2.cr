@@ -403,6 +403,16 @@ module GPhoto2
     end
 
     describe CameraWidget::Range do
+      it "compares the value with numeric strings numerically" do
+        widget = build_range(-1_f32, 1_f32, 0.1_f32)
+        widget.value = "0.30"
+        (widget == "0.30").should be_true
+        (widget == "0.3").should be_true
+        (widget == " 0.3 ").should be_true
+        (widget == "0.4").should be_false
+        (widget == "abc").should be_false
+      end
+
       it "returns range and step" do
         widget = build_range(1, 3, 0.5)
         widget.range.should eq 1f32..3f32
