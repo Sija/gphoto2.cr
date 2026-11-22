@@ -65,8 +65,10 @@ module GPhoto2::FakeDriver
     functions = camera.wrapped.functions
     funcs = functions.value
 
-    funcs.get_config = ->(_camera : LibGPhoto2::Camera*, window : LibGPhoto2::CameraWidget**, _context : LibGPhoto2::GPContext*) {
+    funcs.get_config = ->(_camera : LibGPhoto2::Camera*, window : LibGPhoto2::CameraWidget**, context : LibGPhoto2::GPContext*) {
       FakeDriver.calls[:get_config] += 1
+      # Gives the callbacks (see `Context#idle_callback`) a chance to run
+      LibGPhoto2.gp_context_idle(context)
       window.value = FakeDriver.build_window unless FakeDriver.config_untouched?
       LibGPhoto2::GP_OK
     }

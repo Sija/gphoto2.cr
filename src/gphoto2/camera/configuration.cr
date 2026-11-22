@@ -311,12 +311,28 @@ module GPhoto2
         @dirty = false
       end
 
-      private def get_config
+      # Same as `#config`, but returns `nil` if the camera driver
+      # doesn't support configuration at all.
+      private def config? : Hash(String, CameraWidget::Base)?
+        unless @window
+          return unless window = get_config(&.== LibGPhoto2::GP_ERROR_NOT_SUPPORTED)
+          @window = window.as(CameraWidget::Window)
+        end
+        config
+      end
+
+      private def get_config : CameraWidget::Base
+        get_config { false }.not_nil!
+      end
+
+      # Returns `nil` for the error codes the block returns `true` for
+      # (see `Context#check?`).
+      private def get_config(& : Int32 -> Bool) : CameraWidget::Base?
         # Null-initialized (unlike `out` variables), since drivers aren't
         # guaranteed to set it, which would leave it pointing to garbage
         window = Pointer(LibGPhoto2::CameraWidget).null
-        context.check! \
-          LibGPhoto2.gp_camera_get_config(self, pointerof(window), context)
+        rc = LibGPhoto2.gp_camera_get_config(self, pointerof(window), context)
+        return unless context.check?(rc) { |code| yield code }
 
         if window.null?
           raise Error.new("Camera did not report its configuration", LibGPhoto2::GP_ERROR)

@@ -460,6 +460,17 @@ module GPhoto2
           camera.serialnumber.should eq "SN123"
         end
       end
+
+      it "does not mistake callback exceptions for the lack of configuration" do
+        with_configured_camera do |camera|
+          camera.context.idle_callback = -> : Nil {
+            raise GPhoto2::Error.from_code(LibGPhoto2::GP_ERROR_NOT_SUPPORTED)
+          }
+          expect_raises(GPhoto2::Error) do
+            camera.serialnumber
+          end
+        end
+      end
     end
   end
 end
