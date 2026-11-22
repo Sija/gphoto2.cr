@@ -438,6 +438,12 @@ module GPhoto2
         expect_raises(ArgumentError, "Time out of range") do
           widget.value = Int32::MIN.to_i64 - 1
         end
+        # Out of the range supported by `Time` as well
+        {Int64::MAX, Int64::MIN, UInt64::MAX}.each do |value|
+          expect_raises(ArgumentError, "Time out of range: #{value}") do
+            widget.value = value
+          end
+        end
         widget.value.should eq Time.unix(Int32::MAX)
       end
 

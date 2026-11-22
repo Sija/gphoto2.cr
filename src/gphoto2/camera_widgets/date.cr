@@ -19,7 +19,12 @@ module GPhoto2
           end
           set_value_ptr pointerof(unix)
         when Int
-          set_value Time.unix(value)
+          # Checked upfront, since `Time.unix` raises other errors
+          # (i.e. `OverflowError`) for the values out of its own range
+          unless LibC::Int::MIN <= value <= LibC::Int::MAX
+            raise ArgumentError.new("Time out of range: #{value}")
+          end
+          set_value Time.unix(value.to_i64)
         when String
           set_value parse_time(value)
         else
