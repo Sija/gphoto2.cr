@@ -343,8 +343,9 @@ module GPhoto2
       end
     end
 
-    # Same as `#read_chunk`, but returns `nil` if the camera driver
-    # doesn't support reading the file in chunks.
+    # Reads a chunk of the file starting at *offset* into *buffer*,
+    # returning the number of bytes read, or `nil` if the camera driver
+    # doesn't support reading the file in chunks (at that *offset*).
     private def try_read_chunk(buffer : Bytes, offset : UInt64, type : Type) : UInt64?
       size = buffer.size.to_u64
       rc = LibGPhoto2.gp_camera_file_read(@camera, folder, name, type,
@@ -364,18 +365,6 @@ module GPhoto2
       size
     end
 
-    # Reads a chunk of the file starting at *offset* into *buffer*,
-    # returning the number of bytes read.
-    private def read_chunk(buffer : Bytes, offset : UInt64, type : Type) : UInt64
-      size = buffer.size.to_u64
-
-      context.check! \
-        LibGPhoto2.gp_camera_file_read(@camera, folder, name, type,
-        offset, buffer, pointerof(size), context)
-
-      size
-    end
-
     private def _read(type = Type::Normal) : Bytes
       # Knowing the file size upfront allows allocating a buffer of the
       # right size (+1 byte, so that the end of file is detected without
@@ -392,7 +381,9 @@ module GPhoto2
           if buffer.size == MAX_READ_SIZE
             # The file might end right at the limit, which needs to be
             # checked before giving up
-            break if read_chunk(Bytes.new(1), offset.to_u64, type).zero?
+            # (see below for the lack of support)
+            return to_slice unless size = try_read_chunk(Bytes.new(1), offset.to_u64, type)
+            break if size.zero?
             raise Error.from_code(LibGPhoto2::GP_ERROR_FIXED_LIMIT_EXCEEDED)
           end
           # Grow geometrically to keep the number of copies low
@@ -401,7 +392,11 @@ module GPhoto2
         end
         # Request chunks of (at most) a constant size from the camera
         chunk_size = Math.min(CHUNK_SIZE, buffer.size - offset)
-        size = read_chunk(buffer[offset, chunk_size], offset.to_u64, type)
+        size = try_read_chunk(buffer[offset, chunk_size], offset.to_u64, type)
+
+        # Drivers might not support reading files in chunks (see `#stream_to`),
+        # in which case the file is downloaded as a whole instead
+        return to_slice unless size
 
         # Drivers might return less data than requested before reaching
         # the end of the file, which is signaled by an empty read instead.

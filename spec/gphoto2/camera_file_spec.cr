@@ -101,6 +101,22 @@ module GPhoto2
         end
       end
 
+      it "downloads the file when reading it in chunks is not supported" do
+        with_directory_camera do |camera|
+          # The "Directory Browse" driver doesn't support partial reads at all
+          camera.blob("/DCIM/a.jpg").read.should eq "hello".to_slice
+        end
+      end
+
+      it "downloads the file when reading it in chunks stops being supported" do
+        with_directory_camera do |camera|
+          data = Bytes.new(CameraFile::CHUNK_SIZE * 2 + 123) { |i| (i % 251).to_u8 }
+          stub = stub_file_read(camera, data, unsupported_from: CameraFile::CHUNK_SIZE.to_u64)
+          camera.blob("/DCIM/a.jpg").read.should eq data
+          stub.downloads.should eq 1
+        end
+      end
+
       it "keeps reading after short reads" do
         with_directory_camera do |camera|
           data = Bytes.new(3000) { |i| (i % 251).to_u8 }
