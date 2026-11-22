@@ -7,6 +7,9 @@ module GPhoto2
     # Provides callbacks for libgphoto2.
     module Callbacks
       macro set_callback(key, callback_type, args, public_setter = true, fallback = nil, &block)
+        # Returns *{{ key.id }}* callback.
+        #
+        # Raises `NilAssertionError` if not set, see `#{{ key.id }}_callback?`.
         getter! {{ key.id }}_callback : {{ callback_type.id }}
         private getter {{ key.id }}_box : Pointer(Void)?
 
@@ -93,6 +96,9 @@ module GPhoto2
         # libgphoto2 might report several, i.e. the one of the camera driver,
         # followed by a generic one (see `#check!`).
         getter messages = [] of String
+
+        # The first exception raised by a callback during the current call,
+        # re-raised once the call returns (see `#check!`).
         property exception : ::Exception?
       end
 

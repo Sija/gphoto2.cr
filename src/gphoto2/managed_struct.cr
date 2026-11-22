@@ -4,6 +4,7 @@ module GPhoto2
   module ManagedStruct(T)
     include Struct(T)
 
+    # Returns the pointer to the wrapped value, allocating it if not set.
     getter ptr : T* { Pointer(T).malloc }
 
     def initialize(ptr : T*? = nil)

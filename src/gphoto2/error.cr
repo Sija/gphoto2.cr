@@ -12,6 +12,7 @@ module GPhoto2
   end
 
   class Error < Exception
+    # Returns the libgphoto2 error code (i.e. `LibGPhoto2::GP_ERROR_IO`).
     getter code : Int32
 
     # Builds a new error from a GPhoto2 error code.

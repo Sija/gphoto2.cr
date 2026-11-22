@@ -1,5 +1,7 @@
 module GPhoto2
   module Struct(T)
+    # Returns the wrapped pointer, or `nil` if not set
+    # (i.e. after the object has been closed).
     getter? ptr : T*?
 
     # Returns the wrapped pointer, or a null pointer if not set.

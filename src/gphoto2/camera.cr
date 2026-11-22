@@ -14,7 +14,10 @@ module GPhoto2
 
     alias Operation = LibGPhoto2::CameraOperation
 
+    # Returns name of the camera model (i.e. `"Nikon DSC D5100 (PTP mode)"`).
     getter model : String
+
+    # Returns path of the camera port (i.e. `"usb:001,005"`).
     getter port : String
 
     protected setter abilities : CameraAbilities?

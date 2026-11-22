@@ -1,8 +1,19 @@
 module GPhoto2
   # Represents file information.
   class CameraFileInfo
+    # Returns information about the preview of the file.
+    #
+    # Raises `NilAssertionError` if not available, see `#preview?`.
     getter! preview : Preview
+
+    # Returns information about the file itself.
+    #
+    # Raises `NilAssertionError` if not available, see `#file?`.
     getter! file : File
+
+    # Returns information about the audio data of the file.
+    #
+    # Raises `NilAssertionError` if not available, see `#audio?`.
     getter! audio : Audio
 
     def initialize(info : LibGPhoto2::CameraFileInfo)
