@@ -433,6 +433,15 @@ module GPhoto2
         widget.value.should eq time
       end
 
+      it "compares the value with times regardless of their location" do
+        widget = build_widget(:date)
+        time = Time.unix(1_000_000)
+        widget.value = time
+        (widget == time).should be_true
+        (widget == time.in(Time::Location.fixed(3600))).should be_true
+        (widget == time + 1.second).should be_false
+      end
+
       it "accepts ISO 8601 strings" do
         widget = build_widget(:date)
         widget.value = "2020-01-02T03:04:05Z"

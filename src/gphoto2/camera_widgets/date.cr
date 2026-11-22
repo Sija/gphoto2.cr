@@ -3,6 +3,16 @@ require "./base"
 module GPhoto2
   class CameraWidget
     class Date < Base
+      # Compares the `#value` with the given time, regardless of its location
+      # (unlike `#to_s`, which includes it).
+      #
+      # ```
+      # camera[:datetime] == Time.local(2020, 1, 2, 3, 4, 5)
+      # ```
+      def ==(other : Time) : Bool
+        get_value == other
+      end
+
       protected def get_value
         value = uninitialized LibC::Int
         get_value_ptr pointerof(value)
