@@ -72,13 +72,19 @@ module GPhoto2
     # setting in `~/.gphoto/settings`), so they'd be gone after capturing
     # a few more. Getting them from the cache takes no camera I/O.
     protected def keep_unstored : Nil
-      return if preview? || @data_and_size || @path.dirname != "/"
+      return if preview? || @data_and_size || !unstored?
       data_and_size
     rescue ex : GPhoto2::Error
       # Cancellation (see `Context#cancel_callback`) must not go unnoticed
       raise ex if ex.code == LibGPhoto2::GP_ERROR_CANCEL
       # Otherwise it's left to be downloaded later on, as any other file,
       # since it might be stored on the camera after all
+    end
+
+    # Returns `true` if the file isn't stored on any of the camera storages
+    # (see `#keep_unstored`), so it can't be read from the camera in chunks.
+    private def unstored? : Bool
+      @path.dirname == "/"
     end
 
     # Relative *path* is resolved from the root folder.
@@ -274,7 +280,8 @@ module GPhoto2
     # file.write_to(STDOUT)
     # ```
     def write_to(io : IO) : Nil
-      if @data_and_size || preview?
+      # Files not stored on the camera are available as a whole only
+      if @data_and_size || preview? || unstored?
         write_data_to(io)
       else
         stream_to(io)
@@ -283,10 +290,11 @@ module GPhoto2
 
     # Reads file directly from the camera.
     #
-    # NOTE: Preview files aren't stored on the camera, so their
+    # NOTE: Preview files, and the files captured to the internal RAM of the
+    # camera (see `Camera#capture`) aren't stored on the camera, so their
     # (already captured) data is returned instead, see `#to_slice`.
     def read : Bytes
-      preview? ? to_slice : _read
+      preview? || unstored? ? to_slice : _read
     end
 
     # :nodoc:

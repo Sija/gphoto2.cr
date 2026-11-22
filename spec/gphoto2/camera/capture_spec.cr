@@ -27,6 +27,19 @@ module GPhoto2
         end
       end
 
+      it "doesn't try reading the files captured to the internal RAM from the camera" do
+        with_fake_camera do |camera|
+          FakeDriver.capture_path = "/capt0000.jpg"
+          cache_file(camera, "/capt0000.jpg", "in RAM")
+          stub = stub_file_read(camera, "on the camera".to_slice)
+
+          file = camera.capture
+          String.new(file.read).should eq "in RAM"
+          file.write_to(IO::Memory.new)
+          stub.reads.should eq 0
+        end
+      end
+
       it "leaves the files not available right away to be downloaded later on" do
         with_fake_camera do |camera|
           FakeDriver.capture_path = "/capt0000.jpg"
