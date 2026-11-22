@@ -373,7 +373,8 @@ module GPhoto2
     private def get_mime_type
       GPhoto2.check! \
         LibGPhoto2.gp_file_get_mime_type(self, out mime_type)
-      String.new mime_type.not_nil!
+      # NOTE: `Pointer#not_nil!` doesn't check for null pointers
+      mime_type.null? ? "" : String.new(mime_type)
     end
 
     private def set_mime_type(mime_type)
