@@ -90,6 +90,16 @@ module GPhoto2
     path.normalize
   end
 
+  # :nodoc:
+  #
+  # Returns `true` if the given *path* points to a folder rather than
+  # a file, judging by its form alone (i.e. it's empty, ends with `/`,
+  # `.` or `..`), regardless of whether it exists.
+  def folder_path?(path : Path | String) : Bool
+    path = path.to_s
+    path.ends_with?('/') || Path.posix(path).basename.in?("", ".", "..")
+  end
+
   # Returns `true` if the given return code *rc* denotes a success
   # (`GP_OK` or a non-negative value), `false` if it's an error code.
   def check?(rc : Int32) : Bool

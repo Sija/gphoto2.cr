@@ -56,14 +56,15 @@ module GPhoto2
 
     # Relative *path* is resolved from the root folder.
     #
-    # Raises `ArgumentError` if *path* points to the root folder.
+    # Raises `ArgumentError` if *path* points to a folder, rather than
+    # a file (i.e. it's empty, ends with `/`, `.` or `..`).
     #
     # NOTE: Memory is allocated lazily, on first access to `#ptr`.
     def initialize(@camera, path : Path | String)
-      @path = GPhoto2.absolute_path(path)
-      if @path.to_s == "/"
-        raise ArgumentError.new(%(Invalid file path: "/"))
+      if GPhoto2.folder_path?(path)
+        raise ArgumentError.new("Invalid file path: #{path.to_s.inspect}")
       end
+      @path = GPhoto2.absolute_path(path)
     end
 
     # Creates a preview file, which isn't stored on the camera.

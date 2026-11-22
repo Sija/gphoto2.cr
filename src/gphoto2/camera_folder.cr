@@ -80,7 +80,7 @@ module GPhoto2
     # Raises `ArgumentError` if *name* points to a folder, rather than
     # a file (i.e. it's empty, ends with `/`, `.` or `..`).
     def open(name : String) : CameraFile
-      if name.ends_with?('/') || Path.posix(name).basename.in?("", ".", "..")
+      if GPhoto2.folder_path?(name)
         raise ArgumentError.new("Invalid file name: #{name.inspect}")
       end
       CameraFile.new(@camera, resolve(name))
