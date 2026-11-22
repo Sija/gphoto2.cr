@@ -23,10 +23,14 @@ module GPhoto2
       count
     end
 
+    # Returns the index of the given *port* path in the list.
+    #
+    # Raises `GPhoto2::Error` if the port isn't found.
     def lookup_path(port : String) : Int32
       _lookup_path(port)
     end
 
+    # Returns info of the port at the given *index*.
     def [](index : Int32) : PortInfo
       get_info(index)
     end

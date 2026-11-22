@@ -19,10 +19,12 @@ module GPhoto2
       free if ptr?
     end
 
+    # Returns info of the port.
     def info : PortInfo
       get_info
     end
 
+    # Sets info of the port, which determines the device it connects to.
     def info=(info : PortInfo) : PortInfo
       set_info(info)
       info

@@ -9,10 +9,14 @@ module GPhoto2
     # it's not garbage-collected (and freed) while in use.
     @owner : PortInfoList | Port?
 
+    # Wraps the given *ptr*, keeping its *owner* from being garbage-collected.
     def initialize(ptr : LibGPhoto2Port::GPPortInfo*, @owner : PortInfoList | Port? = nil)
       super(ptr)
     end
 
+    # Returns info of the given *port* (i.e. `"usb:001,005"`).
+    #
+    # Raises `GPhoto2::Error` if the port isn't found.
     def self.find(port : String) : self
       port_info_list = PortInfoList.new
       port_info_list[port]

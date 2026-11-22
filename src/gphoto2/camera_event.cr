@@ -14,6 +14,7 @@ module GPhoto2
     # - `nil` otherwise, or when the camera driver didn't pass any data
     getter data : T
 
+    # Creates an event of the given *type*, with the given *data*.
     def initialize(@type : Type, @data)
     end
   end

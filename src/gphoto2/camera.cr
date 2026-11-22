@@ -146,9 +146,13 @@ module GPhoto2
       end
     end
 
+    # Creates a camera of the given *model*, connected to the given *port*.
+    #
+    # NOTE: The camera is initialized lazily, on first access to `#ptr`.
     def initialize(@model, @port)
     end
 
+    # Returns the wrapped pointer, initializing the camera if needed.
     def ptr
       init unless ptr?
       super

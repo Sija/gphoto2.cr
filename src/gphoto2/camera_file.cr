@@ -88,10 +88,12 @@ module GPhoto2
       io << @path
     end
 
+    # Returns file name.
     def name
       @path.basename
     end
 
+    # Returns path of the folder containing the file.
     def folder
       @path.dirname
     end

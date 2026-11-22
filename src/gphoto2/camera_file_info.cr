@@ -16,6 +16,8 @@ module GPhoto2
     # Raises `NilAssertionError` if not available, see `#audio?`.
     getter! audio : Audio
 
+    # Creates file information from the given libgphoto2 *info*,
+    # with the parts having no fields set left out.
     def initialize(info : LibGPhoto2::CameraFileInfo)
       @preview = get_info info.preview, Preview
       @file = get_info info.file, File

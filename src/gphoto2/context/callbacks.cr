@@ -109,6 +109,7 @@ module GPhoto2
         @callback_state.messages.last?
       end
 
+      # Sets up tracking of the error messages (see `#last_error`).
       def initialize
         self.error_callback = nil
       end

@@ -9,10 +9,12 @@ module GPhoto2
       @ptr || Pointer(T).null
     end
 
+    # Wraps the given *ptr*, if any.
     def initialize(ptr : T*? = nil)
       self.ptr = ptr
     end
 
+    # Returns the wrapped pointer, used when passed to C functions.
     def to_unsafe : T*
       # Debug.log ptr, backtrace_offset: 1
       ptr

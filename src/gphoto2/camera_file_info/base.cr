@@ -9,6 +9,7 @@ module GPhoto2
     abstract class Base
       # include GPhoto2::ManagedStruct(LibGPhoto2::CameraFileInfo)
 
+      # Returns the set of fields with information available.
       def fields : Fields
         wrapped.fields
       end
@@ -18,6 +19,7 @@ module GPhoto2
         fields.includes?(field)
       end
 
+      # Returns whether the file has been downloaded, or `nil` if not set.
       def status : Status?
         wrapped.status if field?(:status)
       end

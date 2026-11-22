@@ -6,6 +6,7 @@ module GPhoto2
   end
 
   class NoDevicesError < Exception
+    # Creates an error with the default message.
     def initialize
       super("No devices detected")
     end
@@ -21,10 +22,12 @@ module GPhoto2
       new(message, code)
     end
 
+    # Creates an error with the given *message* and libgphoto2 error *code*.
     def initialize(message : String?, @code : Int32)
       super(message)
     end
 
+    # Returns the message followed by the error code, i.e. `I/O problem (-7)`.
     def to_s(io : IO)
       if message = self.message.presence
         io << message << ' '
