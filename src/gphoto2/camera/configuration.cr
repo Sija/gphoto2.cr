@@ -173,8 +173,9 @@ module GPhoto2
           raise ex
         end
         # Drivers (i.e. PTP) clear the flags of the saved widgets themselves,
-        # make sure none are left behind, so the config isn't dirty anymore
-        @config.try &.each_value(&.changed = false)
+        # make sure none are left behind, so the config isn't dirty anymore.
+        # NOTE: The rest of the widgets has been just checked to be unflagged.
+        pending.each_value(&.changed = false)
         @dirty = false
         true
       end
