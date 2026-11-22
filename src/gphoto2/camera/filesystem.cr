@@ -32,7 +32,8 @@ module GPhoto2
       # Resets the filesystem. All cached information including the folder tree
       # will get lost and will be queried again on demand.
       def filesystem_reset : Nil
-        context.check! \
+        # Doesn't take the context, so there are no messages to check for
+        GPhoto2.check! \
           LibGPhoto2.gp_filesystem_reset(wrapped.fs)
       end
     end
