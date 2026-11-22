@@ -217,6 +217,58 @@ module GPhoto2
           io.to_s.should eq "hello"
         end
       end
+
+      it "reads the file in chunks, without downloading it as a whole" do
+        with_directory_camera do |camera|
+          data = Bytes.new(CameraFile::BUFFER_SIZE * 2 + 123) { |i| (i % 251).to_u8 }
+          stub = stub_file_read(camera, data, max_read_size: 1000_u64)
+
+          io = IO::Memory.new
+          camera.blob("/DCIM/a.jpg").write_to(io)
+          io.to_slice.should eq data
+          stub.downloads.should eq 0
+        end
+      end
+
+      it "downloads the file when reading it in chunks is not supported" do
+        with_directory_camera do |camera|
+          data = Bytes.new(CameraFile::BUFFER_SIZE * 2 + 123) { |i| (i % 251).to_u8 }
+          stub = stub_file_read(camera, data, unsupported_from: 0_u64)
+
+          io = IO::Memory.new
+          camera.blob("/DCIM/a.jpg").write_to(io)
+          io.to_slice.should eq data
+          stub.downloads.should eq 1
+        end
+      end
+
+      it "downloads the rest of the file when reading it in chunks stops being supported" do
+        with_directory_camera do |camera|
+          data = Bytes.new(CameraFile::BUFFER_SIZE * 2 + 123) { |i| (i % 251).to_u8 }
+          stub = stub_file_read(camera, data, unsupported_from: CameraFile::BUFFER_SIZE.to_u64)
+
+          io = IO::Memory.new
+          camera.blob("/DCIM/a.jpg").write_to(io)
+          io.to_slice.should eq data
+          stub.downloads.should eq 1
+        end
+      end
+
+      it "does not mistake callback exceptions for the lack of support" do
+        with_directory_camera do |camera|
+          stub = stub_file_read(camera, "hello".to_slice, unsupported_from: 0_u64)
+          camera.context.idle_callback = -> : Nil {
+            raise GPhoto2::Error.from_code(LibGPhoto2::GP_ERROR_NOT_SUPPORTED)
+          }
+
+          io = IO::Memory.new
+          expect_raises(GPhoto2::Error) do
+            camera.blob("/DCIM/a.jpg").write_to(io)
+          end
+          io.size.should eq 0
+          stub.downloads.should eq 0
+        end
+      end
     end
 
     describe "#save" do

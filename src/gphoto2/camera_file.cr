@@ -188,19 +188,20 @@ module GPhoto2
 
     # Writes file `#data` to the given *io*, without copying it first.
     #
+    # Unless the data is at hand already (i.e. of previews, or after
+    # accessing `#data`), it's read from the camera in chunks, so that the
+    # whole file is never held in memory (i.e. for large videos). Camera
+    # drivers not supporting that get the whole file downloaded instead.
+    #
     # ```
     # file = camera.preview
     # file.write_to(STDOUT)
     # ```
     def write_to(io : IO) : Nil
-      # Written in chunks, since `Bytes` can't hold more than `Int32::MAX`
-      # bytes, while files (i.e. videos) might be larger than that
-      ptr, remaining = data, size
-      while remaining > 0
-        chunk_size = Math.min(remaining, MAX_SLICE_SIZE.to_u64)
-        io.write(ptr.to_slice(chunk_size))
-        ptr += chunk_size
-        remaining -= chunk_size
+      if @data_and_size || preview?
+        write_data_to(io)
+      else
+        stream_to(io)
       end
     end
 
@@ -297,6 +298,64 @@ module GPhoto2
     private def get(type = Type::Normal)
       context.check! \
         LibGPhoto2.gp_camera_file_get(@camera, folder, name, type, self, context)
+    end
+
+    # Writes `#data` to *io*, starting at *offset*.
+    private def write_data_to(io : IO, offset : UInt64 = 0_u64) : Nil
+      # Written in chunks, since `Bytes` can't hold more than `Int32::MAX`
+      # bytes, while files (i.e. videos) might be larger than that
+      ptr, size = data, self.size
+      return if offset >= size
+
+      ptr, remaining = ptr + offset, size - offset
+      while remaining > 0
+        chunk_size = Math.min(remaining, MAX_SLICE_SIZE.to_u64)
+        io.write(ptr.to_slice(chunk_size))
+        ptr += chunk_size
+        remaining -= chunk_size
+      end
+    end
+
+    # Writes the file to *io*, as read from the camera chunk by chunk.
+    private def stream_to(io : IO, type : Type = :normal) : Nil
+      buffer = Bytes.new(BUFFER_SIZE)
+      offset = 0_u64
+
+      loop do
+        unless size = try_read_chunk(buffer, offset, type)
+          # Drivers might not support reading files in chunks at all, or
+          # past some offset (i.e. 4 GiB, for some PTP cameras), in which
+          # case the file is downloaded as a whole, and written from where
+          # the reading left off
+          return write_data_to(io, offset)
+        end
+        # See `#_read`
+        break if size.zero?
+
+        io.write(buffer[0, size])
+        offset += size
+      end
+    end
+
+    # Same as `#read_chunk`, but returns `nil` if the camera driver
+    # doesn't support reading the file in chunks.
+    private def try_read_chunk(buffer : Bytes, offset : UInt64, type : Type) : UInt64?
+      size = buffer.size.to_u64
+      rc = LibGPhoto2.gp_camera_file_read(@camera, folder, name, type,
+        offset, buffer, pointerof(size), context)
+
+      # Exceptions raised by the callbacks (regardless of their
+      # error code) must not be mistaken for the lack of support
+      unsupported = rc == LibGPhoto2::GP_ERROR_NOT_SUPPORTED &&
+                    !context.callback_exception?
+
+      begin
+        context.check!(rc)
+      rescue ex : GPhoto2::Error
+        raise ex unless unsupported
+        return
+      end
+      size
     end
 
     # Reads a chunk of the file starting at *offset* into *buffer*,

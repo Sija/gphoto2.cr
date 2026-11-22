@@ -26,9 +26,10 @@ module GPhoto2
             time: dos_time(mtime.to_local)
 
           begin
+            # Read in chunks (if supported by the driver), see `CameraFile#write_to`
             zip.add(entry) { |io| file.write_to(io) }
           ensure
-            # free the downloaded data right away, instead of waiting for the GC
+            # Free the downloaded data (if any) right away, instead of waiting for the GC
             file.close
           end
         end

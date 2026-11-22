@@ -7,8 +7,11 @@ module GPhoto2::SpecHelpers
     getter data : Bytes
     getter reported_size : UInt64?
     getter max_read_size : UInt64?
+    getter unsupported_from : UInt64?
+    # Number of times the file has been downloaded as a whole.
+    property downloads = 0
 
-    def initialize(@data, @reported_size, @max_read_size)
+    def initialize(@data, @reported_size, @max_read_size, @unsupported_from)
     end
   end
 
@@ -19,7 +22,13 @@ module GPhoto2::SpecHelpers
   #
   # When *max_read_size* is given, reads return at most that many
   # bytes, even when more were requested and are available.
-  def stub_file_read(camera : Camera, data : Bytes, reported_size : UInt64? = nil, max_read_size : UInt64? = nil) : Nil
+  #
+  # When *unsupported_from* is given, reads starting at that offset
+  # (or past it) fail as not supported, like with some PTP cameras.
+  #
+  # Files are served as a whole (see `CameraFile#data`) from *data* as well,
+  # counted by `StubbedFile#downloads` of the returned stub.
+  def stub_file_read(camera : Camera, data : Bytes, reported_size : UInt64? = nil, max_read_size : UInt64? = nil, unsupported_from : UInt64? = nil) : StubbedFile
     # Make sure the driver is initialized, so it doesn't override our functions.
     # Listing the files also makes them known to the filesystem cache.
     (camera / "DCIM").files
@@ -41,22 +50,41 @@ module GPhoto2::SpecHelpers
       }
     end
 
-    funcs.read_file_func = ->(_fs : LibGPhoto2::CameraFilesystem*, _folder : LibC::Char*, _file : LibC::Char*, _type : LibGPhoto2::CameraFileType, offset : LibC::UInt64T, buf : LibC::Char*, size : LibC::UInt64T*, user_data : Void*, _context : LibGPhoto2::GPContext*) {
+    funcs.read_file_func = ->(_fs : LibGPhoto2::CameraFilesystem*, _folder : LibC::Char*, _file : LibC::Char*, _type : LibGPhoto2::CameraFileType, offset : LibC::UInt64T, buf : LibC::Char*, size : LibC::UInt64T*, user_data : Void*, context : LibGPhoto2::GPContext*) {
+      # Gives the callbacks (see `Context#idle_callback`) a chance to run
+      LibGPhoto2.gp_context_idle(context)
+
       file = Box(StubbedFile).unbox(user_data)
-      bytes = file.data
-      offset = Math.min(offset, bytes.size.to_u64)
-      count = Math.min(size.value, bytes.size.to_u64 - offset)
-      count = Math.min(count, file.max_read_size || count)
-      buf.copy_from(bytes.to_unsafe + offset, count)
-      size.value = count
-      LibGPhoto2::GP_OK
+      if (limit = file.unsupported_from) && offset >= limit
+        LibGPhoto2::GP_ERROR_NOT_SUPPORTED
+      else
+        bytes = file.data
+        offset = Math.min(offset, bytes.size.to_u64)
+        count = Math.min(size.value, bytes.size.to_u64 - offset)
+        count = Math.min(count, file.max_read_size || count)
+        buf.copy_from(bytes.to_unsafe + offset, count)
+        size.value = count
+        LibGPhoto2::GP_OK
+      end
     }
 
-    box = Box.box(StubbedFile.new(data, reported_size, max_read_size))
+    funcs.get_file_func = ->(_fs : LibGPhoto2::CameraFilesystem*, _folder : LibC::Char*, _file : LibC::Char*, _type : LibGPhoto2::CameraFileType, camera_file : LibGPhoto2::CameraFile*, user_data : Void*, _context : LibGPhoto2::GPContext*) {
+      file = Box(StubbedFile).unbox(user_data)
+      file.downloads += 1
+      bytes = file.data
+      # Taken over (and freed) by libgphoto2
+      buffer = LibC.malloc(bytes.size).as(UInt8*)
+      buffer.copy_from(bytes.to_unsafe, bytes.size)
+      LibGPhoto2.gp_file_set_data_and_size(camera_file, buffer, bytes.size)
+    }
+
+    stub = StubbedFile.new(data, reported_size, max_read_size, unsupported_from)
+    box = Box.box(stub)
     STUBS << box
 
     GPhoto2.check! \
       LibGPhoto2.gp_filesystem_set_funcs(camera.wrapped.fs, pointerof(funcs), box)
+    stub
   end
 
   # Keeps the boxed data from being garbage-collected.
