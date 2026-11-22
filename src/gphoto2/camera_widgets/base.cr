@@ -97,8 +97,6 @@ module GPhoto2
         get_info.not_nil!
       end
 
-      private EMPTY_VALUES = {nil, "none"}
-
       # Returns widget `value` unless it's empty or is known to be
       # an empty string, like `none` or raises `NotImplementedError`.
       def value?
@@ -108,9 +106,15 @@ module GPhoto2
 
       # Returns widget value.
       def value
-        get_value.tap do |value|
-          return if value.to_s.presence.try(&.downcase).in?(EMPTY_VALUES)
-        end
+        value = get_value
+        value unless empty_value?(value)
+      end
+
+      # Returns `true` for the values known to represent no value, which
+      # (being strings) are given by the `Text` (and its subclasses) widgets.
+      private def empty_value?(value) : Bool
+        value.is_a?(String) &&
+          (value.empty? || value.compare("none", case_insensitive: true).zero?)
       end
 
       # Sets widget value.

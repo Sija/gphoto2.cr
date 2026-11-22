@@ -36,6 +36,16 @@ module GPhoto2
           widget.value.should be_nil
           widget.value = "None"
           widget.value.should be_nil
+          widget.value = "NONE"
+          widget.value.should be_nil
+          widget.value = "Nonetheless"
+          widget.value.should eq "Nonetheless"
+        end
+
+        it "returns zero values" do
+          widget = build_widget(:toggle)
+          widget.value = 0
+          widget.value.should eq 0
         end
       end
 
