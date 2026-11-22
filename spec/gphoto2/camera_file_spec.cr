@@ -633,6 +633,17 @@ module GPhoto2
       end
     end
 
+    it "compares previews by identity" do
+      with_directory_camera do |camera|
+        preview = CameraFile.new(camera)
+        preview.should eq preview
+        preview.should_not eq CameraFile.new(camera)
+        preview.should_not eq CameraFile.new(camera, CameraFile::PREVIEW_FILENAME)
+        CameraFile.new(camera, CameraFile::PREVIEW_FILENAME).should_not eq preview
+        Set{preview, preview, CameraFile.new(camera)}.size.should eq 2
+      end
+    end
+
     describe "#data=" do
       it "replaces previously read data" do
         with_directory_camera do |camera|

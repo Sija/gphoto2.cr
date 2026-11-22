@@ -118,7 +118,25 @@ module GPhoto2
       @preview = true
     end
 
-    def_equals_and_hash @camera, @path
+    # Compares files by their camera and `#path`.
+    #
+    # NOTE: Previews (see `#preview?`) aren't stored on the camera, but carry
+    # data of their own instead, so each of them is equal only to itself.
+    def ==(other : self) : Bool
+      return true if same?(other)
+      return false if preview? || other.preview?
+
+      @camera == other.camera && @path == other.path
+    end
+
+    # :ditto:
+    def hash(hasher)
+      return object_id.hash(hasher) if preview?
+
+      hasher = @camera.hash(hasher)
+      hasher = @path.hash(hasher)
+      hasher
+    end
 
     # Returns file `#path`.
     def to_s(io : IO) : Nil
