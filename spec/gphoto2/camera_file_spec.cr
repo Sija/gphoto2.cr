@@ -117,6 +117,16 @@ module GPhoto2
         end
       end
 
+      it "downloads the file when reading it in chunks fails right away" do
+        with_directory_camera do |camera|
+          # i.e. PTP cameras, for the files captured to their internal RAM
+          data = Bytes.new(CameraFile::CHUNK_SIZE * 2 + 123) { |i| (i % 251).to_u8 }
+          stub = stub_file_read(camera, data, unsupported_from: 0_u64, error: LibGPhoto2::GP_ERROR)
+          camera.blob("/DCIM/a.jpg").read.should eq data
+          stub.downloads.should eq 1
+        end
+      end
+
       it "does not allocate memory upfront when reading in chunks is not supported" do
         with_directory_camera do |camera|
           stub_file_read(camera, "hello".to_slice, reported_size: 50_000_000_u64, unsupported_from: 0_u64)
@@ -300,6 +310,43 @@ module GPhoto2
           camera.blob("/DCIM/a.jpg").write_to(io)
           io.to_slice.should eq data
           stub.downloads.should eq 1
+        end
+      end
+
+      it "downloads the file when reading it in chunks fails right away" do
+        with_directory_camera do |camera|
+          # i.e. PTP cameras, for the files captured to their internal RAM
+          data = Bytes.new(CameraFile::CHUNK_SIZE * 2 + 123) { |i| (i % 251).to_u8 }
+          stub = stub_file_read(camera, data, unsupported_from: 0_u64, error: LibGPhoto2::GP_ERROR)
+
+          io = IO::Memory.new
+          camera.blob("/DCIM/a.jpg").write_to(io)
+          io.to_slice.should eq data
+          stub.downloads.should eq 1
+        end
+      end
+
+      it "raises when reading the file in chunks fails midway" do
+        with_directory_camera do |camera|
+          data = Bytes.new(CameraFile::CHUNK_SIZE * 2 + 123) { |i| (i % 251).to_u8 }
+          stub = stub_file_read(camera, data, unsupported_from: CameraFile::CHUNK_SIZE.to_u64, error: LibGPhoto2::GP_ERROR_IO)
+
+          io = IO::Memory.new
+          expect_raises(GPhoto2::Error, "Reading failed") do
+            camera.blob("/DCIM/a.jpg").write_to(io)
+          end
+          stub.downloads.should eq 0
+        end
+      end
+
+      it "does not download the file when reading it is cancelled" do
+        with_directory_camera do |camera|
+          stub = stub_file_read(camera, "hello".to_slice, unsupported_from: 0_u64, error: LibGPhoto2::GP_ERROR_CANCEL)
+
+          expect_raises(GPhoto2::Error) do
+            camera.blob("/DCIM/a.jpg").write_to(IO::Memory.new)
+          end
+          stub.downloads.should eq 0
         end
       end
 
