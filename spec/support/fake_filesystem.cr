@@ -8,12 +8,13 @@ module GPhoto2::SpecHelpers
     getter reported_size : UInt64?
     getter max_read_size : UInt64?
     getter unsupported_from : UInt64?
+    getter error : Int32
     # Number of times the file has been downloaded as a whole.
     property downloads = 0
     # Number of the partial reads of the file.
     property reads = 0
 
-    def initialize(@data, @reported_size, @max_read_size, @unsupported_from)
+    def initialize(@data, @reported_size, @max_read_size, @unsupported_from, @error)
     end
   end
 
@@ -26,11 +27,12 @@ module GPhoto2::SpecHelpers
   # bytes, even when more were requested and are available.
   #
   # When *unsupported_from* is given, reads starting at that offset
-  # (or past it) fail as not supported, like with some PTP cameras.
+  # (or past it) fail with *error* (as not supported by default),
+  # like with some PTP cameras.
   #
   # Files are served as a whole (see `CameraFile#data`) from *data* as well,
   # counted by `StubbedFile#downloads` of the returned stub.
-  def stub_file_read(camera : Camera, data : Bytes, reported_size : UInt64? = nil, max_read_size : UInt64? = nil, unsupported_from : UInt64? = nil) : StubbedFile
+  def stub_file_read(camera : Camera, data : Bytes, reported_size : UInt64? = nil, max_read_size : UInt64? = nil, unsupported_from : UInt64? = nil, error : Int32 = LibGPhoto2::GP_ERROR_NOT_SUPPORTED) : StubbedFile
     # Make sure the driver is initialized, so it doesn't override our functions.
     # Listing the files also makes them known to the filesystem cache.
     (camera / "DCIM").files
@@ -59,7 +61,8 @@ module GPhoto2::SpecHelpers
       file = Box(StubbedFile).unbox(user_data)
       file.reads += 1
       if (limit = file.unsupported_from) && offset >= limit
-        LibGPhoto2::GP_ERROR_NOT_SUPPORTED
+        LibGPhoto2.gp_context_error(context, "Reading failed")
+        file.error
       else
         bytes = file.data
         offset = Math.min(offset, bytes.size.to_u64)
@@ -81,7 +84,7 @@ module GPhoto2::SpecHelpers
       LibGPhoto2.gp_file_set_data_and_size(camera_file, buffer, bytes.size)
     }
 
-    stub = StubbedFile.new(data, reported_size, max_read_size, unsupported_from)
+    stub = StubbedFile.new(data, reported_size, max_read_size, unsupported_from, error)
     box = Box.box(stub)
     STUBS << box
 

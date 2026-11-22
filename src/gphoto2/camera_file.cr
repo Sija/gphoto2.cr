@@ -397,12 +397,29 @@ module GPhoto2
     # Reads a chunk of the file starting at *offset* into *buffer*,
     # returning the number of bytes read, or `nil` if the camera driver
     # doesn't support reading the file in chunks (at that *offset*).
+    #
+    # NOTE: Reading the first chunk might fail with other errors too, since
+    # libgphoto2 passes the reads to the camera driver as-is, bypassing its
+    # filesystem cache. That's the case for i.e. files captured to the
+    # internal RAM of PTP cameras (stored under `/`, not on any of the
+    # storages), which are available from the cache only. The file is then
+    # downloaded as a whole instead, which fails on its own if it's not
+    # available at all.
     private def try_read_chunk(buffer : Bytes, offset : UInt64, type : Type) : UInt64?
       size = buffer.size.to_u64
       rc = LibGPhoto2.gp_camera_file_read(@camera, folder, name, type,
         offset, buffer, pointerof(size), context)
 
-      size if context.check?(rc, &.== LibGPhoto2::GP_ERROR_NOT_SUPPORTED)
+      tolerated = context.check?(rc) do |code|
+        if offset.zero?
+          # Cancellation (see `Context#cancel_callback`) must not be retried
+          code != LibGPhoto2::GP_ERROR_CANCEL
+        else
+          # Reading worked before, so any other error is a genuine one
+          code == LibGPhoto2::GP_ERROR_NOT_SUPPORTED
+        end
+      end
+      size if tolerated
     end
 
     private def _read(type = Type::Normal) : Bytes
