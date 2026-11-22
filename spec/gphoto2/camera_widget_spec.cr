@@ -490,6 +490,14 @@ module GPhoto2
         widget.value.should eq "200"
       end
 
+      it "picks the first matching value of the collection" do
+        widget = build_radio(%w[100 200 400])
+        widget.value = %w[400 200]
+        widget.value.should eq "400"
+        widget.value = [300, 200, 100].each
+        widget.value.should eq "200"
+      end
+
       it "accepts collections of numbers and symbols" do
         widget = build_radio(%w[100 200 Auto])
         widget.value = [300, 200]

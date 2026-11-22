@@ -38,12 +38,13 @@ module GPhoto2
           match =
             case value
             in Enumerable
-              # Iterators can be consumed only once, so collect them first
-              # (`Iterator#map` is lazy, hence `#to_a`)
-              candidates = value.to_a.map do |item|
-                choice_value(item)
+              # Candidates are tried in the given order (of preference),
+              # rather than in the order of the choices
+              valid_choices = choices
+              value.find_value do |item|
+                candidate = choice_value(item)
+                candidate if candidate.try(&.in?(valid_choices))
               end
-              choices.find &.in?(candidates)
             in Regex
               choices.find &.matches?(value)
             end
