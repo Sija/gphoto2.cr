@@ -43,6 +43,15 @@ module GPhoto2
       end
     end
 
+    describe "#empty?" do
+      it "returns whether the list has any entries" do
+        list = CameraList.new
+        list.empty?.should be_true
+        GPhoto2.check! LibGPhoto2.gp_list_append(list, "foo", "bar")
+        list.empty?.should be_false
+      end
+    end
+
     describe "#close" do
       it "frees the list" do
         list = CameraList.new

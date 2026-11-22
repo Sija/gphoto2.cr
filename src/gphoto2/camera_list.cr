@@ -29,6 +29,14 @@ module GPhoto2
       count
     end
 
+    # Returns `true` if the list has no entries.
+    #
+    # NOTE: Overrides `Enumerable#empty?`, so that it doesn't need to fetch
+    # the first entry (see `#each`), which takes two more calls into libgphoto2.
+    def empty? : Bool
+      size.zero?
+    end
+
     # Yields each entry in the list.
     #
     # ```
