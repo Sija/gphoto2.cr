@@ -11,6 +11,41 @@ module GPhoto2
         end
       end
 
+      it "keeps the files captured to the internal RAM, before they're evicted" do
+        with_fake_camera do |camera|
+          FakeDriver.capture_path = "/capt0000.jpg"
+          cache_file(camera, "/capt0000.jpg", "in RAM")
+
+          file = camera.capture
+          # libgphoto2 keeps only a couple of files cached
+          camera.filesystem_reset
+          String.new(file.to_slice).should eq "in RAM"
+
+          io = IO::Memory.new
+          file.write_to(io)
+          io.to_s.should eq "in RAM"
+        end
+      end
+
+      it "leaves the files not available right away to be downloaded later on" do
+        with_fake_camera do |camera|
+          FakeDriver.capture_path = "/capt0000.jpg"
+          file = camera.capture
+          file.path.should eq Path.posix("/capt0000.jpg")
+
+          expect_raises(GPhoto2::Error) do
+            file.to_slice
+          end
+        end
+      end
+
+      it "doesn't download the files stored on the camera storages right away" do
+        with_fake_camera do |camera|
+          file = camera.capture
+          file.@data_and_size.should be_nil
+        end
+      end
+
       it "raises when the driver does not report the captured file path" do
         with_fake_camera do |camera|
           FakeDriver.capture_path = nil

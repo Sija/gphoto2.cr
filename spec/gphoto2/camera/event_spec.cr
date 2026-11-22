@@ -94,6 +94,18 @@ module GPhoto2
         end
       end
 
+      it "keeps the files captured to the internal RAM, before they're evicted" do
+        with_fake_camera do |camera|
+          cache_file(camera, "/capt0001.jpg", "in RAM")
+          FakeDriver.events << FakeDriver::FakeEvent.new(:file_added, "/capt0001.jpg")
+
+          file = camera.wait.data.as(CameraFile)
+          # libgphoto2 keeps only a couple of files cached
+          camera.filesystem_reset
+          String.new(file.to_slice).should eq "in RAM"
+        end
+      end
+
       it "returns file changed event" do
         with_fake_camera do |camera|
           FakeDriver.events << FakeDriver::FakeEvent.new(:file_changed, "/DCIM/a.jpg")

@@ -233,6 +233,31 @@ end
 
 module GPhoto2::SpecHelpers
   # Yields a camera with stubbed driver functions (see `FakeDriver`).
+  # Stores a file with the given *data* at *path* in the filesystem cache
+  # of the *camera* only, like PTP cameras do with the files captured to
+  # their internal RAM (under `/`, see `Camera#capture`).
+  #
+  # NOTE: The cache gets emptied by `Camera#filesystem_reset`, like when
+  # libgphoto2 evicts the file to make room for the newer ones.
+  def cache_file(camera : Camera, path : String, data : String) : Nil
+    folder, name = File.dirname(path), File.basename(path)
+    fs = camera.wrapped.fs
+
+    GPhoto2.check! LibGPhoto2.gp_file_new(out file)
+    begin
+      # Taken over (and freed) by libgphoto2
+      buffer = LibC.malloc(data.bytesize).as(UInt8*)
+      buffer.copy_from(data.to_unsafe, data.bytesize)
+      GPhoto2.check! LibGPhoto2.gp_file_set_data_and_size(file, buffer, data.bytesize)
+
+      GPhoto2.check! LibGPhoto2.gp_filesystem_append(fs, folder, name, camera.context)
+      GPhoto2.check! LibGPhoto2.gp_filesystem_set_file_noop(fs, folder, name, LibGPhoto2::CameraFileType::Normal, file, camera.context)
+    ensure
+      # The cache holds its own reference
+      LibGPhoto2.gp_file_unref(file)
+    end
+  end
+
   def with_fake_camera(&)
     FakeDriver.reset
 

@@ -104,4 +104,6 @@ lib LibGPhoto2
   fun gp_filesystem_free(fs : CameraFilesystem*) : LibC::Int
   fun gp_filesystem_reset(fs : CameraFilesystem*) : LibC::Int
   fun gp_filesystem_set_funcs(fs : CameraFilesystem*, funcs : CameraFilesystemFuncs*, data : Void*) : LibC::Int
+  fun gp_filesystem_append(fs : CameraFilesystem*, folder : LibC::Char*, filename : LibC::Char*, context : GPContext*) : LibC::Int
+  fun gp_filesystem_set_file_noop(fs : CameraFilesystem*, folder : LibC::Char*, filename : LibC::Char*, type : CameraFileType, file : CameraFile*, context : GPContext*) : LibC::Int
 end

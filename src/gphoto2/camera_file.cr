@@ -60,6 +60,27 @@ module GPhoto2
       @path = name unless name.extension.empty?
     end
 
+    # :nodoc:
+    #
+    # Downloads the file right away, if it's not stored on any of the camera
+    # storages, which is the case for the files captured to the internal RAM
+    # of PTP cameras (i.e. Canon EOS, with `capturetarget` set to
+    # `Internal RAM`), placed under `/` (unlike i.e. `/store_00010001/...`).
+    #
+    # NOTE: These are kept by libgphoto2 in its filesystem cache only, which
+    # holds a couple of files at most (2 by default, see the `cached-images`
+    # setting in `~/.gphoto/settings`), so they'd be gone after capturing
+    # a few more. Getting them from the cache takes no camera I/O.
+    protected def keep_unstored : Nil
+      return if preview? || @data_and_size || @path.dirname != "/"
+      data_and_size
+    rescue ex : GPhoto2::Error
+      # Cancellation (see `Context#cancel_callback`) must not go unnoticed
+      raise ex if ex.code == LibGPhoto2::GP_ERROR_CANCEL
+      # Otherwise it's left to be downloaded later on, as any other file,
+      # since it might be stored on the camera after all
+    end
+
     # Relative *path* is resolved from the root folder.
     #
     # Raises `ArgumentError` if *path* points to a folder, rather than

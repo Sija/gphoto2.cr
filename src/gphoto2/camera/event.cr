@@ -82,7 +82,9 @@ module GPhoto2
               when .file_added?, .file_changed?
                 file_path = camera_file_path(data_ptr)
                 # Without a name, there's no file to point to
-                CameraFile.new(self, file_path.to_path) unless file_path.name.empty?
+                unless file_path.name.empty?
+                  CameraFile.new(self, file_path.to_path).tap(&.keep_unstored)
+                end
               when .folder_added?
                 CameraFolder.new(self, camera_file_path(data_ptr).to_path)
               when .unknown?
