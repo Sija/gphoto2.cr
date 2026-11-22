@@ -63,6 +63,19 @@ module GPhoto2
         end
       end
 
+      # Compares the `#value` with the given number numerically, instead
+      # of using `#to_s` (which would give i.e. `"3.0"` for `3`).
+      #
+      # ```
+      # camera[:exposurecompensation] == 0
+      # ```
+      def ==(other : Number) : Bool
+        # `Float32` values are widened through their shortest decimal
+        # representation (see `#choices`), so that i.e. `0.3_f32` equals `0.3`
+        other = other.to_s.to_f64 if other.is_a?(Float32)
+        get_value.to_s.to_f64 == other
+      end
+
       protected def get_value
         value = uninitialized LibC::Float
         get_value_ptr pointerof(value)

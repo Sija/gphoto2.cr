@@ -396,6 +396,20 @@ module GPhoto2
         widget.value.should eq 5
       end
 
+      it "compares the value with numbers numerically" do
+        widget = build_range(-5, 5, 0.1)
+        widget.value = 3
+        (widget == 3).should be_true
+        (widget == 3.0).should be_true
+        (widget == 4).should be_false
+        widget.value = 0.3
+        (widget == 0.3).should be_true
+        (widget == 0.3_f32).should be_true
+        widget.in?([1, 0.3]).should be_true
+        # Other objects are still compared as strings
+        (widget == "0.3").should be_true
+      end
+
       it "accepts floats, ints and strings" do
         widget = build_range(0, 10, 1)
         widget.value = 2.5
