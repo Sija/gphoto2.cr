@@ -372,6 +372,26 @@ module GPhoto2
         end
       end
 
+      it "raises the original error when the directories can't be removed" do
+        with_directory_camera do |camera, dir|
+          stub_file_read(camera, "hello".to_slice)
+          target = File.join(dir, "new", "copy.jpg")
+          other = File.join(dir, "new", "other.jpg")
+          # Something else gets written to the created directory meanwhile
+          camera.context.idle_callback = -> : Nil {
+            File.write(other, "other")
+            raise GPhoto2::Error.from_code(LibGPhoto2::GP_ERROR_IO)
+          }
+
+          error = expect_raises(GPhoto2::Error) do
+            camera.blob("/DCIM/a.jpg").save(target)
+          end
+          error.code.should eq LibGPhoto2::GP_ERROR_IO
+          File.exists?(target).should be_false
+          File.read(other).should eq "other"
+        end
+      end
+
       it "saves a new file without downloading it as a whole" do
         with_directory_camera do |camera, dir|
           data = Bytes.new(CameraFile::CHUNK_SIZE * 2 + 123) { |i| (i % 251).to_u8 }

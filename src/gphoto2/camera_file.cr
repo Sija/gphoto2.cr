@@ -141,9 +141,14 @@ module GPhoto2
         begin
           File.open(path, "w") { |file| write_to(file) }
         rescue ex
-          File.delete?(path)
-          # Deepest first, these are left in place unless empty
-          created_dirs.each { |dir| Dir.delete?(dir) }
+          # Cleaning up is best-effort only, which must not mask the original
+          # exception, i.e. when something else has been written there since
+          begin
+            File.delete?(path)
+            # Deepest first, raising (and so stopping) at the non-empty ones
+            created_dirs.each { |dir| Dir.delete?(dir) }
+          rescue File::Error
+          end
           raise ex
         end
       end
