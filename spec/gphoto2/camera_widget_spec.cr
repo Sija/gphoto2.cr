@@ -157,6 +157,16 @@ module GPhoto2
           widget.value = "Automatic"
           (widget == :automatic).should be_true
         end
+
+        it "compares value with symbol case-insensitively" do
+          widget = build_widget(:text)
+          widget.value = "auto"
+          (widget == :auto).should be_true
+          widget.value = "Auto ISO"
+          (widget == :auto_iso).should be_true
+          (widget == :auto).should be_false
+          widget.in?([:manual, :auto_iso]).should be_true
+        end
       end
 
       describe "#in?" do

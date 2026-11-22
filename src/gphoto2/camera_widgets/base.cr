@@ -200,14 +200,16 @@ module GPhoto2
         self.to_s == other.to_s
       end
 
-      # Compares `#value` with given `Symbol`.
+      # Compares `#value` with given `Symbol`, case-insensitively,
+      # with underscores standing for spaces as well.
       #
       # ```
       # camera[:whitebalance] == :automatic
+      # camera[:isoauto] == :auto_iso # (with the value of "Auto ISO")
       # ```
       def ==(other : Symbol)
         # ameba:disable Style/RedundantSelf
-        self.to_s == other.to_s.capitalize
+        symbol_matches?(self.to_s, other)
       end
 
       # Returns `true` if `#value` matches at least one element of the collection.
