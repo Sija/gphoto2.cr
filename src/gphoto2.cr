@@ -96,8 +96,10 @@ module GPhoto2
   # a file, judging by its form alone (i.e. it's empty, ends with `/`,
   # `.` or `..`), regardless of whether it exists.
   def folder_path?(path : Path | String) : Bool
-    path = path.to_s
-    path.ends_with?('/') || Path.posix(path).basename.in?("", ".", "..")
+    # Converted first, so that non-posix (i.e. Windows) paths
+    # are checked the same way as `.absolute_path` resolves them
+    path = Path.posix(path)
+    path.to_s.ends_with?('/') || path.basename.in?("", ".", "..")
   end
 
   # Returns `true` if the given return code *rc* denotes a success

@@ -22,7 +22,7 @@ module GPhoto2
 
     it "rejects paths pointing to a folder" do
       with_directory_camera do |camera|
-        ["", "/", "DCIM/..", Path.posix("/"), "/DCIM/", "DCIM/.", "/DCIM/sub/.."].each do |path|
+        ["", "/", "DCIM/..", Path.posix("/"), "/DCIM/", "DCIM/.", "/DCIM/sub/..", Path.windows("DCIM\\.."), Path.windows("DCIM\\")].each do |path|
           expect_raises(ArgumentError, "Invalid file path") do
             CameraFile.new(camera, path)
           end
