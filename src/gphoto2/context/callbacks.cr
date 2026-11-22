@@ -103,14 +103,6 @@ module GPhoto2
         @callback_state.messages.last?
       end
 
-      # :nodoc:
-      #
-      # Returns `true` if any of the callbacks raised an exception, which
-      # is yet to be re-raised by `#check!`.
-      def callback_exception? : Bool
-        !@callback_state.exception.nil?
-      end
-
       def initialize
         self.error_callback = nil
       end
@@ -162,6 +154,24 @@ module GPhoto2
         else
           raise original_error
         end
+      end
+
+      # :nodoc:
+      #
+      # Same as `#check!`, but returns `false` (instead of raising) for the
+      # error codes the block returns `true` for, or `true` on success.
+      #
+      # NOTE: Exceptions raised by any of the callbacks are re-raised
+      # regardless, so these are never mistaken for the tolerated errors.
+      def check?(rc : Int32, & : Int32 -> Bool) : Bool
+        if !GPhoto2.check?(rc) && @callback_state.exception.nil? && yield rc
+          Debug.log(rc, backtrace_offset: 1, progname: "gphoto2.cr")
+          # The error messages belong to this call, see `#check!`
+          take_error_message
+          return false
+        end
+        check!(rc)
+        true
       end
 
       # Returns the error messages reported during the current call (joined

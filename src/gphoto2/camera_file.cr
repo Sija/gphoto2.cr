@@ -387,18 +387,7 @@ module GPhoto2
       rc = LibGPhoto2.gp_camera_file_read(@camera, folder, name, type,
         offset, buffer, pointerof(size), context)
 
-      # Exceptions raised by the callbacks (regardless of their
-      # error code) must not be mistaken for the lack of support
-      unsupported = rc == LibGPhoto2::GP_ERROR_NOT_SUPPORTED &&
-                    !context.callback_exception?
-
-      begin
-        context.check!(rc)
-      rescue ex : GPhoto2::Error
-        raise ex unless unsupported
-        return
-      end
-      size
+      size if context.check?(rc, &.== LibGPhoto2::GP_ERROR_NOT_SUPPORTED)
     end
 
     private def _read(type = Type::Normal) : Bytes
@@ -453,16 +442,9 @@ module GPhoto2
     private def expected_size(type : Type) : UInt64?
       rc = LibGPhoto2.gp_camera_file_get_info(@camera, folder, name, out info, context)
 
-      # Cancellation (see `Context#cancel_callback`) and exceptions raised
-      # by the callbacks (regardless of their error code) must not be
-      # mistaken for the file info not being available
-      fatal = rc == LibGPhoto2::GP_ERROR_CANCEL || context.callback_exception?
-      begin
-        context.check!(rc)
-      rescue ex : GPhoto2::Error
-        raise ex if fatal
-        return
-      end
+      # Cancellation (see `Context#cancel_callback`) must not be mistaken
+      # for the file info not being available
+      return unless context.check?(rc, &.!= LibGPhoto2::GP_ERROR_CANCEL)
 
       file_info = CameraFileInfo.new(info)
       case type

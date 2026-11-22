@@ -156,6 +156,41 @@ module GPhoto2
       end
     end
 
+    describe "#check?" do
+      it "returns true on success" do
+        context = Context.new
+        context.check?(LibGPhoto2::GP_OK) { true }.should be_true
+        context.close
+      end
+
+      it "returns false for the tolerated errors, discarding their messages" do
+        context = Context.new
+        LibGPhoto2.gp_context_error(context, "Not supported")
+        context.check?(LibGPhoto2::GP_ERROR_NOT_SUPPORTED, &.== LibGPhoto2::GP_ERROR_NOT_SUPPORTED)
+          .should be_false
+        context.last_error.should be_nil
+        context.close
+      end
+
+      it "raises for the other errors" do
+        context = Context.new
+        expect_raises(GPhoto2::Error, "I/O problem") do
+          context.check?(LibGPhoto2::GP_ERROR_IO, &.== LibGPhoto2::GP_ERROR_NOT_SUPPORTED)
+        end
+        context.close
+      end
+
+      it "re-raises the exceptions raised by the callbacks, even for the tolerated errors" do
+        context = Context.new
+        context.idle_callback = -> : Nil { raise "oops" }
+        LibGPhoto2.gp_context_idle(context)
+        expect_raises(::Exception, "oops") do
+          context.check?(LibGPhoto2::GP_ERROR_NOT_SUPPORTED) { true }
+        end
+        context.close
+      end
+    end
+
     describe "#check!" do
       it "returns the value on success" do
         context = Context.new
