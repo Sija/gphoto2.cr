@@ -143,7 +143,9 @@ module GPhoto2
         # NOTE: Unlike `File.tempfile` (creating it with `0o600` permissions),
         # it's created with the same permissions as the target one would be,
         # under a random name, which can't be guessed (nor clash) in practice.
-        tempfile = path.parent / ".#{path.basename}.#{Random::Secure.hex(8)}.part"
+        # It's not named after the target one, since that one might take up
+        # (almost) all of the file name length supported by the filesystem.
+        tempfile = path.parent / ".gphoto2-#{Random::Secure.hex(8)}.part"
         begin
           File.open(tempfile, "w") { |file| write_to(file) }
           # Renaming replaces the target file atomically, including the one

@@ -441,6 +441,14 @@ module GPhoto2
         end
       end
 
+      it "saves a new file with a name as long as supported" do
+        with_directory_camera do |camera, dir|
+          target = File.join(dir, "#{"x" * 251}.jpg")
+          camera.blob("/DCIM/a.jpg").save(target)
+          File.read(target).should eq "hello"
+        end
+      end
+
       it "saves a new file without downloading it as a whole" do
         with_directory_camera do |camera, dir|
           data = Bytes.new(CameraFile::CHUNK_SIZE * 2 + 123) { |i| (i % 251).to_u8 }
