@@ -94,9 +94,30 @@ module GPhoto2
           (camera / "DCIM").cd("../..").root?.should be_true
         end
       end
+
+      it "accepts paths" do
+        with_directory_camera do |camera|
+          folder = camera / "DCIM"
+          folder.cd(Path.posix("sub")).path.should eq Path.posix("/DCIM/sub")
+          (folder / Path.posix("/x")).path.should eq Path.posix("/x")
+          folder.cd(Path.windows("sub\\..\\x")).path.should eq Path.posix("/DCIM/x")
+        end
+      end
     end
 
     describe "#open" do
+      it "accepts paths" do
+        with_directory_camera do |camera|
+          folder = camera / "DCIM/sub"
+          String.new(folder.open(Path.posix("../a.jpg")).to_slice).should eq "hello"
+          folder.open(Path.windows("..\\a.jpg")).path.should eq Path.posix("/DCIM/a.jpg")
+          folder.open(Path.posix("b.jpg"), &.size).should eq 3
+          expect_raises(ArgumentError, "Invalid file name: \"..\"") do
+            folder.open(Path.posix(".."))
+          end
+        end
+      end
+
       it "returns a file by its relative path" do
         with_directory_camera do |camera|
           file = (camera / "DCIM/sub").open("../a.jpg")

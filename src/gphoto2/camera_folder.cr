@@ -55,12 +55,12 @@ module GPhoto2
     # folder.cd("sub/../x").path # => Path["/DCIM/x"]
     # folder.cd("/x").path       # => Path["/x"]
     # ```
-    def cd(name : String) : CameraFolder
+    def cd(name : Path | String) : CameraFolder
       self.class.new(@camera, resolve(name))
     end
 
     # See: `#cd`
-    def /(name : String) : CameraFolder
+    def /(name : Path | String) : CameraFolder
       cd(name)
     end
 
@@ -80,9 +80,9 @@ module GPhoto2
     #
     # Raises `ArgumentError` if *name* points to a folder, rather than
     # a file (i.e. it's empty, ends with `/`, `.` or `..`).
-    def open(name : String) : CameraFile
+    def open(name : Path | String) : CameraFile
       if GPhoto2.folder_path?(name)
-        raise ArgumentError.new("Invalid file name: #{name.inspect}")
+        raise ArgumentError.new("Invalid file name: #{name.to_s.inspect}")
       end
       CameraFile.new(@camera, resolve(name))
     end
@@ -90,7 +90,7 @@ module GPhoto2
     # :ditto:
     #
     # Yields the file and closes it upon return, returning the value of the block.
-    def open(name : String, &)
+    def open(name : Path | String, &)
       file = open(name)
       begin
         yield file
@@ -154,8 +154,9 @@ module GPhoto2
     end
 
     # Absolute *name* is resolved from the root folder, as in a shell.
-    private def resolve(name : String) : Path
-      path = Path.posix(name)
+    private def resolve(name : Path | String) : Path
+      # Converted the same way as by `GPhoto2.absolute_path`
+      path = name.is_a?(String) ? Path.posix(name) : name.to_posix
       path = @path / path unless path.absolute?
       path.normalize
     end
