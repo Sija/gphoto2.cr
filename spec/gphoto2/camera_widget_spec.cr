@@ -532,6 +532,27 @@ module GPhoto2
         widget.value.should eq "200"
       end
 
+      it "compares the value with numbers numerically" do
+        widget = build_radio(%w[4 5.6 0.3 1/60])
+        widget.value = "4"
+        (widget == 4).should be_true
+        (widget == 4.0).should be_true
+        (widget == 5.6).should be_false
+        widget.in?([8, 4.0]).should be_true
+        widget.value = "0.3"
+        (widget == 0.3_f32).should be_true
+        widget.value = "1/60"
+        (widget == 0).should be_false
+        (widget == "1/60").should be_true
+      end
+
+      it "compares the value with integers exactly" do
+        widget = build_widget(:text)
+        widget.value = "9007199254740992"
+        (widget == 9007199254740992_i64).should be_true
+        (widget == 9007199254740993_i64).should be_false
+      end
+
       it "matches numbers with the choices numerically" do
         widget = build_radio(%w[2.8 4 5.6 1/60])
         widget.value = 4.0
