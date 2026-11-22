@@ -125,7 +125,9 @@ module GPhoto2
       path = Path[path] if path.is_a?(String)
       path /= name if path.ends_with_separator? || Dir.exists?(path)
 
-      if File.exists?(path)
+      # NOTE: Symlinks (even the broken ones) are existing files too,
+      # which must not be removed on failure
+      if File.exists?(path) || File.symlink?(path)
         # Download the data first, so that a failed download
         # doesn't leave an existing file truncated
         data

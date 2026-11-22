@@ -361,6 +361,17 @@ module GPhoto2
         end
       end
 
+      it "keeps a broken symlink when the download fails" do
+        with_directory_camera do |camera, dir|
+          target = File.join(dir, "link.jpg")
+          File.symlink(File.join(dir, "nowhere.jpg"), target)
+          expect_raises(GPhoto2::Error) do
+            camera.blob("/DCIM/missing.jpg").save(target)
+          end
+          File.symlink?(target).should be_true
+        end
+      end
+
       it "saves a new file without downloading it as a whole" do
         with_directory_camera do |camera, dir|
           data = Bytes.new(CameraFile::CHUNK_SIZE * 2 + 123) { |i| (i % 251).to_u8 }
