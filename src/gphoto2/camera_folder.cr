@@ -165,7 +165,7 @@ module GPhoto2
       begin
         context.check! \
           LibGPhoto2.gp_camera_folder_list_files(@camera, @path.to_s, list, context)
-        list.to_a.map { |file| open file.name }
+        list.map { |file| open file.name }
       ensure
         list.close
       end
@@ -176,7 +176,7 @@ module GPhoto2
       begin
         context.check! \
           LibGPhoto2.gp_camera_folder_list_folders(@camera, @path.to_s, list, context)
-        list.to_a.map { |folder| cd folder.name }
+        list.map { |folder| cd folder.name }
       ensure
         list.close
       end
