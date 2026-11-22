@@ -84,12 +84,15 @@ module GPhoto2
 
       # :nodoc:
       #
-      # Holds the last error message and the exception raised by a callback,
+      # Holds the error messages and the exception raised by a callback,
       # separately from the context, so that callbacks don't need to reference
       # the context itself. Such a reference cycle would prevent the context
       # from being ever finalized (and freed) by the GC.
       class CallbackState
-        property message : String?
+        # Error messages reported (in order) during the current call, since
+        # libgphoto2 might report several, i.e. the one of the camera driver,
+        # followed by a generic one (see `#check!`).
+        getter messages = [] of String
         property exception : ::Exception?
       end
 
@@ -97,7 +100,7 @@ module GPhoto2
 
       # Returns the last error message reported by libgphoto2.
       def last_error : String?
-        @callback_state.message
+        @callback_state.messages.last?
       end
 
       # :nodoc:
@@ -119,7 +122,7 @@ module GPhoto2
       def error_callback=(callback : Proc(String, Void)?) : Nil # ameba:disable Lint/VoidOutsideLib
         state = @callback_state
         set_error_callback do |message|
-          state.message = message
+          state.messages << message
           callback.try &.call(message)
         end
         @error_callback = callback
@@ -135,17 +138,18 @@ module GPhoto2
 
       # Returns the given return code *rc*, or raises if it's an error code.
       #
-      # Raised error is a `Context::Error` carrying the last error message
-      # reported by libgphoto2 (if any), or a generic `GPhoto2::Error` otherwise.
+      # Raised error is a `Context::Error` carrying the error messages reported
+      # by libgphoto2 during the call (if any), one per line, in the order they
+      # were reported, or a generic `GPhoto2::Error` otherwise.
       #
       # Exception raised by any of the callbacks during the call which returned
       # *rc* takes precedence, and is re-raised regardless of *rc*.
       def check!(rc : Int32) : Int32
         Debug.log(rc, backtrace_offset: 1, progname: "gphoto2.cr")
 
-        # Error message (if any) belongs to the call which returned *rc*,
-        # so it must not leak into the subsequent calls.
-        error_message, @callback_state.message = @callback_state.message, nil
+        # Error messages (if any) belong to the call which returned *rc*,
+        # so they must not leak into the subsequent calls.
+        error_message = take_error_message
         if exception = @callback_state.exception
           @callback_state.exception = nil
           raise exception
@@ -153,12 +157,28 @@ module GPhoto2
         return rc if GPhoto2.check?(rc)
 
         original_error = GPhoto2::Error.from_code(rc)
-        # Blank messages carry no information, unlike the generic one
-        if error_message = error_message.presence
+        if error_message
           raise Error.new(error_message, rc, original_error)
         else
           raise original_error
         end
+      end
+
+      # Returns the error messages reported during the current call (joined
+      # into one), or `nil` if there are none, clearing them along the way.
+      #
+      # NOTE: The messages reported first are kept as well, since these tend
+      # to be the most specific ones (i.e. the one of the camera driver),
+      # while the following ones (i.e. reported by libgphoto2 itself on the
+      # way out) are more generic.
+      private def take_error_message : String?
+        messages = @callback_state.messages
+        return if messages.empty?
+
+        # Blank messages carry no information, unlike the generic one
+        message = messages.reject(&.blank?).join('\n').presence
+        messages.clear
+        message
       end
     end
   end

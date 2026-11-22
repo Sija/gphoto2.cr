@@ -177,6 +177,27 @@ module GPhoto2
         context.close
       end
 
+      it "raises with all of the error messages reported during the call" do
+        context = Context.new
+        LibGPhoto2.gp_context_error(context, "PTP I/O Error")
+        LibGPhoto2.gp_context_error(context, " ")
+        LibGPhoto2.gp_context_error(context, "An error occurred in the io-library")
+        context.last_error.should eq "An error occurred in the io-library"
+
+        error = expect_raises(Context::Error) do
+          context.check!(LibGPhoto2::GP_ERROR_IO)
+        end
+        error.message.should eq "PTP I/O Error\nAn error occurred in the io-library"
+        context.last_error.should be_nil
+
+        # Messages of the previous call don't leak into the next one
+        LibGPhoto2.gp_context_error(context, "Another error")
+        expect_raises(Context::Error) do
+          context.check!(LibGPhoto2::GP_ERROR_IO)
+        end.message.should eq "Another error"
+        context.close
+      end
+
       it "discards the last error message on success" do
         context = Context.new
         LibGPhoto2.gp_context_error(context, "Stale error")
