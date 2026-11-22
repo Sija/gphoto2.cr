@@ -25,7 +25,8 @@ module GPhoto2
 
     # Returns `true` if folder `#path` is `/`.
     def root?
-      to_s == "/"
+      # `Path#to_s` returns the underlying string, unlike `#to_s`, which builds one
+      @path.to_s == "/"
     end
 
     # Returns folder name.
