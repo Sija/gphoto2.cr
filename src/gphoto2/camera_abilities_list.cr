@@ -41,7 +41,9 @@ module GPhoto2
 
     # Returns the index of the given *model* in the list.
     #
-    # Raises `GPhoto2::Error` if the model isn't supported.
+    # Raises `GPhoto2::Error` if the model isn't supported, or `ArgumentError`
+    # if *model* contains a null byte (which would make libgphoto2 look up
+    # the model named by the part before it).
     def lookup_model(model : String) : Int32
       _lookup_model(model)
     end
@@ -83,7 +85,7 @@ module GPhoto2
 
     private def _lookup_model(model)
       GPhoto2.check! \
-        LibGPhoto2.gp_abilities_list_lookup_model(self, model)
+        LibGPhoto2.gp_abilities_list_lookup_model(self, model.check_no_null_byte)
     end
 
     private def get_abilities(index)

@@ -53,6 +53,18 @@ module GPhoto2
       end
     end
 
+    it "raises on models containing a null byte" do
+      context = Context.new
+      begin
+        list = CameraAbilitiesList.new(context)
+        expect_raises(ArgumentError, "String contains null byte") do
+          list["#{DIRECTORY_CAMERA_MODEL}\0junk"]
+        end
+      ensure
+        context.close
+      end
+    end
+
     describe "#close" do
       it "frees the list" do
         context = Context.new
