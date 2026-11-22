@@ -20,6 +20,12 @@ module GPhoto2
         widget.parent.should be_nil
       end
 
+      it "treats any non-zero readonly flag as set" do
+        widget = build_widget(:text)
+        GPhoto2.check! LibGPhoto2.gp_widget_set_readonly(widget, 2)
+        widget.readonly?.should be_true
+      end
+
       it "casts to subclasses" do
         widget = build_widget(:radio)
         widget.as_radio.should be widget

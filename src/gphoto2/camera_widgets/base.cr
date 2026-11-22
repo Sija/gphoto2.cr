@@ -69,7 +69,8 @@ module GPhoto2
 
       # Returns `true` if the widget has readonly flag set.
       getter? readonly : Bool do
-        get_readonly == 1
+        # Any non-zero value is truthy in C
+        get_readonly != 0
       end
 
       # Returns type of the widget.
