@@ -296,15 +296,42 @@ module GPhoto2
         end
         return if diff.empty?
 
+        # Unsaved changes of the other settings must not be saved along with
+        # the restored ones (see `#save`), so these are set aside meanwhile
+        window = @window
+        unrelated = config.select { |key, widget| !diff.has_key?(key) && widget.changed? }
+        unrelated_values = unrelated.transform_values(&.raw_value)
+        unrelated.each_value(&.changed = false)
         begin
-          update diff
-        rescue ex : GPhoto2::Error
-          # Cancelled operations (see `Context#cancel_callback`) must not be retried
-          raise ex if ex.code == LibGPhoto2::GP_ERROR_CANCEL
-          reload
-          # Reloaded settings might be gone as well
-          update diff.select { |key, _| self[key]? }
+          begin
+            update diff
+          rescue ex : GPhoto2::Error
+            # Cancelled operations (see `Context#cancel_callback`) must not be retried
+            raise ex if ex.code == LibGPhoto2::GP_ERROR_CANCEL
+            reload
+            # Reloaded settings might be gone as well
+            update diff.select { |key, _| self[key]? }
+          end
+        ensure
+          keep_unsaved(unrelated, unrelated_values, window)
         end
+      end
+
+      # Marks the *widgets* as changed again, or (when the configuration has
+      # been reloaded since, see `#reload`) sets their *values* once again.
+      private def keep_unsaved(widgets, values, window) : Nil
+        return if widgets.empty?
+
+        if @window.same?(window)
+          widgets.each_value(&.changed = true)
+        else
+          values.each do |key, value|
+            # Reloaded settings might be gone as well
+            next if value.nil? || !(widget = self[key]?)
+            widget.value = value
+          end
+        end
+        @dirty = true
       end
 
       private def reset : Nil

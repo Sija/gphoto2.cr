@@ -447,6 +447,39 @@ module GPhoto2
         end
       end
 
+      it "doesn't save the unrelated unsaved changes" do
+        with_configured_camera do |camera|
+          camera.preserving_config(:iso) do
+            camera.update(iso: 400)
+            camera[:owner] = "Jane"
+          end
+          FakeDriver.settings["iso"].value.should eq "100"
+          FakeDriver.settings["owner"].value.should_not eq "Jane"
+          # Still pending, to be saved explicitly
+          camera.dirty?.should be_true
+          camera[:owner].value.should eq "Jane"
+          camera.save
+          FakeDriver.settings["owner"].value.should eq "Jane"
+        end
+      end
+
+      it "keeps the unrelated unsaved changes when retrying the restore" do
+        with_configured_camera do |camera|
+          camera.preserving_config(:iso) do
+            camera.update(iso: 400)
+            camera[:owner] = "Jane"
+            # Make the first restore attempt fail, to have it retried
+            FakeDriver.set_config_failures = 1
+          end
+          FakeDriver.settings["iso"].value.should eq "100"
+          FakeDriver.settings["owner"].value.should_not eq "Jane"
+          camera.dirty?.should be_true
+          camera[:owner].value.should eq "Jane"
+          camera.save
+          FakeDriver.settings["owner"].value.should eq "Jane"
+        end
+      end
+
       it "restores the original values when leaving the block with break" do
         with_configured_camera do |camera|
           camera.preserving_config do
