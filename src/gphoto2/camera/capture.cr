@@ -11,9 +11,10 @@ module GPhoto2
       # file.save
       # ```
       #
-      # NOTE: Files captured to the internal RAM of the camera (i.e. Canon EOS,
-      # with `capturetarget` set to `Internal RAM`) are downloaded right away,
-      # since libgphoto2 keeps just a couple of them around, while the others
+      # NOTE: Files captured under `/` are downloaded right away, since these
+      # might not be stored on the camera (i.e. captured to the internal RAM
+      # of Canon EOS cameras, with `capturetarget` set to `Internal RAM`), in
+      # which case libgphoto2 keeps just a couple of them around. The others
       # are downloaded on demand (see `CameraFile#save`).
       def capture : CameraFile
         capture :image

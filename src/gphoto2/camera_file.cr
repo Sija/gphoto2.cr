@@ -62,15 +62,23 @@ module GPhoto2
 
     # :nodoc:
     #
-    # Downloads the file right away, if it's not stored on any of the camera
-    # storages, which is the case for the files captured to the internal RAM
-    # of PTP cameras (i.e. Canon EOS, with `capturetarget` set to
-    # `Internal RAM`), placed under `/` (unlike i.e. `/store_00010001/...`).
+    # Downloads the captured file right away, if it's placed under `/`.
     #
-    # NOTE: These are kept by libgphoto2 in its filesystem cache only, which
-    # holds a couple of files at most (2 by default, see the `cached-images`
-    # setting in `~/.gphoto/settings`), so they'd be gone after capturing
-    # a few more. Getting them from the cache takes no camera I/O.
+    # That's where the camera drivers place the captured files not stored on
+    # the camera, which are kept by libgphoto2 in its filesystem cache only:
+    # the ones captured to the internal RAM of PTP cameras (i.e. Canon EOS,
+    # with `capturetarget` set to `Internal RAM`, unlike the stored ones,
+    # placed under i.e. `/store_00010001/...`), as well as the ones captured
+    # by the `pentax` and `lumix` drivers. The cache holds a couple of files
+    # at most (2 by default, see the `cached-images` setting in
+    # `~/.gphoto/settings`), so they'd be gone after capturing a few more.
+    # Getting them from the cache takes no camera I/O.
+    #
+    # NOTE: Drivers of the cameras with a flat filesystem (i.e. `ricoh`,
+    # `spca50x`, `sipix`) place the captured files under `/` too, while these
+    # are stored on the camera. They get downloaded right away as well, which
+    # makes no difference other than the timing, since none of these drivers
+    # supports reading files in chunks (see `#write_to`) anyway.
     protected def keep_unstored : Nil
       return if preview? || @data_and_size || @path.dirname != "/"
       data_and_size
