@@ -20,6 +20,22 @@ module GPhoto2
     # Returns path of the camera port (i.e. `"usb:001,005"`).
     getter port : String
 
+    # Returns abilities of the camera model.
+    #
+    # NOTE: Doesn't require the camera to be initialized.
+    getter abilities : CameraAbilities { CameraAbilities.find(@model) }
+
+    # Returns info of the camera port.
+    #
+    # NOTE: Doesn't require the camera to be initialized.
+    getter port_info : PortInfo { PortInfo.find(@port) }
+
+    # Returns context used for the camera operations, allowing to set
+    # its callbacks (i.e. `Context#cancel_callback=`).
+    #
+    # NOTE: The context is closed along with the camera (see `#close`).
+    getter context : Context { Context.new }
+
     protected setter abilities : CameraAbilities?
     protected setter port_info : PortInfo?
 
@@ -176,22 +192,6 @@ module GPhoto2
     def exit : Nil
       _exit if ptr?
     end
-
-    # Returns abilities of the camera model.
-    #
-    # NOTE: Doesn't require the camera to be initialized.
-    def abilities : CameraAbilities
-      @abilities ||= CameraAbilities.find(@model)
-    end
-
-    # Returns info of the camera port.
-    #
-    # NOTE: Doesn't require the camera to be initialized.
-    def port_info : PortInfo
-      @port_info ||= PortInfo.find(@port)
-    end
-
-    getter context : Context { Context.new }
 
     # Yields opened instance of `Port` with already associated camera's `PortInfo`.
     # Port is automatically closed on block exit/exception.
