@@ -10,7 +10,7 @@ private def file_columns(file)
   type = info.try(&.type)
   mtime = info.try(&.mtime).try(&.to_s("%Y-%m-%d %H:%M:%S"))
 
-  if info && (info.readable? || info.removable?)
+  if info && info.field?(:permissions)
     flags = String.build do |str|
       str << '['
       str << 'R' if info.readable?
