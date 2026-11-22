@@ -34,6 +34,8 @@ module GPhoto2::FakeDriver
   class_property? config_untouched = false
   # Number of the upcoming `set_config` calls to fail.
   class_property set_config_failures = 0
+  # Error code returned by the failing `set_config` calls.
+  class_property set_config_error = LibGPhoto2::GP_ERROR_IO
   # Name of the setting failing to be saved, which (like Canon EOS cameras
   # in the PTP driver) gets its flag cleared and stops saving the rest.
   class_property failing_setting : String? = nil
@@ -53,6 +55,7 @@ module GPhoto2::FakeDriver
     self.fail_set_config = false
     self.config_untouched = false
     self.set_config_failures = 0
+    self.set_config_error = LibGPhoto2::GP_ERROR_IO
     self.failing_setting = nil
     self.last_timeout = nil
   end
@@ -79,7 +82,7 @@ module GPhoto2::FakeDriver
         LibGPhoto2::GP_ERROR_IO
       elsif FakeDriver.set_config_failures > 0
         FakeDriver.set_config_failures -= 1
-        LibGPhoto2::GP_ERROR_IO
+        FakeDriver.set_config_error
       else
         FakeDriver.store_window(window)
       end

@@ -431,6 +431,22 @@ module GPhoto2
         end
       end
 
+      it "does not retry restoring the original values when cancelled" do
+        with_configured_camera do |camera|
+          error = expect_raises(GPhoto2::Error) do
+            camera.preserving_config do
+              camera.update(iso: 400)
+              FakeDriver.set_config_failures = 1
+              FakeDriver.set_config_error = LibGPhoto2::GP_ERROR_CANCEL
+              FakeDriver.calls.clear
+            end
+          end
+          error.code.should eq LibGPhoto2::GP_ERROR_CANCEL
+          FakeDriver.calls[:set_config].should eq 1
+          FakeDriver.settings["iso"].value.should eq "400"
+        end
+      end
+
       it "restores the original values when leaving the block with break" do
         with_configured_camera do |camera|
           camera.preserving_config do

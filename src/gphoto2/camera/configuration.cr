@@ -298,7 +298,9 @@ module GPhoto2
 
         begin
           update diff
-        rescue GPhoto2::Error
+        rescue ex : GPhoto2::Error
+          # Cancelled operations (see `Context#cancel_callback`) must not be retried
+          raise ex if ex.code == LibGPhoto2::GP_ERROR_CANCEL
           reload
           # Reloaded settings might be gone as well
           update diff.select { |key, _| self[key]? }
