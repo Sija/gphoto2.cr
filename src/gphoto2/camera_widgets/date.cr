@@ -13,6 +13,23 @@ module GPhoto2
         get_value == other
       end
 
+      # Compares the `#value` with the time given in one of the formats
+      # accepted by `#value=` (i.e. ISO 8601), regardless of its location,
+      # or with `#to_s` if it's not a time.
+      #
+      # ```
+      # camera[:datetime] == "2020-01-02T03:04:05Z"
+      # ```
+      def ==(other : String) : Bool
+        time =
+          begin
+            parse_time(other)
+          rescue Time::Format::Error | ArgumentError
+            # Not a time, or an invalid one (i.e. February 30th)
+          end
+        time ? self == time : super
+      end
+
       protected def get_value
         value = uninitialized LibC::Int
         get_value_ptr pointerof(value)

@@ -514,6 +514,17 @@ module GPhoto2
         (widget == time + 1.second).should be_false
       end
 
+      it "compares the value with time strings" do
+        widget = build_widget(:date)
+        widget.value = "2020-01-02T03:04:05Z"
+        (widget == "2020-01-02T03:04:05Z").should be_true
+        (widget == "2020-01-02T04:04:05+01:00").should be_true
+        (widget == "2020-01-02 03:04:05 UTC").should be_true
+        (widget == "2020-01-02T03:04:06Z").should be_false
+        (widget == "yesterday").should be_false
+        (widget == "2020-02-30 03:04:05 UTC").should be_false
+      end
+
       it "accepts ISO 8601 strings" do
         widget = build_widget(:date)
         widget.value = "2020-01-02T03:04:05Z"
