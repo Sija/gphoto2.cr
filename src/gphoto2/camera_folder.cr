@@ -76,7 +76,13 @@ module GPhoto2
     # Returns file by *name*, relative to current `#path`.
     #
     # See `#cd` for the supported *name* formats.
+    #
+    # Raises `ArgumentError` if *name* points to a folder, rather than
+    # a file (i.e. it's empty, ends with `/`, `.` or `..`).
     def open(name : String) : CameraFile
+      if name.ends_with?('/') || Path.posix(name).basename.in?("", ".", "..")
+        raise ArgumentError.new("Invalid file name: #{name.inspect}")
+      end
       CameraFile.new(@camera, resolve(name))
     end
 

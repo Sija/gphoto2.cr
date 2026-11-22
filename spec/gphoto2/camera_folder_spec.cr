@@ -113,6 +113,17 @@ module GPhoto2
         end
       end
 
+      it "raises for names pointing to a folder" do
+        with_directory_camera do |camera|
+          folder = camera / "DCIM/sub"
+          {"", ".", "..", "sub/", "../..", "/", "x/."}.each do |name|
+            expect_raises(ArgumentError, "Invalid file name: #{name.inspect}") do
+              folder.open(name)
+            end
+          end
+        end
+      end
+
       it "yields the file and closes it after the block" do
         with_directory_camera do |camera|
           opened = nil
