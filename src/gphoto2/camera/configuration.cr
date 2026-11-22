@@ -255,7 +255,8 @@ module GPhoto2
       # the widgets they failed to save too, without telling which ones
       # were saved, hence the comparison with the values on the camera.
       private def keep_pending(widgets : Hash(String, CameraWidget::Base)) : Nil
-        saved_config = get_config.flatten rescue nil
+        saved_window = get_config rescue nil
+        saved_config = saved_window.try &.flatten
 
         widgets.each do |key, widget|
           next if widget.changed?
@@ -264,21 +265,31 @@ module GPhoto2
           end
           widget.changed = true
         end
+      ensure
+        # Free the widget tree right away, since it's allocated outside
+        # of the GC heap, and therefore doesn't trigger garbage collection
+        saved_window.try &.close
       end
 
       private def restore_config(snapshot : Hash(String, String)) : Nil
         # Unsaved values don't reflect the camera state, in which case
         # the values need to be compared with the ones on the camera too
-        saved_config = dirty? ? get_config.flatten : config
+        saved_window = get_config if dirty?
+        diff = begin
+          saved_config = saved_window.try(&.flatten) || config
 
-        diff = snapshot.select do |key, value|
-          # Settings might come and go (i.e. depending on the camera mode),
-          # those which are gone can't be restored anymore
-          next false unless (widget = self[key]?) &&
-                            (saved_widget = saved_config[key]?)
+          snapshot.select do |key, value|
+            # Settings might come and go (i.e. depending on the camera mode),
+            # those which are gone can't be restored anymore
+            next false unless (widget = self[key]?) &&
+                              (saved_widget = saved_config[key]?)
 
-          widget.raw_value.to_s != value ||
-            saved_widget.raw_value.to_s != value
+            widget.raw_value.to_s != value ||
+              saved_widget.raw_value.to_s != value
+          end
+        ensure
+          # See `#keep_pending`
+          saved_window.try &.close
         end
         return if diff.empty?
 
