@@ -10,6 +10,12 @@ module GPhoto2
       # # And save it to the current working directory.
       # file.save
       # ```
+      #
+      # NOTE: Files captured under `/` are downloaded right away, since these
+      # might not be stored on the camera (i.e. captured to the internal RAM
+      # of Canon EOS cameras, with `capturetarget` set to `Internal RAM`), in
+      # which case libgphoto2 keeps just a couple of them around. The others
+      # are downloaded on demand (see `CameraFile#save`).
       def capture : CameraFile
         capture :image
       end
@@ -18,7 +24,7 @@ module GPhoto2
       def capture(type : Type) : CameraFile
         save
         path = _capture(type).to_path
-        CameraFile.new(self, path)
+        CameraFile.new(self, path).tap(&.keep_unstored)
       end
 
       # Triggers a capture and immediately returns.

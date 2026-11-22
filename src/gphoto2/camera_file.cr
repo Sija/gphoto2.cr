@@ -60,6 +60,43 @@ module GPhoto2
       @path = name unless name.extension.empty?
     end
 
+    # :nodoc:
+    #
+    # Downloads the captured file right away, if it's placed under `/`.
+    #
+    # That's where the camera drivers place the captured files not stored on
+    # the camera, which are kept by libgphoto2 in its filesystem cache only:
+    # the ones captured to the internal RAM of PTP cameras (i.e. Canon EOS,
+    # with `capturetarget` set to `Internal RAM`, unlike the stored ones,
+    # placed under i.e. `/store_00010001/...`), as well as the ones captured
+    # by the `pentax` and `lumix` drivers. The cache holds a couple of files
+    # at most (2 by default, see the `cached-images` setting in
+    # `~/.gphoto/settings`), so they'd be gone after capturing a few more.
+    # Getting them from the cache takes no camera I/O.
+    #
+    # NOTE: Drivers of the cameras with a flat filesystem (i.e. `ricoh`,
+    # `spca50x`, `sipix`) place the captured files under `/` too, while these
+    # are stored on the camera. They get downloaded right away as well, which
+    # makes no difference other than the timing, since none of these drivers
+    # supports reading files in chunks (see `#write_to`) anyway.
+    protected def keep_unstored : Nil
+      return if preview? || @data_and_size || @path.dirname != "/"
+      data_and_size
+      @unstored = true
+    rescue ex : GPhoto2::Error
+      # Cancellation (see `Context#cancel_callback`) must not go unnoticed
+      raise ex if ex.code == LibGPhoto2::GP_ERROR_CANCEL
+      # Otherwise it's left to be downloaded later on, as any other file,
+      # since it might be stored on the camera after all
+    end
+
+    # Whether the file has been downloaded by `#keep_unstored`, and so (most
+    # likely) can't be read from the camera in chunks.
+    #
+    # NOTE: Not judged by the path alone, since files stored under `/` might
+    # be read in chunks just fine (i.e. the root of the memory card, for CHDK).
+    @unstored = false
+
     # Relative *path* is resolved from the root folder.
     #
     # Raises `ArgumentError` if *path* points to a folder, rather than
@@ -253,7 +290,8 @@ module GPhoto2
     # file.write_to(STDOUT)
     # ```
     def write_to(io : IO) : Nil
-      if @data_and_size || preview?
+      # Files not stored on the camera are available as a whole only
+      if @data_and_size || preview? || @unstored
         write_data_to(io)
       else
         stream_to(io)
@@ -262,10 +300,11 @@ module GPhoto2
 
     # Reads file directly from the camera.
     #
-    # NOTE: Preview files aren't stored on the camera, so their
+    # NOTE: Preview files, and the files captured to the internal RAM of the
+    # camera (see `Camera#capture`) aren't stored on the camera, so their
     # (already captured) data is returned instead, see `#to_slice`.
     def read : Bytes
-      preview? ? to_slice : _read
+      preview? || @unstored ? to_slice : _read
     end
 
     # :nodoc:
