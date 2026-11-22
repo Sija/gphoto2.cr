@@ -357,6 +357,23 @@ module GPhoto2
         widget.in?({true}).should be_false
       end
 
+      it "accepts and compares with symbols" do
+        widget = build_widget(:toggle)
+        widget.value = :on
+        widget.value.should eq 1
+        (widget == :on).should be_true
+        (widget == :yes).should be_true
+        (widget == :off).should be_false
+        widget.in?([:off, :true]).should be_true
+        widget.value = :Off
+        widget.value.should eq 0
+        (widget == :off).should be_true
+        (widget == :maybe).should be_false
+        expect_raises(ArgumentError, "Invalid value: :maybe") do
+          widget.value = :maybe
+        end
+      end
+
       it "accepts boolean strings" do
         widget = build_widget(:toggle)
         widget.value = "true"

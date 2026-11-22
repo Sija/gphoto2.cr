@@ -12,6 +12,17 @@ module GPhoto2
         get_value == (other ? 1 : 0)
       end
 
+      # Compares the toggle state with the given `Symbol`, naming
+      # one of the states accepted by `#value=` (i.e. `:on`, `:off`).
+      #
+      # ```
+      # camera[:autofocus] == :on
+      # ```
+      def ==(other : Symbol) : Bool
+        state = parse_state(other.to_s)
+        !state.nil? && self == state
+      end
+
       protected def get_value
         value = uninitialized LibC::Int
         get_value_ptr pointerof(value)
@@ -30,15 +41,26 @@ module GPhoto2
         when Bool
           set_value value ? 1 : 0
         when String
-          # Same values as accepted by the `gphoto2` CLI tool
-          case value.strip.downcase
-          when "true", "on", "yes"  then set_value true
-          when "false", "off", "no" then set_value false
-          else                           set_value value.to_i32
+          state = parse_state(value)
+          set_value state.nil? ? value.to_i32 : state
+        when Symbol
+          state = parse_state(value.to_s)
+          if state.nil?
+            raise ArgumentError.new("Invalid value: #{value.inspect}")
           end
+          set_value state
         else
           raise ArgumentError.new \
-            "Invalid value type, expected Int | Bool | String, got #{value.class}"
+            "Invalid value type, expected Int | Bool | String | Symbol, got #{value.class}"
+        end
+      end
+
+      # Returns the state named by *value*, or `nil` if there's none.
+      private def parse_state(value : String) : Bool?
+        # Same values as accepted by the `gphoto2` CLI tool
+        case value.strip.downcase
+        when "true", "on", "yes"  then true
+        when "false", "off", "no" then false
         end
       end
     end
