@@ -259,6 +259,16 @@ module GPhoto2
         set_value(other.get_value)
       end
 
+      # Returns `true` if the given *string* is named by the *symbol*,
+      # case-insensitively, with underscores standing for spaces as well
+      # (i.e. `:auto_iso` for `"Auto ISO"`), since symbols can't hold
+      # these (without quoting).
+      private def symbol_matches?(string : String, symbol : Symbol) : Bool
+        name = symbol.to_s
+        string.compare(name, case_insensitive: true).zero? ||
+          string.compare(name.tr("_", " "), case_insensitive: true).zero?
+      end
+
       protected abstract def get_value
       protected abstract def set_value(value)
 

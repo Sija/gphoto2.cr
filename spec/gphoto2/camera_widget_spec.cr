@@ -553,6 +553,19 @@ module GPhoto2
         (widget == 9007199254740993_i64).should be_false
       end
 
+      it "matches symbols with the choices case-insensitively" do
+        widget = build_radio(["auto", "Auto ISO", "AWB"])
+        widget.value = :auto
+        widget.value.should eq "auto"
+        widget.value = :auto_iso
+        widget.value.should eq "Auto ISO"
+        widget.value = [:daylight, :awb]
+        widget.value.should eq "AWB"
+        # Symbols not among the choices are set capitalized, as before
+        widget.value = :manual
+        widget.value.should eq "Manual"
+      end
+
       it "matches numbers with the choices numerically" do
         widget = build_radio(%w[2.8 4 5.6 1/60])
         widget.value = 4.0

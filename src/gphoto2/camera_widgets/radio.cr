@@ -50,7 +50,7 @@ module GPhoto2
             end
           match || raise ArgumentError.new("No matching value found")
           super match
-        when Number
+        when Number, Symbol
           super choice_value(value, choices)
         else
           super
@@ -72,11 +72,12 @@ module GPhoto2
 
       # Converts *value* to a choice, the same way `Text#value=` does,
       # except for numbers equal to one of the *choices* numerically
-      # (i.e. `4.0` for `"4"`), which are converted to that choice.
+      # (i.e. `4.0` for `"4"`), and symbols naming one of them (i.e. `:auto`
+      # for `"auto"`, see `#symbol_matches?`), which are converted to that choice.
       private def choice_value(value, choices : Array(String)) : String?
         case value
         when String then value
-        when Symbol then value.to_s.capitalize
+        when Symbol then choices.find { |choice| symbol_matches?(choice, value) } || value.to_s.capitalize
         when Number then numeric_choice(value, choices) || value.to_s
         end
       end
