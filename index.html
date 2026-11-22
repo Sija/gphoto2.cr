@@ -232,6 +232,36 @@
       
     </li>
   
+  <li class="parent " data-id="gphoto2/GPhoto2/CameraStorageInfo" data-name="gphoto2::camerastorageinfo">
+      <a href="GPhoto2/CameraStorageInfo.html">CameraStorageInfo</a>
+      
+        <ul>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraStorageInfo/AccessType" data-name="gphoto2::camerastorageinfo::accesstype">
+      <a href="GPhoto2/CameraStorageInfo/AccessType.html">AccessType</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraStorageInfo/Fields" data-name="gphoto2::camerastorageinfo::fields">
+      <a href="GPhoto2/CameraStorageInfo/Fields.html">Fields</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraStorageInfo/FilesystemType" data-name="gphoto2::camerastorageinfo::filesystemtype">
+      <a href="GPhoto2/CameraStorageInfo/FilesystemType.html">FilesystemType</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraStorageInfo/Type" data-name="gphoto2::camerastorageinfo::type">
+      <a href="GPhoto2/CameraStorageInfo/Type.html">Type</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
   <li class="parent " data-id="gphoto2/GPhoto2/CameraWidget" data-name="gphoto2::camerawidget">
       <a href="GPhoto2/CameraWidget.html">CameraWidget</a>
       
@@ -428,6 +458,7 @@ It also includes a facade to interact with the library in a more idiomatic Cryst
 <li>Camera ability detection</li>
 <li>Camera connection reloading</li>
 <li>Filesystem access (r/w) [^1]</li>
+<li>Storage information [^1]</li>
 <li>Configuration (r/w) [^1]</li>
 <li>Image capture [^1]</li>
 <li>Live-view [^1]</li>
@@ -565,6 +596,10 @@ file.save
 
 <span class="c"># ...or to a specific pathname</span>
 file.save(<span class="s">&quot;/tmp/out.jpg&quot;</span>)
+
+<span class="c"># list camera storages (i.e. memory cards)</span>
+camera.storage_info.map { <span class="o">|</span>storage<span class="o">|</span> {storage.base_dir, storage.free_kbytes} }
+<span class="c"># =&gt; [{&quot;/store_00010001&quot;, 13842432}, ...]</span>
 
 <span class="c"># traverse the camera filesystem</span>
 folder <span class="o">=</span> camera<span class="o">/</span><span class="s">&quot;store_00010001/DCIM/100D5100&quot;</span>

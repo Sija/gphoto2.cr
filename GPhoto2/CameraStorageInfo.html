@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Crystal Docs 1.21.0">
+<meta name="crystal_docs.project_version" content="master">
+<meta name="crystal_docs.project_name" content="gphoto2">
+
+
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+  <meta name="repository-name" content="gphoto2">
+  <title>GPhoto2::CameraStorageInfo - gphoto2 master</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill="currentColor" fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<input type="checkbox" id="sidebar-btn">
+<label for="sidebar-btn" id="sidebar-btn-label">
+  <svg class="open" xmlns="http://www.w3.org/2000/svg" height="2em" width="2em" viewBox="0 0 512 512"><title>Open Sidebar</title><path fill="currentColor" d="M80 96v64h352V96H80zm0 112v64h352v-64H80zm0 112v64h352v-64H80z"></path></svg>
+  <svg class="close" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512"><title>Close Sidebar</title><path fill="currentColor" d="m118.6 73.4-45.2 45.2L210.7 256 73.4 393.4l45.2 45.2L256 301.3l137.4 137.3 45.2-45.2L301.3 256l137.3-137.4-45.2-45.2L256 210.7Z"></path></svg>
+</label>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          gphoto2
+        </a>
+      </h1>
+
+      <span class="project-version">
+        master
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="gphoto2/GPhoto2" data-name="gphoto2">
+      <a href="../GPhoto2.html">GPhoto2</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="gphoto2/GPhoto2/Camera" data-name="gphoto2::camera">
+      <a href="../GPhoto2/Camera.html">Camera</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="gphoto2/GPhoto2/Camera/Capture" data-name="gphoto2::camera::capture">
+      <a href="../GPhoto2/Camera/Capture.html">Capture</a>
+      
+        <ul>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/Camera/Capture/Type" data-name="gphoto2::camera::capture::type">
+      <a href="../GPhoto2/Camera/Capture/Type.html">Type</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/Camera/Configuration" data-name="gphoto2::camera::configuration">
+      <a href="../GPhoto2/Camera/Configuration.html">Configuration</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/Camera/Event" data-name="gphoto2::camera::event">
+      <a href="../GPhoto2/Camera/Event.html">Event</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/Camera/Filesystem" data-name="gphoto2::camera::filesystem">
+      <a href="../GPhoto2/Camera/Filesystem.html">Filesystem</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/Camera/ID" data-name="gphoto2::camera::id">
+      <a href="../GPhoto2/Camera/ID.html">ID</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/Camera/Info" data-name="gphoto2::camera::info">
+      <a href="../GPhoto2/Camera/Info.html">Info</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/Camera/Operation" data-name="gphoto2::camera::operation">
+      <a href="../GPhoto2/Camera/Operation.html">Operation</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraAbilities" data-name="gphoto2::cameraabilities">
+      <a href="../GPhoto2/CameraAbilities.html">CameraAbilities</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraAbilitiesList" data-name="gphoto2::cameraabilitieslist">
+      <a href="../GPhoto2/CameraAbilitiesList.html">CameraAbilitiesList</a>
+      
+    </li>
+  
+  <li class="parent " data-id="gphoto2/GPhoto2/CameraEvent" data-name="gphoto2::cameraevent(t)">
+      <a href="../GPhoto2/CameraEvent.html">CameraEvent</a>
+      
+        <ul>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraEvent/Type" data-name="gphoto2::cameraevent::type">
+      <a href="../GPhoto2/CameraEvent/Type.html">Type</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="gphoto2/GPhoto2/CameraFile" data-name="gphoto2::camerafile">
+      <a href="../GPhoto2/CameraFile.html">CameraFile</a>
+      
+        <ul>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraFile/Type" data-name="gphoto2::camerafile::type">
+      <a href="../GPhoto2/CameraFile/Type.html">Type</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="gphoto2/GPhoto2/CameraFileInfo" data-name="gphoto2::camerafileinfo">
+      <a href="../GPhoto2/CameraFileInfo.html">CameraFileInfo</a>
+      
+        <ul>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraFileInfo/Audio" data-name="gphoto2::camerafileinfo::audio">
+      <a href="../GPhoto2/CameraFileInfo/Audio.html">Audio</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraFileInfo/Base" data-name="gphoto2::camerafileinfo::base">
+      <a href="../GPhoto2/CameraFileInfo/Base.html">Base</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraFileInfo/Fields" data-name="gphoto2::camerafileinfo::fields">
+      <a href="../GPhoto2/CameraFileInfo/Fields.html">Fields</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraFileInfo/File" data-name="gphoto2::camerafileinfo::file">
+      <a href="../GPhoto2/CameraFileInfo/File.html">File</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraFileInfo/Preview" data-name="gphoto2::camerafileinfo::preview">
+      <a href="../GPhoto2/CameraFileInfo/Preview.html">Preview</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraFileInfo/Status" data-name="gphoto2::camerafileinfo::status">
+      <a href="../GPhoto2/CameraFileInfo/Status.html">Status</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraFilePath" data-name="gphoto2::camerafilepath">
+      <a href="../GPhoto2/CameraFilePath.html">CameraFilePath</a>
+      
+    </li>
+  
+  <li class="parent " data-id="gphoto2/GPhoto2/CameraFolder" data-name="gphoto2::camerafolder">
+      <a href="../GPhoto2/CameraFolder.html">CameraFolder</a>
+      
+        <ul>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraFolder/Compression" data-name="gphoto2::camerafolder::compression">
+      <a href="../GPhoto2/CameraFolder/Compression.html">Compression</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="gphoto2/GPhoto2/CameraList" data-name="gphoto2::cameralist">
+      <a href="../GPhoto2/CameraList.html">CameraList</a>
+      
+        <ul>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraList/Entry" data-name="gphoto2::cameralist::entry">
+      <a href="../GPhoto2/CameraList/Entry.html">Entry</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent open current" data-id="gphoto2/GPhoto2/CameraStorageInfo" data-name="gphoto2::camerastorageinfo">
+      <a href="../GPhoto2/CameraStorageInfo.html">CameraStorageInfo</a>
+      
+        <ul>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraStorageInfo/AccessType" data-name="gphoto2::camerastorageinfo::accesstype">
+      <a href="../GPhoto2/CameraStorageInfo/AccessType.html">AccessType</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraStorageInfo/Fields" data-name="gphoto2::camerastorageinfo::fields">
+      <a href="../GPhoto2/CameraStorageInfo/Fields.html">Fields</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraStorageInfo/FilesystemType" data-name="gphoto2::camerastorageinfo::filesystemtype">
+      <a href="../GPhoto2/CameraStorageInfo/FilesystemType.html">FilesystemType</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraStorageInfo/Type" data-name="gphoto2::camerastorageinfo::type">
+      <a href="../GPhoto2/CameraStorageInfo/Type.html">Type</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="gphoto2/GPhoto2/CameraWidget" data-name="gphoto2::camerawidget">
+      <a href="../GPhoto2/CameraWidget.html">CameraWidget</a>
+      
+        <ul>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraWidget/Base" data-name="gphoto2::camerawidget::base">
+      <a href="../GPhoto2/CameraWidget/Base.html">Base</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraWidget/Button" data-name="gphoto2::camerawidget::button">
+      <a href="../GPhoto2/CameraWidget/Button.html">Button</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraWidget/Date" data-name="gphoto2::camerawidget::date">
+      <a href="../GPhoto2/CameraWidget/Date.html">Date</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraWidget/Menu" data-name="gphoto2::camerawidget::menu">
+      <a href="../GPhoto2/CameraWidget/Menu.html">Menu</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraWidget/Radio" data-name="gphoto2::camerawidget::radio">
+      <a href="../GPhoto2/CameraWidget/Radio.html">Radio</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraWidget/Range" data-name="gphoto2::camerawidget::range">
+      <a href="../GPhoto2/CameraWidget/Range.html">Range</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraWidget/Section" data-name="gphoto2::camerawidget::section">
+      <a href="../GPhoto2/CameraWidget/Section.html">Section</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraWidget/Text" data-name="gphoto2::camerawidget::text">
+      <a href="../GPhoto2/CameraWidget/Text.html">Text</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraWidget/Toggle" data-name="gphoto2::camerawidget::toggle">
+      <a href="../GPhoto2/CameraWidget/Toggle.html">Toggle</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraWidget/Type" data-name="gphoto2::camerawidget::type">
+      <a href="../GPhoto2/CameraWidget/Type.html">Type</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/CameraWidget/Window" data-name="gphoto2::camerawidget::window">
+      <a href="../GPhoto2/CameraWidget/Window.html">Window</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="gphoto2/GPhoto2/Context" data-name="gphoto2::context">
+      <a href="../GPhoto2/Context.html">Context</a>
+      
+        <ul>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/Context/Callbacks" data-name="gphoto2::context::callbacks">
+      <a href="../GPhoto2/Context/Callbacks.html">Callbacks</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/Context/Error" data-name="gphoto2::context::error">
+      <a href="../GPhoto2/Context/Error.html">Error</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/Context/Feedback" data-name="gphoto2::context::feedback">
+      <a href="../GPhoto2/Context/Feedback.html">Feedback</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/Error" data-name="gphoto2::error">
+      <a href="../GPhoto2/Error.html">Error</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/Exception" data-name="gphoto2::exception">
+      <a href="../GPhoto2/Exception.html">Exception</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/LogLevel" data-name="gphoto2::loglevel">
+      <a href="../GPhoto2/LogLevel.html">LogLevel</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/ManagedStruct" data-name="gphoto2::managedstruct(t)">
+      <a href="../GPhoto2/ManagedStruct.html">ManagedStruct</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/NoDevicesError" data-name="gphoto2::nodeviceserror">
+      <a href="../GPhoto2/NoDevicesError.html">NoDevicesError</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/NotImplementedError" data-name="gphoto2::notimplementederror">
+      <a href="../GPhoto2/NotImplementedError.html">NotImplementedError</a>
+      
+    </li>
+  
+  <li class="parent " data-id="gphoto2/GPhoto2/Port" data-name="gphoto2::port">
+      <a href="../GPhoto2/Port.html">Port</a>
+      
+        <ul>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/Port/Type" data-name="gphoto2::port::type">
+      <a href="../GPhoto2/Port/Type.html">Type</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/PortInfo" data-name="gphoto2::portinfo">
+      <a href="../GPhoto2/PortInfo.html">PortInfo</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/PortInfoList" data-name="gphoto2::portinfolist">
+      <a href="../GPhoto2/PortInfoList.html">PortInfoList</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/Struct" data-name="gphoto2::struct(t)">
+      <a href="../GPhoto2/Struct.html">Struct</a>
+      
+    </li>
+  
+  <li class=" " data-id="gphoto2/GPhoto2/VersionVerbosity" data-name="gphoto2::versionverbosity">
+      <a href="../GPhoto2/VersionVerbosity.html">VersionVerbosity</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">
+    struct
+  </span> GPhoto2::<wbr>CameraStorageInfo
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../GPhoto2/CameraStorageInfo.html">GPhoto2::CameraStorageInfo</a></li><li class="superclass">Struct</li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
+
+
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>Represents information about a camera storage (i.e. a memory card).</p>
+<p><span class="flag purple">NOTE</span>  Values not reported by the camera driver are <code>nil</code>.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/Sija/gphoto2.cr/blob/2e7afb0/src/gphoto2/camera_storage_info.cr#L5" target="_blank">
+        gphoto2/camera_storage_info.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+
+
+  
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new%28info%3ALibGPhoto2%3A%3ACameraStorageInformation%29-class-method" class="signature"><strong>.new</strong>(info : LibGPhoto2::CameraStorageInformation)</a>
+        
+          <div class="summary"><p>Creates storage information from the given libgphoto2 <em>info</em>.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+  
+
+  
+
+  
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#%3D%3D%28other%3Aself%29-instance-method" class="signature"><strong>#==</strong>(other : <span class="k">self</span>)</a>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#access%3AAccessType%7CNil-instance-method" class="signature"><strong>#access</strong> : AccessType | Nil</a>
+        
+          <div class="summary"><p>Returns the access permissions of the storage.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#base_dir%3AString%7CNil-instance-method" class="signature"><strong>#base_dir</strong> : String | Nil</a>
+        
+          <div class="summary"><p>Returns the base folder of the storage (i.e.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#capacity_kbytes%3AUInt64%7CNil-instance-method" class="signature"><strong>#capacity_kbytes</strong> : UInt64 | Nil</a>
+        
+          <div class="summary"><p>Returns the total capacity of the storage, in kilobytes.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#description%3AString%7CNil-instance-method" class="signature"><strong>#description</strong> : String | Nil</a>
+        
+          <div class="summary"><p>Returns the description of the storage.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#fields%3AFields-instance-method" class="signature"><strong>#fields</strong> : Fields</a>
+        
+          <div class="summary"><p>Returns the set of fields reported by the camera driver.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#filesystem_type%3AFilesystemType%7CNil-instance-method" class="signature"><strong>#filesystem_type</strong> : FilesystemType | Nil</a>
+        
+          <div class="summary"><p>Returns the type of the filesystem hierarchy of the storage.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#free_images%3AUInt64%7CNil-instance-method" class="signature"><strong>#free_images</strong> : UInt64 | Nil</a>
+        
+          <div class="summary"><p>Returns the number of images that still fit on the storage, as estimated by the camera.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#free_kbytes%3AUInt64%7CNil-instance-method" class="signature"><strong>#free_kbytes</strong> : UInt64 | Nil</a>
+        
+          <div class="summary"><p>Returns the free space of the storage, in kilobytes.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#hash%28hasher%29-instance-method" class="signature"><strong>#hash</strong>(hasher)</a>
+        
+          <div class="summary"><p>See <code>Object#hash(hasher)</code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#label%3AString%7CNil-instance-method" class="signature"><strong>#label</strong> : String | Nil</a>
+        
+          <div class="summary"><p>Returns the label of the storage, similar to a DOS volume label.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#type%3AType%7CNil-instance-method" class="signature"><strong>#type</strong> : Type | Nil</a>
+        
+          <div class="summary"><p>Returns the hardware type of the storage.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#writable%3F%3ABool%7CNil-instance-method" class="signature"><strong>#writable?</strong> : Bool | Nil</a>
+        
+          <div class="summary"><p>Returns <code>true</code> if files can be written to the storage, <code>false</code> otherwise, or <code>nil</code> if the access permissions are not reported.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+  <div class="methods-inherited">
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
+    
+  </div>
+
+  
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(info:LibGPhoto2::CameraStorageInformation)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(info : LibGPhoto2::CameraStorageInformation)
+
+        <a class="method-permalink" href="#new%28info%3ALibGPhoto2%3A%3ACameraStorageInformation%29-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Creates storage information from the given libgphoto2 <em>info</em>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/2e7afb0/src/gphoto2/camera_storage_info.cr#L47" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+  
+
+  
+
+  
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="==(other:self)-instance-method">
+      <div class="signature">
+        
+        def <strong>==</strong>(other : <span class="k">self</span>)
+
+        <a class="method-permalink" href="#%3D%3D%28other%3Aself%29-instance-method">#</a>
+      </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="access:AccessType|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>access</strong> : <a href="../GPhoto2/CameraStorageInfo/AccessType.html">AccessType</a> | Nil
+
+        <a class="method-permalink" href="#access%3AAccessType%7CNil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the access permissions of the storage.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/2e7afb0/src/gphoto2/camera_storage_info.cr#L31" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="base_dir:String|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>base_dir</strong> : String | Nil
+
+        <a class="method-permalink" href="#base_dir%3AString%7CNil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the base folder of the storage (i.e. <code>/store_00010001</code>),
+which is <code>/</code> if the camera has a single storage only.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/2e7afb0/src/gphoto2/camera_storage_info.cr#L16" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="capacity_kbytes:UInt64|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>capacity_kbytes</strong> : UInt64 | Nil
+
+        <a class="method-permalink" href="#capacity_kbytes%3AUInt64%7CNil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the total capacity of the storage, in kilobytes.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/2e7afb0/src/gphoto2/camera_storage_info.cr#L34" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="description:String|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>description</strong> : String | Nil
+
+        <a class="method-permalink" href="#description%3AString%7CNil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the description of the storage.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/2e7afb0/src/gphoto2/camera_storage_info.cr#L22" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="fields:Fields-instance-method">
+      <div class="signature">
+        
+        def <strong>fields</strong> : <a href="../GPhoto2/CameraStorageInfo/Fields.html">Fields</a>
+
+        <a class="method-permalink" href="#fields%3AFields-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the set of fields reported by the camera driver.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/2e7afb0/src/gphoto2/camera_storage_info.cr#L12" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="filesystem_type:FilesystemType|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>filesystem_type</strong> : <a href="../GPhoto2/CameraStorageInfo/FilesystemType.html">FilesystemType</a> | Nil
+
+        <a class="method-permalink" href="#filesystem_type%3AFilesystemType%7CNil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the type of the filesystem hierarchy of the storage.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/2e7afb0/src/gphoto2/camera_storage_info.cr#L28" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="free_images:UInt64|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>free_images</strong> : UInt64 | Nil
+
+        <a class="method-permalink" href="#free_images%3AUInt64%7CNil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the number of images that still fit on the storage,
+as estimated by the camera.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/2e7afb0/src/gphoto2/camera_storage_info.cr#L41" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="free_kbytes:UInt64|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>free_kbytes</strong> : UInt64 | Nil
+
+        <a class="method-permalink" href="#free_kbytes%3AUInt64%7CNil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the free space of the storage, in kilobytes.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/2e7afb0/src/gphoto2/camera_storage_info.cr#L37" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="hash(hasher)-instance-method">
+      <div class="signature">
+        
+        def <strong>hash</strong>(hasher)
+
+        <a class="method-permalink" href="#hash%28hasher%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from struct Struct
+            </div>
+          
+          <p>See <code>Object#hash(hasher)</code></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="label:String|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>label</strong> : String | Nil
+
+        <a class="method-permalink" href="#label%3AString%7CNil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the label of the storage, similar to a DOS volume label.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/2e7afb0/src/gphoto2/camera_storage_info.cr#L19" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="type:Type|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>type</strong> : <a href="../GPhoto2/CameraStorageInfo/Type.html">Type</a> | Nil
+
+        <a class="method-permalink" href="#type%3AType%7CNil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the hardware type of the storage.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/2e7afb0/src/gphoto2/camera_storage_info.cr#L25" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="writable?:Bool|Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>writable?</strong> : Bool | Nil
+
+        <a class="method-permalink" href="#writable%3F%3ABool%7CNil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if files can be written to the storage, <code>false</code>
+otherwise, or <code>nil</code> if the access permissions are not reported.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/2e7afb0/src/gphoto2/camera_storage_info.cr#L63" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+</div>
+
+</body>
+</html>
