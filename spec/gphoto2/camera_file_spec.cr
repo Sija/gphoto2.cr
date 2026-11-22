@@ -76,6 +76,21 @@ module GPhoto2
     end
 
     describe "#read" do
+      it "reads the files stored under the root folder in chunks" do
+        with_directory_camera do |camera|
+          # i.e. the root of the memory card, for CHDK cameras
+          stub = stub_file_read(camera, "on the card".to_slice)
+          camera.blob("/a.jpg").read.should eq "on the card".to_slice
+
+          io = IO::Memory.new
+          camera.blob("/a.jpg").write_to(io)
+          io.to_s.should eq "on the card"
+
+          stub.reads.should be > 0
+          stub.downloads.should eq 0
+        end
+      end
+
       it "returns the data of preview files" do
         with_fake_camera do |camera|
           FakeDriver.preview_data = "preview data"
