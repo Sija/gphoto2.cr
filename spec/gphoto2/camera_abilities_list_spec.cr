@@ -16,6 +16,31 @@ module GPhoto2
       end
     end
 
+    it "loads the port list only when detecting cameras" do
+      context = Context.new
+      begin
+        list = CameraAbilitiesList.new(context)
+        list[DIRECTORY_CAMERA_MODEL]
+        list.@port_info_list.should be_nil
+
+        list.detect.close
+        list.@port_info_list.should_not be_nil
+      ensure
+        context.close
+      end
+    end
+
+    it "uses the given port list" do
+      context = Context.new
+      begin
+        port_info_list = PortInfoList.new
+        list = CameraAbilitiesList.new(context, port_info_list)
+        list.@port_info_list.should be port_info_list
+      ensure
+        context.close
+      end
+    end
+
     it "raises on unknown model" do
       context = Context.new
       begin

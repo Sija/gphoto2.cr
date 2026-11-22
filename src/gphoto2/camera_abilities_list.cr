@@ -6,13 +6,16 @@ module GPhoto2
     include Struct(LibGPhoto2::CameraAbilitiesList)
 
     @context : Context
-    @port_info_list : PortInfoList
+
+    # The list of ports used by `#detect`, loaded on first use (unless given),
+    # since loading it takes a while, while it's not needed for lookups.
+    private getter port_info_list : PortInfoList { PortInfoList.new }
 
     # Loads the abilities of all supported camera models, using the given
     # *context*, along with the *port_info_list* used by `#detect`.
     #
     # NOTE: allocates memory.
-    def initialize(@context, @port_info_list = PortInfoList.new)
+    def initialize(@context, @port_info_list : PortInfoList? = nil)
       new
       load
     end
@@ -74,7 +77,7 @@ module GPhoto2
     private def _detect
       camera_list = CameraList.new
       @context.check! \
-        LibGPhoto2.gp_abilities_list_detect(self, @port_info_list, camera_list, @context)
+        LibGPhoto2.gp_abilities_list_detect(self, port_info_list, camera_list, @context)
       camera_list
     end
 
