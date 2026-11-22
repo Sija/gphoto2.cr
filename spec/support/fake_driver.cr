@@ -112,8 +112,10 @@ module GPhoto2::FakeDriver
       LibGPhoto2.gp_file_set_data_and_size(file, buffer, data.bytesize)
     }
 
-    funcs.wait_for_event = ->(_camera : LibGPhoto2::Camera*, timeout : LibC::Int, type : LibGPhoto2::CameraEventType*, data : Void**, _context : LibGPhoto2::GPContext*) {
+    funcs.wait_for_event = ->(_camera : LibGPhoto2::Camera*, timeout : LibC::Int, type : LibGPhoto2::CameraEventType*, data : Void**, context : LibGPhoto2::GPContext*) {
       FakeDriver.calls[:wait_for_event] += 1
+      # Gives the callbacks (see `Context#idle_callback`) a chance to run
+      LibGPhoto2.gp_context_idle(context)
       FakeDriver.last_timeout = timeout
       event = FakeDriver.events.shift? || FakeEvent.new(:timeout)
       type.value = event.type unless event.untouched_type

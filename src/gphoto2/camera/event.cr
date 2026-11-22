@@ -33,10 +33,10 @@ module GPhoto2
         type = CameraEvent::Type::Timeout
         data_ptr = Pointer(Void).null
 
-        context.check! \
-          LibGPhoto2.gp_camera_wait_for_event(self, timeout_ms, pointerof(type), pointerof(data_ptr), context)
-
+        rc = LibGPhoto2.gp_camera_wait_for_event(self, timeout_ms, pointerof(type), pointerof(data_ptr), context)
         begin
+          context.check!(rc)
+
           # Drivers aren't guaranteed to pass any data along with the event
           data =
             if data_ptr
@@ -53,8 +53,9 @@ module GPhoto2
             end
           CameraEvent.new(type, data)
         ensure
-          # Event data is allocated by libgphoto2 and must be freed by the caller.
-          LibC.free(data_ptr) if data_ptr
+          # Event data is allocated by libgphoto2 and must be freed by the caller,
+          # after a successful call (even when one of the callbacks raised)
+          LibC.free(data_ptr) if data_ptr && GPhoto2.check?(rc)
         end
       end
 

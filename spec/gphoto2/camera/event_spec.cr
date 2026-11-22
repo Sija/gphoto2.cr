@@ -84,6 +84,16 @@ module GPhoto2
         end
       end
 
+      it "re-raises the exceptions raised by the callbacks along with the event data" do
+        with_fake_camera do |camera|
+          FakeDriver.events << FakeDriver::FakeEvent.new(:file_added, "/DCIM/a.jpg")
+          camera.context.idle_callback = -> : Nil { raise "oops" }
+          expect_raises(::Exception, "oops") do
+            camera.wait
+          end
+        end
+      end
+
       it "returns file changed event" do
         with_fake_camera do |camera|
           FakeDriver.events << FakeDriver::FakeEvent.new(:file_changed, "/DCIM/a.jpg")
