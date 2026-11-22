@@ -373,7 +373,10 @@ module GPhoto2
         # NOTE: Capped before adding 1, since the size might be bogus
         (Math.min(size, MAX_PREALLOCATED_SIZE.to_u64 - 1) + 1).to_i32
       end
-      buffer = Bytes.new(capacity || BUFFER_SIZE)
+      # Starts with (at most) a single chunk, since reading the file in chunks
+      # might turn out not to be supported (see below), in which case a buffer
+      # of the expected size would have been allocated for nothing
+      buffer = Bytes.new(Math.min(capacity || BUFFER_SIZE, CHUNK_SIZE))
       offset = 0
 
       loop do
@@ -386,8 +389,9 @@ module GPhoto2
             break if size.zero?
             raise Error.from_code(LibGPhoto2::GP_ERROR_FIXED_LIMIT_EXCEEDED)
           end
-          # Grow geometrically to keep the number of copies low
-          new_size = Math.min(Math.max(buffer.size.to_i64 * 2, BUFFER_SIZE), MAX_READ_SIZE).to_i32
+          # Grow geometrically to keep the number of copies low,
+          # or to the expected size right away, if known
+          new_size = Math.min(Math.max(buffer.size.to_i64 * 2, capacity || BUFFER_SIZE), MAX_READ_SIZE).to_i32
           buffer = Bytes.new(new_size).tap(&.copy_from(buffer))
         end
         # Request chunks of (at most) a constant size from the camera

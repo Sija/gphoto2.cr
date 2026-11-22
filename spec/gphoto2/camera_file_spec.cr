@@ -117,6 +117,26 @@ module GPhoto2
         end
       end
 
+      it "does not allocate memory upfront when reading in chunks is not supported" do
+        with_directory_camera do |camera|
+          stub_file_read(camera, "hello".to_slice, reported_size: 50_000_000_u64, unsupported_from: 0_u64)
+          # NOTE: See "does not allocate memory upfront for bogus reported sizes"
+          total_bytes = GC.stats.total_bytes
+          camera.blob("/DCIM/a.jpg").read.should eq "hello".to_slice
+          (GC.stats.total_bytes - total_bytes).should be <= CameraFile::CHUNK_SIZE + 1024 * 1024
+        end
+      end
+
+      it "reads files larger than a chunk with a matching reported size" do
+        with_directory_camera do |camera|
+          data = Bytes.new(CameraFile::CHUNK_SIZE * 3 + 123) { |i| (i % 251).to_u8 }
+          stub_file_read(camera, data, reported_size: data.size.to_u64, max_read_size: 100_000_u64)
+          bytes = camera.blob("/DCIM/a.jpg").read
+          bytes.should eq data
+          LibGC.size(bytes.to_unsafe).should be < data.size + 64 * 1024
+        end
+      end
+
       it "keeps reading after short reads" do
         with_directory_camera do |camera|
           data = Bytes.new(3000) { |i| (i % 251).to_u8 }
