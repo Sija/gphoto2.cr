@@ -480,7 +480,7 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/7c94d32/src/gphoto2/camera/capture.cr#L3" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/67c32d3/src/gphoto2/camera/capture.cr#L3" target="_blank">
         gphoto2/camera/capture.cr
       </a>
     
@@ -568,12 +568,17 @@ file <span class="o">=</span> camera.capture
 
 <span class="c"># And save it to the current working directory.</span>
 file.save</code></pre>
+<p><span class="flag purple">NOTE</span>  Files captured under <code>/</code> are downloaded right away, since these
+might not be stored on the camera (i.e. captured to the internal RAM
+of Canon EOS cameras, with <code>capturetarget</code> set to <code>Internal RAM</code>), in
+which case libgphoto2 keeps just a couple of them around. The others
+are downloaded on demand (see <code><a href="../../GPhoto2/CameraFile.html#save%28path%3APath%7CString%3Dname%29%3ANil-instance-method">CameraFile#save</a></code>).</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/7c94d32/src/gphoto2/camera/capture.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/67c32d3/src/gphoto2/camera/capture.cr#L19" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -604,7 +609,7 @@ file.to_slice <span class="c"># =&gt; Bytes[255, 216, 255, 219, 0, 132, 0, 6, ..
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/7c94d32/src/gphoto2/camera/capture.cr#L55" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/67c32d3/src/gphoto2/camera/capture.cr#L61" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -631,7 +636,7 @@ event.data <span class="c"># =&gt; CameraFile</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/7c94d32/src/gphoto2/camera/capture.cr#L35" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/67c32d3/src/gphoto2/camera/capture.cr#L41" target="_blank">View source</a>]
         
       </div>
     </div>
