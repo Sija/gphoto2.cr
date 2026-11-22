@@ -532,6 +532,29 @@ module GPhoto2
         widget.value.should eq "200"
       end
 
+      it "matches numbers with the choices numerically" do
+        widget = build_radio(%w[2.8 4 5.6 1/60])
+        widget.value = 4.0
+        widget.value.should eq "4"
+        widget.value = 5.6_f32
+        widget.value.should eq "5.6"
+        widget.value = [8, 4.0_f32]
+        widget.value.should eq "4"
+        # Numbers not among the choices are set as-is
+        widget.value = 11
+        widget.value.should eq "11"
+      end
+
+      it "matches integers with the choices exactly" do
+        widget = build_radio(%w[9007199254740992 9007199254740993 4.0])
+        widget.value = 9007199254740993_i64
+        widget.value.should eq "9007199254740993"
+        widget.value = [9007199254740993_i64]
+        widget.value.should eq "9007199254740993"
+        widget.value = 4
+        widget.value.should eq "4.0"
+      end
+
       it "accepts collections of numbers and symbols" do
         widget = build_radio(%w[100 200 Auto])
         widget.value = [300, 200]

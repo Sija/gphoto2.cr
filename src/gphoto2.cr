@@ -83,6 +83,27 @@ module GPhoto2
 
   # :nodoc:
   #
+  # Returns `true` if the given *string* represents the *number* numerically
+  # (i.e. `"4"` or `"4.0"` for `4`).
+  #
+  # Integers are compared exactly, rather than through `Float64` (which would
+  # make i.e. `"9007199254740992"` equal `9007199254740993`), while `Float32`
+  # values are widened through their shortest decimal representation (see
+  # `CameraWidget::Range#choices`), so that i.e. `0.3_f32` equals `"0.3"`.
+  def number_string?(string : String, number : Number) : Bool
+    if number.is_a?(Int)
+      if integer = string.to_i128?
+        return integer == number
+      end
+      # Integers beyond these can't be compared through `Float64` exactly
+      return false unless -(2_i64 ** 53) <= number <= 2_i64 ** 53
+    end
+    float = number.is_a?(Float32) ? number.to_s.to_f64 : number.to_f64
+    string.to_f64? == float
+  end
+
+  # :nodoc:
+  #
   # Returns normalized, absolute posix version of the given *path*.
   def absolute_path(path : Path | String) : Path
     path = path.is_a?(String) ? Path.posix(path) : path.to_posix
