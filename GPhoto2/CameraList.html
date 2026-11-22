@@ -429,6 +429,8 @@
   </h2>
   <ul class="other-types-list">
     
+      <li class="other-type">Enumerable(<a href="../GPhoto2/CameraList/Entry.html">GPhoto2::CameraList::Entry</a>)</li>
+    
       <li class="other-type"><a href="../GPhoto2/Struct.html">GPhoto2::Struct(LibGPhoto2::CameraList)</a></li>
     
   </ul>
@@ -452,7 +454,7 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/d184be9/src/gphoto2/camera_list.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/263bba9/src/gphoto2/camera_list.cr#L4" target="_blank">
         gphoto2/camera_list.cr
       </a>
     
@@ -507,6 +509,20 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#each%28%26%3AEntry-%3E%29%3ANil-instance-method" class="signature"><strong>#each</strong>(& : Entry -> ) : Nil</a>
+        
+          <div class="summary"><p>Yields each entry in the list.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#empty%3F%3ABool-instance-method" class="signature"><strong>#empty?</strong> : Bool</a>
+        
+          <div class="summary"><p>Returns <code>true</code> if the list has no entries.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#finalize-instance-method" class="signature"><strong>#finalize</strong></a>
         
           <div class="summary"><p>Finalizes object by freeing allocated memory.</p></div>
@@ -520,18 +536,24 @@
         
       </li>
     
-      <li class="entry-summary">
-        <a href="#to_a%3AArray%28Entry%29-instance-method" class="signature"><strong>#to_a</strong> : Array(Entry)</a>
-        
-          <div class="summary"><p>Returns an array of entries in the list.</p></div>
-        
-      </li>
-    
   </ul>
 
 
 
   <div class="methods-inherited">
+    
+      
+
+
+      
+
+
+      
+
+
+      
+
+
     
       
 
@@ -633,7 +655,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d184be9/src/gphoto2/camera_list.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/263bba9/src/gphoto2/camera_list.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -670,7 +692,54 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d184be9/src/gphoto2/camera_list.cr#L22" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/263bba9/src/gphoto2/camera_list.cr#L23" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="each(&amp;:Entry-&gt;):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>each</strong>(& : <a href="../GPhoto2/CameraList/Entry.html">Entry</a> -> ) : Nil
+
+        <a class="method-permalink" href="#each%28%26%3AEntry-%3E%29%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Yields each entry in the list.</p>
+<pre><code class="language-crystal">list.each <span class="k">do</span> <span class="o">|</span>entry<span class="o">|</span>
+  puts <span class="s">&quot;</span><span class="i">#{</span>entry.name<span class="i">}</span><span class="s">: </span><span class="i">#{</span>entry.value<span class="i">}</span><span class="s">&quot;</span>
+<span class="k">end</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/263bba9/src/gphoto2/camera_list.cr#L47" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="empty?:Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>empty?</strong> : Bool
+
+        <a class="method-permalink" href="#empty%3F%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns <code>true</code> if the list has no entries.</p>
+<p><span class="flag purple">NOTE</span>  Overrides <code>Enumerable#empty?</code>, so that it doesn't need to fetch
+the first entry (see <code><a href="../GPhoto2/CameraList.html#each%28%26%3AEntry-%3E%29%3ANil-instance-method">#each</a></code>), which takes two more calls into libgphoto2.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/263bba9/src/gphoto2/camera_list.cr#L36" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -691,7 +760,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d184be9/src/gphoto2/camera_list.cr#L17" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/263bba9/src/gphoto2/camera_list.cr#L18" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -712,28 +781,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d184be9/src/gphoto2/camera_list.cr#L27" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
-    <div class="entry-detail" id="to_a:Array(Entry)-instance-method">
-      <div class="signature">
-        
-        def <strong>to_a</strong> : Array(<a href="../GPhoto2/CameraList/Entry.html">Entry</a>)
-
-        <a class="method-permalink" href="#to_a%3AArray%28Entry%29-instance-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns an array of entries in the list.</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/d184be9/src/gphoto2/camera_list.cr#L32" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/263bba9/src/gphoto2/camera_list.cr#L28" target="_blank">View source</a>]
         
       </div>
     </div>
