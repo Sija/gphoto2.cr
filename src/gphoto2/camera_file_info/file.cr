@@ -16,19 +16,24 @@ module GPhoto2
         field?(:permissions) && wrapped.permissions.delete?
       end
 
-      # Returns modification time.
+      # Returns modification time, or `nil` if it's not set
+      # (or out of the range supported by `Time`).
       def mtime : Time?
-        Time.unix(wrapped.mtime) if field?(:mtime)
+        GPhoto2.time_from(wrapped.mtime) if field?(:mtime)
       end
 
-      # Returns the width in pixels.
+      # Returns the width in pixels, or `nil` if it's not set
+      # (or out of the `Int32` range, since cameras might report bogus values).
       def width : Int32?
-        wrapped.width.to_i32 if field?(:width)
+        width = wrapped.width
+        width.to_i32 if field?(:width) && width <= Int32::MAX
       end
 
-      # Returns the height in pixels.
+      # Returns the height in pixels, or `nil` if it's not set
+      # (or out of the `Int32` range, since cameras might report bogus values).
       def height : Int32?
-        wrapped.height.to_i32 if field?(:height)
+        height = wrapped.height
+        height.to_i32 if field?(:height) && height <= Int32::MAX
       end
     end
   end

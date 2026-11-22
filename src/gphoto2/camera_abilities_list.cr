@@ -8,6 +8,9 @@ module GPhoto2
     @context : Context
     @port_info_list : PortInfoList
 
+    # Loads the abilities of all supported camera models, using the given
+    # *context*, along with the *port_info_list* used by `#detect`.
+    #
     # NOTE: allocates memory.
     def initialize(@context, @port_info_list = PortInfoList.new)
       new
@@ -16,17 +19,31 @@ module GPhoto2
 
     # Finalizes object by freeing allocated memory.
     def finalize
-      free
+      close
     end
 
+    # Frees allocated memory.
+    #
+    # NOTE: The list of all supported models takes up several megabytes,
+    # allocated outside of the GC heap, so it's best to free it right
+    # after use, instead of waiting for the GC.
+    def close : Nil
+      free if ptr?
+    end
+
+    # Returns the list of the detected cameras, with their model names and ports.
     def detect : CameraList
       _detect
     end
 
+    # Returns the index of the given *model* in the list.
+    #
+    # Raises `GPhoto2::Error` if the model isn't supported.
     def lookup_model(model : String) : Int32
       _lookup_model(model)
     end
 
+    # Returns the abilities of the camera model at the given *index*.
     def [](index : Int32) : CameraAbilities
       get_abilities(index)
     end

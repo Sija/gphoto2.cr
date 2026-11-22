@@ -7,7 +7,8 @@ module GPhoto2
 
       # Returns the serial number of the camera if present.
       def serialnumber : String?
-        self[:serialnumber]?.try(&.value?).try(&.to_s)
+        # Camera drivers might not support configuration at all
+        config?.try(&.["serialnumber"]?).try(&.value?).try(&.to_s)
       end
 
       # Returns the ID of the camera.

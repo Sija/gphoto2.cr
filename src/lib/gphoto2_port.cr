@@ -123,6 +123,15 @@ lib LibGPhoto2Port
   fun gp_port_send_break(port : GPPort*, duration : LibC::Int) : LibC::Int
   fun gp_port_flush(port : GPPort*, direction : LibC::Int) : LibC::Int
 
+  # Sets the file descriptor of an already opened USB device, to be used
+  # instead of auto-discovery (i.e. on Android). Must be called prior
+  # to the library initialization.
+  #
+  # NOTE: available since libgphoto2 2.5.32
+  fun gp_port_usb_set_sys_device(fd : LibC::Int) : LibC::Int
+  # NOTE: available since libgphoto2 2.5.32
+  fun gp_port_usb_get_sys_device : LibC::Int
+
   fun gp_port_usb_find_device(port : GPPort*, idvendor : LibC::Int, idproduct : LibC::Int) : LibC::Int
   fun gp_port_usb_find_device_by_class(port : GPPort*, mainclass : LibC::Int, subclass : LibC::Int, protocol : LibC::Int) : LibC::Int
   fun gp_port_usb_clear_halt(port : GPPort*, ep : LibC::Int) : LibC::Int
@@ -136,7 +145,7 @@ lib LibGPhoto2Port
   fun gp_port_seek(port : GPPort*, offset : LibC::Int, whence : LibC::Int) : LibC::Int
   fun gp_port_send_scsi_cmd(port : GPPort*, to_dev : LibC::Int, cmd : LibC::Char*, cmd_size : LibC::Int, sense : LibC::Char*, sense_size : LibC::Int, data : LibC::Char*, data_size : LibC::Int) : LibC::Int
 
-  fun gp_port_set_error(port : GPPort*, format : LibC::Char*) : LibC::Int
+  fun gp_port_set_error(port : GPPort*, format : LibC::Char*, ...) : LibC::Int
   fun gp_port_get_error(port : GPPort*) : LibC::Char*
 
   fun gp_port_message_codeset(codeset : LibC::Char*) : LibC::Char*

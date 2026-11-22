@@ -91,7 +91,7 @@ camera.autorelease do
   # ...
 end
 
-# check camera abilities (see `GPhoto2::CameraOperation`)
+# check camera abilities (see `GPhoto2::Camera::Operation`)
 camera.can? :capture_image
 # => true
 

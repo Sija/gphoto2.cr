@@ -4,8 +4,11 @@ module GPhoto2
   module ManagedStruct(T)
     include Struct(T)
 
+    # Returns the pointer to the wrapped value, allocating it if not set.
     getter ptr : T* { Pointer(T).malloc }
 
+    # Copies the value pointed to by *ptr* (if given) into memory
+    # managed by the GC, so it's independent of the original one.
     def initialize(ptr : T*? = nil)
       self.ptr = ptr
     end

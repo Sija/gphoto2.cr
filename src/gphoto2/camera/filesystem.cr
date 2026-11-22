@@ -9,12 +9,6 @@ module GPhoto2
       # folder.files.map(&.name) # => ["DSC_0001.JPG", "DSC_0002.JPG", ...]
       # ```
       def filesystem(path : Path | String = "/") : CameraFolder
-        path =
-          path.is_a?(String) ? Path.posix(path) : path.to_posix
-
-        path = Path.posix("/", path) unless path.absolute?
-        path = path.normalize
-
         CameraFolder.new(self, path)
       end
 
@@ -30,14 +24,7 @@ module GPhoto2
       # file.name # => "DSC_0001.JPG"
       # ```
       def blob(path : Path | String) : CameraFile
-        path =
-          path.is_a?(String) ? Path.posix(path) : path.to_posix
-
-        path = Path.posix("/", path) unless path.absolute?
-        path = path.normalize
-
-        fs = self / path.dirname
-        fs.open(path.basename)
+        CameraFile.new(self, path)
       end
 
       # Clear the filesystem.
@@ -45,7 +32,8 @@ module GPhoto2
       # Resets the filesystem. All cached information including the folder tree
       # will get lost and will be queried again on demand.
       def filesystem_reset : Nil
-        context.check! \
+        # Doesn't take the context, so there are no messages to check for
+        GPhoto2.check! \
           LibGPhoto2.gp_filesystem_reset(wrapped.fs)
       end
     end

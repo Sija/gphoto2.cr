@@ -49,6 +49,7 @@ lib LibGPhoto2
     FileAdded
     FolderAdded
     CaptureComplete
+    FileChanged
   end
 
   #
@@ -68,7 +69,7 @@ lib LibGPhoto2
   alias CameraManualFunc          = Camera*, CameraText*, GPContext* -> LibC::Int
   alias CameraAboutFunc           = Camera*, CameraText*, GPContext* -> LibC::Int
 
-  alias CameraTimeoutStartFunc    = Camera*, LibC::UInt, CameraTimeoutFunc, Void* -> LibC::Int
+  alias CameraTimeoutStartFunc    = Camera*, LibC::UInt, CameraTimeoutFunc, Void* -> LibC::UInt
   alias CameraTimeoutStopFunc     = Camera*, LibC::UInt, Void* -> Void
 
   alias CameraPrePostFunc         = Camera*, GPContext* -> LibC::Int
@@ -153,7 +154,7 @@ lib LibGPhoto2
   #
 
   fun gp_camera_autodetect(list : CameraList*, context : GPContext*) : LibC::Int
-  fun gp_camera_get_storageinfo(camera : Camera*, sifs : Void**, nrofsifs : Void*, context : GPContext*) : LibC::Int
+  fun gp_camera_get_storageinfo(camera : Camera*, sifs : CameraStorageInformation**, nrofsifs : LibC::Int*, context : GPContext*) : LibC::Int
 
   fun gp_camera_new(camera : Camera**) : LibC::Int
   fun gp_camera_init(camera : Camera*, context : GPContext*) : LibC::Int

@@ -12,14 +12,19 @@ module GPhoto2
     end
 
     # Finalizes object by freeing allocated memory.
+    #
+    # NOTE: The memory might not have been allocated at all (i.e. when
+    # `#initialize` failed), and raising from a finalizer is not an option.
     def finalize
-      free
+      free if ptr?
     end
 
+    # Returns info of the port.
     def info : PortInfo
       get_info
     end
 
+    # Sets info of the port, which determines the device it connects to.
     def info=(info : PortInfo) : PortInfo
       set_info(info)
       info
@@ -70,7 +75,7 @@ module GPhoto2
     private def get_info
       GPhoto2.check! \
         LibGPhoto2Port.gp_port_get_info(self, out port_info)
-      PortInfo.new(port_info)
+      PortInfo.new(port_info, self)
     end
 
     private def set_info(port_info)

@@ -39,31 +39,48 @@ module GPhoto2
       # camera[:aperture] # => 4
       # camera[:iso]      # => 400
       # ```
-      def preserving_config(keys : Enumerable(String | Symbol)? = nil, &) : Nil
-        config_snapshot = keys ? config.select(keys.map(&.to_s)) : config
+      #
+      # Returns the value of the block.
+      #
+      # Raises `KeyError` if any of the given *keys* doesn't exist.
+      def preserving_config(keys : Enumerable(String | Symbol)? = nil, &)
+        config_snapshot =
+          if keys
+            # Unknown keys (i.e. typos) would otherwise go silently unpreserved
+            keys.to_h { |key| {key.to_s, self[key]} }
+          else
+            config
+          end
+
         config_snapshot =
           config_snapshot.reduce({} of String => String) do |memo, (key, widget)|
-            if value = widget.value?
+            # Read-only values (i.e. battery level, or the number of
+            # available shots) can't be restored and change on their own.
+            next memo if widget.readonly?
+
+            # Use raw values, so that the empty ones (i.e. `None`) are restored too
+            unless (value = widget.raw_value).nil?
               memo[key] = value.to_s
             end
             memo
           end
 
+        raised = false
         begin
           yield self
+        rescue ex
+          raised = true
+          # Don't let a failed restore mask the original exception
+          restore_config(config_snapshot) rescue nil
+          raise ex
         ensure
-          diff = config_snapshot.reject { |key, value| self[key] == value }
-          begin
-            update diff unless diff.empty?
-          rescue GPhoto2::Error
-            reload
-            update diff
-          end
+          # NOTE: `ensure` also covers leaving the block with `break`
+          restore_config(config_snapshot) unless raised
         end
       end
 
       # :nodoc:
-      def preserving_config(*keys, &) : Nil
+      def preserving_config(*keys, &)
         preserving_config(keys) { |camera| yield camera }
       end
 
@@ -78,7 +95,8 @@ module GPhoto2
       # camera[:iso] # => 800
       # ```
       def reload : Nil
-        @window.try &.close
+        # NOTE: The previous widget tree is not freed explicitly, since its
+        # widgets might still be in use; it gets freed by the GC instead.
         reset
         config
       end
@@ -116,15 +134,21 @@ module GPhoto2
         value
       end
 
+      # Updates the attribute with the value of the given *widget*,
+      # matched by its name.
+      #
       # ```
       # iso = camera[:iso].as_radio
       # iso.value = iso.choices.first
       # camera << iso
       # ```
       def <<(widget : CameraWidget::Base) : self
-        key = widget.name
-        # set_single_config(key, widget)
-        config[key] = widget
+        own_widget = self[widget.name]
+
+        # Widgets not belonging to our configuration tree would be
+        # ignored by `#save`, so their value needs to be copied over.
+        own_widget.copy_value_from(widget) unless own_widget.same?(widget)
+
         @dirty = true
         self
       end
@@ -137,8 +161,21 @@ module GPhoto2
       # camera.save # => false (nothing to update)
       # ```
       def save : Bool
-        return false unless dirty?
-        set_config
+        # NOTE: Same as `#dirty?`, but scanning the widgets only once
+        return false unless @dirty || @window
+        pending = config.select { |_, widget| widget.changed? }
+        return false unless @dirty || pending.present?
+
+        begin
+          set_config
+        rescue ex
+          keep_pending(pending)
+          raise ex
+        end
+        # Drivers (i.e. PTP) clear the flags of the saved widgets themselves,
+        # make sure none are left behind, so the config isn't dirty anymore.
+        # NOTE: The rest of the widgets has been just checked to be unflagged.
+        pending.each_value(&.changed = false)
         @dirty = false
         true
       end
@@ -161,9 +198,31 @@ module GPhoto2
       # camera[:iso]           # => 400
       # camera[:shutterspeed2] # => "1/60"
       # ```
+      #
+      # NOTE: When any of the attributes can't be set (i.e. due to an invalid
+      # value), the ones set before are reverted and the error is reraised.
       def update(attributes) : Bool
-        attributes.each do |key, value|
-          self[key] = value
+        # The changed flags of the widgets are restored one by one (see below),
+        # so only the flag tracking the changes made by `#[]=` and `#<<` is kept
+        was_dirty = @dirty
+        previous = Array({CameraWidget::Base, typeof(self[""].raw_value), Bool}).new
+        begin
+          attributes.each do |key, value|
+            widget = self[key]
+            previous << {widget, widget.raw_value, widget.changed?}
+            self[key] = value
+          end
+        rescue ex
+          # Otherwise the values set so far would be saved along with any
+          # subsequent `#save` (i.e. the one implicitly done by `#capture`)
+          previous.reverse_each do |widget, raw_value, changed|
+            widget.value = raw_value unless raw_value.nil?
+            # Restoring the value marks it as changed again, which would
+            # make drivers save it along with the next `#save`
+            widget.changed = changed
+          end
+          @dirty = was_dirty
+          raise ex
         end
         save
       end
@@ -173,14 +232,114 @@ module GPhoto2
         update(attributes)
       end
 
-      # Returns `true` if any attributes have unsaved changes.
+      @dirty = false
+
+      # Returns `true` if any attributes have unsaved changes, including
+      # the ones changed on the widgets directly (i.e. using
+      # `CameraWidget::Base#value=` or `CameraWidget::Radio#>>`).
       #
       # ```
       # camera.dirty? # => false
       # camera[:iso] = 400
       # camera.dirty? # => true
       # ```
-      getter? dirty = false
+      def dirty? : Bool
+        return true if @dirty
+        return false unless @window
+
+        # Widgets changed directly are flagged by libgphoto2 only
+        config.each_value.any?(&.changed?)
+      end
+
+      # Flags the *widgets* whose values didn't make it to the camera
+      # as changed again, so that they're saved by the next `#save`.
+      #
+      # NOTE: Drivers (i.e. PTP, for Canon EOS cameras) clear the flags of
+      # the widgets they failed to save too, without telling which ones
+      # were saved, hence the comparison with the values on the camera.
+      private def keep_pending(widgets : Hash(String, CameraWidget::Base)) : Nil
+        saved_window = get_config rescue nil
+        saved_config = saved_window.try &.flatten
+
+        widgets.each do |key, widget|
+          next if widget.changed?
+          if saved_config && (saved_widget = saved_config[key]?)
+            next if saved_widget.raw_value.to_s == widget.raw_value.to_s
+          end
+          widget.changed = true
+        end
+      ensure
+        # Free the widget tree right away, since it's allocated outside
+        # of the GC heap, and therefore doesn't trigger garbage collection
+        saved_window.try &.close
+      end
+
+      private def restore_config(snapshot : Hash(String, String)) : Nil
+        # Unsaved values don't reflect the camera state, in which case
+        # the values need to be compared with the ones on the camera too
+        saved_window = get_config if dirty?
+        diff = begin
+          saved_config = saved_window.try(&.flatten) || config
+
+          snapshot.select do |key, value|
+            # Settings might come and go (i.e. depending on the camera mode),
+            # those which are gone can't be restored anymore
+            next false unless (widget = self[key]?) &&
+                              (saved_widget = saved_config[key]?)
+
+            widget.raw_value.to_s != value ||
+              saved_widget.raw_value.to_s != value
+          end
+        ensure
+          # See `#keep_pending`
+          saved_window.try &.close
+        end
+        return if diff.empty?
+
+        # Unsaved changes of the other settings must not be saved along with
+        # the restored ones (see `#save`), so these are set aside meanwhile
+        window = @window
+        unrelated = config.select { |key, widget| !diff.has_key?(key) && widget.changed? }
+        unrelated_values = unrelated.transform_values(&.raw_value)
+        unrelated.each_value(&.changed = false)
+        begin
+          begin
+            update diff
+          rescue ex : GPhoto2::Error
+            # Cancelled operations (see `Context#cancel_callback`) must not be retried
+            raise ex if ex.code == LibGPhoto2::GP_ERROR_CANCEL
+            reload
+            # Reloaded settings might be gone as well
+            update diff.select { |key, _| self[key]? }
+          end
+        ensure
+          keep_unsaved(unrelated, unrelated_values, window)
+        end
+      end
+
+      # Marks the *widgets* as changed again, or (when the configuration has
+      # been reloaded since, see `#reload`) sets their *values* once again.
+      private def keep_unsaved(widgets, values, window) : Nil
+        return if widgets.empty?
+
+        if @window.same?(window)
+          widgets.each_value(&.changed = true)
+          @dirty = true
+        else
+          values.each do |key, value|
+            # Reloaded settings might be gone as well
+            next if value.nil? || !(widget = self[key]?)
+            begin
+              widget.value = value
+              @dirty = true
+            rescue ArgumentError | GPhoto2::Exception
+              # The value might not be valid anymore (i.e. its widget changed
+              # type along with the camera mode), which (being called from
+              # within `ensure`) must not mask the original exception
+            end
+          end
+        end
+      end
 
       private def reset : Nil
         @window = nil
@@ -188,20 +347,45 @@ module GPhoto2
         @dirty = false
       end
 
-      private def get_config
-        context.check! \
-          LibGPhoto2.gp_camera_get_config(self, out window, context)
-        CameraWidget.factory(window)
+      # Same as `#config`, but returns `nil` if the camera driver
+      # doesn't support configuration at all.
+      private def config? : Hash(String, CameraWidget::Base)?
+        unless @window
+          return unless window = get_config(&.== LibGPhoto2::GP_ERROR_NOT_SUPPORTED)
+          @window = window.as(CameraWidget::Window)
+        end
+        config
+      end
+
+      private def get_config : CameraWidget::Base
+        get_config { false }.not_nil!
+      end
+
+      # Returns `nil` for the error codes the block returns `true` for
+      # (see `Context#check?`).
+      private def get_config(& : Int32 -> Bool) : CameraWidget::Base?
+        # Null-initialized (unlike `out` variables), since drivers aren't
+        # guaranteed to set it, which would leave it pointing to garbage
+        window = Pointer(LibGPhoto2::CameraWidget).null
+        rc = LibGPhoto2.gp_camera_get_config(self, pointerof(window), context)
+        begin
+          return unless context.check?(rc) { |code| yield code }
+
+          if window.null?
+            raise Error.new("Camera did not report its configuration", LibGPhoto2::GP_ERROR)
+          end
+          CameraWidget.factory(window)
+        rescue ex
+          # The widget tree is ours after a successful call (even when one of
+          # the callbacks raised), until owned by the wrapper (see `.factory`)
+          LibGPhoto2.gp_widget_free(window) if GPhoto2.check?(rc) && !window.null?
+          raise ex
+        end
       end
 
       private def set_config
         context.check! \
           LibGPhoto2.gp_camera_set_config(self, window, context)
-      end
-
-      private def set_single_config(name, widget)
-        context.check! \
-          LibGPhoto2.gp_camera_set_single_config(self, name, widget, context)
       end
     end
   end

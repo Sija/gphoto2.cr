@@ -11,14 +11,26 @@ module GPhoto2
     end
 
     # Finalizes object by freeing allocated memory.
+    #
+    # NOTE: The memory might not have been allocated at all (i.e. when
+    # `#initialize` failed), and raising from a finalizer is not an option.
     def finalize
-      free
+      free if ptr?
     end
 
+    # Returns number of entries in the list.
+    def size : Int32
+      count
+    end
+
+    # Returns the index of the given *port* path in the list.
+    #
+    # Raises `GPhoto2::Error` if the port isn't found.
     def lookup_path(port : String) : Int32
       _lookup_path(port)
     end
 
+    # Returns info of the port at the given *index*.
     def [](index : Int32) : PortInfo
       get_info(index)
     end
@@ -59,7 +71,7 @@ module GPhoto2
     private def get_info(index)
       GPhoto2.check! \
         LibGPhoto2Port.gp_port_info_list_get_info(self, index, out info)
-      PortInfo.new info
+      PortInfo.new(info, self)
     end
   end
 end

@@ -10,19 +10,16 @@ module GPhoto2
 
       # Moves the cursor to the previous choice.
       def <<(step : Int32) : String?
-        move_by -step
+        # Widened, since negating `Int32::MIN` would overflow
+        move_cursor -step.to_i64
       end
 
       # Moves the cursor by the given *step*.
+      #
+      # Returns the new value, or `nil` if the cursor would end up
+      # out of bounds (in which case the value is left unchanged).
       def move_by(step : Int32) : String?
-        choices = self.choices
-        index = choices.index(value)
-        if index
-          next_value = choices[index + step]?
-          if next_value
-            self.value = next_value
-          end
-        end
+        move_cursor step.to_i64
       end
 
       # Returns valid choices for a configuration widget.
@@ -40,13 +37,42 @@ module GPhoto2
         when Enumerable, Regex
           match =
             case value
-            in Enumerable then choices.find &.in?(value)
-            in Regex      then choices.find &.matches?(value)
+            in Enumerable
+              # Iterators can be consumed only once, so collect them first
+              # (`Iterator#map` is lazy, hence `#to_a`)
+              candidates = value.to_a.map do |item|
+                choice_value(item)
+              end
+              choices.find &.in?(candidates)
+            in Regex
+              choices.find &.matches?(value)
             end
           match || raise ArgumentError.new("No matching value found")
           super match
         else
           super
+        end
+      end
+
+      # NOTE: Uses `Int64`, so that moving far out of bounds doesn't overflow.
+      private def move_cursor(step : Int64) : String?
+        choices = self.choices
+
+        # Use the raw value, since `#value` returns `nil` for i.e. `None`
+        return unless index = choices.index(get_value)
+
+        next_index = index.to_i64 + step
+        return unless 0 <= next_index < choices.size
+
+        self.value = choices[next_index]
+      end
+
+      # Converts *value* to a choice, the same way `Text#value=` does.
+      private def choice_value(value) : String?
+        case value
+        when String then value
+        when Symbol then value.to_s.capitalize
+        when Number then value.to_s
         end
       end
 
