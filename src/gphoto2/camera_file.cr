@@ -143,6 +143,19 @@ module GPhoto2
       io << @path
     end
 
+    # Returns the file `#path` (and whether it's a preview), i.e.
+    # `#<GPhoto2::CameraFile path="/DCIM/DSC_0001.JPG">`.
+    def inspect(io : IO) : Nil
+      io << "#<" << self.class.name << " path=" << @path.to_s.inspect
+      io << " preview" if preview?
+      io << '>'
+    end
+
+    # :ditto:
+    def pretty_print(pp) : Nil
+      pp.text inspect
+    end
+
     # Returns file name.
     def name
       @path.basename

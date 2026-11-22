@@ -150,6 +150,27 @@ module GPhoto2
         io << value?
       end
 
+      # Returns the widget `#name` and `#value`, i.e.
+      # `#<GPhoto2::CameraWidget::Radio name="iso" value="400">`.
+      def inspect(io : IO) : Nil
+        # Built upfront, so that a closed widget doesn't leave the output half-written
+        details =
+          begin
+            # Checked upfront, since the name might be cached already, while
+            # widgets without value (i.e. `Window`) don't read it at all
+            to_unsafe
+            "name=#{name.inspect} value=#{value?.inspect}"
+          rescue GPhoto2::Exception
+            "(closed)"
+          end
+        io << "#<" << self.class.name << ' ' << details << '>'
+      end
+
+      # :ditto:
+      def pretty_print(pp) : Nil
+        pp.text inspect
+      end
+
       # Compares widget with another, based on `#type`, `#name` and `#value`.
       def ==(other : self)
         return true if same?(other)

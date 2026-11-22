@@ -23,6 +23,16 @@ module GPhoto2
       io << @path
     end
 
+    # Returns the folder `#path`, i.e. `#<GPhoto2::CameraFolder path="/DCIM">`.
+    def inspect(io : IO) : Nil
+      io << "#<" << self.class.name << " path=" << @path.to_s.inspect << '>'
+    end
+
+    # :ditto:
+    def pretty_print(pp) : Nil
+      pp.text inspect
+    end
+
     # Returns `true` if folder `#path` is `/`.
     def root?
       # `Path#to_s` returns the underlying string, unlike `#to_s`, which builds one

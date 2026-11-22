@@ -447,6 +447,16 @@ module GPhoto2
       end
     end
 
+    describe "#inspect" do
+      it "returns the folder path" do
+        with_directory_camera do |camera|
+          folder = camera / "DCIM"
+          folder.inspect.should eq %(#<GPhoto2::CameraFolder path="/DCIM">)
+          folder.pretty_inspect.should eq folder.inspect
+        end
+      end
+    end
+
     describe "#to_s" do
       it "returns the folder path" do
         with_directory_camera do |camera|

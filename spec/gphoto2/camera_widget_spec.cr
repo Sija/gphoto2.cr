@@ -68,6 +68,40 @@ module GPhoto2
         end
       end
 
+      describe "#inspect" do
+        it "returns the name and value of the widget" do
+          widget = build_radio(%w[100 200], "iso")
+          widget.value = "200"
+          widget.inspect.should eq %(#<GPhoto2::CameraWidget::Radio name="iso" value="200">)
+          build_widget(:window, "main").inspect.should eq %(#<GPhoto2::CameraWidget::Window name="main" value=nil>)
+        end
+
+        it "leaves out the ancestors of the widget" do
+          window = build_widget(:window, "main")
+          LibGPhoto2.gp_widget_append(window, build_widget_ptr(:toggle, "flash"))
+          child = window.children.first
+          child.inspect.should eq %(#<GPhoto2::CameraWidget::Toggle name="flash" value=0>)
+          child.pretty_inspect.should eq child.inspect
+        end
+
+        it "doesn't raise for closed widgets" do
+          widget = build_widget(:text)
+          widget.close
+          widget.inspect.should eq "#<GPhoto2::CameraWidget::Text (closed)>"
+        end
+
+        it "doesn't show the cached details of closed widgets" do
+          window = build_widget(:window, "main")
+          LibGPhoto2.gp_widget_append(window, build_widget_ptr(:toggle, "flash"))
+          child = window.children.first
+          window.inspect
+          child.inspect
+          window.close
+          window.inspect.should eq "#<GPhoto2::CameraWidget::Window (closed)>"
+          child.inspect.should eq "#<GPhoto2::CameraWidget::Toggle (closed)>"
+        end
+      end
+
       describe "#==(other : self)" do
         it "compares type, name and value" do
           a, b = build_widget(:text, "foo"), build_widget(:text, "foo")

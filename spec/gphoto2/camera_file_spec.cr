@@ -693,6 +693,17 @@ module GPhoto2
       end
     end
 
+    describe "#inspect" do
+      it "returns the file path" do
+        with_directory_camera do |camera|
+          file = camera.blob("/DCIM/a.jpg")
+          file.inspect.should eq %(#<GPhoto2::CameraFile path="/DCIM/a.jpg">)
+          file.pretty_inspect.should eq file.inspect
+          CameraFile.new(camera).inspect.should eq %(#<GPhoto2::CameraFile path="capture_preview.jpg" preview>)
+        end
+      end
+    end
+
     describe "#to_s" do
       it "returns the file path" do
         with_directory_camera do |camera|

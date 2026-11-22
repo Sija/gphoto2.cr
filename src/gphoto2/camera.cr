@@ -231,6 +231,18 @@ module GPhoto2
 
     def_equals_and_hash @model, @port
 
+    # Returns the camera `#model` and `#port`, i.e.
+    # `#<GPhoto2::Camera model="Nikon DSC D5100 (PTP mode)" port="usb:001,005">`.
+    def inspect(io : IO) : Nil
+      io << "#<" << self.class.name
+      io << " model=" << @model.inspect << " port=" << @port.inspect << '>'
+    end
+
+    # :ditto:
+    def pretty_print(pp) : Nil
+      pp.text inspect
+    end
+
     # NOTE: The pointer is assigned only once fully set up, since `#ptr`
     # (and thus `#to_unsafe`) would otherwise call `#init` recursively.
     private def init : Nil

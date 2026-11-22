@@ -2,6 +2,16 @@ require "../spec_helper"
 
 module GPhoto2
   describe Camera do
+    describe "#inspect" do
+      it "returns the model and port of the camera" do
+        with_fake_camera do |camera|
+          camera.config
+          camera.inspect.should eq %(#<GPhoto2::Camera model="#{camera.model}" port="#{camera.port}">)
+          camera.pretty_inspect.should eq camera.inspect
+        end
+      end
+    end
+
     it "exposes model and port" do
       camera = Camera.new("Directory Browse", "disk:/tmp")
       camera.model.should eq "Directory Browse"
