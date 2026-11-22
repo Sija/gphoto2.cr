@@ -120,7 +120,8 @@ module GPhoto2
     #
     # NOTE: An existing file is overwritten only once the whole file has
     # been downloaded, while a new one is written as the data is read from
-    # the camera (see `#write_to`), and removed if that fails.
+    # the camera (see `#write_to`) into a temporary file, which is renamed
+    # to *path* once done, or removed if that fails.
     def save(path : Path | String = name) : Nil
       path = Path[path] if path.is_a?(String)
       path /= name if path.ends_with_separator? || Dir.exists?(path)
@@ -135,16 +136,24 @@ module GPhoto2
       else
         # There's nothing to truncate, so the data is written as read
         # from the camera (see `#write_to`), without holding all of it
-        # in memory, cleaning up after a failed download instead
+        # in memory, into a temporary file next to the target one.
         created_dirs = missing_dirs(path.parent)
         Dir.mkdir_p(path.dirname)
+
+        # NOTE: Unlike `File.tempfile` (creating it with `0o600` permissions),
+        # it's created with the same permissions as the target one would be,
+        # under a random name, which can't be guessed (nor clash) in practice.
+        tempfile = path.parent / ".#{path.basename}.#{Random::Secure.hex(8)}.part"
         begin
-          File.open(path, "w") { |file| write_to(file) }
+          File.open(tempfile, "w") { |file| write_to(file) }
+          # Renaming replaces the target file atomically, including the one
+          # created meanwhile (i.e. by another writer), as with existing files
+          File.rename(tempfile, path)
         rescue ex
           # Cleaning up is best-effort only, which must not mask the original
           # exception, i.e. when something else has been written there since
           begin
-            File.delete?(path)
+            File.delete?(tempfile)
             # Deepest first, raising (and so stopping) at the non-empty ones
             created_dirs.each { |dir| Dir.delete?(dir) }
           rescue File::Error

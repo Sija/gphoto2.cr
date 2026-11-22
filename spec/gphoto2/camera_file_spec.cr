@@ -392,6 +392,55 @@ module GPhoto2
         end
       end
 
+      it "keeps a file created meanwhile when the download fails" do
+        with_directory_camera do |camera, dir|
+          stub_file_read(camera, "hello".to_slice)
+          target = File.join(dir, "copy.jpg")
+          # Another writer creates the target file during the transfer
+          camera.context.idle_callback = -> : Nil {
+            File.write(target, "other")
+            raise GPhoto2::Error.from_code(LibGPhoto2::GP_ERROR_IO)
+          }
+
+          expect_raises(GPhoto2::Error) do
+            camera.blob("/DCIM/a.jpg").save(target)
+          end
+          File.read(target).should eq "other"
+          Dir.children(dir).should_not contain(".copy.jpg")
+          Dir.children(dir).select(&.ends_with?(".part")).should be_empty
+        end
+      end
+
+      it "doesn't expose a partially written new file" do
+        with_directory_camera do |camera, dir|
+          data = Bytes.new(CameraFile::CHUNK_SIZE * 2 + 123) { |i| (i % 251).to_u8 }
+          stub_file_read(camera, data)
+          target = File.join(dir, "copy.jpg")
+          exposed = false
+          camera.context.idle_callback = -> : Nil {
+            exposed ||= File.exists?(target)
+            nil
+          }
+
+          camera.blob("/DCIM/a.jpg").save(target)
+          exposed.should be_false
+          File.open(target, &.getb_to_end).should eq data
+          Dir.children(dir).select(&.ends_with?(".part")).should be_empty
+        end
+      end
+
+      it "saves a new file with the default permissions" do
+        with_directory_camera do |camera, dir|
+          stub_file_read(camera, "hello".to_slice)
+          target = File.join(dir, "copy.jpg")
+          reference = File.join(dir, "reference.jpg")
+          File.write(reference, "")
+
+          camera.blob("/DCIM/a.jpg").save(target)
+          File.info(target).permissions.should eq File.info(reference).permissions
+        end
+      end
+
       it "saves a new file without downloading it as a whole" do
         with_directory_camera do |camera, dir|
           data = Bytes.new(CameraFile::CHUNK_SIZE * 2 + 123) { |i| (i % 251).to_u8 }
