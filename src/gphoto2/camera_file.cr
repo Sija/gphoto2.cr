@@ -350,15 +350,24 @@ module GPhoto2
 
     # Returns the size of the file as reported by the camera, if known.
     private def expected_size(type : Type) : UInt64?
-      info = get_info
-      case type
-      when .normal?  then info.file?.try(&.size)
-      when .preview? then info.preview?.try(&.size)
+      rc = LibGPhoto2.gp_camera_file_get_info(@camera, folder, name, out info, context)
+
+      # Cancellation (see `Context#cancel_callback`) and exceptions raised
+      # by the callbacks (regardless of their error code) must not be
+      # mistaken for the file info not being available
+      fatal = rc == LibGPhoto2::GP_ERROR_CANCEL || context.callback_exception?
+      begin
+        context.check!(rc)
+      rescue ex : GPhoto2::Error
+        raise ex if fatal
+        return
       end
-    rescue ex : GPhoto2::Error
-      # Cancellation (see `Context#cancel_callback`) must not be mistaken
-      # for the file info not being available
-      raise ex if ex.code == LibGPhoto2::GP_ERROR_CANCEL
+
+      file_info = CameraFileInfo.new(info)
+      case type
+      when .normal?  then file_info.file?.try(&.size)
+      when .preview? then file_info.preview?.try(&.size)
+      end
     end
 
     private def get_mime_type

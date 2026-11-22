@@ -100,6 +100,14 @@ module GPhoto2
         @callback_state.message
       end
 
+      # :nodoc:
+      #
+      # Returns `true` if any of the callbacks raised an exception, which
+      # is yet to be re-raised by `#check!`.
+      def callback_exception? : Bool
+        !@callback_state.exception.nil?
+      end
+
       def initialize
         self.error_callback = nil
       end
