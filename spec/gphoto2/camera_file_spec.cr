@@ -351,6 +351,41 @@ module GPhoto2
         end
       end
 
+      it "does not leave a new file behind when the download fails" do
+        with_directory_camera do |camera, dir|
+          target = File.join(dir, "copy.jpg")
+          expect_raises(GPhoto2::Error) do
+            camera.blob("/DCIM/missing.jpg").save(target)
+          end
+          File.exists?(target).should be_false
+        end
+      end
+
+      it "saves a new file without downloading it as a whole" do
+        with_directory_camera do |camera, dir|
+          data = Bytes.new(CameraFile::CHUNK_SIZE * 2 + 123) { |i| (i % 251).to_u8 }
+          stub = stub_file_read(camera, data)
+          target = File.join(dir, "new", "copy.jpg")
+
+          camera.blob("/DCIM/a.jpg").save(target)
+          File.open(target, &.getb_to_end).should eq data
+          stub.downloads.should eq 0
+        end
+      end
+
+      it "downloads the file as a whole before overwriting an existing one" do
+        with_directory_camera do |camera, dir|
+          data = Bytes.new(CameraFile::CHUNK_SIZE * 2 + 123) { |i| (i % 251).to_u8 }
+          stub = stub_file_read(camera, data)
+          target = File.join(dir, "copy.jpg")
+          File.write(target, "previous")
+
+          camera.blob("/DCIM/a.jpg").save(target)
+          File.open(target, &.getb_to_end).should eq data
+          stub.downloads.should eq 1
+        end
+      end
+
       it "does not create directories when the download fails" do
         with_directory_camera do |camera, dir|
           expect_raises(GPhoto2::Error) do

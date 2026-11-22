@@ -117,16 +117,45 @@ module GPhoto2
     #
     # When *path* points to an existing directory (or ends with a path
     # separator), the file is saved inside of it, under its `#name`.
+    #
+    # NOTE: An existing file is overwritten only once the whole file has
+    # been downloaded, while a new one is written as the data is read from
+    # the camera (see `#write_to`), and removed if that fails.
     def save(path : Path | String = name) : Nil
       path = Path[path] if path.is_a?(String)
       path /= name if path.ends_with_separator? || Dir.exists?(path)
 
-      # Download the data first, so that a failed download
-      # doesn't leave an existing file truncated
-      data
+      if File.exists?(path)
+        # Download the data first, so that a failed download
+        # doesn't leave an existing file truncated
+        data
+        File.open(path, "w") { |file| write_to(file) }
+      else
+        # There's nothing to truncate, so the data is written as read
+        # from the camera (see `#write_to`), without holding all of it
+        # in memory, cleaning up after a failed download instead
+        created_dirs = missing_dirs(path.parent)
+        Dir.mkdir_p(path.dirname)
+        begin
+          File.open(path, "w") { |file| write_to(file) }
+        rescue ex
+          File.delete?(path)
+          # Deepest first, these are left in place unless empty
+          created_dirs.each { |dir| Dir.delete?(dir) }
+          raise ex
+        end
+      end
+    end
 
-      Dir.mkdir_p(path.dirname)
-      File.open(path, "w") { |file| write_to(file) }
+    # Returns the directories missing along the given *dir* path (itself
+    # included), deepest first.
+    private def missing_dirs(dir : Path) : Array(Path)
+      dirs = [] of Path
+      until Dir.exists?(dir) || dir.parent == dir
+        dirs << dir
+        dir = dir.parent
+      end
+      dirs
     end
 
     # Deletes file from the camera.
