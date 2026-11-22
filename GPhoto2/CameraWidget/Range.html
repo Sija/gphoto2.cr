@@ -438,7 +438,7 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_widgets/range.cr#L5" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_widgets/range.cr#L5" target="_blank">
         gphoto2/camera_widgets/range.cr
       </a>
     
@@ -446,6 +446,29 @@
   
 
 
+
+  
+    <h2>
+      <a id="constant-summary" class="anchor" href="#constant-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+      Constant Summary
+    </h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="MAX_CHOICES">
+        <strong>MAX_CHOICES</strong> = <code><span class="n">1000000</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>Maximum number of choices returned by <code><a href="../../GPhoto2/CameraWidget/Range.html#choices%3AArray%28Float32%29-instance-method">#choices</a></code>.</p>
+      </dd>
+      
+    
+  </dl>
 
 
 
@@ -465,6 +488,13 @@
     Instance Method Summary
   </h2>
   <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#%3D%3D%28other%3ANumber%29%3ABool-instance-method" class="signature"><strong>#==</strong>(other : Number) : Bool</a>
+        
+          <div class="summary"><p>Compares the <code>#value</code> with the given number numerically, instead of using <code>#to_s</code> (which would give i.e.</p></div>
+        
+      </li>
     
       <li class="entry-summary">
         <a href="#choices%3AArray%28Float32%29-instance-method" class="signature"><strong>#choices</strong> : Array(Float32)</a>
@@ -603,9 +633,19 @@
     close</a>, 
     
   
+    <a href="../../GPhoto2/CameraWidget/Base.html#finalize-instance-method" class="tooltip">
+      <span>finalize</span>
+    finalize</a>, 
+    
+  
     <a href="../../GPhoto2/CameraWidget/Base.html#flatten%28map%3D%7B%7DofString%3D%3EBase%29%3AHash%28String%2CBase%29-instance-method" class="tooltip">
       <span>flatten(map = {} <span class="k">of</span> <span class="t">String</span> <span class="o">=&gt;</span> <span class="t">Base</span>) : Hash(String, Base)</span>
     flatten</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#hash%28hasher%29-instance-method" class="tooltip">
+      <span>hash(hasher)</span>
+    hash</a>, 
     
   
     <a href="../../GPhoto2/CameraWidget/Base.html#id%3AInt32-instance-method" class="tooltip">
@@ -613,8 +653,8 @@
     id</a>, 
     
   
-    <a href="../../GPhoto2/CameraWidget/Base.html#in%3F%28other%3A%3A%3ARange%29-instance-method" class="tooltip">
-      <span>in?(other : ::Range)<br/>in?(other : Enumerable)</span>
+    <a href="../../GPhoto2/CameraWidget/Base.html#in%3F%28other%3A%3A%3ARange%28B%2CE%29%29%3ABoolforallB%2CE-instance-method" class="tooltip">
+      <span>in?(other : ::Range(B, E)) : Bool forall B, E<br/>in?(other : Enumerable)</span>
     in?</a>, 
     
   
@@ -643,9 +683,14 @@
     readonly?</a>, 
     
   
-    <a href="../../GPhoto2/CameraWidget/Base.html#to_s%28io%3AIO%29-instance-method" class="tooltip">
-      <span>to_s(io : IO)</span>
+    <a href="../../GPhoto2/CameraWidget/Base.html#to_s%28io%3AIO%29%3ANil-instance-method" class="tooltip">
+      <span>to_s(io : IO) : Nil</span>
     to_s</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#to_unsafe%3APointer%28LibGPhoto2%3A%3ACameraWidget%29-instance-method" class="tooltip">
+      <span>to_unsafe : Pointer(LibGPhoto2::CameraWidget)</span>
+    to_unsafe</a>, 
     
   
     <a href="../../GPhoto2/CameraWidget/Base.html#type%3AType-instance-method" class="tooltip">
@@ -675,8 +720,8 @@
   <h3>Constructor methods inherited from class <code><a href="../../GPhoto2/CameraWidget/Base.html">GPhoto2::CameraWidget::Base</a></code></h3>
   
   
-    <a href="../../GPhoto2/CameraWidget/Base.html#new%28ptr%3APointer%28LibGPhoto2%3A%3ACameraWidget%29%2Cparent%3AGPhoto2%3A%3ACameraWidget%3A%3ABase%7CNil%3Dnil%29-class-method" class="tooltip">
-      <span>new(ptr : Pointer(LibGPhoto2::CameraWidget), parent : GPhoto2::CameraWidget::Base | Nil = <span class="n">nil</span>)</span>
+    <a href="../../GPhoto2/CameraWidget/Base.html#new%28ptr%3APointer%28LibGPhoto2%3A%3ACameraWidget%29%2Cparent%3AGPhoto2%3A%3ACameraWidget%3A%3ABase%7CNil%3Dnil%2C%2A%2Cowned%3ABool%7CNil%3Dnil%29-class-method" class="tooltip">
+      <span>new(ptr : Pointer(LibGPhoto2::CameraWidget), parent : GPhoto2::CameraWidget::Base | Nil = <span class="n">nil</span>, *, owned : Bool | Nil = <span class="n">nil</span>)</span>
     new</a>
     
   
@@ -779,6 +824,29 @@
     Instance Method Detail
   </h2>
   
+    <div class="entry-detail" id="==(other:Number):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>==</strong>(other : Number) : Bool
+
+        <a class="method-permalink" href="#%3D%3D%28other%3ANumber%29%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Compares the <code>#value</code> with the given number numerically, instead
+of using <code>#to_s</code> (which would give i.e. <code>&quot;3.0&quot;</code> for <code>3</code>).</p>
+<pre><code class="language-crystal">camera[<span class="n">:exposurecompensation</span>] <span class="o">==</span> <span class="n">0</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_widgets/range.cr#L72" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
     <div class="entry-detail" id="choices:Array(Float32)-instance-method">
       <div class="signature">
         
@@ -790,12 +858,16 @@
         <div class="doc">
           
           <p>Returns the list of choices of the widget.</p>
+<p><span class="flag purple">NOTE</span>  When the widget reports no (or negative, or NaN) increment,
+the range is considered continuous and only its bounds are returned.</p>
+<p>Raises <code><a href="../../GPhoto2/Exception.html">GPhoto2::Exception</a></code> if the range has more than <code><a href="../../GPhoto2/CameraWidget/Range.html#MAX_CHOICES">MAX_CHOICES</a></code>
+choices (i.e. generic 32-bit ranges), use <code><a href="../../GPhoto2/CameraWidget/Range.html#range%3A%3A%3ARange%28Float32%2CFloat32%29-instance-method">#range</a></code> and <code><a href="../../GPhoto2/CameraWidget/Range.html#step%3AFloat32-instance-method">#step</a></code> instead.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_widgets/range.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_widgets/range.cr#L33" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -816,7 +888,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_widgets/range.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_widgets/range.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -837,7 +909,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_widgets/range.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_widgets/range.cr#L21" target="_blank">View source</a>]
         
       </div>
     </div>

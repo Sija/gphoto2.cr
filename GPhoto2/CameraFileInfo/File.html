@@ -463,7 +463,7 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file_info/file.cr#L6" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file_info/file.cr#L6" target="_blank">
         gphoto2/camera_file_info/file.cr
       </a>
     
@@ -494,14 +494,14 @@
       <li class="entry-summary">
         <a href="#height%3AInt32%7CNil-instance-method" class="signature"><strong>#height</strong> : Int32 | Nil</a>
         
-          <div class="summary"><p>Returns the height in pixels.</p></div>
+          <div class="summary"><p>Returns the height in pixels, or <code>nil</code> if it's not set (or out of the <code>Int32</code> range, since cameras might report bogus values).</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#mtime%3ATime%7CNil-instance-method" class="signature"><strong>#mtime</strong> : Time | Nil</a>
         
-          <div class="summary"><p>Returns modification time.</p></div>
+          <div class="summary"><p>Returns modification time, or <code>nil</code> if it's not set (or out of the range supported by <code>Time</code>).</p></div>
         
       </li>
     
@@ -522,7 +522,7 @@
       <li class="entry-summary">
         <a href="#width%3AInt32%7CNil-instance-method" class="signature"><strong>#width</strong> : Int32 | Nil</a>
         
-          <div class="summary"><p>Returns the width in pixels.</p></div>
+          <div class="summary"><p>Returns the width in pixels, or <code>nil</code> if it's not set (or out of the <code>Int32</code> range, since cameras might report bogus values).</p></div>
         
       </li>
     
@@ -705,13 +705,14 @@
       
         <div class="doc">
           
-          <p>Returns the height in pixels.</p>
+          <p>Returns the height in pixels, or <code>nil</code> if it's not set
+(or out of the <code>Int32</code> range, since cameras might report bogus values).</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file_info/file.cr#L30" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file_info/file.cr#L34" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -726,13 +727,14 @@
       
         <div class="doc">
           
-          <p>Returns modification time.</p>
+          <p>Returns modification time, or <code>nil</code> if it's not set
+(or out of the range supported by <code>Time</code>).</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file_info/file.cr#L20" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file_info/file.cr#L21" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -753,7 +755,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file_info/file.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file_info/file.cr#L10" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -774,7 +776,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file_info/file.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file_info/file.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -789,13 +791,14 @@
       
         <div class="doc">
           
-          <p>Returns the width in pixels.</p>
+          <p>Returns the width in pixels, or <code>nil</code> if it's not set
+(or out of the <code>Int32</code> range, since cameras might report bogus values).</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file_info/file.cr#L25" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file_info/file.cr#L27" target="_blank">View source</a>]
         
       </div>
     </div>

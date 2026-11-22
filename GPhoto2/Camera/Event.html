@@ -461,7 +461,7 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera/event.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera/event.cr#L4" target="_blank">
         gphoto2/camera/event.cr
       </a>
     
@@ -491,6 +491,8 @@
     
       <li class="entry-summary">
         <a href="#wait%28timeout%3ATime%3A%3ASpan%3D2.seconds%29%3ACameraEvent-instance-method" class="signature"><strong>#wait</strong>(timeout : Time::Span = <span class="n">2</span>.seconds) : CameraEvent</a>
+        
+          <div class="summary"><p>Waits for the next event and returns it.</p></div>
         
       </li>
     
@@ -533,10 +535,18 @@
         <a class="method-permalink" href="#wait%28timeout%3ATime%3A%3ASpan%3D2.seconds%29%3ACameraEvent-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Waits for the next event and returns it.</p>
+<p>Returns an event of <code><a href="../../LibGPhoto2/CameraEventType.html#Timeout">CameraEvent::Type::Timeout</a></code> type when no event
+arrives within the given <em>timeout</em>.</p>
+<p><span class="flag purple">NOTE</span>  this method is blocking.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera/event.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera/event.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -552,13 +562,15 @@
         <div class="doc">
           
           <p>Waits for the specified event type and returns the event.</p>
+<p>Raises <code><a href="../../GPhoto2/Error.html">GPhoto2::Error</a></code> (with <code>GP_ERROR_TIMEOUT</code> code) when
+no matching event arrives within the given <em>timeout</em>.</p>
 <p><span class="flag purple">NOTE</span>  this method is blocking.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera/event.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera/event.cr#L21" target="_blank">View source</a>]
         
       </div>
     </div>

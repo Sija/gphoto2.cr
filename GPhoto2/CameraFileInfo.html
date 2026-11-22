@@ -449,35 +449,35 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file_info.cr#L3" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file_info.cr#L3" target="_blank">
         gphoto2/camera_file_info.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file_info/audio.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file_info/audio.cr#L4" target="_blank">
         gphoto2/camera_file_info/audio.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file_info/base.cr#L5" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file_info/base.cr#L5" target="_blank">
         gphoto2/camera_file_info/base.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file_info/file.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file_info/file.cr#L4" target="_blank">
         gphoto2/camera_file_info/file.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file_info/preview.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file_info/preview.cr#L4" target="_blank">
         gphoto2/camera_file_info/preview.cr
       </a>
     
@@ -502,6 +502,8 @@
       <li class="entry-summary">
         <a href="#new%28info%3ALibGPhoto2%3A%3ACameraFileInfo%29-class-method" class="signature"><strong>.new</strong>(info : LibGPhoto2::CameraFileInfo)</a>
         
+          <div class="summary"><p>Creates file information from the given libgphoto2 <em>info</em>, with the parts having no fields set left out.</p></div>
+        
       </li>
     
   </ul>
@@ -525,30 +527,42 @@
       <li class="entry-summary">
         <a href="#audio%3AAudio-instance-method" class="signature"><strong>#audio</strong> : Audio</a>
         
+          <div class="summary"><p>Returns information about the audio data of the file.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#audio%3F%3AAudio%7CNil-instance-method" class="signature"><strong>#audio?</strong> : Audio | Nil</a>
+        
+          <div class="summary"><p>Returns information about the audio data of the file.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#file%3AFile-instance-method" class="signature"><strong>#file</strong> : File</a>
         
+          <div class="summary"><p>Returns information about the file itself.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#file%3F%3AFile%7CNil-instance-method" class="signature"><strong>#file?</strong> : File | Nil</a>
+        
+          <div class="summary"><p>Returns information about the file itself.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#preview%3APreview-instance-method" class="signature"><strong>#preview</strong> : Preview</a>
         
+          <div class="summary"><p>Returns information about the preview of the file.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#preview%3F%3APreview%7CNil-instance-method" class="signature"><strong>#preview?</strong> : Preview | Nil</a>
+        
+          <div class="summary"><p>Returns information about the preview of the file.</p></div>
         
       </li>
     
@@ -604,10 +618,16 @@
         <a class="method-permalink" href="#new%28info%3ALibGPhoto2%3A%3ACameraFileInfo%29-class-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Creates file information from the given libgphoto2 <em>info</em>,
+with the parts having no fields set left out.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file_info.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file_info.cr#L21" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -636,10 +656,16 @@
         <a class="method-permalink" href="#audio%3AAudio-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns information about the audio data of the file.</p>
+<p>Raises <code>NilAssertionError</code> if not available, see <code><a href="../GPhoto2/CameraFileInfo.html#audio%3F%3AAudio%7CNil-instance-method">#audio?</a></code>.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file_info.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file_info.cr#L17" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -652,10 +678,16 @@
         <a class="method-permalink" href="#audio%3F%3AAudio%7CNil-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns information about the audio data of the file.</p>
+<p>Raises <code>NilAssertionError</code> if not available, see <code><a href="../GPhoto2/CameraFileInfo.html#audio%3F%3AAudio%7CNil-instance-method">#audio?</a></code>.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file_info.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file_info.cr#L17" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -668,10 +700,16 @@
         <a class="method-permalink" href="#file%3AFile-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns information about the file itself.</p>
+<p>Raises <code>NilAssertionError</code> if not available, see <code><a href="../GPhoto2/CameraFileInfo.html#file%3F%3AFile%7CNil-instance-method">#file?</a></code>.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file_info.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file_info.cr#L12" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -684,10 +722,16 @@
         <a class="method-permalink" href="#file%3F%3AFile%7CNil-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns information about the file itself.</p>
+<p>Raises <code>NilAssertionError</code> if not available, see <code><a href="../GPhoto2/CameraFileInfo.html#file%3F%3AFile%7CNil-instance-method">#file?</a></code>.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file_info.cr#L5" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file_info.cr#L12" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -700,10 +744,16 @@
         <a class="method-permalink" href="#preview%3APreview-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns information about the preview of the file.</p>
+<p>Raises <code>NilAssertionError</code> if not available, see <code><a href="../GPhoto2/CameraFileInfo.html#preview%3F%3APreview%7CNil-instance-method">#preview?</a></code>.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file_info.cr#L4" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file_info.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -716,10 +766,16 @@
         <a class="method-permalink" href="#preview%3F%3APreview%7CNil-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns information about the preview of the file.</p>
+<p>Raises <code>NilAssertionError</code> if not available, see <code><a href="../GPhoto2/CameraFileInfo.html#preview%3F%3APreview%7CNil-instance-method">#preview?</a></code>.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file_info.cr#L4" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file_info.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>

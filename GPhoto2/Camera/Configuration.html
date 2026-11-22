@@ -461,7 +461,7 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera/configuration.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera/configuration.cr#L4" target="_blank">
         gphoto2/camera/configuration.cr
       </a>
     
@@ -492,7 +492,7 @@
       <li class="entry-summary">
         <a href="#%3C%3C%28widget%3ACameraWidget%3A%3ABase%29%3Aself-instance-method" class="signature"><strong>#<<</strong>(widget : CameraWidget::Base) : <span class="k">self</span></a>
         
-          <div class="summary"><p><code>iso = camera[:iso].as_radio iso.value = iso.choices.first camera &lt;&lt; iso</code></p></div>
+          <div class="summary"><p>Updates the attribute with the value of the given <em>widget</em>, matched by its name.</p></div>
         
       </li>
     
@@ -525,14 +525,14 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#dirty%3F-instance-method" class="signature"><strong>#dirty?</strong></a>
+        <a href="#dirty%3F%3ABool-instance-method" class="signature"><strong>#dirty?</strong> : Bool</a>
         
-          <div class="summary"><p>Returns <code>true</code> if any attributes have unsaved changes.</p></div>
+          <div class="summary"><p>Returns <code>true</code> if any attributes have unsaved changes, including the ones changed on the widgets directly (i.e.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#preserving_config%28keys%3AEnumerable%28String%7CSymbol%29%7CNil%3Dnil%2C%26%29%3ANil-instance-method" class="signature"><strong>#preserving_config</strong>(keys : Enumerable(String | Symbol) | Nil = <span class="n">nil</span>, &) : Nil</a>
+        <a href="#preserving_config%28keys%3AEnumerable%28String%7CSymbol%29%7CNil%3Dnil%2C%26%29-instance-method" class="signature"><strong>#preserving_config</strong>(keys : Enumerable(String | Symbol) | Nil = <span class="n">nil</span>, &)</a>
         
           <div class="summary"><p>Preserves config for a block call.</p></div>
         
@@ -600,7 +600,9 @@
       
         <div class="doc">
           
-          <pre><code class="language-crystal">iso <span class="o">=</span> camera[<span class="n">:iso</span>].as_radio
+          <p>Updates the attribute with the value of the given <em>widget</em>,
+matched by its name.</p>
+<pre><code class="language-crystal">iso <span class="o">=</span> camera[<span class="n">:iso</span>].as_radio
 iso.value <span class="o">=</span> iso.choices.first
 camera <span class="o">&lt;&lt;</span> iso</code></pre>
         </div>
@@ -608,7 +610,7 @@ camera <span class="o">&lt;&lt;</span> iso</code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera/configuration.cr#L124" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera/configuration.cr#L145" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -632,7 +634,7 @@ camera[<span class="s">&quot;whitebalance&quot;</span>].to_s <span class="c"># =
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera/configuration.cr#L94" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera/configuration.cr#L112" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -658,7 +660,7 @@ camera[<span class="s">&quot;shutterspeed2&quot;</span>] <span class="o">=</span
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera/configuration.cr#L113" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera/configuration.cr#L131" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -682,7 +684,7 @@ camera[<span class="s">&quot;whitebalance&quot;</span>].to_s <span class="c"># =
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera/configuration.cr#L99" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera/configuration.cr#L117" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -706,22 +708,24 @@ camera.config.keys <span class="c"># =&gt; [&quot;autofocusdrive&quot;, &quot;ma
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera/configuration.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera/configuration.cr#L16" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="dirty?-instance-method">
+    <div class="entry-detail" id="dirty?:Bool-instance-method">
       <div class="signature">
         
-        def <strong>dirty?</strong>
+        def <strong>dirty?</strong> : Bool
 
-        <a class="method-permalink" href="#dirty%3F-instance-method">#</a>
+        <a class="method-permalink" href="#dirty%3F%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Returns <code>true</code> if any attributes have unsaved changes.</p>
+          <p>Returns <code>true</code> if any attributes have unsaved changes, including
+the ones changed on the widgets directly (i.e. using
+<code><a href="../../GPhoto2/CameraWidget/Base.html#value%3D%28value%29-instance-method">CameraWidget::Base#value=</a></code> or <code>CameraWidget::Radio#&gt;&gt;</code>).</p>
 <pre><code class="language-crystal">camera.dirty? <span class="c"># =&gt; false</span>
 camera[<span class="n">:iso</span>] <span class="o">=</span> <span class="n">400</span>
 camera.dirty? <span class="c"># =&gt; true</span></code></pre>
@@ -730,17 +734,17 @@ camera.dirty? <span class="c"># =&gt; true</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera/configuration.cr#L183" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera/configuration.cr#L246" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="preserving_config(keys:Enumerable(String|Symbol)|Nil=nil,&amp;):Nil-instance-method">
+    <div class="entry-detail" id="preserving_config(keys:Enumerable(String|Symbol)|Nil=nil,&amp;)-instance-method">
       <div class="signature">
         
-        def <strong>preserving_config</strong>(keys : Enumerable(String | Symbol) | Nil = <span class="n">nil</span>, &) : Nil
+        def <strong>preserving_config</strong>(keys : Enumerable(String | Symbol) | Nil = <span class="n">nil</span>, &)
 
-        <a class="method-permalink" href="#preserving_config%28keys%3AEnumerable%28String%7CSymbol%29%7CNil%3Dnil%2C%26%29%3ANil-instance-method">#</a>
+        <a class="method-permalink" href="#preserving_config%28keys%3AEnumerable%28String%7CSymbol%29%7CNil%3Dnil%2C%26%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -766,12 +770,14 @@ camera.preserving_config <span class="k">do</span>
 <span class="c"># Original values are being preserved</span>
 camera[<span class="n">:aperture</span>] <span class="c"># =&gt; 4</span>
 camera[<span class="n">:iso</span>]      <span class="c"># =&gt; 400</span></code></pre>
+<p>Returns the value of the block.</p>
+<p>Raises <code>KeyError</code> if any of the given <em>keys</em> doesn't exist.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera/configuration.cr#L42" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera/configuration.cr#L46" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -797,7 +803,7 @@ camera[<span class="n">:iso</span>] <span class="c"># =&gt; 800</span></code></p
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera/configuration.cr#L80" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera/configuration.cr#L97" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -821,7 +827,7 @@ camera.save <span class="c"># =&gt; false (nothing to update)</span></code></pre
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera/configuration.cr#L139" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera/configuration.cr#L163" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -851,12 +857,14 @@ camera.update({<span class="s">&quot;iso&quot;</span> <span class="o">=&gt;</spa
 
 camera[<span class="n">:iso</span>]           <span class="c"># =&gt; 400</span>
 camera[<span class="n">:shutterspeed2</span>] <span class="c"># =&gt; &quot;1/60&quot;</span></code></pre>
+<p><span class="flag purple">NOTE</span>  When any of the attributes can't be set (i.e. due to an invalid
+value), the ones set before are reverted and the error is reraised.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera/configuration.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera/configuration.cr#L204" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -877,7 +885,7 @@ camera[<span class="n">:shutterspeed2</span>] <span class="c"># =&gt; &quot;1/60
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera/configuration.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera/configuration.cr#L6" target="_blank">View source</a>]
         
       </div>
     </div>

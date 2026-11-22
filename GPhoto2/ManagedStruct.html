@@ -470,7 +470,7 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/managed_struct.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/managed_struct.cr#L4" target="_blank">
         gphoto2/managed_struct.cr
       </a>
     
@@ -495,6 +495,8 @@
       <li class="entry-summary">
         <a href="#new%28ptr%3APointer%28T%29%7CNil%3Dnil%29-class-method" class="signature"><strong>.new</strong>(ptr : Pointer(T) | Nil = <span class="n">nil</span>)</a>
         
+          <div class="summary"><p>Copies the value pointed to by <em>ptr</em> (if given) into memory managed by the GC, so it's independent of the original one.</p></div>
+        
       </li>
     
   </ul>
@@ -517,6 +519,8 @@
     
       <li class="entry-summary">
         <a href="#ptr%3APointer%28T%29-instance-method" class="signature"><strong>#ptr</strong> : Pointer(T)</a>
+        
+          <div class="summary"><p>Returns the pointer to the wrapped value, allocating it if not set.</p></div>
         
       </li>
     
@@ -592,10 +596,16 @@
         <a class="method-permalink" href="#new%28ptr%3APointer%28T%29%7CNil%3Dnil%29-class-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Copies the value pointed to by <em>ptr</em> (if given) into memory
+managed by the GC, so it's independent of the original one.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/managed_struct.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/managed_struct.cr#L12" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -624,10 +634,15 @@
         <a class="method-permalink" href="#ptr%3APointer%28T%29-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns the pointer to the wrapped value, allocating it if not set.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/managed_struct.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/managed_struct.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>

@@ -452,7 +452,7 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/error.cr#L14" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/error.cr#L15" target="_blank">
         gphoto2/error.cr
       </a>
     
@@ -484,6 +484,8 @@
       <li class="entry-summary">
         <a href="#new%28message%3AString%7CNil%2Ccode%3AInt32%29-class-method" class="signature"><strong>.new</strong>(message : String | Nil, code : Int32)</a>
         
+          <div class="summary"><p>Creates an error with the given <em>message</em> and libgphoto2 error <em>code</em>.</p></div>
+        
       </li>
     
   </ul>
@@ -507,12 +509,14 @@
       <li class="entry-summary">
         <a href="#code%3AInt32-instance-method" class="signature"><strong>#code</strong> : Int32</a>
         
+          <div class="summary"><p>Returns the libgphoto2 error code (i.e.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#to_s%28io%3AIO%29-instance-method" class="signature"><strong>#to_s</strong>(io : IO)</a>
         
-          <div class="summary"><p>Appends a short String representation of this object which includes its class name and its object address.</p></div>
+          <div class="summary"><p>Returns the message followed by the error code, i.e.</p></div>
         
       </li>
     
@@ -602,7 +606,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/error.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/error.cr#L20" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -615,10 +619,15 @@
         <a class="method-permalink" href="#new%28message%3AString%7CNil%2Ccode%3AInt32%29-class-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Creates an error with the given <em>message</em> and libgphoto2 error <em>code</em>.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/error.cr#L23" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/error.cr#L26" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -647,10 +656,15 @@
         <a class="method-permalink" href="#code%3AInt32-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns the libgphoto2 error code (i.e. <code><a href="../LibGPhoto2.html#GP_ERROR_IO">LibGPhoto2::GP_ERROR_IO</a></code>).</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/error.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/error.cr#L17" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -665,24 +679,13 @@
       
         <div class="doc">
           
-            <div class="doc-inherited">
-              Description copied from class Exception
-            </div>
-          
-          <p>Appends a short String representation of this object
-which includes its class name and its object address.</p>
-<pre><code class="language-crystal"><span class="k">class</span> <span class="t">Person</span>
-  <span class="k">def</span> <span class="m">initialize</span>(@name : <span class="t">String</span>, @age : <span class="t">Int32</span>)
-  <span class="k">end</span>
-<span class="k">end</span>
-
-<span class="t">Person</span>.new(<span class="s">&quot;John&quot;</span>, <span class="n">32</span>).to_s <span class="c"># =&gt; #&lt;Person:0x10a199f20&gt;</span></code></pre>
+          <p>Returns the message followed by the error code, i.e. <code>I/O problem (-7)</code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/error.cr#L27" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/error.cr#L31" target="_blank">View source</a>]
         
       </div>
     </div>

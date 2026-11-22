@@ -463,7 +463,7 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_abilities_list.cr#L5" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_abilities_list.cr#L5" target="_blank">
         gphoto2/camera_abilities_list.cr
       </a>
     
@@ -488,7 +488,7 @@
       <li class="entry-summary">
         <a href="#new%28context%3AGPhoto2%3A%3AContext%2Cport_info_list%3AGPhoto2%3A%3APortInfoList%3DPortInfoList.new%29-class-method" class="signature"><strong>.new</strong>(context : GPhoto2::Context, port_info_list : GPhoto2::PortInfoList = <span class="t">PortInfoList</span>.new)</a>
         
-          <div class="summary"><p><span class="flag purple">NOTE</span>  allocates memory.</p></div>
+          <div class="summary"><p>Loads the abilities of all supported camera models, using the given <em>context</em>, along with the <em>port_info_list</em> used by <code><a href="../GPhoto2/CameraAbilitiesList.html#detect%3ACameraList-instance-method">#detect</a></code>.</p></div>
         
       </li>
     
@@ -513,6 +513,8 @@
       <li class="entry-summary">
         <a href="#%5B%5D%28index%3AInt32%29%3ACameraAbilities-instance-method" class="signature"><strong>#[]</strong>(index : Int32) : CameraAbilities</a>
         
+          <div class="summary"><p>Returns the abilities of the camera model at the given <em>index</em>.</p></div>
+        
       </li>
     
       <li class="entry-summary">
@@ -523,7 +525,16 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#close%3ANil-instance-method" class="signature"><strong>#close</strong> : Nil</a>
+        
+          <div class="summary"><p>Frees allocated memory.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#detect%3ACameraList-instance-method" class="signature"><strong>#detect</strong> : CameraList</a>
+        
+          <div class="summary"><p>Returns the list of the detected cameras, with their model names and ports.</p></div>
         
       </li>
     
@@ -536,6 +547,8 @@
     
       <li class="entry-summary">
         <a href="#lookup_model%28model%3AString%29%3AInt32-instance-method" class="signature"><strong>#lookup_model</strong>(model : String) : Int32</a>
+        
+          <div class="summary"><p>Returns the index of the given <em>model</em> in the list.</p></div>
         
       </li>
     
@@ -639,13 +652,15 @@
       
         <div class="doc">
           
-          <p><span class="flag purple">NOTE</span>  allocates memory.</p>
+          <p>Loads the abilities of all supported camera models, using the given
+<em>context</em>, along with the <em>port_info_list</em> used by <code><a href="../GPhoto2/CameraAbilitiesList.html#detect%3ACameraList-instance-method">#detect</a></code>.</p>
+<p><span class="flag purple">NOTE</span>  allocates memory.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_abilities_list.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_abilities_list.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -674,10 +689,15 @@
         <a class="method-permalink" href="#%5B%5D%28index%3AInt32%29%3ACameraAbilities-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns the abilities of the camera model at the given <em>index</em>.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_abilities_list.cr#L30" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_abilities_list.cr#L47" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -698,7 +718,31 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_abilities_list.cr#L35" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_abilities_list.cr#L52" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="close:Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>close</strong> : Nil
+
+        <a class="method-permalink" href="#close%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Frees allocated memory.</p>
+<p><span class="flag purple">NOTE</span>  The list of all supported models takes up several megabytes,
+allocated outside of the GC heap, so it's best to free it right
+after use, instead of waiting for the GC.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_abilities_list.cr#L30" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -711,10 +755,15 @@
         <a class="method-permalink" href="#detect%3ACameraList-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns the list of the detected cameras, with their model names and ports.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_abilities_list.cr#L22" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_abilities_list.cr#L35" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -735,7 +784,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_abilities_list.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_abilities_list.cr#L21" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -748,10 +797,16 @@
         <a class="method-permalink" href="#lookup_model%28model%3AString%29%3AInt32-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns the index of the given <em>model</em> in the list.</p>
+<p>Raises <code><a href="../GPhoto2/Error.html">GPhoto2::Error</a></code> if the model isn't supported.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_abilities_list.cr#L26" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_abilities_list.cr#L42" target="_blank">View source</a>]
         
       </div>
     </div>

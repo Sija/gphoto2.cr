@@ -452,7 +452,7 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file.cr#L4" target="_blank">
         gphoto2/camera_file.cr
       </a>
     
@@ -482,12 +482,35 @@
       </dd>
       
     
+      <dt class="entry-const" id="CHUNK_SIZE">
+        <strong>CHUNK_SIZE</strong> = <code><span class="n">1024</span> <span class="o">*</span> <span class="n">1024</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>Maximum size of a chunk requested from the camera at once by <code><a href="../GPhoto2/CameraFile.html#read%3ABytes-instance-method">#read</a></code>
+and <code><a href="../GPhoto2/CameraFile.html#write_to%28io%3AIO%29%3ANil-instance-method">#write_to</a></code>, the same as used by libgphoto2 itself for reading
+files in chunks (i.e. in its PTP driver). Larger chunks mean fewer
+round trips, while some cameras might not handle these too large.</p>
+      </dd>
+      
+    
+      <dt class="entry-const" id="MAX_PREALLOCATED_SIZE">
+        <strong>MAX_PREALLOCATED_SIZE</strong> = <code>(<span class="n">64</span> <span class="o">*</span> <span class="n">1024</span>) <span class="o">*</span> <span class="n">1024</span></code>
+      </dt>
+      
+      <dd class="entry-const-doc">
+        <p>Maximum buffer size allocated upfront in <code><a href="../GPhoto2/CameraFile.html#read%3ABytes-instance-method">#read</a></code>, based on the file
+size reported by the camera, which might be bogus (i.e. <code>0xFFFFFFFF</code>).</p>
+      </dd>
+      
+    
       <dt class="entry-const" id="PREVIEW_FILENAME">
         <strong>PREVIEW_FILENAME</strong> = <code><span class="s">&quot;capture_preview.jpg&quot;</span></code>
       </dt>
       
       <dd class="entry-const-doc">
-        <p>The preview data is assumed to be a jpg.</p>
+        <p>Name of the preview files, used when the mime type of their data
+is unknown (otherwise named after it, i.e. <code>capture_preview.ppm</code>).</p>
       </dd>
       
     
@@ -518,14 +541,14 @@
       <li class="entry-summary">
         <a href="#new%28camera%3AGPhoto2%3A%3ACamera%2Cpath%3APath%7CString%29-class-method" class="signature"><strong>.new</strong>(camera : GPhoto2::Camera, path : Path | String)</a>
         
-          <div class="summary"><p><span class="flag purple">NOTE</span>  allocates memory.</p></div>
+          <div class="summary"><p>Relative <em>path</em> is resolved from the root folder.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#new%28camera%3AGPhoto2%3A%3ACamera%29-class-method" class="signature"><strong>.new</strong>(camera : GPhoto2::Camera)</a>
         
-          <div class="summary"><p><span class="flag purple">NOTE</span>  allocates memory.</p></div>
+          <div class="summary"><p>Creates a preview file, which isn't stored on the camera.</p></div>
         
       </li>
     
@@ -585,6 +608,15 @@
       <li class="entry-summary">
         <a href="#folder-instance-method" class="signature"><strong>#folder</strong></a>
         
+          <div class="summary"><p>Returns path of the folder containing the file.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#hash%28hasher%29-instance-method" class="signature"><strong>#hash</strong>(hasher)</a>
+        
+          <div class="summary"><p>See <code>Object#hash(hasher)</code></p></div>
+        
       </li>
     
       <li class="entry-summary">
@@ -597,6 +629,8 @@
       <li class="entry-summary">
         <a href="#name-instance-method" class="signature"><strong>#name</strong></a>
         
+          <div class="summary"><p>Returns file name.</p></div>
+        
       </li>
     
       <li class="entry-summary">
@@ -607,9 +641,16 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#preview%3F-instance-method" class="signature"><strong>#preview?</strong></a>
+        <a href="#preview%3F%3ABool-instance-method" class="signature"><strong>#preview?</strong> : Bool</a>
         
-          <div class="summary"><p>Returns <code>true</code> if file is a preview.</p></div>
+          <div class="summary"><p>Returns <code>true</code> if file is a preview (see <code>Camera#preview</code>).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#ptr%3APointer%28LibGPhoto2%3A%3ACameraFile%29-instance-method" class="signature"><strong>#ptr</strong> : Pointer(LibGPhoto2::CameraFile)</a>
+        
+          <div class="summary"><p>Returns the wrapped pointer, allocating it if needed.</p></div>
         
       </li>
     
@@ -621,9 +662,9 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#save%28path%3APath%7CString%3Ddefault_filename%29%3ANil-instance-method" class="signature"><strong>#save</strong>(path : Path | String = default_filename) : Nil</a>
+        <a href="#save%28path%3APath%7CString%3Dname%29%3ANil-instance-method" class="signature"><strong>#save</strong>(path : Path | String = name) : Nil</a>
         
-          <div class="summary"><p>Saves file <code><a href="../GPhoto2/CameraFile.html#data%3APointer%28UInt8%29-instance-method">#data</a></code> at given <em>pathname</em>.</p></div>
+          <div class="summary"><p>Saves file <code><a href="../GPhoto2/CameraFile.html#data%3APointer%28UInt8%29-instance-method">#data</a></code> at given <em>path</em>, defaulting to file <code><a href="../GPhoto2/CameraFile.html#name-instance-method">#name</a></code> in the current working directory.</p></div>
         
       </li>
     
@@ -635,7 +676,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#to_s-instance-method" class="signature"><strong>#to_s</strong></a>
+        <a href="#to_s%28io%3AIO%29%3ANil-instance-method" class="signature"><strong>#to_s</strong>(io : IO) : Nil</a>
         
           <div class="summary"><p>Returns file <code><a href="../GPhoto2/CameraFile.html#path%3APath-instance-method">#path</a></code>.</p></div>
         
@@ -644,7 +685,14 @@
       <li class="entry-summary">
         <a href="#to_slice%3ABytes-instance-method" class="signature"><strong>#to_slice</strong> : Bytes</a>
         
-          <div class="summary"><p>Returns file <code><a href="../GPhoto2/CameraFile.html#data%3APointer%28UInt8%29-instance-method">#data</a></code> as <code>Bytes</code>.</p></div>
+          <div class="summary"><p>Returns a copy of file <code><a href="../GPhoto2/CameraFile.html#data%3APointer%28UInt8%29-instance-method">#data</a></code> as <code>Bytes</code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#write_to%28io%3AIO%29%3ANil-instance-method" class="signature"><strong>#write_to</strong>(io : IO) : Nil</a>
+        
+          <div class="summary"><p>Writes file <code><a href="../GPhoto2/CameraFile.html#data%3APointer%28UInt8%29-instance-method">#data</a></code> to the given <em>io</em>, without copying it first.</p></div>
         
       </li>
     
@@ -748,13 +796,16 @@
       
         <div class="doc">
           
-          <p><span class="flag purple">NOTE</span>  allocates memory.</p>
+          <p>Relative <em>path</em> is resolved from the root folder.</p>
+<p>Raises <code>ArgumentError</code> if <em>path</em> points to a folder, rather than
+a file (i.e. it's empty, ends with <code>/</code>, <code>.</code> or <code>..</code>).</p>
+<p><span class="flag purple">NOTE</span>  Memory is allocated lazily, on first access to <code><a href="../GPhoto2/CameraFile.html#ptr%3APointer%28LibGPhoto2%3A%3ACameraFile%29-instance-method">#ptr</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file.cr#L26" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file.cr#L69" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -769,13 +820,14 @@
       
         <div class="doc">
           
-          <p><span class="flag purple">NOTE</span>  allocates memory.</p>
+          <p>Creates a preview file, which isn't stored on the camera.</p>
+<p><span class="flag purple">NOTE</span>  Memory is allocated lazily, on first access to <code><a href="../GPhoto2/CameraFile.html#ptr%3APointer%28LibGPhoto2%3A%3ACameraFile%29-instance-method">#ptr</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file.cr#L34" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file.cr#L79" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -816,8 +868,6 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file.cr#L38" target="_blank">View source</a>]
-        
       </div>
     </div>
   
@@ -837,7 +887,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file.cr#L59" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file.cr#L113" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -858,7 +908,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file.cr#L101" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file.cr#L223" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -874,12 +924,13 @@
         <div class="doc">
           
           <p>Deletes file from the camera.</p>
+<p>Raises <code><a href="../GPhoto2/Error.html">GPhoto2::Error</a></code> for preview files, which aren't stored on the camera.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file.cr#L77" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file.cr#L184" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -900,7 +951,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file.cr#L54" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file.cr#L108" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -913,10 +964,38 @@
         <a class="method-permalink" href="#folder-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns path of the folder containing the file.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file.cr#L49" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file.cr#L97" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="hash(hasher)-instance-method">
+      <div class="signature">
+        
+        def <strong>hash</strong>(hasher)
+
+        <a class="method-permalink" href="#hash%28hasher%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from class Reference
+            </div>
+          
+          <p>See <code>Object#hash(hasher)</code></p>
+        </div>
+      
+      <br/>
+      <div>
         
       </div>
     </div>
@@ -932,12 +1011,13 @@
         <div class="doc">
           
           <p>Returns an object containing information about the file.</p>
+<p>Raises <code><a href="../GPhoto2/Error.html">GPhoto2::Error</a></code> for preview files, which aren't stored on the camera.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file.cr#L157" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file.cr#L310" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -950,10 +1030,15 @@
         <a class="method-permalink" href="#name-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns file name.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file.cr#L45" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file.cr#L92" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -974,28 +1059,49 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file.cr#L19" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file.cr#L38" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="preview?-instance-method">
+    <div class="entry-detail" id="preview?:Bool-instance-method">
       <div class="signature">
         
-        def <strong>preview?</strong>
+        def <strong>preview?</strong> : Bool
 
-        <a class="method-permalink" href="#preview%3F-instance-method">#</a>
+        <a class="method-permalink" href="#preview%3F%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Returns <code>true</code> if file is a preview.</p>
+          <p>Returns <code>true</code> if file is a preview (see <code>Camera#preview</code>).</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file.cr#L64" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file.cr#L45" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="ptr:Pointer(LibGPhoto2::CameraFile)-instance-method">
+      <div class="signature">
+        
+        def <strong>ptr</strong> : Pointer(LibGPhoto2::CameraFile)
+
+        <a class="method-permalink" href="#ptr%3APointer%28LibGPhoto2%3A%3ACameraFile%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the wrapped pointer, allocating it if needed.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file.cr#L102" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1011,33 +1117,42 @@
         <div class="doc">
           
           <p>Reads file directly from the camera.</p>
+<p><span class="flag purple">NOTE</span>  Preview files aren't stored on the camera, so their
+(already captured) data is returned instead, see <code><a href="../GPhoto2/CameraFile.html#to_slice%3ABytes-instance-method">#to_slice</a></code>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file.cr#L116" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file.cr#L267" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="save(path:Path|String=default_filename):Nil-instance-method">
+    <div class="entry-detail" id="save(path:Path|String=name):Nil-instance-method">
       <div class="signature">
         
-        def <strong>save</strong>(path : Path | String = default_filename) : Nil
+        def <strong>save</strong>(path : Path | String = name) : Nil
 
-        <a class="method-permalink" href="#save%28path%3APath%7CString%3Ddefault_filename%29%3ANil-instance-method">#</a>
+        <a class="method-permalink" href="#save%28path%3APath%7CString%3Dname%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Saves file <code><a href="../GPhoto2/CameraFile.html#data%3APointer%28UInt8%29-instance-method">#data</a></code> at given <em>pathname</em>.</p>
+          <p>Saves file <code><a href="../GPhoto2/CameraFile.html#data%3APointer%28UInt8%29-instance-method">#data</a></code> at given <em>path</em>, defaulting to file <code><a href="../GPhoto2/CameraFile.html#name-instance-method">#name</a></code>
+in the current working directory.</p>
+<p>When <em>path</em> points to an existing directory (or ends with a path
+separator), the file is saved inside of it, under its <code><a href="../GPhoto2/CameraFile.html#name-instance-method">#name</a></code>.</p>
+<p><span class="flag purple">NOTE</span>  An existing file is overwritten only once the whole file has
+been downloaded, while a new one is written as the data is read from
+the camera (see <code><a href="../GPhoto2/CameraFile.html#write_to%28io%3AIO%29%3ANil-instance-method">#write_to</a></code>) into a temporary file, which is renamed
+to <em>path</em> once done, or removed if that fails.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file.cr#L69" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file.cr#L127" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1058,17 +1173,17 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file.cr#L106" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file.cr#L228" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="to_s-instance-method">
+    <div class="entry-detail" id="to_s(io:IO):Nil-instance-method">
       <div class="signature">
         
-        def <strong>to_s</strong>
+        def <strong>to_s</strong>(io : IO) : Nil
 
-        <a class="method-permalink" href="#to_s-instance-method">#</a>
+        <a class="method-permalink" href="#to_s%28io%3AIO%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1079,7 +1194,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file.cr#L41" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file.cr#L87" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1094,13 +1209,45 @@
       
         <div class="doc">
           
-          <p>Returns file <code><a href="../GPhoto2/CameraFile.html#data%3APointer%28UInt8%29-instance-method">#data</a></code> as <code>Bytes</code>.</p>
+          <p>Returns a copy of file <code><a href="../GPhoto2/CameraFile.html#data%3APointer%28UInt8%29-instance-method">#data</a></code> as <code>Bytes</code>.</p>
+<p><span class="flag purple">NOTE</span>  The data is copied, since the original buffer is owned by
+libgphoto2, and freed along with the file (see <code><a href="../GPhoto2/CameraFile.html#close%3ANil-instance-method">#close</a></code>).
+Use <code><a href="../GPhoto2/CameraFile.html#write_to%28io%3AIO%29%3ANil-instance-method">#write_to</a></code> or <code><a href="../GPhoto2/CameraFile.html#save%28path%3APath%7CString%3Dname%29%3ANil-instance-method">#save</a></code> to avoid the copy.</p>
+<p><span class="flag purple">NOTE</span>  Raises <code>OverflowError</code> for files larger than <code>Int32::MAX</code> bytes,
+which <code>Bytes</code> can't hold; use <code><a href="../GPhoto2/CameraFile.html#write_to%28io%3AIO%29%3ANil-instance-method">#write_to</a></code> or <code><a href="../GPhoto2/CameraFile.html#save%28path%3APath%7CString%3Dname%29%3ANil-instance-method">#save</a></code> for those instead.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_file.cr#L111" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file.cr#L240" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="write_to(io:IO):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>write_to</strong>(io : IO) : Nil
+
+        <a class="method-permalink" href="#write_to%28io%3AIO%29%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Writes file <code><a href="../GPhoto2/CameraFile.html#data%3APointer%28UInt8%29-instance-method">#data</a></code> to the given <em>io</em>, without copying it first.</p>
+<p>Unless the data is at hand already (i.e. of previews, or after
+accessing <code><a href="../GPhoto2/CameraFile.html#data%3APointer%28UInt8%29-instance-method">#data</a></code>), it's read from the camera in chunks, so that the
+whole file is never held in memory (i.e. for large videos). Camera
+drivers not supporting that get the whole file downloaded instead.</p>
+<pre><code class="language-crystal">file <span class="o">=</span> camera.preview
+file.write_to(<span class="t">STDOUT</span>)</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_file.cr#L255" target="_blank">View source</a>]
         
       </div>
     </div>

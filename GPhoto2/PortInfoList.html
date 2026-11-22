@@ -452,7 +452,7 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/port_info_list.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/port_info_list.cr#L4" target="_blank">
         gphoto2/port_info_list.cr
       </a>
     
@@ -502,6 +502,8 @@
       <li class="entry-summary">
         <a href="#%5B%5D%28index%3AInt32%29%3APortInfo-instance-method" class="signature"><strong>#[]</strong>(index : Int32) : PortInfo</a>
         
+          <div class="summary"><p>Returns info of the port at the given <em>index</em>.</p></div>
+        
       </li>
     
       <li class="entry-summary">
@@ -520,6 +522,15 @@
     
       <li class="entry-summary">
         <a href="#lookup_path%28port%3AString%29%3AInt32-instance-method" class="signature"><strong>#lookup_path</strong>(port : String) : Int32</a>
+        
+          <div class="summary"><p>Returns the index of the given <em>port</em> path in the list.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#size%3AInt32-instance-method" class="signature"><strong>#size</strong> : Int32</a>
+        
+          <div class="summary"><p>Returns number of entries in the list.</p></div>
         
       </li>
     
@@ -629,7 +640,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/port_info_list.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/port_info_list.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -658,10 +669,15 @@
         <a class="method-permalink" href="#%5B%5D%28index%3AInt32%29%3APortInfo-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns info of the port at the given <em>index</em>.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/port_info_list.cr#L22" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/port_info_list.cr#L34" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -682,7 +698,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/port_info_list.cr#L27" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/port_info_list.cr#L39" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -698,12 +714,14 @@
         <div class="doc">
           
           <p>Finalizes object by freeing allocated memory.</p>
+<p><span class="flag purple">NOTE</span>  The memory might not have been allocated at all (i.e. when
+<code>#initialize</code> failed), and raising from a finalizer is not an option.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/port_info_list.cr#L14" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/port_info_list.cr#L17" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -716,10 +734,37 @@
         <a class="method-permalink" href="#lookup_path%28port%3AString%29%3AInt32-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns the index of the given <em>port</em> path in the list.</p>
+<p>Raises <code><a href="../GPhoto2/Error.html">GPhoto2::Error</a></code> if the port isn't found.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/port_info_list.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/port_info_list.cr#L29" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="size:Int32-instance-method">
+      <div class="signature">
+        
+        def <strong>size</strong> : Int32
+
+        <a class="method-permalink" href="#size%3AInt32-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns number of entries in the list.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/port_info_list.cr#L22" target="_blank">View source</a>]
         
       </div>
     </div>

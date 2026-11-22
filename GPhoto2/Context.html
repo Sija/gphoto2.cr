@@ -454,21 +454,21 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/context.cr#L5" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/context.cr#L5" target="_blank">
         gphoto2/context.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/context/callbacks.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/context/callbacks.cr#L4" target="_blank">
         gphoto2/context/callbacks.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/context/error.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/context/error.cr#L4" target="_blank">
         gphoto2/context/error.cr
       </a>
     
@@ -517,6 +517,15 @@
     
       <li class="entry-summary">
         <a href="#close%3ANil-instance-method" class="signature"><strong>#close</strong> : Nil</a>
+        
+          <div class="summary"><p>Removes the callbacks and frees allocated memory.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#finalize-instance-method" class="signature"><strong>#finalize</strong></a>
+        
+          <div class="summary"><p>Finalizes object by freeing allocated memory.</p></div>
         
       </li>
     
@@ -643,8 +652,8 @@
   <h3>Macros inherited from module <code><a href="../GPhoto2/Context/Callbacks.html">GPhoto2::Context::Callbacks</a></code></h3>
   
   
-    <a href="../GPhoto2/Context/Callbacks.html#set_callback%28key%2Ccallback_type%2Cargs%2C%26block%29-macro" class="tooltip">
-      <span>set_callback(key, callback_type, args, &block)</span>
+    <a href="../GPhoto2/Context/Callbacks.html#set_callback%28key%2Ccallback_type%2Cargs%2Cpublic_setter%3Dtrue%2Cfallback%3Dnil%2C%26block%29-macro" class="tooltip">
+      <span>set_callback(key, callback_type, args, public_setter = <span class="n">true</span>, fallback = <span class="n">nil</span>, &block)</span>
     set_callback</a>
     
   
@@ -751,7 +760,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/context.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/context.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -780,10 +789,36 @@
         <a class="method-permalink" href="#close%3ANil-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Removes the callbacks and frees allocated memory.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/context.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/context.cr#L22" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="finalize-instance-method">
+      <div class="signature">
+        
+        def <strong>finalize</strong>
+
+        <a class="method-permalink" href="#finalize-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Finalizes object by freeing allocated memory.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/context.cr#L17" target="_blank">View source</a>]
         
       </div>
     </div>

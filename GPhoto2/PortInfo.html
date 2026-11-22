@@ -452,7 +452,7 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/port_info.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/port_info.cr#L4" target="_blank">
         gphoto2/port_info.cr
       </a>
     
@@ -477,6 +477,15 @@
       <li class="entry-summary">
         <a href="#find%28port%3AString%29%3Aself-class-method" class="signature"><strong>.find</strong>(port : String) : <span class="k">self</span></a>
         
+          <div class="summary"><p>Returns info of the given <em>port</em> (i.e.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#new%28ptr%3APointer%28LibGPhoto2Port%3A%3AGPPortInfo%29%2Cowner%3APortInfoList%7CPort%7CNil%3Dnil%29-class-method" class="signature"><strong>.new</strong>(ptr : Pointer(LibGPhoto2Port::GPPortInfo), owner : PortInfoList | Port | Nil = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Wraps the given <em>ptr</em>, keeping its <em>owner</em> from being garbage-collected.</p></div>
+        
       </li>
     
   </ul>
@@ -500,14 +509,14 @@
       <li class="entry-summary">
         <a href="#name%3AString-instance-method" class="signature"><strong>#name</strong> : String</a>
         
-          <div class="summary"><p>Returns the name of the port.</p></div>
+          <div class="summary"><p>Returns the name of the port, or an empty string if not set (i.e.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#path%3AString-instance-method" class="signature"><strong>#path</strong> : String</a>
         
-          <div class="summary"><p>Returns the path of the port.</p></div>
+          <div class="summary"><p>Returns the path of the port, or an empty string if not set (i.e.</p></div>
         
       </li>
     
@@ -616,10 +625,37 @@
         <a class="method-permalink" href="#find%28port%3AString%29%3Aself-class-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns info of the given <em>port</em> (i.e. <code>&quot;usb:001,005&quot;</code>).</p>
+<p>Raises <code><a href="../GPhoto2/Error.html">GPhoto2::Error</a></code> if the port isn't found.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/port_info.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/port_info.cr#L20" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="new(ptr:Pointer(LibGPhoto2Port::GPPortInfo),owner:PortInfoList|Port|Nil=nil)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(ptr : Pointer(LibGPhoto2Port::GPPortInfo), owner : <a href="../GPhoto2/PortInfoList.html">PortInfoList</a> | <a href="../GPhoto2/Port.html">Port</a> | Nil = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#new%28ptr%3APointer%28LibGPhoto2Port%3A%3AGPPortInfo%29%2Cowner%3APortInfoList%7CPort%7CNil%3Dnil%29-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Wraps the given <em>ptr</em>, keeping its <em>owner</em> from being garbage-collected.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/port_info.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -650,13 +686,14 @@
       
         <div class="doc">
           
-          <p>Returns the name of the port.</p>
+          <p>Returns the name of the port, or an empty string if not set
+(i.e. for a <code><a href="../GPhoto2/Port.html">Port</a></code> without any <code><a href="../GPhoto2/PortInfo.html">PortInfo</a></code> assigned).</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/port_info.cr#L13" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/port_info.cr#L27" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -671,13 +708,14 @@
       
         <div class="doc">
           
-          <p>Returns the path of the port.</p>
+          <p>Returns the path of the port, or an empty string if not set
+(i.e. for a <code><a href="../GPhoto2/Port.html">Port</a></code> without any <code><a href="../GPhoto2/PortInfo.html">PortInfo</a></code> assigned).</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/port_info.cr#L18" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/port_info.cr#L33" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -698,7 +736,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/port_info.cr#L23" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/port_info.cr#L38" target="_blank">View source</a>]
         
       </div>
     </div>

@@ -468,7 +468,7 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/struct.cr#L2" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/struct.cr#L2" target="_blank">
         gphoto2/struct.cr
       </a>
     
@@ -493,6 +493,8 @@
       <li class="entry-summary">
         <a href="#new%28ptr%3APointer%28T%29%7CNil%3Dnil%29-class-method" class="signature"><strong>.new</strong>(ptr : Pointer(T) | Nil = <span class="n">nil</span>)</a>
         
+          <div class="summary"><p>Wraps the given <em>ptr</em>, if any.</p></div>
+        
       </li>
     
   </ul>
@@ -516,15 +518,21 @@
       <li class="entry-summary">
         <a href="#ptr%3APointer%28T%29-instance-method" class="signature"><strong>#ptr</strong> : Pointer(T)</a>
         
+          <div class="summary"><p>Returns the wrapped pointer, or a null pointer if not set.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#ptr%3F%3APointer%28T%29%7CNil-instance-method" class="signature"><strong>#ptr?</strong> : Pointer(T) | Nil</a>
         
+          <div class="summary"><p>Returns the wrapped pointer, or <code>nil</code> if not set (i.e.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#to_unsafe%3APointer%28T%29-instance-method" class="signature"><strong>#to_unsafe</strong> : Pointer(T)</a>
+        
+          <div class="summary"><p>Returns the wrapped pointer, used when passed to C functions.</p></div>
         
       </li>
     
@@ -561,10 +569,15 @@
         <a class="method-permalink" href="#new%28ptr%3APointer%28T%29%7CNil%3Dnil%29-class-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Wraps the given <em>ptr</em>, if any.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/struct.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/struct.cr#L13" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -593,10 +606,15 @@
         <a class="method-permalink" href="#ptr%3APointer%28T%29-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns the wrapped pointer, or a null pointer if not set.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/struct.cr#L3" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/struct.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -609,10 +627,16 @@
         <a class="method-permalink" href="#ptr%3F%3APointer%28T%29%7CNil-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns the wrapped pointer, or <code>nil</code> if not set
+(i.e. after the object has been closed).</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/struct.cr#L4" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/struct.cr#L5" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -625,10 +649,15 @@
         <a class="method-permalink" href="#to_unsafe%3APointer%28T%29-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns the wrapped pointer, used when passed to C functions.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/struct.cr#L10" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/struct.cr#L18" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -644,12 +673,14 @@
         <div class="doc">
           
           <p>Returns wrapped value.</p>
+<p>Raises <code><a href="../GPhoto2/Exception.html">GPhoto2::Exception</a></code> if there's no value to return,
+i.e. after the object has been closed.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/struct.cr#L16" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/struct.cr#L27" target="_blank">View source</a>]
         
       </div>
     </div>

@@ -461,7 +461,7 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/context/callbacks.cr#L8" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/context/callbacks.cr#L8" target="_blank">
         gphoto2/context/callbacks.cr
       </a>
     
@@ -486,6 +486,8 @@
       <li class="entry-summary">
         <a href="#new-class-method" class="signature"><strong>.new</strong></a>
         
+          <div class="summary"><p>Sets up tracking of the error messages (see <code><a href="../../GPhoto2/Context/Callbacks.html#last_error%3AString%7CNil-instance-method">#last_error</a></code>).</p></div>
+        
       </li>
     
   </ul>
@@ -505,7 +507,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#set_callback%28key%2Ccallback_type%2Cargs%2C%26block%29-macro" class="signature"><strong>set_callback</strong>(key, callback_type, args, &block)</a>
+        <a href="#set_callback%28key%2Ccallback_type%2Cargs%2Cpublic_setter%3Dtrue%2Cfallback%3Dnil%2C%26block%29-macro" class="signature"><strong>set_callback</strong>(key, callback_type, args, public_setter = <span class="n">true</span>, fallback = <span class="n">nil</span>, &block)</a>
         
       </li>
     
@@ -526,6 +528,8 @@
       <li class="entry-summary">
         <a href="#cancel_callback%3AProc%28Bool%29-instance-method" class="signature"><strong>#cancel_callback</strong> : Proc(Bool)</a>
         
+          <div class="summary"><p>Returns <em>cancel</em> callback.</p></div>
+        
       </li>
     
       <li class="entry-summary">
@@ -538,12 +542,14 @@
       <li class="entry-summary">
         <a href="#cancel_callback%3F%3AProc%28Bool%29%7CNil-instance-method" class="signature"><strong>#cancel_callback?</strong> : Proc(Bool) | Nil</a>
         
+          <div class="summary"><p>Returns <em>cancel</em> callback.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#check%21%28rc%3AInt32%29%3AInt32-instance-method" class="signature"><strong>#check!</strong>(rc : Int32) : Int32</a>
         
-          <div class="summary"><p>Checks if the given <em>rc</em> is a GPhoto2 error code.</p></div>
+          <div class="summary"><p>Returns the given return code <em>rc</em>, or raises if it's an error code.</p></div>
         
       </li>
     
@@ -557,6 +563,8 @@
       <li class="entry-summary">
         <a href="#error_callback%3AProc%28String%2CVoid%29-instance-method" class="signature"><strong>#error_callback</strong> : Proc(String, Void)</a>
         
+          <div class="summary"><p>Returns <em>error</em> callback.</p></div>
+        
       </li>
     
       <li class="entry-summary">
@@ -569,12 +577,14 @@
       <li class="entry-summary">
         <a href="#error_callback%3F%3AProc%28String%2CVoid%29%7CNil-instance-method" class="signature"><strong>#error_callback?</strong> : Proc(String, Void) | Nil</a>
         
+          <div class="summary"><p>Returns <em>error</em> callback.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#idle_callback%3AProc%28Void%29-instance-method" class="signature"><strong>#idle_callback</strong> : Proc(Void)</a>
         
-          <div class="summary"><p>ameba:disable Lint/VoidOutsideLib</p></div>
+          <div class="summary"><p>Returns <em>idle</em> callback.</p></div>
         
       </li>
     
@@ -588,17 +598,21 @@
       <li class="entry-summary">
         <a href="#idle_callback%3F%3AProc%28Void%29%7CNil-instance-method" class="signature"><strong>#idle_callback?</strong> : Proc(Void) | Nil</a>
         
-          <div class="summary"><p>ameba:disable Lint/VoidOutsideLib</p></div>
+          <div class="summary"><p>Returns <em>idle</em> callback.</p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#last_error%3AString%7CNil-instance-method" class="signature"><strong>#last_error</strong> : String | Nil</a>
         
+          <div class="summary"><p>Returns the last error message reported by libgphoto2.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#message_callback%3AProc%28String%2CVoid%29-instance-method" class="signature"><strong>#message_callback</strong> : Proc(String, Void)</a>
+        
+          <div class="summary"><p>Returns <em>message</em> callback.</p></div>
         
       </li>
     
@@ -612,10 +626,14 @@
       <li class="entry-summary">
         <a href="#message_callback%3F%3AProc%28String%2CVoid%29%7CNil-instance-method" class="signature"><strong>#message_callback?</strong> : Proc(String, Void) | Nil</a>
         
+          <div class="summary"><p>Returns <em>message</em> callback.</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#status_callback%3AProc%28String%2CVoid%29-instance-method" class="signature"><strong>#status_callback</strong> : Proc(String, Void)</a>
+        
+          <div class="summary"><p>Returns <em>status</em> callback.</p></div>
         
       </li>
     
@@ -628,6 +646,8 @@
     
       <li class="entry-summary">
         <a href="#status_callback%3F%3AProc%28String%2CVoid%29%7CNil-instance-method" class="signature"><strong>#status_callback?</strong> : Proc(String, Void) | Nil</a>
+        
+          <div class="summary"><p>Returns <em>status</em> callback.</p></div>
         
       </li>
     
@@ -657,10 +677,15 @@
         <a class="method-permalink" href="#new-class-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Sets up tracking of the error messages (see <code><a href="../../GPhoto2/Context/Callbacks.html#last_error%3AString%7CNil-instance-method">#last_error</a></code>).</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/context/callbacks.cr#L69" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/context/callbacks.cr#L113" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -679,18 +704,18 @@
     Macro Detail
   </h2>
   
-    <div class="entry-detail" id="set_callback(key,callback_type,args,&amp;block)-macro">
+    <div class="entry-detail" id="set_callback(key,callback_type,args,public_setter=true,fallback=nil,&amp;block)-macro">
       <div class="signature">
         
-        macro <strong>set_callback</strong>(key, callback_type, args, &block)
+        macro <strong>set_callback</strong>(key, callback_type, args, public_setter = <span class="n">true</span>, fallback = <span class="n">nil</span>, &block)
 
-        <a class="method-permalink" href="#set_callback%28key%2Ccallback_type%2Cargs%2C%26block%29-macro">#</a>
+        <a class="method-permalink" href="#set_callback%28key%2Ccallback_type%2Cargs%2Cpublic_setter%3Dtrue%2Cfallback%3Dnil%2C%26block%29-macro">#</a>
       </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/context/callbacks.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/context/callbacks.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -715,6 +740,12 @@
         <a class="method-permalink" href="#cancel_callback%3AProc%28Bool%29-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns <em>cancel</em> callback.</p>
+<p>Raises <code>NilAssertionError</code> if not set, see <code><a href="../../GPhoto2/Context/Callbacks.html#cancel_callback%3F%3AProc%28Bool%29%7CNil-instance-method">#cancel_callback?</a></code>.</p>
+        </div>
+      
       <br/>
       <div>
         
@@ -738,7 +769,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/context/callbacks.cr#L52" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/context/callbacks.cr#L68" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -750,6 +781,12 @@
 
         <a class="method-permalink" href="#cancel_callback%3F%3AProc%28Bool%29%7CNil-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns <em>cancel</em> callback.</p>
+<p>Raises <code>NilAssertionError</code> if not set, see <code><a href="../../GPhoto2/Context/Callbacks.html#cancel_callback%3F%3AProc%28Bool%29%7CNil-instance-method">#cancel_callback?</a></code>.</p>
+        </div>
       
       <br/>
       <div>
@@ -767,13 +804,18 @@
       
         <div class="doc">
           
-          <p>Checks if the given <em>rc</em> is a GPhoto2 error code.</p>
+          <p>Returns the given return code <em>rc</em>, or raises if it's an error code.</p>
+<p>Raised error is a <code><a href="../../GPhoto2/Context/Error.html">Context::Error</a></code> carrying the error messages reported
+by libgphoto2 during the call (if any), one per line, in the order they
+were reported, or a generic <code><a href="../../GPhoto2/Error.html">GPhoto2::Error</a></code> otherwise.</p>
+<p>Exception raised by any of the callbacks during the call which returned
+<em>rc</em> takes precedence, and is re-raised regardless of <em>rc</em>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/context/callbacks.cr#L83" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/context/callbacks.cr#L146" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -794,7 +836,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/context/callbacks.cr#L76" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/context/callbacks.cr#L131" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -806,6 +848,12 @@
 
         <a class="method-permalink" href="#error_callback%3AProc%28String%2CVoid%29-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns <em>error</em> callback.</p>
+<p>Raises <code>NilAssertionError</code> if not set, see <code><a href="../../GPhoto2/Context/Callbacks.html#error_callback%3F%3AProc%28String%2CVoid%29%7CNil-instance-method">#error_callback?</a></code>.</p>
+        </div>
       
       <br/>
       <div>
@@ -824,11 +872,14 @@
         <div class="doc">
           
           <p>Sets <em>error</em> callback. Pass <code>nil</code> to remove it.</p>
-<p>See: <a href="http://www.gphoto.org/doc/api/gphoto2-context_8h.html">LibGPhoto2#gp_context_set_error_func</a></p>
+<p><span class="flag purple">NOTE</span>  Error messages are tracked (see <code><a href="../../GPhoto2/Context/Callbacks.html#last_error%3AString%7CNil-instance-method">#last_error</a></code>) regardless
+of the callback being set.</p>
         </div>
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/context/callbacks.cr#L121" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -840,6 +891,12 @@
 
         <a class="method-permalink" href="#error_callback%3F%3AProc%28String%2CVoid%29%7CNil-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns <em>error</em> callback.</p>
+<p>Raises <code>NilAssertionError</code> if not set, see <code><a href="../../GPhoto2/Context/Callbacks.html#error_callback%3F%3AProc%28String%2CVoid%29%7CNil-instance-method">#error_callback?</a></code>.</p>
+        </div>
       
       <br/>
       <div>
@@ -857,7 +914,8 @@
       
         <div class="doc">
           
-          <p>ameba:disable Lint/VoidOutsideLib</p>
+          <p>Returns <em>idle</em> callback.</p>
+<p>Raises <code>NilAssertionError</code> if not set, see <code><a href="../../GPhoto2/Context/Callbacks.html#idle_callback%3F%3AProc%28Void%29%7CNil-instance-method">#idle_callback?</a></code>.</p>
         </div>
       
       <br/>
@@ -883,7 +941,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/context/callbacks.cr#L57" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/context/callbacks.cr#L73" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -898,7 +956,8 @@
       
         <div class="doc">
           
-          <p>ameba:disable Lint/VoidOutsideLib</p>
+          <p>Returns <em>idle</em> callback.</p>
+<p>Raises <code>NilAssertionError</code> if not set, see <code><a href="../../GPhoto2/Context/Callbacks.html#idle_callback%3F%3AProc%28Void%29%7CNil-instance-method">#idle_callback?</a></code>.</p>
         </div>
       
       <br/>
@@ -915,10 +974,15 @@
         <a class="method-permalink" href="#last_error%3AString%7CNil-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns the last error message reported by libgphoto2.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/context/callbacks.cr#L67" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/context/callbacks.cr#L108" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -930,6 +994,12 @@
 
         <a class="method-permalink" href="#message_callback%3AProc%28String%2CVoid%29-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns <em>message</em> callback.</p>
+<p>Raises <code>NilAssertionError</code> if not set, see <code><a href="../../GPhoto2/Context/Callbacks.html#message_callback%3F%3AProc%28String%2CVoid%29%7CNil-instance-method">#message_callback?</a></code>.</p>
+        </div>
       
       <br/>
       <div>
@@ -965,6 +1035,12 @@
         <a class="method-permalink" href="#message_callback%3F%3AProc%28String%2CVoid%29%7CNil-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns <em>message</em> callback.</p>
+<p>Raises <code>NilAssertionError</code> if not set, see <code><a href="../../GPhoto2/Context/Callbacks.html#message_callback%3F%3AProc%28String%2CVoid%29%7CNil-instance-method">#message_callback?</a></code>.</p>
+        </div>
+      
       <br/>
       <div>
         
@@ -978,6 +1054,12 @@
 
         <a class="method-permalink" href="#status_callback%3AProc%28String%2CVoid%29-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns <em>status</em> callback.</p>
+<p>Raises <code>NilAssertionError</code> if not set, see <code><a href="../../GPhoto2/Context/Callbacks.html#status_callback%3F%3AProc%28String%2CVoid%29%7CNil-instance-method">#status_callback?</a></code>.</p>
+        </div>
       
       <br/>
       <div>
@@ -1012,6 +1094,12 @@
 
         <a class="method-permalink" href="#status_callback%3F%3AProc%28String%2CVoid%29%7CNil-instance-method">#</a>
       </div>
+      
+        <div class="doc">
+          
+          <p>Returns <em>status</em> callback.</p>
+<p>Raises <code>NilAssertionError</code> if not set, see <code><a href="../../GPhoto2/Context/Callbacks.html#status_callback%3F%3AProc%28String%2CVoid%29%7CNil-instance-method">#status_callback?</a></code>.</p>
+        </div>
       
       <br/>
       <div>

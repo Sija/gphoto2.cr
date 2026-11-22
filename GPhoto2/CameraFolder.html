@@ -452,14 +452,14 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_folder.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_folder.cr#L4" target="_blank">
         gphoto2/camera_folder.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_folder/compression.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_folder/compression.cr#L4" target="_blank">
         gphoto2/camera_folder/compression.cr
       </a>
     
@@ -483,6 +483,8 @@
     
       <li class="entry-summary">
         <a href="#new%28camera%3AGPhoto2%3A%3ACamera%2Cpath%3APath%7CString%3D%22/%22%29-class-method" class="signature"><strong>.new</strong>(camera : GPhoto2::Camera, path : Path | String = <span class="s">&quot;/&quot;</span>)</a>
+        
+          <div class="summary"><p>Relative <em>path</em> is resolved from the root folder.</p></div>
         
       </li>
     
@@ -554,6 +556,13 @@
       </li>
     
       <li class="entry-summary">
+        <a href="#hash%28hasher%29-instance-method" class="signature"><strong>#hash</strong>(hasher)</a>
+        
+          <div class="summary"><p>See <code>Object#hash(hasher)</code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
         <a href="#mkdir%28name%3AString%29%3ACameraFolder-instance-method" class="signature"><strong>#mkdir</strong>(name : String) : CameraFolder</a>
         
           <div class="summary"><p>Creates a new folder and returns it</p></div>
@@ -569,6 +578,13 @@
     
       <li class="entry-summary">
         <a href="#open%28name%3AString%29%3ACameraFile-instance-method" class="signature"><strong>#open</strong>(name : String) : CameraFile</a>
+        
+          <div class="summary"><p>Returns file by <em>name</em>, relative to current <code><a href="../GPhoto2/CameraFolder.html#path%3APath-instance-method">#path</a></code>.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#open%28name%3AString%2C%26%29-instance-method" class="signature"><strong>#open</strong>(name : String, &)</a>
         
           <div class="summary"><p>Returns file by <em>name</em>, relative to current <code><a href="../GPhoto2/CameraFolder.html#path%3APath-instance-method">#path</a></code>.</p></div>
         
@@ -610,7 +626,7 @@
       </li>
     
       <li class="entry-summary">
-        <a href="#to_s-instance-method" class="signature"><strong>#to_s</strong></a>
+        <a href="#to_s%28io%3AIO%29%3ANil-instance-method" class="signature"><strong>#to_s</strong>(io : IO) : Nil</a>
         
           <div class="summary"><p>Returns folder <code><a href="../GPhoto2/CameraFolder.html#path%3APath-instance-method">#path</a></code> as string.</p></div>
         
@@ -628,7 +644,7 @@
   
   
     <a href="../GPhoto2/CameraFolder/Compression.html#to_zip_file%28io%3AIO%2Croot%3AString%7CNil%3Dnil%29%3ANil-instance-method" class="tooltip">
-      <span>to_zip_file(io : IO, root : String | Nil = <span class="n">nil</span>) : Nil<br/>to_zip_file(root : String | Nil = <span class="n">nil</span>) : File<br/>to_zip_file(root : String | Nil = <span class="n">nil</span>, &) : Nil</span>
+      <span>to_zip_file(io : IO, root : String | Nil = <span class="n">nil</span>) : Nil<br/>to_zip_file(root : String | Nil = <span class="n">nil</span>) : File<br/>to_zip_file(root : String | Nil = <span class="n">nil</span>, &)</span>
     to_zip_file</a>
     
   
@@ -690,10 +706,15 @@
         <a class="method-permalink" href="#new%28camera%3AGPhoto2%3A%3ACamera%2Cpath%3APath%7CString%3D%22/%22%29-class-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Relative <em>path</em> is resolved from the root folder.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_folder.cr#L14" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_folder.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -730,7 +751,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_folder.cr#L57" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_folder.cr#L63" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -755,8 +776,6 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_folder.cr#L19" target="_blank">View source</a>]
-        
       </div>
     </div>
   
@@ -771,12 +790,18 @@
         <div class="doc">
           
           <p>Returns subfolder by <em>name</em>, relative to current <code><a href="../GPhoto2/CameraFolder.html#path%3APath-instance-method">#path</a></code>.</p>
+<p><em>name</em> can contain multiple path segments, including <code>.</code> and <code>..</code>,
+while absolute <em>name</em> is resolved from the root folder.</p>
+<pre><code class="language-crystal">folder <span class="o">=</span> camera <span class="o">/</span> <span class="s">&quot;DCIM&quot;</span>
+folder.cd(<span class="s">&quot;..&quot;</span>).path       <span class="c"># =&gt; Path[&quot;/&quot;]</span>
+folder.cd(<span class="s">&quot;sub/../x&quot;</span>).path <span class="c"># =&gt; Path[&quot;/DCIM/x&quot;]</span>
+folder.cd(<span class="s">&quot;/x&quot;</span>).path       <span class="c"># =&gt; Path[&quot;/x&quot;]</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_folder.cr#L47" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_folder.cr#L58" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -797,7 +822,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_folder.cr#L97" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_folder.cr#L133" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -818,7 +843,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_folder.cr#L104" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_folder.cr#L140" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -839,7 +864,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_folder.cr#L42" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_folder.cr#L43" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -860,7 +885,30 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_folder.cr#L37" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_folder.cr#L38" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="hash(hasher)-instance-method">
+      <div class="signature">
+        
+        def <strong>hash</strong>(hasher)
+
+        <a class="method-permalink" href="#hash%28hasher%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+            <div class="doc-inherited">
+              Description copied from class Reference
+            </div>
+          
+          <p>See <code>Object#hash(hasher)</code></p>
+        </div>
+      
+      <br/>
+      <div>
         
       </div>
     </div>
@@ -876,12 +924,14 @@
         <div class="doc">
           
           <p>Creates a new folder and returns it</p>
+<p>Raises <code>ArgumentError</code> if <em>name</em> is not a valid folder name
+(i.e. it's empty, <code>.</code>, <code>..</code> or contains a <code><a href="../GPhoto2/CameraFolder.html#/%28name%3AString%29%3ACameraFolder-instance-method">#/</a></code>).</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_folder.cr#L62" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_folder.cr#L71" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -902,7 +952,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_folder.cr#L32" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_folder.cr#L33" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -918,12 +968,40 @@
         <div class="doc">
           
           <p>Returns file by <em>name</em>, relative to current <code><a href="../GPhoto2/CameraFolder.html#path%3APath-instance-method">#path</a></code>.</p>
+<p>See <code><a href="../GPhoto2/CameraFolder.html#cd%28name%3AString%29%3ACameraFolder-instance-method">#cd</a></code> for the supported <em>name</em> formats.</p>
+<p>Raises <code>ArgumentError</code> if <em>name</em> points to a folder, rather than
+a file (i.e. it's empty, ends with <code><a href="../GPhoto2/CameraFolder.html#/%28name%3AString%29%3ACameraFolder-instance-method">#/</a></code>, <code>.</code> or <code>..</code>).</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_folder.cr#L68" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_folder.cr#L83" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="open(name:String,&amp;)-instance-method">
+      <div class="signature">
+        
+        def <strong>open</strong>(name : String, &)
+
+        <a class="method-permalink" href="#open%28name%3AString%2C%26%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns file by <em>name</em>, relative to current <code><a href="../GPhoto2/CameraFolder.html#path%3APath-instance-method">#path</a></code>.</p>
+<p>See <code><a href="../GPhoto2/CameraFolder.html#cd%28name%3AString%29%3ACameraFolder-instance-method">#cd</a></code> for the supported <em>name</em> formats.</p>
+<p>Raises <code>ArgumentError</code> if <em>name</em> points to a folder, rather than
+a file (i.e. it's empty, ends with <code><a href="../GPhoto2/CameraFolder.html#/%28name%3AString%29%3ACameraFolder-instance-method">#/</a></code>, <code>.</code> or <code>..</code>).</p>
+<p>Yields the file and closes it upon return, returning the value of the block.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_folder.cr#L93" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -944,7 +1022,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_folder.cr#L92" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_folder.cr#L128" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -965,7 +1043,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_folder.cr#L87" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_folder.cr#L123" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -986,7 +1064,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_folder.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_folder.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1002,12 +1080,14 @@
         <div class="doc">
           
           <p>Uploads a new file and returns it</p>
+<p>Raises <code>ArgumentError</code> if <em>name</em> is not a valid file name
+(i.e. it's empty, <code>.</code>, <code>..</code> or contains a <code><a href="../GPhoto2/CameraFolder.html#/%28name%3AString%29%3ACameraFolder-instance-method">#/</a></code>).</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_folder.cr#L73" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_folder.cr#L107" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1028,17 +1108,17 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_folder.cr#L27" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_folder.cr#L27" target="_blank">View source</a>]
         
       </div>
     </div>
   
-    <div class="entry-detail" id="to_s-instance-method">
+    <div class="entry-detail" id="to_s(io:IO):Nil-instance-method">
       <div class="signature">
         
-        def <strong>to_s</strong>
+        def <strong>to_s</strong>(io : IO) : Nil
 
-        <a class="method-permalink" href="#to_s-instance-method">#</a>
+        <a class="method-permalink" href="#to_s%28io%3AIO%29%3ANil-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -1049,7 +1129,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_folder.cr#L22" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_folder.cr#L22" target="_blank">View source</a>]
         
       </div>
     </div>

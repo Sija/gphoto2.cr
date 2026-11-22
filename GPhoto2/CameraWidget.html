@@ -449,77 +449,77 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_widget.cr#L3" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_widget.cr#L3" target="_blank">
         gphoto2/camera_widget.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_widgets/base.cr#L5" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_widgets/base.cr#L5" target="_blank">
         gphoto2/camera_widgets/base.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_widgets/button.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_widgets/button.cr#L4" target="_blank">
         gphoto2/camera_widgets/button.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_widgets/date.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_widgets/date.cr#L4" target="_blank">
         gphoto2/camera_widgets/date.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_widgets/menu.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_widgets/menu.cr#L4" target="_blank">
         gphoto2/camera_widgets/menu.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_widgets/radio.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_widgets/radio.cr#L4" target="_blank">
         gphoto2/camera_widgets/radio.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_widgets/range.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_widgets/range.cr#L4" target="_blank">
         gphoto2/camera_widgets/range.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_widgets/section.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_widgets/section.cr#L4" target="_blank">
         gphoto2/camera_widgets/section.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_widgets/text.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_widgets/text.cr#L4" target="_blank">
         gphoto2/camera_widgets/text.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_widgets/toggle.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_widgets/toggle.cr#L4" target="_blank">
         gphoto2/camera_widgets/toggle.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_widgets/window.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_widgets/window.cr#L4" target="_blank">
         gphoto2/camera_widgets/window.cr
       </a>
     
@@ -544,7 +544,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#factory%28ptr%3APointer%28LibGPhoto2%3A%3ACameraWidget%29%2Cparent%3ABase%7CNil%3Dnil%29%3ABase-class-method" class="signature"><strong>.factory</strong>(ptr : Pointer(LibGPhoto2::CameraWidget), parent : Base | Nil = <span class="n">nil</span>) : Base</a>
+        <a href="#factory%28ptr%3APointer%28LibGPhoto2%3A%3ACameraWidget%29%2Cparent%3ABase%7CNil%3Dnil%2C%2A%2Cowned%3ABool%7CNil%3Dnil%29%3ABase-class-method" class="signature"><strong>.factory</strong>(ptr : Pointer(LibGPhoto2::CameraWidget), parent : Base | Nil = <span class="n">nil</span>, *, owned : Bool | Nil = <span class="n">nil</span>) : Base</a>
         
           <div class="summary"><p>Creates a new widget from the given pointer.</p></div>
         
@@ -607,23 +607,24 @@
     Class Method Detail
   </h2>
   
-    <div class="entry-detail" id="factory(ptr:Pointer(LibGPhoto2::CameraWidget),parent:Base|Nil=nil):Base-class-method">
+    <div class="entry-detail" id="factory(ptr:Pointer(LibGPhoto2::CameraWidget),parent:Base|Nil=nil,*,owned:Bool|Nil=nil):Base-class-method">
       <div class="signature">
         
-        def self.<strong>factory</strong>(ptr : Pointer(LibGPhoto2::CameraWidget), parent : <a href="../GPhoto2/CameraWidget/Base.html">Base</a> | Nil = <span class="n">nil</span>) : <a href="../GPhoto2/CameraWidget/Base.html">Base</a>
+        def self.<strong>factory</strong>(ptr : Pointer(LibGPhoto2::CameraWidget), parent : <a href="../GPhoto2/CameraWidget/Base.html">Base</a> | Nil = <span class="n">nil</span>, *, owned : Bool | Nil = <span class="n">nil</span>) : <a href="../GPhoto2/CameraWidget/Base.html">Base</a>
 
-        <a class="method-permalink" href="#factory%28ptr%3APointer%28LibGPhoto2%3A%3ACameraWidget%29%2Cparent%3ABase%7CNil%3Dnil%29%3ABase-class-method">#</a>
+        <a class="method-permalink" href="#factory%28ptr%3APointer%28LibGPhoto2%3A%3ACameraWidget%29%2Cparent%3ABase%7CNil%3Dnil%2C%2A%2Cowned%3ABool%7CNil%3Dnil%29%3ABase-class-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Creates a new widget from the given pointer.</p>
+<p>See <code><a href="../GPhoto2/CameraWidget/Base.html#new%28ptr%3APointer%28LibGPhoto2%3A%3ACameraWidget%29%2Cparent%3AGPhoto2%3A%3ACameraWidget%3A%3ABase%7CNil%3Dnil%2C%2A%2Cowned%3ABool%7CNil%3Dnil%29-class-method">Base.new</a></code> for the meaning of <em>owned</em>.</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_widget.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_widget.cr#L14" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -644,7 +645,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_widget.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_widget.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>

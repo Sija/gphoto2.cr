@@ -449,7 +449,7 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_event.cr#L3" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_event.cr#L3" target="_blank">
         gphoto2/camera_event.cr
       </a>
     
@@ -474,6 +474,8 @@
       <li class="entry-summary">
         <a href="#new%28type%3AType%2Cdata%3AT%29-class-method" class="signature"><strong>.new</strong>(type : Type, data : T)</a>
         
+          <div class="summary"><p>Creates an event of the given <em>type</em>, with the given <em>data</em>.</p></div>
+        
       </li>
     
   </ul>
@@ -497,10 +499,14 @@
       <li class="entry-summary">
         <a href="#data%3AT-instance-method" class="signature"><strong>#data</strong> : T</a>
         
+          <div class="summary"><p>Returns data of the event, depending on its <code><a href="../GPhoto2/CameraEvent.html#type%3AType-instance-method">#type</a></code>:</p></div>
+        
       </li>
     
       <li class="entry-summary">
         <a href="#type%3AType-instance-method" class="signature"><strong>#type</strong> : Type</a>
+        
+          <div class="summary"><p>Returns type of the event.</p></div>
         
       </li>
     
@@ -569,10 +575,15 @@
         <a class="method-permalink" href="#new%28type%3AType%2Cdata%3AT%29-class-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Creates an event of the given <em>type</em>, with the given <em>data</em>.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_event.cr#L9" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_event.cr#L18" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -601,10 +612,21 @@
         <a class="method-permalink" href="#data%3AT-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns data of the event, depending on its <code><a href="../GPhoto2/CameraEvent.html#type%3AType-instance-method">#type</a></code>:</p>
+<ul>
+<li><code><a href="../GPhoto2/CameraFile.html">CameraFile</a></code> for <code><a href="../LibGPhoto2/CameraEventType.html#FileAdded">Type::FileAdded</a></code> and <code><a href="../LibGPhoto2/CameraEventType.html#FileChanged">Type::FileChanged</a></code></li>
+<li><code><a href="../GPhoto2/CameraFolder.html">CameraFolder</a></code> for <code><a href="../LibGPhoto2/CameraEventType.html#FolderAdded">Type::FolderAdded</a></code></li>
+<li><code>String</code> for <code><a href="../LibGPhoto2/CameraEventType.html#Unknown">Type::Unknown</a></code></li>
+<li><code>nil</code> otherwise, or when the camera driver didn't pass any data</li>
+</ul>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_event.cr#L7" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_event.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -617,10 +639,15 @@
         <a class="method-permalink" href="#type%3AType-instance-method">#</a>
       </div>
       
+        <div class="doc">
+          
+          <p>Returns type of the event.</p>
+        </div>
+      
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/0e47a42/src/gphoto2/camera_event.cr#L6" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/efc54ce/src/gphoto2/camera_event.cr#L7" target="_blank">View source</a>]
         
       </div>
     </div>
