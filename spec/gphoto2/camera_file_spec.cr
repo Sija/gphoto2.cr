@@ -178,6 +178,16 @@ module GPhoto2
         end
       end
 
+      it "grows the buffer to the reported size past the first chunk" do
+        with_directory_camera do |camera|
+          data = Bytes.new(CameraFile::CHUNK_SIZE * 3 // 2) { |i| (i % 251).to_u8 }
+          stub_file_read(camera, data, reported_size: data.size.to_u64)
+          bytes = camera.blob("/DCIM/a.jpg").read
+          bytes.should eq data
+          LibGC.size(bytes.to_unsafe).should be < data.size + 64 * 1024
+        end
+      end
+
       it "reads files larger than their reported size" do
         with_directory_camera do |camera|
           data = Bytes.new(CameraFile::BUFFER_SIZE * 2 + 123) { |i| (i % 251).to_u8 }

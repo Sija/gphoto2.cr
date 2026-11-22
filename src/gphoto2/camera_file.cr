@@ -506,9 +506,14 @@ module GPhoto2
             break if size.zero?
             raise Error.from_code(LibGPhoto2::GP_ERROR_FIXED_LIMIT_EXCEEDED)
           end
-          # Grow geometrically to keep the number of copies low,
-          # or to the expected size right away, if known
-          new_size = Math.min(Math.max(buffer.size.to_i64 * 2, capacity || BUFFER_SIZE), MAX_READ_SIZE).to_i32
+          # Grow to the expected size right away, if known (and not reached
+          # yet), otherwise geometrically, to keep the number of copies low
+          new_size =
+            if capacity && capacity > buffer.size
+              capacity
+            else
+              Math.min(Math.max(buffer.size.to_i64 * 2, BUFFER_SIZE), MAX_READ_SIZE).to_i32
+            end
           buffer = Bytes.new(new_size).tap(&.copy_from(buffer))
         end
         # Request chunks of (at most) a constant size from the camera
