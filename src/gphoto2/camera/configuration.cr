@@ -201,7 +201,9 @@ module GPhoto2
       # NOTE: When any of the attributes can't be set (i.e. due to an invalid
       # value), the ones set before are reverted and the error is reraised.
       def update(attributes) : Bool
-        was_dirty = dirty?
+        # The changed flags of the widgets are restored one by one (see below),
+        # so only the flag tracking the changes made by `#[]=` and `#<<` is kept
+        was_dirty = @dirty
         previous = Array({CameraWidget::Base, typeof(self[""].raw_value), Bool}).new
         begin
           attributes.each do |key, value|
