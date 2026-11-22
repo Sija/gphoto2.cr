@@ -18,6 +18,7 @@ It also includes a facade to interact with the library in a more idiomatic Cryst
 - Camera ability detection
 - Camera connection reloading
 - Filesystem access (r/w) [^1]
+- Storage information [^1]
 - Configuration (r/w) [^1]
 - Image capture [^1]
 - Live-view [^1]
@@ -149,6 +150,10 @@ file.save
 
 # ...or to a specific pathname
 file.save("/tmp/out.jpg")
+
+# list camera storages (i.e. memory cards)
+camera.storage_info.map { |storage| {storage.base_dir, storage.free_kbytes} }
+# => [{"/store_00010001", 13842432}, ...]
 
 # traverse the camera filesystem
 folder = camera/"store_00010001/DCIM/100D5100"

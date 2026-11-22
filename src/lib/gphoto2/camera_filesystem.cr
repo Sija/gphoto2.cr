@@ -4,11 +4,63 @@ require "./camera_file"
 @[Link("libgphoto2")]
 lib LibGPhoto2
   #
-  # Aliases
+  # Enums
   #
 
-  # NOTE: Not bound (yet), used only as an opaque pointer.
-  alias CameraStorageInformation = Void
+  @[Flags]
+  enum CameraStorageInfoFields
+    Base
+    Label
+    Description
+    Access
+    StorageType
+    FilesystemType
+    MaxCapacity
+    FreeSpaceKbytes
+    FreeSpaceImages
+  end
+
+  enum CameraStorageType
+    Unknown
+    FixedRom
+    RemovableRom
+    FixedRam
+    RemovableRam
+  end
+
+  enum CameraStorageAccessType
+    ReadWrite
+    ReadOnly
+    ReadOnlyWithDelete
+  end
+
+  enum CameraStorageFilesystemType
+    Undefined
+    GenericFlat
+    GenericHierarchical
+    Dcf
+  end
+
+  #
+  # Structs
+  #
+
+  struct CameraStorageInformation
+    fields : CameraStorageInfoFields
+    basedir : LibC::Char[256]
+    label : LibC::Char[256]
+    description : LibC::Char[256]
+    type : CameraStorageType
+    fstype : CameraStorageFilesystemType
+    access : CameraStorageAccessType
+    capacitykbytes : LibC::UInt64T
+    freekbytes : LibC::UInt64T
+    freeimages : LibC::UInt64T
+  end
+
+  #
+  # Aliases
+  #
 
   # NOTE: Opaque struct, its layout is private to libgphoto2.
   type CameraFilesystem = Void
