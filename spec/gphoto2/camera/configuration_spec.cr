@@ -480,6 +480,24 @@ module GPhoto2
         end
       end
 
+      it "skips the unrelated unsaved changes no longer valid after retrying the restore" do
+        with_configured_camera do |camera|
+          camera.preserving_config(:iso) do
+            camera.update(iso: 400)
+            camera[:owner] = "Jane"
+            camera[:flash] = true
+            # The setting changes its type (i.e. along with the camera mode)
+            FakeDriver.settings["owner"] = FakeDriver::Setting.new(:toggle, "0")
+            # Make the first restore attempt fail, to have it retried
+            FakeDriver.set_config_failures = 1
+          end
+          FakeDriver.settings["iso"].value.should eq "100"
+          camera[:owner].value.should eq 0
+          camera[:flash].value.should eq 1
+          camera.dirty?.should be_true
+        end
+      end
+
       it "restores the original values when leaving the block with break" do
         with_configured_camera do |camera|
           camera.preserving_config do

@@ -324,14 +324,21 @@ module GPhoto2
 
         if @window.same?(window)
           widgets.each_value(&.changed = true)
+          @dirty = true
         else
           values.each do |key, value|
             # Reloaded settings might be gone as well
             next if value.nil? || !(widget = self[key]?)
-            widget.value = value
+            begin
+              widget.value = value
+              @dirty = true
+            rescue ArgumentError | GPhoto2::Exception
+              # The value might not be valid anymore (i.e. its widget changed
+              # type along with the camera mode), which (being called from
+              # within `ensure`) must not mask the original exception
+            end
           end
         end
-        @dirty = true
       end
 
       private def reset : Nil
