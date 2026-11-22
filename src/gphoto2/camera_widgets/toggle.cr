@@ -23,6 +23,18 @@ module GPhoto2
         !state.nil? && self == state
       end
 
+      # Compares the toggle state with the given `String`, naming one of
+      # the states accepted by `#value=` (i.e. `"on"`, `"off"`), or compares
+      # it with the `#value` using `#to_s` otherwise (i.e. `"1"`).
+      #
+      # ```
+      # camera[:autofocus] == "on"
+      # ```
+      def ==(other : String) : Bool
+        state = parse_state(other)
+        state.nil? ? super : self == state
+      end
+
       protected def get_value
         value = uninitialized LibC::Int
         get_value_ptr pointerof(value)
