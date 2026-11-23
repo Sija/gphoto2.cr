@@ -30,6 +30,16 @@ module GPhoto2
         time ? self == time : super
       end
 
+      # Compares the `#value` with the time given as a Unix timestamp
+      # (in seconds), as accepted by `#value=`.
+      #
+      # ```
+      # camera[:datetime] == 1_577_934_245
+      # ```
+      def ==(other : Int) : Bool
+        get_value.to_unix == other
+      end
+
       protected def get_value
         value = uninitialized LibC::Int
         get_value_ptr pointerof(value)

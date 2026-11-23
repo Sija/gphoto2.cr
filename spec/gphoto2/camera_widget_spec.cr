@@ -538,6 +538,17 @@ module GPhoto2
         (widget == time + 1.second).should be_false
       end
 
+      it "compares the value with Unix timestamps" do
+        widget = build_widget(:date)
+        widget.value = 1_000_000
+        (widget == 1_000_000).should be_true
+        (widget == 1_000_000_u64).should be_true
+        (widget == 1_000_001).should be_false
+        (widget == Int64::MAX).should be_false
+        (widget == UInt64::MAX).should be_false
+        widget.in?([0, 1_000_000]).should be_true
+      end
+
       it "compares the value with time strings" do
         widget = build_widget(:date)
         widget.value = "2020-01-02T03:04:05Z"
