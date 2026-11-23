@@ -196,8 +196,11 @@ module GPhoto2
       # camera[:iso] == 400
       # ```
       def ==(other)
+        string = other.to_s
+        # The raw value is compared too, since `#to_s` is empty for the values
+        # known to represent no value (see `#value`), i.e. `"None"`
         # ameba:disable Style/RedundantSelf
-        self.to_s == other.to_s
+        self.to_s == string || raw_value.to_s == string
       end
 
       # Compares `#value` with given `Symbol`, case-insensitively,
@@ -208,8 +211,9 @@ module GPhoto2
       # camera[:isoauto] == :auto_iso # (with the value of "Auto ISO")
       # ```
       def ==(other : Symbol)
+        # See `#==` for the raw value
         # ameba:disable Style/RedundantSelf
-        symbol_matches?(self.to_s, other)
+        symbol_matches?(self.to_s, other) || symbol_matches?(raw_value.to_s, other)
       end
 
       # Returns `true` if `#value` matches at least one element of the collection.

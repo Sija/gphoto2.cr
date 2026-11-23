@@ -152,6 +152,18 @@ module GPhoto2
           (widget == 200).should be_false
         end
 
+        it "compares the values representing no value as they are" do
+          widget = build_widget(:text)
+          widget.value = "None"
+          widget.value.should be_nil
+          (widget == "None").should be_true
+          (widget == :none).should be_true
+          widget.in?(["None"]).should be_true
+          # As before
+          (widget == "").should be_true
+          (widget == "Auto").should be_false
+        end
+
         it "compares value with symbol" do
           widget = build_widget(:text)
           widget.value = "Automatic"
