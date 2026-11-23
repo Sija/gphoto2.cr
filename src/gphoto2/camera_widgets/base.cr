@@ -223,7 +223,8 @@ module GPhoto2
 
       # Returns `true` if `#value` is included in the *other* `::Range`.
       #
-      # Numeric ranges are compared against the numeric `#value`,
+      # Numeric ranges are compared against the numeric `#value` (or the
+      # Unix timestamp of the value of `Date` widgets, see `Date#==`),
       # `Time` ranges against the `Time` value of `Date` widgets,
       # other ranges against the `#value` converted to a `String`.
       #
@@ -237,6 +238,8 @@ module GPhoto2
         return false unless value = self.value
 
         {% if B < ::Number || E < ::Number %}
+          return other.includes?(value.to_unix) if value.is_a?(::Time)
+
           string = value.to_s
           # Integers are compared exactly, rather than through `Float64`
           # (see `GPhoto2.number_string?`)
