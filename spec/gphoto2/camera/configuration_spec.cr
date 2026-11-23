@@ -69,6 +69,27 @@ module GPhoto2
     end
 
     describe "#save" do
+      it "saves the values set to the ones held locally" do
+        with_configured_camera do |camera|
+          camera.config
+          # Changed on the camera itself, since read
+          FakeDriver.settings["iso"] = FakeDriver.settings["iso"].copy_with(value: "200")
+
+          camera[:iso] = 100
+          camera.save.should be_true
+          FakeDriver.settings["iso"].value.should eq "100"
+
+          FakeDriver.settings["iso"] = FakeDriver.settings["iso"].copy_with(value: "200")
+          camera.update(iso: 100)
+          FakeDriver.settings["iso"].value.should eq "100"
+
+          FakeDriver.settings["iso"] = FakeDriver.settings["iso"].copy_with(value: "200")
+          camera << camera[:iso]
+          camera.save.should be_true
+          FakeDriver.settings["iso"].value.should eq "100"
+        end
+      end
+
       it "saves the configuration only when dirty" do
         with_configured_camera do |camera|
           camera.save.should be_false

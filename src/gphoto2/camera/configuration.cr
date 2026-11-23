@@ -129,8 +129,9 @@ module GPhoto2
       # camera["shutterspeed2"] = "1/60"
       # ```
       def []=(key : String | Symbol, value)
-        self[key].value = value
-        @dirty = true
+        widget = self[key]
+        widget.value = value
+        flag_changed(widget)
         value
       end
 
@@ -149,8 +150,20 @@ module GPhoto2
         # ignored by `#save`, so their value needs to be copied over.
         own_widget.copy_value_from(widget) unless own_widget.same?(widget)
 
-        @dirty = true
+        flag_changed(own_widget)
         self
+      end
+
+      # Flags the *widget* as changed, so that its value gets saved by `#save`.
+      #
+      # NOTE: libgphoto2 flags the widgets as changed only when their value
+      # differs from the one held locally, which might not reflect the camera
+      # state anymore (i.e. changed on the camera itself, since read), while
+      # drivers (i.e. PTP) save just the flagged ones, so setting the value
+      # held locally would be saved (and reported as such) without effect.
+      private def flag_changed(widget : CameraWidget::Base) : Nil
+        widget.changed = true
+        @dirty = true
       end
 
       # Updates the configuration on the camera.
