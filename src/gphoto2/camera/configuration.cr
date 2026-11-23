@@ -65,17 +65,32 @@ module GPhoto2
             memo
           end
 
+        # Values changed before the block, but not saved yet, are restored as
+        # such, rather than saved, with the camera getting its own values back
+        unsaved_snapshot = take_unsaved(config_snapshot)
+
         raised = false
         begin
           yield self
         rescue ex
           raised = true
           # Don't let a failed restore mask the original exception
-          restore_config(config_snapshot) rescue nil
+          begin
+            restore_config(config_snapshot)
+          rescue
+          ensure
+            restore_unsaved(unsaved_snapshot)
+          end
           raise ex
         ensure
           # NOTE: `ensure` also covers leaving the block with `break`
-          restore_config(config_snapshot) unless raised
+          unless raised
+            begin
+              restore_config(config_snapshot)
+            ensure
+              restore_unsaved(unsaved_snapshot)
+            end
+          end
         end
       end
 
@@ -318,6 +333,46 @@ module GPhoto2
           end
         ensure
           keep_unsaved(unrelated, unrelated_values, window)
+        end
+      end
+
+      # Replaces the unsaved values in the *snapshot* (see `#preserving_config`)
+      # with the ones on the camera, returning the unsaved values.
+      private def take_unsaved(snapshot : Hash(String, String)) : Hash(String, String)
+        unsaved = snapshot.select { |key, _| self[key].changed? }
+        return unsaved if unsaved.empty?
+
+        saved_window = get_config
+        begin
+          saved_config = saved_window.flatten
+          unsaved.each_key do |key|
+            if value = saved_config[key]?.try(&.raw_value)
+              snapshot[key] = value.to_s
+            else
+              # Gone from the camera, so there's nothing to restore it to
+              snapshot.delete(key)
+            end
+          end
+        ensure
+          # See `#keep_pending`
+          saved_window.close
+        end
+        unsaved
+      end
+
+      # Sets the *values* as unsaved changes (once again), see `#take_unsaved`.
+      private def restore_unsaved(values : Hash(String, String)) : Nil
+        values.each do |key, value|
+          # Settings might be gone (i.e. depending on the camera mode)
+          next unless widget = self[key]?
+          begin
+            widget.value = value
+            flag_changed(widget)
+          rescue ArgumentError | GPhoto2::Exception
+            # The value might not be valid anymore (i.e. its widget changed
+            # type along with the camera mode), which (being called from
+            # within `ensure`) must not mask the original exception
+          end
         end
       end
 

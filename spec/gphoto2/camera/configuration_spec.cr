@@ -328,6 +328,45 @@ module GPhoto2
     end
 
     describe "#preserving_config" do
+      it "restores the values changed before the block as unsaved ones" do
+        with_configured_camera do |camera|
+          camera[:owner] = "Jane"
+          camera.preserving_config { camera.reload }
+          FakeDriver.settings["owner"].value.should eq "John"
+          camera[:owner].value.should eq "Jane"
+          camera.dirty?.should be_true
+        end
+      end
+
+      it "restores the camera values of the ones saved within the block" do
+        with_configured_camera do |camera|
+          camera[:owner] = "Jane"
+          camera.preserving_config do
+            camera.update(iso: 400)
+            FakeDriver.settings["owner"].value.should eq "Jane"
+          end
+          FakeDriver.settings["owner"].value.should eq "John"
+          FakeDriver.settings["iso"].value.should eq "100"
+          camera[:owner].value.should eq "Jane"
+          camera.dirty?.should be_true
+        end
+      end
+
+      it "restores the values changed before the block when it raises" do
+        with_configured_camera do |camera|
+          camera[:owner] = "Jane"
+          expect_raises(::Exception, "boom") do
+            camera.preserving_config do
+              camera.update(owner: "Bob")
+              raise "boom"
+            end
+          end
+          FakeDriver.settings["owner"].value.should eq "John"
+          camera[:owner].value.should eq "Jane"
+          camera.dirty?.should be_true
+        end
+      end
+
       it "restores the original values" do
         with_configured_camera do |camera|
           camera.preserving_config do
