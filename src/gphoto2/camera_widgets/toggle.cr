@@ -25,14 +25,18 @@ module GPhoto2
 
       # Compares the toggle state with the given `String`, naming one of
       # the states accepted by `#value=` (i.e. `"on"`, `"off"`), or compares
-      # it with the `#value` using `#to_s` otherwise (i.e. `"1"`).
+      # the `#value` with the integer it represents (i.e. `"1"`, `" 2 "`),
+      # parsed the same way as by `#value=`, or using `#to_s` otherwise.
       #
       # ```
       # camera[:autofocus] == "on"
       # ```
       def ==(other : String) : Bool
-        state = parse_state(other)
-        state.nil? ? super : self == state
+        unless (state = parse_state(other)).nil?
+          return self == state
+        end
+        # Wider than the value, so that integers out of its range don't match
+        (integer = other.to_i64?) ? get_value == integer : super
       end
 
       protected def get_value

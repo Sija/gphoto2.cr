@@ -411,6 +411,17 @@ module GPhoto2
         widget.in?(%w[off true]).should be_true
       end
 
+      it "compares with integer strings the way they're set" do
+        widget = build_widget(:toggle)
+        widget.value = " 4 "
+        (widget == " 4 ").should be_true
+        (widget == "+4").should be_true
+        (widget == "4").should be_true
+        (widget == "5").should be_false
+        (widget == "4294967300").should be_false
+        widget.in?(["+4"]).should be_true
+      end
+
       it "accepts boolean strings" do
         widget = build_widget(:toggle)
         widget.value = "true"
