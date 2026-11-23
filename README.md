@@ -30,8 +30,8 @@ It also includes a facade to interact with the library in a more idiomatic Cryst
 ### Prerequisites
 
   * Crystal: `~> 1.19`
-  * libgphoto2: `>= 2.5.2`
-  * libgphoto2_port: `>= 0.10.1`
+  * libgphoto2: `>= 2.5.11`
+  * libgphoto2_port: `>= 0.12.0`
 
 To install the latest libgphoto2, you can use `homebrew` or `apt-get`, depending on the platform:
 
