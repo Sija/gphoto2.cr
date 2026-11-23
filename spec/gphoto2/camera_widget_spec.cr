@@ -170,6 +170,20 @@ module GPhoto2
       end
 
       describe "#in?" do
+        it "checks integers against numeric ranges exactly" do
+          widget = build_widget(:text)
+          widget.value = "9007199254740993"
+          widget.in?(9007199254740992_i64..9007199254740992_i64).should be_false
+          widget.in?(9007199254740993_i64..9007199254740994_i64).should be_true
+          widget.in?(9007199254740990_i64..).should be_true
+          widget.in?(..9007199254740992_u64).should be_false
+          widget.value = "4"
+          widget.in?(3.5..4.5).should be_true
+          widget.value = "4.5"
+          widget.in?(4..5).should be_true
+          widget.in?(5..6).should be_false
+        end
+
         it "checks against collections" do
           widget = build_widget(:text)
           widget.value = "Manual"

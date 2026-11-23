@@ -237,7 +237,14 @@ module GPhoto2
         return false unless value = self.value
 
         {% if B < ::Number || E < ::Number %}
-          !!((num_value = value.to_s.to_f?) && other.includes?(num_value))
+          string = value.to_s
+          # Integers are compared exactly, rather than through `Float64`
+          # (see `GPhoto2.number_string?`)
+          if integer = string.to_i128?
+            other.includes?(integer)
+          else
+            !!((number = string.to_f?) && other.includes?(number))
+          end
         {% elsif B <= ::Time || E <= ::Time %}
           value.is_a?(::Time) && other.includes?(value)
         {% else %}
