@@ -518,6 +518,18 @@ module GPhoto2
         (widget == "0.3").should be_true
       end
 
+      it "compares the value with numbers rounded the way they're set" do
+        widget = build_range(-Float32::MAX, Float32::MAX, 0_f32)
+        widget.value = 1.0 / 3
+        (widget == 1.0 / 3).should be_true
+        widget.value = Int32::MAX
+        (widget == Int32::MAX).should be_true
+        widget.in?([Int32::MAX]).should be_true
+        (widget == 1e300).should be_false
+        (widget == Float64::NAN).should be_false
+        (widget == UInt128::MAX).should be_false
+      end
+
       it "accepts floats, ints and strings" do
         widget = build_range(0, 10, 1)
         widget.value = 2.5
