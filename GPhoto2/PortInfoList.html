@@ -482,7 +482,7 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/port_info_list.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/port_info_list.cr#L4" target="_blank">
         gphoto2/port_info_list.cr
       </a>
     
@@ -670,7 +670,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/port_info_list.cr#L8" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/port_info_list.cr#L8" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -707,7 +707,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/port_info_list.cr#L34" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/port_info_list.cr#L36" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -728,7 +728,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/port_info_list.cr#L39" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/port_info_list.cr#L41" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -751,7 +751,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/port_info_list.cr#L17" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/port_info_list.cr#L17" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -767,13 +767,15 @@
         <div class="doc">
           
           <p>Returns the index of the given <em>port</em> path in the list.</p>
-<p>Raises <code><a href="../GPhoto2/Error.html">GPhoto2::Error</a></code> if the port isn't found.</p>
+<p>Raises <code><a href="../GPhoto2/Error.html">GPhoto2::Error</a></code> if the port isn't found, or <code>ArgumentError</code>
+if <em>port</em> contains a null byte (which would make libgphoto2 look up
+the port given by the part before it).</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/port_info_list.cr#L29" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/port_info_list.cr#L31" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -794,7 +796,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/port_info_list.cr#L22" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/port_info_list.cr#L22" target="_blank">View source</a>]
         
       </div>
     </div>

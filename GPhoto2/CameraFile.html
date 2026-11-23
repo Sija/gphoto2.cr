@@ -482,7 +482,7 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_file.cr#L4" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_file.cr#L4" target="_blank">
         gphoto2/camera_file.cr
       </a>
     
@@ -601,9 +601,9 @@ is unknown (otherwise named after it, i.e. <code>capture_preview.ppm</code>).</p
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#%3D%3D%28other%3Aself%29-instance-method" class="signature"><strong>#==</strong>(other : <span class="k">self</span>)</a>
+        <a href="#%3D%3D%28other%3Aself%29%3ABool-instance-method" class="signature"><strong>#==</strong>(other : <span class="k">self</span>) : Bool</a>
         
-          <div class="summary"><p>Returns <code>true</code> if this reference is the same as <em>other</em>.</p></div>
+          <div class="summary"><p>Compares files by their camera and <code><a href="../GPhoto2/CameraFile.html#path%3APath-instance-method">#path</a></code>.</p></div>
         
       </li>
     
@@ -645,7 +645,7 @@ is unknown (otherwise named after it, i.e. <code>capture_preview.ppm</code>).</p
       <li class="entry-summary">
         <a href="#hash%28hasher%29-instance-method" class="signature"><strong>#hash</strong>(hasher)</a>
         
-          <div class="summary"><p>See <code>Object#hash(hasher)</code></p></div>
+          <div class="summary"><p>Compares files by their camera and <code><a href="../GPhoto2/CameraFile.html#path%3APath-instance-method">#path</a></code>.</p></div>
         
       </li>
     
@@ -653,6 +653,13 @@ is unknown (otherwise named after it, i.e. <code>capture_preview.ppm</code>).</p
         <a href="#info%3ACameraFileInfo-instance-method" class="signature"><strong>#info</strong> : CameraFileInfo</a>
         
           <div class="summary"><p>Returns an object containing information about the file.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#inspect%28io%3AIO%29%3ANil-instance-method" class="signature"><strong>#inspect</strong>(io : IO) : Nil</a>
+        
+          <div class="summary"><p>Returns the file <code><a href="../GPhoto2/CameraFile.html#path%3APath-instance-method">#path</a></code> (and whether it's a preview), i.e.</p></div>
         
       </li>
     
@@ -667,6 +674,13 @@ is unknown (otherwise named after it, i.e. <code>capture_preview.ppm</code>).</p
         <a href="#path%3APath-instance-method" class="signature"><strong>#path</strong> : Path</a>
         
           <div class="summary"><p>Returns file path.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#pretty_print%28pp%29%3ANil-instance-method" class="signature"><strong>#pretty_print</strong>(pp) : Nil</a>
+        
+          <div class="summary"><p>Returns the file <code><a href="../GPhoto2/CameraFile.html#path%3APath-instance-method">#path</a></code> (and whether it's a preview), i.e.</p></div>
         
       </li>
     
@@ -835,7 +849,7 @@ a file (i.e. it's empty, ends with <code>/</code>, <code>.</code> or <code>..</c
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_file.cr#L106" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_file.cr#L106" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -857,7 +871,7 @@ a file (i.e. it's empty, ends with <code>/</code>, <code>.</code> or <code>..</c
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_file.cr#L116" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_file.cr#L116" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -878,25 +892,25 @@ a file (i.e. it's empty, ends with <code>/</code>, <code>.</code> or <code>..</c
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="==(other:self)-instance-method">
+    <div class="entry-detail" id="==(other:self):Bool-instance-method">
       <div class="signature">
         
-        def <strong>==</strong>(other : <span class="k">self</span>)
+        def <strong>==</strong>(other : <span class="k">self</span>) : Bool
 
-        <a class="method-permalink" href="#%3D%3D%28other%3Aself%29-instance-method">#</a>
+        <a class="method-permalink" href="#%3D%3D%28other%3Aself%29%3ABool-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-            <div class="doc-inherited">
-              Description copied from class Reference
-            </div>
-          
-          <p>Returns <code>true</code> if this reference is the same as <em>other</em>. Invokes <code>same?</code>.</p>
+          <p>Compares files by their camera and <code><a href="../GPhoto2/CameraFile.html#path%3APath-instance-method">#path</a></code>.</p>
+<p><span class="flag purple">NOTE</span>  Previews (see <code><a href="../GPhoto2/CameraFile.html#preview%3F%3ABool-instance-method">#preview?</a></code>) aren't stored on the camera, but carry
+data of their own instead, so each of them is equal only to itself.</p>
         </div>
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_file.cr#L125" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -917,7 +931,7 @@ a file (i.e. it's empty, ends with <code>/</code>, <code>.</code> or <code>..</c
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_file.cr#L150" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_file.cr#L181" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -938,7 +952,7 @@ a file (i.e. it's empty, ends with <code>/</code>, <code>.</code> or <code>..</c
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_file.cr#L260" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_file.cr#L291" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -960,7 +974,7 @@ a file (i.e. it's empty, ends with <code>/</code>, <code>.</code> or <code>..</c
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_file.cr#L221" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_file.cr#L252" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -981,7 +995,7 @@ a file (i.e. it's empty, ends with <code>/</code>, <code>.</code> or <code>..</c
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_file.cr#L145" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_file.cr#L176" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1002,7 +1016,7 @@ a file (i.e. it's empty, ends with <code>/</code>, <code>.</code> or <code>..</c
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_file.cr#L134" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_file.cr#L165" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1017,15 +1031,15 @@ a file (i.e. it's empty, ends with <code>/</code>, <code>.</code> or <code>..</c
       
         <div class="doc">
           
-            <div class="doc-inherited">
-              Description copied from class Reference
-            </div>
-          
-          <p>See <code>Object#hash(hasher)</code></p>
+          <p>Compares files by their camera and <code><a href="../GPhoto2/CameraFile.html#path%3APath-instance-method">#path</a></code>.</p>
+<p><span class="flag purple">NOTE</span>  Previews (see <code><a href="../GPhoto2/CameraFile.html#preview%3F%3ABool-instance-method">#preview?</a></code>) aren't stored on the camera, but carry
+data of their own instead, so each of them is equal only to itself.</p>
         </div>
       
       <br/>
       <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_file.cr#L133" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1047,7 +1061,29 @@ a file (i.e. it's empty, ends with <code>/</code>, <code>.</code> or <code>..</c
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_file.cr#L349" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_file.cr#L380" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="inspect(io:IO):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>inspect</strong>(io : IO) : Nil
+
+        <a class="method-permalink" href="#inspect%28io%3AIO%29%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the file <code><a href="../GPhoto2/CameraFile.html#path%3APath-instance-method">#path</a></code> (and whether it's a preview), i.e.
+<code>#&lt;<a href="../GPhoto2/CameraFile.html">GPhoto2::CameraFile</a> path=&quot;/DCIM/DSC_0001.JPG&quot;&gt;</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_file.cr#L148" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1068,7 +1104,7 @@ a file (i.e. it's empty, ends with <code>/</code>, <code>.</code> or <code>..</c
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_file.cr#L129" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_file.cr#L160" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1089,7 +1125,29 @@ a file (i.e. it's empty, ends with <code>/</code>, <code>.</code> or <code>..</c
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_file.cr#L38" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_file.cr#L38" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="pretty_print(pp):Nil-instance-method">
+      <div class="signature">
+        
+        def <strong>pretty_print</strong>(pp) : Nil
+
+        <a class="method-permalink" href="#pretty_print%28pp%29%3ANil-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns the file <code><a href="../GPhoto2/CameraFile.html#path%3APath-instance-method">#path</a></code> (and whether it's a preview), i.e.
+<code>#&lt;<a href="../GPhoto2/CameraFile.html">GPhoto2::CameraFile</a> path=&quot;/DCIM/DSC_0001.JPG&quot;&gt;</code>.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_file.cr#L155" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1110,7 +1168,7 @@ a file (i.e. it's empty, ends with <code>/</code>, <code>.</code> or <code>..</c
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_file.cr#L45" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_file.cr#L45" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1131,7 +1189,7 @@ a file (i.e. it's empty, ends with <code>/</code>, <code>.</code> or <code>..</c
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_file.cr#L139" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_file.cr#L170" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1155,7 +1213,7 @@ camera (see <code>Camera#capture</code>) aren't stored on the camera, so their
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_file.cr#L306" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_file.cr#L337" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1183,7 +1241,7 @@ to <em>path</em> once done, or removed if that fails.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_file.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_file.cr#L195" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1204,7 +1262,7 @@ to <em>path</em> once done, or removed if that fails.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_file.cr#L265" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_file.cr#L296" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1225,7 +1283,7 @@ to <em>path</em> once done, or removed if that fails.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_file.cr#L124" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_file.cr#L142" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1251,7 +1309,7 @@ which <code>Bytes</code> can't hold; use <code><a href="../GPhoto2/CameraFile.ht
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_file.cr#L277" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_file.cr#L308" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -1278,7 +1336,7 @@ file.write_to(<span class="t">STDOUT</span>)</code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_file.cr#L292" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_file.cr#L323" target="_blank">View source</a>]
         
       </div>
     </div>

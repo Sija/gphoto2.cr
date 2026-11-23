@@ -468,7 +468,7 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_widgets/date.cr#L5" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_widgets/date.cr#L5" target="_blank">
         gphoto2/camera_widgets/date.cr
       </a>
     
@@ -500,6 +500,20 @@
         <a href="#%3D%3D%28other%3ATime%29%3ABool-instance-method" class="signature"><strong>#==</strong>(other : Time) : Bool</a>
         
           <div class="summary"><p>Compares the <code>#value</code> with the given time, regardless of its location (unlike <code>#to_s</code>, which includes it).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%3D%3D%28other%3AString%29%3ABool-instance-method" class="signature"><strong>#==</strong>(other : String) : Bool</a>
+        
+          <div class="summary"><p>Compares the <code>#value</code> with the time given in one of the formats accepted by <code>#value=</code> (i.e.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%3D%3D%28other%3AInt%29%3ABool-instance-method" class="signature"><strong>#==</strong>(other : Int) : Bool</a>
+        
+          <div class="summary"><p>Compares the <code>#value</code> with the time given as a Unix timestamp (in seconds), as accepted by <code>#value=</code>.</p></div>
         
       </li>
     
@@ -649,6 +663,11 @@
     info</a>, 
     
   
+    <a href="../../GPhoto2/CameraWidget/Base.html#inspect%28io%3AIO%29%3ANil-instance-method" class="tooltip">
+      <span>inspect(io : IO) : Nil</span>
+    inspect</a>, 
+    
+  
     <a href="../../GPhoto2/CameraWidget/Base.html#label%3AString-instance-method" class="tooltip">
       <span>label : String</span>
     label</a>, 
@@ -662,6 +681,11 @@
     <a href="../../GPhoto2/CameraWidget/Base.html#parent%3ABase%7CNil-instance-method" class="tooltip">
       <span>parent : Base | Nil</span>
     parent</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#pretty_print%28pp%29%3ANil-instance-method" class="tooltip">
+      <span>pretty_print(pp) : Nil</span>
+    pretty_print</a>, 
     
   
     <a href="../../GPhoto2/CameraWidget/Base.html#readonly%3F%3ABool-instance-method" class="tooltip">
@@ -828,7 +852,54 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_widgets/date.cr#L12" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_widgets/date.cr#L12" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="==(other:String):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>==</strong>(other : String) : Bool
+
+        <a class="method-permalink" href="#%3D%3D%28other%3AString%29%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Compares the <code>#value</code> with the time given in one of the formats
+accepted by <code>#value=</code> (i.e. ISO 8601), regardless of its location,
+or with <code>#to_s</code> if it's not a time.</p>
+<pre><code class="language-crystal">camera[<span class="n">:datetime</span>] <span class="o">==</span> <span class="s">&quot;2020-01-02T03:04:05Z&quot;</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_widgets/date.cr#L23" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="==(other:Int):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>==</strong>(other : Int) : Bool
+
+        <a class="method-permalink" href="#%3D%3D%28other%3AInt%29%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Compares the <code>#value</code> with the time given as a Unix timestamp
+(in seconds), as accepted by <code>#value=</code>.</p>
+<pre><code class="language-crystal">camera[<span class="n">:datetime</span>] <span class="o">==</span> <span class="n">1_577_934_245</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_widgets/date.cr#L39" target="_blank">View source</a>]
         
       </div>
     </div>

@@ -468,7 +468,7 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_widgets/range.cr#L5" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_widgets/range.cr#L5" target="_blank">
         gphoto2/camera_widgets/range.cr
       </a>
     
@@ -523,6 +523,13 @@
         <a href="#%3D%3D%28other%3ANumber%29%3ABool-instance-method" class="signature"><strong>#==</strong>(other : Number) : Bool</a>
         
           <div class="summary"><p>Compares the <code>#value</code> with the given number numerically, instead of using <code>#to_s</code> (which would give i.e.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#%3D%3D%28other%3AString%29%3ABool-instance-method" class="signature"><strong>#==</strong>(other : String) : Bool</a>
+        
+          <div class="summary"><p>Compares the <code>#value</code> with the number given as a string (as accepted by <code>#value=</code>) numerically, or with <code>#to_s</code> if it's not a number.</p></div>
         
       </li>
     
@@ -693,6 +700,11 @@
     info</a>, 
     
   
+    <a href="../../GPhoto2/CameraWidget/Base.html#inspect%28io%3AIO%29%3ANil-instance-method" class="tooltip">
+      <span>inspect(io : IO) : Nil</span>
+    inspect</a>, 
+    
+  
     <a href="../../GPhoto2/CameraWidget/Base.html#label%3AString-instance-method" class="tooltip">
       <span>label : String</span>
     label</a>, 
@@ -706,6 +718,11 @@
     <a href="../../GPhoto2/CameraWidget/Base.html#parent%3ABase%7CNil-instance-method" class="tooltip">
       <span>parent : Base | Nil</span>
     parent</a>, 
+    
+  
+    <a href="../../GPhoto2/CameraWidget/Base.html#pretty_print%28pp%29%3ANil-instance-method" class="tooltip">
+      <span>pretty_print(pp) : Nil</span>
+    pretty_print</a>, 
     
   
     <a href="../../GPhoto2/CameraWidget/Base.html#readonly%3F%3ABool-instance-method" class="tooltip">
@@ -866,13 +883,38 @@
           
           <p>Compares the <code>#value</code> with the given number numerically, instead
 of using <code>#to_s</code> (which would give i.e. <code>&quot;3.0&quot;</code> for <code>3</code>).</p>
+<p><span class="flag purple">NOTE</span>  The value is held as a C <code>float</code>, so the number is compared
+as such too, i.e. the way it's rounded when set (see <code>#value=</code>).</p>
 <pre><code class="language-crystal">camera[<span class="n">:exposurecompensation</span>] <span class="o">==</span> <span class="n">0</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_widgets/range.cr#L72" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_widgets/range.cr#L75" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="==(other:String):Bool-instance-method">
+      <div class="signature">
+        
+        def <strong>==</strong>(other : String) : Bool
+
+        <a class="method-permalink" href="#%3D%3D%28other%3AString%29%3ABool-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Compares the <code>#value</code> with the number given as a string (as accepted
+by <code>#value=</code>) numerically, or with <code>#to_s</code> if it's not a number.</p>
+<pre><code class="language-crystal">camera[<span class="n">:exposurecompensation</span>] <span class="o">==</span> <span class="s">&quot;0.30&quot;</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_widgets/range.cr#L87" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -897,7 +939,7 @@ choices (i.e. generic 32-bit ranges), use <code><a href="../../GPhoto2/CameraWid
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_widgets/range.cr#L33" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_widgets/range.cr#L33" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -918,7 +960,7 @@ choices (i.e. generic 32-bit ranges), use <code><a href="../../GPhoto2/CameraWid
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_widgets/range.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_widgets/range.cr#L15" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -939,7 +981,7 @@ choices (i.e. generic 32-bit ranges), use <code><a href="../../GPhoto2/CameraWid
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_widgets/range.cr#L21" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_widgets/range.cr#L21" target="_blank">View source</a>]
         
       </div>
     </div>

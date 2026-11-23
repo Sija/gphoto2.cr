@@ -493,7 +493,7 @@
   </h2>
   
     
-      <a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_abilities_list.cr#L5" target="_blank">
+      <a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_abilities_list.cr#L5" target="_blank">
         gphoto2/camera_abilities_list.cr
       </a>
     
@@ -516,7 +516,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28context%3AGPhoto2%3A%3AContext%2Cport_info_list%3AGPhoto2%3A%3APortInfoList%3DPortInfoList.new%29-class-method" class="signature"><strong>.new</strong>(context : GPhoto2::Context, port_info_list : GPhoto2::PortInfoList = <span class="t">PortInfoList</span>.new)</a>
+        <a href="#new%28context%3AGPhoto2%3A%3AContext%2Cport_info_list%3APortInfoList%7CNil%3Dnil%29-class-method" class="signature"><strong>.new</strong>(context : GPhoto2::Context, port_info_list : PortInfoList | Nil = <span class="n">nil</span>)</a>
         
           <div class="summary"><p>Loads the abilities of all supported camera models, using the given <em>context</em>, along with the <em>port_info_list</em> used by <code><a href="../GPhoto2/CameraAbilitiesList.html#detect%3ACameraList-instance-method">#detect</a></code>.</p></div>
         
@@ -672,12 +672,12 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(context:GPhoto2::Context,port_info_list:GPhoto2::PortInfoList=PortInfoList.new)-class-method">
+    <div class="entry-detail" id="new(context:GPhoto2::Context,port_info_list:PortInfoList|Nil=nil)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(context : <a href="../GPhoto2/Context.html">GPhoto2::Context</a>, port_info_list : <a href="../GPhoto2/PortInfoList.html">GPhoto2::PortInfoList</a> = <span class="t">PortInfoList</span>.new)
+        def self.<strong>new</strong>(context : <a href="../GPhoto2/Context.html">GPhoto2::Context</a>, port_info_list : <a href="../GPhoto2/PortInfoList.html">PortInfoList</a> | Nil = <span class="n">nil</span>)
 
-        <a class="method-permalink" href="#new%28context%3AGPhoto2%3A%3AContext%2Cport_info_list%3AGPhoto2%3A%3APortInfoList%3DPortInfoList.new%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28context%3AGPhoto2%3A%3AContext%2Cport_info_list%3APortInfoList%7CNil%3Dnil%29-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -690,7 +690,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_abilities_list.cr#L15" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_abilities_list.cr#L18" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -727,7 +727,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_abilities_list.cr#L47" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_abilities_list.cr#L52" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -748,7 +748,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_abilities_list.cr#L52" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_abilities_list.cr#L57" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -772,7 +772,7 @@ after use, instead of waiting for the GC.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_abilities_list.cr#L30" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_abilities_list.cr#L33" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -793,7 +793,7 @@ after use, instead of waiting for the GC.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_abilities_list.cr#L35" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_abilities_list.cr#L38" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -814,7 +814,7 @@ after use, instead of waiting for the GC.</p>
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_abilities_list.cr#L21" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_abilities_list.cr#L24" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -830,13 +830,15 @@ after use, instead of waiting for the GC.</p>
         <div class="doc">
           
           <p>Returns the index of the given <em>model</em> in the list.</p>
-<p>Raises <code><a href="../GPhoto2/Error.html">GPhoto2::Error</a></code> if the model isn't supported.</p>
+<p>Raises <code><a href="../GPhoto2/Error.html">GPhoto2::Error</a></code> if the model isn't supported, or <code>ArgumentError</code>
+if <em>model</em> contains a null byte (which would make libgphoto2 look up
+the model named by the part before it).</p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/Sija/gphoto2.cr/blob/9bae3cc/src/gphoto2/camera_abilities_list.cr#L42" target="_blank">View source</a>]
+          [<a href="https://github.com/Sija/gphoto2.cr/blob/6c05ffa/src/gphoto2/camera_abilities_list.cr#L47" target="_blank">View source</a>]
         
       </div>
     </div>
