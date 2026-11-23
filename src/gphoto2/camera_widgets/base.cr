@@ -284,12 +284,7 @@ module GPhoto2
       # Returns `true` if the value has been changed, as tracked by
       # libgphoto2 (and used by camera drivers to pick the values to save).
       protected def changed? : Bool
-        changed = GPhoto2.check!(LibGPhoto2.gp_widget_changed(self)) != 0
-
-        # NOTE: Reading the flag also resets it in libgphoto2 < 2.5.11,
-        # so it's restored (unset flags stay unset, so these are skipped)
-        self.changed = true if changed
-        changed
+        GPhoto2.check!(LibGPhoto2.gp_widget_changed(self)) != 0
       end
 
       # :nodoc:
