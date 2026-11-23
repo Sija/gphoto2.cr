@@ -163,7 +163,6 @@ module GPhoto2
       # held locally would be saved (and reported as such) without effect.
       private def flag_changed(widget : CameraWidget::Base) : Nil
         widget.changed = true
-        @dirty = true
       end
 
       # Updates the configuration on the camera.
@@ -174,10 +173,10 @@ module GPhoto2
       # camera.save # => false (nothing to update)
       # ```
       def save : Bool
-        # NOTE: Same as `#dirty?`, but scanning the widgets only once
-        return false unless @dirty || @window
+        # NOTE: Same as `#dirty?`, but keeping the changed widgets around
+        return false unless @window
         pending = config.select { |_, widget| widget.changed? }
-        return false unless @dirty || pending.present?
+        return false if pending.empty?
 
         begin
           set_config
@@ -189,7 +188,6 @@ module GPhoto2
         # make sure none are left behind, so the config isn't dirty anymore.
         # NOTE: The rest of the widgets has been just checked to be unflagged.
         pending.each_value(&.changed = false)
-        @dirty = false
         true
       end
 
@@ -215,9 +213,6 @@ module GPhoto2
       # NOTE: When any of the attributes can't be set (i.e. due to an invalid
       # value), the ones set before are reverted and the error is reraised.
       def update(attributes) : Bool
-        # The changed flags of the widgets are restored one by one (see below),
-        # so only the flag tracking the changes made by `#[]=` and `#<<` is kept
-        was_dirty = @dirty
         previous = Array({CameraWidget::Base, typeof(self[""].raw_value), Bool}).new
         begin
           attributes.each do |key, value|
@@ -234,7 +229,6 @@ module GPhoto2
             # make drivers save it along with the next `#save`
             widget.changed = changed
           end
-          @dirty = was_dirty
           raise ex
         end
         save
@@ -244,8 +238,6 @@ module GPhoto2
       def update(**attributes)
         update(attributes)
       end
-
-      @dirty = false
 
       # Returns `true` if any attributes have unsaved changes, including
       # the ones changed on the widgets directly (i.e. using
@@ -257,10 +249,9 @@ module GPhoto2
       # camera.dirty? # => true
       # ```
       def dirty? : Bool
-        return true if @dirty
         return false unless @window
 
-        # Widgets changed directly are flagged by libgphoto2 only
+        # Changes are tracked by the flags of the widgets (see `#flag_changed`)
         config.each_value.any?(&.changed?)
       end
 
@@ -337,14 +328,14 @@ module GPhoto2
 
         if @window.same?(window)
           widgets.each_value(&.changed = true)
-          @dirty = true
         else
           values.each do |key, value|
             # Reloaded settings might be gone as well
             next if value.nil? || !(widget = self[key]?)
             begin
+              # Flagged as changed by libgphoto2 if it differs from the
+              # reloaded one, otherwise there's nothing left to save
               widget.value = value
-              @dirty = true
             rescue ArgumentError | GPhoto2::Exception
               # The value might not be valid anymore (i.e. its widget changed
               # type along with the camera mode), which (being called from
@@ -357,7 +348,6 @@ module GPhoto2
       private def reset : Nil
         @window = nil
         @config = nil
-        @dirty = false
       end
 
       # Same as `#config`, but returns `nil` if the camera driver

@@ -130,6 +130,21 @@ module GPhoto2
         end
       end
 
+      it "isn't dirty anymore when the driver saved all of the values despite failing" do
+        with_configured_camera do |camera|
+          # Fails on the setting it already holds, after saving the others
+          FakeDriver.failing_setting = "owner"
+          camera[:iso] = 400
+          camera[:owner] = "John"
+
+          expect_raises(GPhoto2::Error) { camera.save }
+          FakeDriver.settings["iso"].value.should eq "400"
+          camera.dirty?.should be_false
+          camera.save.should be_false
+          FakeDriver.calls[:set_config].should eq 1
+        end
+      end
+
       it "keeps all of the values pending when the config can't be read" do
         with_configured_camera do |camera|
           FakeDriver.failing_setting = "owner"
