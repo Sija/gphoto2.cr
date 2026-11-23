@@ -18,6 +18,24 @@ module GPhoto2
         context.close
         context.@ptr.should be_a Nil
       end
+
+      it "removes all of the callbacks" do
+        context = Context.new
+        context.status_callback = ->(_message : String) { nil }
+        context.error_callback = ->(_message : String) { nil }
+        context.close
+        context.status_callback?.should be_nil
+        context.error_callback?.should be_nil
+        context.@error_box.should be_nil
+      end
+
+      it "does nothing when closed already" do
+        context = Context.new
+        context.close
+        context.close
+        context.@error_box.should be_nil
+        context.ptr?.should be_nil
+      end
     end
 
     describe "#finalize" do

@@ -178,6 +178,16 @@ module GPhoto2
         end
       end
 
+      it "grows the buffer to the reported size past the first chunk" do
+        with_directory_camera do |camera|
+          data = Bytes.new(CameraFile::CHUNK_SIZE * 3 // 2) { |i| (i % 251).to_u8 }
+          stub_file_read(camera, data, reported_size: data.size.to_u64)
+          bytes = camera.blob("/DCIM/a.jpg").read
+          bytes.should eq data
+          LibGC.size(bytes.to_unsafe).should be < data.size + 64 * 1024
+        end
+      end
+
       it "reads files larger than their reported size" do
         with_directory_camera do |camera|
           data = Bytes.new(CameraFile::BUFFER_SIZE * 2 + 123) { |i| (i % 251).to_u8 }
@@ -633,6 +643,17 @@ module GPhoto2
       end
     end
 
+    it "compares previews by identity" do
+      with_directory_camera do |camera|
+        preview = CameraFile.new(camera)
+        preview.should eq preview
+        preview.should_not eq CameraFile.new(camera)
+        preview.should_not eq CameraFile.new(camera, CameraFile::PREVIEW_FILENAME)
+        CameraFile.new(camera, CameraFile::PREVIEW_FILENAME).should_not eq preview
+        Set{preview, preview, CameraFile.new(camera)}.size.should eq 2
+      end
+    end
+
     describe "#data=" do
       it "replaces previously read data" do
         with_directory_camera do |camera|
@@ -668,6 +689,17 @@ module GPhoto2
           file.to_slice
           file.close
           file.@data_and_size.should be_nil
+        end
+      end
+    end
+
+    describe "#inspect" do
+      it "returns the file path" do
+        with_directory_camera do |camera|
+          file = camera.blob("/DCIM/a.jpg")
+          file.inspect.should eq %(#<GPhoto2::CameraFile path="/DCIM/a.jpg">)
+          file.pretty_inspect.should eq file.inspect
+          CameraFile.new(camera).inspect.should eq %(#<GPhoto2::CameraFile path="capture_preview.jpg" preview>)
         end
       end
     end

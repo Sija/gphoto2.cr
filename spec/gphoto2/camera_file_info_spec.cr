@@ -19,6 +19,22 @@ module GPhoto2
       end
     end
 
+    describe "#readable? and #removable?" do
+      it "return the permissions" do
+        info = LibGPhoto2::CameraFileInfoFile.new(fields: CameraFileInfo::Fields::Permissions, permissions: LibGPhoto2::CameraFilePermissions::Read)
+        file = CameraFileInfo::File.new(pointerof(info))
+        file.readable?.should be_true
+        file.removable?.should be_false
+      end
+
+      it "return nil when not set" do
+        info = LibGPhoto2::CameraFileInfoFile.new(permissions: LibGPhoto2::CameraFilePermissions::All)
+        file = CameraFileInfo::File.new(pointerof(info))
+        file.readable?.should be_nil
+        file.removable?.should be_nil
+      end
+    end
+
     describe "#width and #height" do
       it "return the dimensions" do
         info = LibGPhoto2::CameraFileInfoFile.new(fields: CameraFileInfo::Fields::Width | CameraFileInfo::Fields::Height, width: 640, height: 480)

@@ -6,14 +6,16 @@ module GPhoto2
     class File < Base
       include GPhoto2::ManagedStruct(LibGPhoto2::CameraFileInfoFile)
 
-      # Returns `true` if the file is readable, `false` otherwise.
-      def readable?
-        field?(:permissions) && wrapped.permissions.read?
+      # Returns `true` if the file is readable, `false` otherwise,
+      # or `nil` if the permissions are not reported.
+      def readable? : Bool?
+        wrapped.permissions.read? if field?(:permissions)
       end
 
-      # Returns `true` if the file is removable, `false` otherwise.
-      def removable?
-        field?(:permissions) && wrapped.permissions.delete?
+      # Returns `true` if the file is removable, `false` otherwise,
+      # or `nil` if the permissions are not reported.
+      def removable? : Bool?
+        wrapped.permissions.delete? if field?(:permissions)
       end
 
       # Returns modification time, or `nil` if it's not set

@@ -15,7 +15,10 @@ def visit(camera, folder)
         file.folder.colorize(:green),
         file.name.colorize(:blue),
       }
-      path = Path[DEST_PATH, camera.model, file.path]
+      # Model names might contain a `/` (i.e. `JL2005B/C/D camera`),
+      # which would otherwise end up as nested directories
+      path = Path[DEST_PATH, camera.model.tr("/", "_"), file.path]
+
       file.save path
       # Free the downloaded data right away, since it's allocated outside
       # of the GC heap, and therefore doesn't trigger garbage collection

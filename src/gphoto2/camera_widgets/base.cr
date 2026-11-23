@@ -150,6 +150,27 @@ module GPhoto2
         io << value?
       end
 
+      # Returns the widget `#name` and `#value`, i.e.
+      # `#<GPhoto2::CameraWidget::Radio name="iso" value="400">`.
+      def inspect(io : IO) : Nil
+        # Built upfront, so that a closed widget doesn't leave the output half-written
+        details =
+          begin
+            # Checked upfront, since the name might be cached already, while
+            # widgets without value (i.e. `Window`) don't read it at all
+            to_unsafe
+            "name=#{name.inspect} value=#{value?.inspect}"
+          rescue GPhoto2::Exception
+            "(closed)"
+          end
+        io << "#<" << self.class.name << ' ' << details << '>'
+      end
+
+      # :ditto:
+      def pretty_print(pp) : Nil
+        pp.text inspect
+      end
+
       # Compares widget with another, based on `#type`, `#name` and `#value`.
       def ==(other : self)
         return true if same?(other)
@@ -175,18 +196,24 @@ module GPhoto2
       # camera[:iso] == 400
       # ```
       def ==(other)
+        string = other.to_s
+        # The raw value is compared too, since `#to_s` is empty for the values
+        # known to represent no value (see `#value`), i.e. `"None"`
         # ameba:disable Style/RedundantSelf
-        self.to_s == other.to_s
+        self.to_s == string || raw_value.to_s == string
       end
 
-      # Compares `#value` with given `Symbol`.
+      # Compares `#value` with given `Symbol`, case-insensitively,
+      # with underscores standing for spaces as well.
       #
       # ```
       # camera[:whitebalance] == :automatic
+      # camera[:isoauto] == :auto_iso # (with the value of "Auto ISO")
       # ```
       def ==(other : Symbol)
+        # See `#==` for the raw value
         # ameba:disable Style/RedundantSelf
-        self.to_s == other.to_s.capitalize
+        symbol_matches?(self.to_s, other) || symbol_matches?(raw_value.to_s, other)
       end
 
       # Returns `true` if `#value` matches at least one element of the collection.
@@ -200,7 +227,8 @@ module GPhoto2
 
       # Returns `true` if `#value` is included in the *other* `::Range`.
       #
-      # Numeric ranges are compared against the numeric `#value`,
+      # Numeric ranges are compared against the numeric `#value` (or the
+      # Unix timestamp of the value of `Date` widgets, see `Date#==`),
       # `Time` ranges against the `Time` value of `Date` widgets,
       # other ranges against the `#value` converted to a `String`.
       #
@@ -214,7 +242,16 @@ module GPhoto2
         return false unless value = self.value
 
         {% if B < ::Number || E < ::Number %}
-          !!((num_value = value.to_s.to_f?) && other.includes?(num_value))
+          return other.includes?(value.to_unix) if value.is_a?(::Time)
+
+          string = value.to_s
+          # Integers are compared exactly, rather than through `Float64`
+          # (see `GPhoto2.number_string?`)
+          if integer = string.to_i128?
+            other.includes?(integer)
+          else
+            !!((number = string.to_f?) && other.includes?(number))
+          end
         {% elsif B <= ::Time || E <= ::Time %}
           value.is_a?(::Time) && other.includes?(value)
         {% else %}
@@ -238,6 +275,16 @@ module GPhoto2
         set_value(other.get_value)
       end
 
+      # Returns `true` if the given *string* is named by the *symbol*,
+      # case-insensitively, with underscores standing for spaces as well
+      # (i.e. `:auto_iso` for `"Auto ISO"`), since symbols can't hold
+      # these (without quoting).
+      private def symbol_matches?(string : String, symbol : Symbol) : Bool
+        name = symbol.to_s
+        string.compare(name, case_insensitive: true).zero? ||
+          string.compare(name.tr("_", " "), case_insensitive: true).zero?
+      end
+
       protected abstract def get_value
       protected abstract def set_value(value)
 
@@ -251,12 +298,7 @@ module GPhoto2
       # Returns `true` if the value has been changed, as tracked by
       # libgphoto2 (and used by camera drivers to pick the values to save).
       protected def changed? : Bool
-        changed = GPhoto2.check!(LibGPhoto2.gp_widget_changed(self)) != 0
-
-        # NOTE: Reading the flag also resets it in libgphoto2 < 2.5.20,
-        # so it's restored (unset flags stay unset, so these are skipped)
-        self.changed = true if changed
-        changed
+        GPhoto2.check!(LibGPhoto2.gp_widget_changed(self)) != 0
       end
 
       # :nodoc:

@@ -51,6 +51,31 @@ describe GPhoto2 do
     end
   end
 
+  describe ".number_string?" do
+    it "compares integers exactly" do
+      GPhoto2.number_string?("9007199254740993", 9007199254740993_i64).should be_true
+      GPhoto2.number_string?("9007199254740992", 9007199254740993_i64).should be_false
+      GPhoto2.number_string?("9007199254740992.0", 9007199254740993_i64).should be_false
+      GPhoto2.number_string?("-170141183460469231731687303715884105728", Int128::MIN).should be_true
+      GPhoto2.number_string?("4", 4).should be_true
+      GPhoto2.number_string?("4.0", 4_u8).should be_true
+      GPhoto2.number_string?("4.5", 4).should be_false
+    end
+
+    it "compares floats numerically" do
+      GPhoto2.number_string?("4", 4.0).should be_true
+      GPhoto2.number_string?("0.3", 0.3_f32).should be_true
+      GPhoto2.number_string?("0.30", 0.3).should be_true
+      GPhoto2.number_string?("0.3", 0.4).should be_false
+    end
+
+    it "returns false for non-numeric strings" do
+      GPhoto2.number_string?("1/60", 0).should be_false
+      GPhoto2.number_string?("", 0).should be_false
+      GPhoto2.number_string?("nan", Float64::NAN).should be_false
+    end
+  end
+
   describe ".string_from" do
     it "reads up to the first null byte" do
       chars = StaticArray(LibC::Char, 8).new(0_u8)

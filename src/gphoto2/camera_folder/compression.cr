@@ -52,6 +52,9 @@ module GPhoto2
         pathname = Path.posix(root, pathname) if root
 
         name = pathname.normalize.to_s.lchop('/')
+        # The compressed folder itself, given an empty *root* (i.e. `""`),
+        # has no name either (it would end up as a `./` entry)
+        return "" if name == "."
 
         invalid = name == ".." ||
                   name.starts_with?("../") ||
@@ -104,13 +107,14 @@ module GPhoto2
       #
       # Returns the value of the block.
       #
-      # NOTE: the temporary file will be deleted after the block returns.
+      # NOTE: the temporary file will be deleted after the block returns,
+      # unless the block has moved (or deleted) it already.
       def to_zip_file(root : String? = nil, &)
         tempfile = to_zip_file(root)
         begin
           yield tempfile
         ensure
-          tempfile.delete
+          File.delete?(tempfile.path)
         end
       end
     end

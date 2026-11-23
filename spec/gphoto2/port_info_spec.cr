@@ -18,6 +18,12 @@ module GPhoto2
       end
     end
 
+    it "raises on paths containing a null byte" do
+      expect_raises(ArgumentError, "String contains null byte") do
+        PortInfoList.new.lookup_path("disk:\0/tmp")
+      end
+    end
+
     describe "#finalize" do
       it "does not raise when the list has not been allocated" do
         # i.e. when `#initialize` failed

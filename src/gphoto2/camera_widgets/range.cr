@@ -66,14 +66,26 @@ module GPhoto2
       # Compares the `#value` with the given number numerically, instead
       # of using `#to_s` (which would give i.e. `"3.0"` for `3`).
       #
+      # NOTE: The value is held as a C `float`, so the number is compared
+      # as such too, i.e. the way it's rounded when set (see `#value=`).
+      #
       # ```
       # camera[:exposurecompensation] == 0
       # ```
       def ==(other : Number) : Bool
-        # `Float32` values are widened through their shortest decimal
-        # representation (see `#choices`), so that i.e. `0.3_f32` equals `0.3`
-        other = other.to_s.to_f64 if other.is_a?(Float32)
-        get_value.to_s.to_f64 == other
+        # Numbers out of the `Float32` range become infinite (or NaN),
+        # which never equal the (finite) value
+        get_value == other.to_f32!
+      end
+
+      # Compares the `#value` with the number given as a string (as accepted
+      # by `#value=`) numerically, or with `#to_s` if it's not a number.
+      #
+      # ```
+      # camera[:exposurecompensation] == "0.30"
+      # ```
+      def ==(other : String) : Bool
+        (number = other.to_f64?) ? self == number : super
       end
 
       protected def get_value

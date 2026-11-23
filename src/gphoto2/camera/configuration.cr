@@ -65,17 +65,32 @@ module GPhoto2
             memo
           end
 
+        # Values changed before the block, but not saved yet, are restored as
+        # such, rather than saved, with the camera getting its own values back
+        unsaved_snapshot = take_unsaved(config_snapshot)
+
         raised = false
         begin
           yield self
         rescue ex
           raised = true
           # Don't let a failed restore mask the original exception
-          restore_config(config_snapshot) rescue nil
+          begin
+            restore_config(config_snapshot)
+          rescue
+          ensure
+            restore_unsaved(unsaved_snapshot)
+          end
           raise ex
         ensure
           # NOTE: `ensure` also covers leaving the block with `break`
-          restore_config(config_snapshot) unless raised
+          unless raised
+            begin
+              restore_config(config_snapshot)
+            ensure
+              restore_unsaved(unsaved_snapshot)
+            end
+          end
         end
       end
 
@@ -129,8 +144,9 @@ module GPhoto2
       # camera["shutterspeed2"] = "1/60"
       # ```
       def []=(key : String | Symbol, value)
-        self[key].value = value
-        @dirty = true
+        widget = self[key]
+        widget.value = value
+        flag_changed(widget)
         value
       end
 
@@ -149,8 +165,19 @@ module GPhoto2
         # ignored by `#save`, so their value needs to be copied over.
         own_widget.copy_value_from(widget) unless own_widget.same?(widget)
 
-        @dirty = true
+        flag_changed(own_widget)
         self
+      end
+
+      # Flags the *widget* as changed, so that its value gets saved by `#save`.
+      #
+      # NOTE: libgphoto2 flags the widgets as changed only when their value
+      # differs from the one held locally, which might not reflect the camera
+      # state anymore (i.e. changed on the camera itself, since read), while
+      # drivers (i.e. PTP) save just the flagged ones, so setting the value
+      # held locally would be saved (and reported as such) without effect.
+      private def flag_changed(widget : CameraWidget::Base) : Nil
+        widget.changed = true
       end
 
       # Updates the configuration on the camera.
@@ -161,10 +188,10 @@ module GPhoto2
       # camera.save # => false (nothing to update)
       # ```
       def save : Bool
-        # NOTE: Same as `#dirty?`, but scanning the widgets only once
-        return false unless @dirty || @window
+        # NOTE: Same as `#dirty?`, but keeping the changed widgets around
+        return false unless @window
         pending = config.select { |_, widget| widget.changed? }
-        return false unless @dirty || pending.present?
+        return false if pending.empty?
 
         begin
           set_config
@@ -176,7 +203,6 @@ module GPhoto2
         # make sure none are left behind, so the config isn't dirty anymore.
         # NOTE: The rest of the widgets has been just checked to be unflagged.
         pending.each_value(&.changed = false)
-        @dirty = false
         true
       end
 
@@ -202,9 +228,6 @@ module GPhoto2
       # NOTE: When any of the attributes can't be set (i.e. due to an invalid
       # value), the ones set before are reverted and the error is reraised.
       def update(attributes) : Bool
-        # The changed flags of the widgets are restored one by one (see below),
-        # so only the flag tracking the changes made by `#[]=` and `#<<` is kept
-        was_dirty = @dirty
         previous = Array({CameraWidget::Base, typeof(self[""].raw_value), Bool}).new
         begin
           attributes.each do |key, value|
@@ -221,7 +244,6 @@ module GPhoto2
             # make drivers save it along with the next `#save`
             widget.changed = changed
           end
-          @dirty = was_dirty
           raise ex
         end
         save
@@ -231,8 +253,6 @@ module GPhoto2
       def update(**attributes)
         update(attributes)
       end
-
-      @dirty = false
 
       # Returns `true` if any attributes have unsaved changes, including
       # the ones changed on the widgets directly (i.e. using
@@ -244,10 +264,9 @@ module GPhoto2
       # camera.dirty? # => true
       # ```
       def dirty? : Bool
-        return true if @dirty
         return false unless @window
 
-        # Widgets changed directly are flagged by libgphoto2 only
+        # Changes are tracked by the flags of the widgets (see `#flag_changed`)
         config.each_value.any?(&.changed?)
       end
 
@@ -317,6 +336,46 @@ module GPhoto2
         end
       end
 
+      # Replaces the unsaved values in the *snapshot* (see `#preserving_config`)
+      # with the ones on the camera, returning the unsaved values.
+      private def take_unsaved(snapshot : Hash(String, String)) : Hash(String, String)
+        unsaved = snapshot.select { |key, _| self[key].changed? }
+        return unsaved if unsaved.empty?
+
+        saved_window = get_config
+        begin
+          saved_config = saved_window.flatten
+          unsaved.each_key do |key|
+            if value = saved_config[key]?.try(&.raw_value)
+              snapshot[key] = value.to_s
+            else
+              # Gone from the camera, so there's nothing to restore it to
+              snapshot.delete(key)
+            end
+          end
+        ensure
+          # See `#keep_pending`
+          saved_window.close
+        end
+        unsaved
+      end
+
+      # Sets the *values* as unsaved changes (once again), see `#take_unsaved`.
+      private def restore_unsaved(values : Hash(String, String)) : Nil
+        values.each do |key, value|
+          # Settings might be gone (i.e. depending on the camera mode)
+          next unless widget = self[key]?
+          begin
+            widget.value = value
+            flag_changed(widget)
+          rescue ArgumentError | GPhoto2::Exception
+            # The value might not be valid anymore (i.e. its widget changed
+            # type along with the camera mode), which (being called from
+            # within `ensure`) must not mask the original exception
+          end
+        end
+      end
+
       # Marks the *widgets* as changed again, or (when the configuration has
       # been reloaded since, see `#reload`) sets their *values* once again.
       private def keep_unsaved(widgets, values, window) : Nil
@@ -324,14 +383,14 @@ module GPhoto2
 
         if @window.same?(window)
           widgets.each_value(&.changed = true)
-          @dirty = true
         else
           values.each do |key, value|
             # Reloaded settings might be gone as well
             next if value.nil? || !(widget = self[key]?)
             begin
+              # Flagged as changed by libgphoto2 if it differs from the
+              # reloaded one, otherwise there's nothing left to save
               widget.value = value
-              @dirty = true
             rescue ArgumentError | GPhoto2::Exception
               # The value might not be valid anymore (i.e. its widget changed
               # type along with the camera mode), which (being called from
@@ -344,7 +403,6 @@ module GPhoto2
       private def reset : Nil
         @window = nil
         @config = nil
-        @dirty = false
       end
 
       # Same as `#config`, but returns `nil` if the camera driver

@@ -25,7 +25,9 @@ module GPhoto2
 
     # Returns the index of the given *port* path in the list.
     #
-    # Raises `GPhoto2::Error` if the port isn't found.
+    # Raises `GPhoto2::Error` if the port isn't found, or `ArgumentError`
+    # if *port* contains a null byte (which would make libgphoto2 look up
+    # the port given by the part before it).
     def lookup_path(port : String) : Int32
       _lookup_path(port)
     end
@@ -65,7 +67,7 @@ module GPhoto2
 
     private def _lookup_path(port)
       GPhoto2.check! \
-        LibGPhoto2Port.gp_port_info_list_lookup_path(self, port)
+        LibGPhoto2Port.gp_port_info_list_lookup_path(self, port.check_no_null_byte)
     end
 
     private def get_info(index)

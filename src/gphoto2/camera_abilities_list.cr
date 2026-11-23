@@ -6,13 +6,16 @@ module GPhoto2
     include Struct(LibGPhoto2::CameraAbilitiesList)
 
     @context : Context
-    @port_info_list : PortInfoList
+
+    # The list of ports used by `#detect`, loaded on first use (unless given),
+    # since loading it takes a while, while it's not needed for lookups.
+    private getter port_info_list : PortInfoList { PortInfoList.new }
 
     # Loads the abilities of all supported camera models, using the given
     # *context*, along with the *port_info_list* used by `#detect`.
     #
     # NOTE: allocates memory.
-    def initialize(@context, @port_info_list = PortInfoList.new)
+    def initialize(@context, @port_info_list : PortInfoList? = nil)
       new
       load
     end
@@ -38,7 +41,9 @@ module GPhoto2
 
     # Returns the index of the given *model* in the list.
     #
-    # Raises `GPhoto2::Error` if the model isn't supported.
+    # Raises `GPhoto2::Error` if the model isn't supported, or `ArgumentError`
+    # if *model* contains a null byte (which would make libgphoto2 look up
+    # the model named by the part before it).
     def lookup_model(model : String) : Int32
       _lookup_model(model)
     end
@@ -74,13 +79,13 @@ module GPhoto2
     private def _detect
       camera_list = CameraList.new
       @context.check! \
-        LibGPhoto2.gp_abilities_list_detect(self, @port_info_list, camera_list, @context)
+        LibGPhoto2.gp_abilities_list_detect(self, port_info_list, camera_list, @context)
       camera_list
     end
 
     private def _lookup_model(model)
       GPhoto2.check! \
-        LibGPhoto2.gp_abilities_list_lookup_model(self, model)
+        LibGPhoto2.gp_abilities_list_lookup_model(self, model.check_no_null_byte)
     end
 
     private def get_abilities(index)

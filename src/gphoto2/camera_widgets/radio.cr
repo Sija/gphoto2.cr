@@ -38,17 +38,20 @@ module GPhoto2
           match =
             case value
             in Enumerable
-              # Iterators can be consumed only once, so collect them first
-              # (`Iterator#map` is lazy, hence `#to_a`)
-              candidates = value.to_a.map do |item|
-                choice_value(item)
+              # Candidates are tried in the given order (of preference),
+              # rather than in the order of the choices
+              valid_choices = choices
+              value.find_value do |item|
+                candidate = choice_value(item, valid_choices)
+                candidate if candidate.try(&.in?(valid_choices))
               end
-              choices.find &.in?(candidates)
             in Regex
               choices.find &.matches?(value)
             end
           match || raise ArgumentError.new("No matching value found")
           super match
+        when Number, Symbol
+          super choice_value(value, choices)
         else
           super
         end
@@ -67,13 +70,20 @@ module GPhoto2
         self.value = choices[next_index]
       end
 
-      # Converts *value* to a choice, the same way `Text#value=` does.
-      private def choice_value(value) : String?
+      # Converts *value* to a choice, the same way `Text#value=` does,
+      # except for numbers equal to one of the *choices* numerically
+      # (i.e. `4.0` for `"4"`), and symbols naming one of them (i.e. `:auto`
+      # for `"auto"`, see `#symbol_matches?`), which are converted to that choice.
+      private def choice_value(value, choices : Array(String)) : String?
         case value
         when String then value
-        when Symbol then value.to_s.capitalize
-        when Number then value.to_s
+        when Symbol then choices.find { |choice| symbol_matches?(choice, value) } || value.to_s.capitalize
+        when Number then numeric_choice(value, choices) || value.to_s
         end
+      end
+
+      private def numeric_choice(value : Number, choices : Array(String)) : String?
+        choices.find { |choice| GPhoto2.number_string?(choice, value) }
       end
 
       private def count_choices

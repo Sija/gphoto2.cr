@@ -118,11 +118,42 @@ module GPhoto2
       @preview = true
     end
 
-    def_equals_and_hash @camera, @path
+    # Compares files by their camera and `#path`.
+    #
+    # NOTE: Previews (see `#preview?`) aren't stored on the camera, but carry
+    # data of their own instead, so each of them is equal only to itself.
+    def ==(other : self) : Bool
+      return true if same?(other)
+      return false if preview? || other.preview?
+
+      @camera == other.camera && @path == other.path
+    end
+
+    # :ditto:
+    def hash(hasher)
+      return object_id.hash(hasher) if preview?
+
+      hasher = @camera.hash(hasher)
+      hasher = @path.hash(hasher)
+      hasher
+    end
 
     # Returns file `#path`.
     def to_s(io : IO) : Nil
       io << @path
+    end
+
+    # Returns the file `#path` (and whether it's a preview), i.e.
+    # `#<GPhoto2::CameraFile path="/DCIM/DSC_0001.JPG">`.
+    def inspect(io : IO) : Nil
+      io << "#<" << self.class.name << " path=" << @path.to_s.inspect
+      io << " preview" if preview?
+      io << '>'
+    end
+
+    # :ditto:
+    def pretty_print(pp) : Nil
+      pp.text inspect
     end
 
     # Returns file name.
@@ -488,9 +519,14 @@ module GPhoto2
             break if size.zero?
             raise Error.from_code(LibGPhoto2::GP_ERROR_FIXED_LIMIT_EXCEEDED)
           end
-          # Grow geometrically to keep the number of copies low,
-          # or to the expected size right away, if known
-          new_size = Math.min(Math.max(buffer.size.to_i64 * 2, capacity || BUFFER_SIZE), MAX_READ_SIZE).to_i32
+          # Grow to the expected size right away, if known (and not reached
+          # yet), otherwise geometrically, to keep the number of copies low
+          new_size =
+            if capacity && capacity > buffer.size
+              capacity
+            else
+              Math.min(Math.max(buffer.size.to_i64 * 2, BUFFER_SIZE), MAX_READ_SIZE).to_i32
+            end
           buffer = Bytes.new(new_size).tap(&.copy_from(buffer))
         end
         # Request chunks of (at most) a constant size from the camera

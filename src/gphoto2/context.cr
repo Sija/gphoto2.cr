@@ -20,8 +20,15 @@ module GPhoto2
 
     # Removes the callbacks and frees allocated memory.
     def close : Nil
-      clear_callbacks
-      unref if ptr?
+      return unless ptr?
+
+      # Unlike `#clear_callbacks`, the error messages are not tracked anymore
+      # either, since the context is gone (which also keeps the callbacks
+      # of an already closed context from being set on a null pointer)
+      {% for key in %w[cancel idle status message error] %}
+        unset_{{ key.id }}_callback
+      {% end %}
+      unref
     end
 
     private def new

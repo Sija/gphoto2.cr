@@ -69,6 +69,27 @@ module GPhoto2
     end
 
     describe "#save" do
+      it "saves the values set to the ones held locally" do
+        with_configured_camera do |camera|
+          camera.config
+          # Changed on the camera itself, since read
+          FakeDriver.settings["iso"] = FakeDriver.settings["iso"].copy_with(value: "200")
+
+          camera[:iso] = 100
+          camera.save.should be_true
+          FakeDriver.settings["iso"].value.should eq "100"
+
+          FakeDriver.settings["iso"] = FakeDriver.settings["iso"].copy_with(value: "200")
+          camera.update(iso: 100)
+          FakeDriver.settings["iso"].value.should eq "100"
+
+          FakeDriver.settings["iso"] = FakeDriver.settings["iso"].copy_with(value: "200")
+          camera << camera[:iso]
+          camera.save.should be_true
+          FakeDriver.settings["iso"].value.should eq "100"
+        end
+      end
+
       it "saves the configuration only when dirty" do
         with_configured_camera do |camera|
           camera.save.should be_false
@@ -106,6 +127,21 @@ module GPhoto2
           # Already saved values aren't saved again
           FakeDriver.settings["iso"].value.should eq "200"
           camera.dirty?.should be_false
+        end
+      end
+
+      it "isn't dirty anymore when the driver saved all of the values despite failing" do
+        with_configured_camera do |camera|
+          # Fails on the setting it already holds, after saving the others
+          FakeDriver.failing_setting = "owner"
+          camera[:iso] = 400
+          camera[:owner] = "John"
+
+          expect_raises(GPhoto2::Error) { camera.save }
+          FakeDriver.settings["iso"].value.should eq "400"
+          camera.dirty?.should be_false
+          camera.save.should be_false
+          FakeDriver.calls[:set_config].should eq 1
         end
       end
 
@@ -292,6 +328,45 @@ module GPhoto2
     end
 
     describe "#preserving_config" do
+      it "restores the values changed before the block as unsaved ones" do
+        with_configured_camera do |camera|
+          camera[:owner] = "Jane"
+          camera.preserving_config { camera.reload }
+          FakeDriver.settings["owner"].value.should eq "John"
+          camera[:owner].value.should eq "Jane"
+          camera.dirty?.should be_true
+        end
+      end
+
+      it "restores the camera values of the ones saved within the block" do
+        with_configured_camera do |camera|
+          camera[:owner] = "Jane"
+          camera.preserving_config do
+            camera.update(iso: 400)
+            FakeDriver.settings["owner"].value.should eq "Jane"
+          end
+          FakeDriver.settings["owner"].value.should eq "John"
+          FakeDriver.settings["iso"].value.should eq "100"
+          camera[:owner].value.should eq "Jane"
+          camera.dirty?.should be_true
+        end
+      end
+
+      it "restores the values changed before the block when it raises" do
+        with_configured_camera do |camera|
+          camera[:owner] = "Jane"
+          expect_raises(::Exception, "boom") do
+            camera.preserving_config do
+              camera.update(owner: "Bob")
+              raise "boom"
+            end
+          end
+          FakeDriver.settings["owner"].value.should eq "John"
+          camera[:owner].value.should eq "Jane"
+          camera.dirty?.should be_true
+        end
+      end
+
       it "restores the original values" do
         with_configured_camera do |camera|
           camera.preserving_config do

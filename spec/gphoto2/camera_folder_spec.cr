@@ -94,9 +94,30 @@ module GPhoto2
           (camera / "DCIM").cd("../..").root?.should be_true
         end
       end
+
+      it "accepts paths" do
+        with_directory_camera do |camera|
+          folder = camera / "DCIM"
+          folder.cd(Path.posix("sub")).path.should eq Path.posix("/DCIM/sub")
+          (folder / Path.posix("/x")).path.should eq Path.posix("/x")
+          folder.cd(Path.windows("sub\\..\\x")).path.should eq Path.posix("/DCIM/x")
+        end
+      end
     end
 
     describe "#open" do
+      it "accepts paths" do
+        with_directory_camera do |camera|
+          folder = camera / "DCIM/sub"
+          String.new(folder.open(Path.posix("../a.jpg")).to_slice).should eq "hello"
+          folder.open(Path.windows("..\\a.jpg")).path.should eq Path.posix("/DCIM/a.jpg")
+          folder.open(Path.posix("b.jpg"), &.size).should eq 3
+          expect_raises(ArgumentError, "Invalid file name: \"..\"") do
+            folder.open(Path.posix(".."))
+          end
+        end
+      end
+
       it "returns a file by its relative path" do
         with_directory_camera do |camera|
           file = (camera / "DCIM/sub").open("../a.jpg")
@@ -348,6 +369,19 @@ module GPhoto2
         end
       end
 
+      it "returns an empty archive for an empty folder given an empty root" do
+        with_directory_camera do |camera, dir|
+          Dir.mkdir_p(File.join(dir, "DCIM", "sub", "empty"))
+          zip_entries(camera / "DCIM/sub/empty", "").should be_empty
+          zip_entries(camera / "DCIM/sub/empty", ".").should be_empty
+          zip_entries(camera / "DCIM", "").should eq({
+            "a.jpg"      => "hello",
+            "sub/b.jpg"  => "xyz",
+            "sub/empty/" => "",
+          })
+        end
+      end
+
       it "uses the given root folder name" do
         with_directory_camera do |camera|
           zip_entries(camera / "DCIM", "photos").should eq({
@@ -360,6 +394,17 @@ module GPhoto2
       it "returns the value of the block" do
         with_directory_camera do |camera|
           (camera / "DCIM").to_zip_file { |file| File.size(file.path) }.should be > 0
+        end
+      end
+
+      it "allows the block to move the temporary file away" do
+        with_directory_camera do |camera, dir|
+          target = File.join(dir, "kept.zip")
+          (camera / "DCIM").to_zip_file do |file|
+            File.rename(file.path, target)
+            file.path
+          end.try { |path| File.exists?(path).should be_false }
+          File.size(target).should be > 0
         end
       end
 
@@ -398,6 +443,16 @@ module GPhoto2
             "DCIM/a.jpg"     => "hello",
             "DCIM/sub/b.jpg" => "xyz",
           })
+        end
+      end
+    end
+
+    describe "#inspect" do
+      it "returns the folder path" do
+        with_directory_camera do |camera|
+          folder = camera / "DCIM"
+          folder.inspect.should eq %(#<GPhoto2::CameraFolder path="/DCIM">)
+          folder.pretty_inspect.should eq folder.inspect
         end
       end
     end

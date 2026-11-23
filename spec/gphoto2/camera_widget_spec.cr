@@ -68,6 +68,40 @@ module GPhoto2
         end
       end
 
+      describe "#inspect" do
+        it "returns the name and value of the widget" do
+          widget = build_radio(%w[100 200], "iso")
+          widget.value = "200"
+          widget.inspect.should eq %(#<GPhoto2::CameraWidget::Radio name="iso" value="200">)
+          build_widget(:window, "main").inspect.should eq %(#<GPhoto2::CameraWidget::Window name="main" value=nil>)
+        end
+
+        it "leaves out the ancestors of the widget" do
+          window = build_widget(:window, "main")
+          LibGPhoto2.gp_widget_append(window, build_widget_ptr(:toggle, "flash"))
+          child = window.children.first
+          child.inspect.should eq %(#<GPhoto2::CameraWidget::Toggle name="flash" value=0>)
+          child.pretty_inspect.should eq child.inspect
+        end
+
+        it "doesn't raise for closed widgets" do
+          widget = build_widget(:text)
+          widget.close
+          widget.inspect.should eq "#<GPhoto2::CameraWidget::Text (closed)>"
+        end
+
+        it "doesn't show the cached details of closed widgets" do
+          window = build_widget(:window, "main")
+          LibGPhoto2.gp_widget_append(window, build_widget_ptr(:toggle, "flash"))
+          child = window.children.first
+          window.inspect
+          child.inspect
+          window.close
+          window.inspect.should eq "#<GPhoto2::CameraWidget::Window (closed)>"
+          child.inspect.should eq "#<GPhoto2::CameraWidget::Toggle (closed)>"
+        end
+      end
+
       describe "#==(other : self)" do
         it "compares type, name and value" do
           a, b = build_widget(:text, "foo"), build_widget(:text, "foo")
@@ -118,14 +152,50 @@ module GPhoto2
           (widget == 200).should be_false
         end
 
+        it "compares the values representing no value as they are" do
+          widget = build_widget(:text)
+          widget.value = "None"
+          widget.value.should be_nil
+          (widget == "None").should be_true
+          (widget == :none).should be_true
+          widget.in?(["None"]).should be_true
+          # As before
+          (widget == "").should be_true
+          (widget == "Auto").should be_false
+        end
+
         it "compares value with symbol" do
           widget = build_widget(:text)
           widget.value = "Automatic"
           (widget == :automatic).should be_true
         end
+
+        it "compares value with symbol case-insensitively" do
+          widget = build_widget(:text)
+          widget.value = "auto"
+          (widget == :auto).should be_true
+          widget.value = "Auto ISO"
+          (widget == :auto_iso).should be_true
+          (widget == :auto).should be_false
+          widget.in?([:manual, :auto_iso]).should be_true
+        end
       end
 
       describe "#in?" do
+        it "checks integers against numeric ranges exactly" do
+          widget = build_widget(:text)
+          widget.value = "9007199254740993"
+          widget.in?(9007199254740992_i64..9007199254740992_i64).should be_false
+          widget.in?(9007199254740993_i64..9007199254740994_i64).should be_true
+          widget.in?(9007199254740990_i64..).should be_true
+          widget.in?(..9007199254740992_u64).should be_false
+          widget.value = "4"
+          widget.in?(3.5..4.5).should be_true
+          widget.value = "4.5"
+          widget.in?(4..5).should be_true
+          widget.in?(5..6).should be_false
+        end
+
         it "checks against collections" do
           widget = build_widget(:text)
           widget.value = "Manual"
@@ -313,6 +383,45 @@ module GPhoto2
         widget.in?({true}).should be_false
       end
 
+      it "accepts and compares with symbols" do
+        widget = build_widget(:toggle)
+        widget.value = :on
+        widget.value.should eq 1
+        (widget == :on).should be_true
+        (widget == :yes).should be_true
+        (widget == :off).should be_false
+        widget.in?([:off, :true]).should be_true
+        widget.value = :Off
+        widget.value.should eq 0
+        (widget == :off).should be_true
+        (widget == :maybe).should be_false
+        expect_raises(ArgumentError, "Invalid value: :maybe") do
+          widget.value = :maybe
+        end
+      end
+
+      it "compares with strings" do
+        widget = build_widget(:toggle)
+        widget.value = "on"
+        (widget == "on").should be_true
+        (widget == " Yes ").should be_true
+        (widget == "1").should be_true
+        (widget == "off").should be_false
+        (widget == "maybe").should be_false
+        widget.in?(%w[off true]).should be_true
+      end
+
+      it "compares with integer strings the way they're set" do
+        widget = build_widget(:toggle)
+        widget.value = " 4 "
+        (widget == " 4 ").should be_true
+        (widget == "+4").should be_true
+        (widget == "4").should be_true
+        (widget == "5").should be_false
+        (widget == "4294967300").should be_false
+        widget.in?(["+4"]).should be_true
+      end
+
       it "accepts boolean strings" do
         widget = build_widget(:toggle)
         widget.value = "true"
@@ -331,6 +440,16 @@ module GPhoto2
     end
 
     describe CameraWidget::Range do
+      it "compares the value with numeric strings numerically" do
+        widget = build_range(-1_f32, 1_f32, 0.1_f32)
+        widget.value = "0.30"
+        (widget == "0.30").should be_true
+        (widget == "0.3").should be_true
+        (widget == " 0.3 ").should be_true
+        (widget == "0.4").should be_false
+        (widget == "abc").should be_false
+      end
+
       it "returns range and step" do
         widget = build_range(1, 3, 0.5)
         widget.range.should eq 1f32..3f32
@@ -410,6 +529,18 @@ module GPhoto2
         (widget == "0.3").should be_true
       end
 
+      it "compares the value with numbers rounded the way they're set" do
+        widget = build_range(-Float32::MAX, Float32::MAX, 0_f32)
+        widget.value = 1.0 / 3
+        (widget == 1.0 / 3).should be_true
+        widget.value = Int32::MAX
+        (widget == Int32::MAX).should be_true
+        widget.in?([Int32::MAX]).should be_true
+        (widget == 1e300).should be_false
+        (widget == Float64::NAN).should be_false
+        (widget == UInt128::MAX).should be_false
+      end
+
       it "accepts floats, ints and strings" do
         widget = build_range(0, 10, 1)
         widget.value = 2.5
@@ -440,6 +571,36 @@ module GPhoto2
         (widget == time).should be_true
         (widget == time.in(Time::Location.fixed(3600))).should be_true
         (widget == time + 1.second).should be_false
+      end
+
+      it "compares the value with Unix timestamps" do
+        widget = build_widget(:date)
+        widget.value = 1_000_000
+        (widget == 1_000_000).should be_true
+        (widget == 1_000_000_u64).should be_true
+        (widget == 1_000_001).should be_false
+        (widget == Int64::MAX).should be_false
+        (widget == UInt64::MAX).should be_false
+        widget.in?([0, 1_000_000]).should be_true
+      end
+
+      it "checks the value against ranges of Unix timestamps" do
+        widget = build_widget(:date)
+        widget.value = 1_000_000
+        widget.in?(0..2_000_000).should be_true
+        widget.in?(1_000_001..).should be_false
+        widget.in?(..1_000_000_u64).should be_true
+      end
+
+      it "compares the value with time strings" do
+        widget = build_widget(:date)
+        widget.value = "2020-01-02T03:04:05Z"
+        (widget == "2020-01-02T03:04:05Z").should be_true
+        (widget == "2020-01-02T04:04:05+01:00").should be_true
+        (widget == "2020-01-02 03:04:05 UTC").should be_true
+        (widget == "2020-01-02T03:04:06Z").should be_false
+        (widget == "yesterday").should be_false
+        (widget == "2020-02-30 03:04:05 UTC").should be_false
       end
 
       it "accepts ISO 8601 strings" do
@@ -488,6 +649,71 @@ module GPhoto2
         widget.value.should eq "400"
         widget.value = /^2/
         widget.value.should eq "200"
+      end
+
+      it "picks the first matching value of the collection" do
+        widget = build_radio(%w[100 200 400])
+        widget.value = %w[400 200]
+        widget.value.should eq "400"
+        widget.value = [300, 200, 100].each
+        widget.value.should eq "200"
+      end
+
+      it "compares the value with numbers numerically" do
+        widget = build_radio(%w[4 5.6 0.3 1/60])
+        widget.value = "4"
+        (widget == 4).should be_true
+        (widget == 4.0).should be_true
+        (widget == 5.6).should be_false
+        widget.in?([8, 4.0]).should be_true
+        widget.value = "0.3"
+        (widget == 0.3_f32).should be_true
+        widget.value = "1/60"
+        (widget == 0).should be_false
+        (widget == "1/60").should be_true
+      end
+
+      it "compares the value with integers exactly" do
+        widget = build_widget(:text)
+        widget.value = "9007199254740992"
+        (widget == 9007199254740992_i64).should be_true
+        (widget == 9007199254740993_i64).should be_false
+      end
+
+      it "matches symbols with the choices case-insensitively" do
+        widget = build_radio(["auto", "Auto ISO", "AWB"])
+        widget.value = :auto
+        widget.value.should eq "auto"
+        widget.value = :auto_iso
+        widget.value.should eq "Auto ISO"
+        widget.value = [:daylight, :awb]
+        widget.value.should eq "AWB"
+        # Symbols not among the choices are set capitalized, as before
+        widget.value = :manual
+        widget.value.should eq "Manual"
+      end
+
+      it "matches numbers with the choices numerically" do
+        widget = build_radio(%w[2.8 4 5.6 1/60])
+        widget.value = 4.0
+        widget.value.should eq "4"
+        widget.value = 5.6_f32
+        widget.value.should eq "5.6"
+        widget.value = [8, 4.0_f32]
+        widget.value.should eq "4"
+        # Numbers not among the choices are set as-is
+        widget.value = 11
+        widget.value.should eq "11"
+      end
+
+      it "matches integers with the choices exactly" do
+        widget = build_radio(%w[9007199254740992 9007199254740993 4.0])
+        widget.value = 9007199254740993_i64
+        widget.value.should eq "9007199254740993"
+        widget.value = [9007199254740993_i64]
+        widget.value.should eq "9007199254740993"
+        widget.value = 4
+        widget.value.should eq "4.0"
       end
 
       it "accepts collections of numbers and symbols" do
